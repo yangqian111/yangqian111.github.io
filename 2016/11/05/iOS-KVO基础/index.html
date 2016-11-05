@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="iOS应用之间的跳转," />
+  <meta name="keywords" content="KVO," />
 
 
 
@@ -84,23 +84,16 @@
 
 
 
-<meta name="description" content="应用之间的跳转，在我们日常使用中是经常见到的，分享到微信啊，支付宝支付啊，等等。接下来，我们就来实现一下这种效果">
+<meta name="description" content="在Objc中有一种观察者模式，即是Key Value Observing(KVO)。利用KVO可以很容易实现视图组件和数据模型的分离。当数据模型的值改变时，会马上触发视图组件，更新视图组件。在Objc中要实现KVO，必须实现NSKeyValueObServing协议，所幸的是NSObject已经实现该协议，也就是说，几乎所有的Objc对象都可以使用KVO。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="iOS应用之间的跳转解析">
-<meta property="og:url" content="http://yoursite.com/2016/10/27/iOS应用之间的跳转解析/index.html">
+<meta property="og:title" content="iOS KVO基础">
+<meta property="og:url" content="http://yoursite.com/2016/11/05/iOS-KVO基础/index.html">
 <meta property="og:site_name" content="ppsheep">
-<meta property="og:description" content="应用之间的跳转，在我们日常使用中是经常见到的，分享到微信啊，支付宝支付啊，等等。接下来，我们就来实现一下这种效果">
-<meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/jump1.gif">
-<meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/jump2.gif">
-<meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/Snip20161028_1.png">
-<meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/Snip20161028_2.png">
-<meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/jump1.gif">
-<meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/jump2.gif">
-<meta property="og:updated_time" content="2016-11-05T05:52:45.000Z">
+<meta property="og:description" content="在Objc中有一种观察者模式，即是Key Value Observing(KVO)。利用KVO可以很容易实现视图组件和数据模型的分离。当数据模型的值改变时，会马上触发视图组件，更新视图组件。在Objc中要实现KVO，必须实现NSKeyValueObServing协议，所幸的是NSObject已经实现该协议，也就是说，几乎所有的Objc对象都可以使用KVO。">
+<meta property="og:updated_time" content="2016-11-05T09:07:27.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="iOS应用之间的跳转解析">
-<meta name="twitter:description" content="应用之间的跳转，在我们日常使用中是经常见到的，分享到微信啊，支付宝支付啊，等等。接下来，我们就来实现一下这种效果">
-<meta name="twitter:image" content="http://o8bxt3lx0.bkt.clouddn.com/jump1.gif">
+<meta name="twitter:title" content="iOS KVO基础">
+<meta name="twitter:description" content="在Objc中有一种观察者模式，即是Key Value Observing(KVO)。利用KVO可以很容易实现视图组件和数据模型的分离。当数据模型的值改变时，会马上触发视图组件，更新视图组件。在Objc中要实现KVO，必须实现NSKeyValueObServing协议，所幸的是NSObject已经实现该协议，也就是说，几乎所有的Objc对象都可以使用KVO。">
 
 
 
@@ -121,10 +114,10 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2016/10/27/iOS应用之间的跳转解析/"/>
+  <link rel="canonical" href="http://yoursite.com/2016/11/05/iOS-KVO基础/"/>
 
 
-  <title> iOS应用之间的跳转解析 | ppsheep </title>
+  <title> iOS KVO基础 | ppsheep </title>
 </head>
 
 <body itemscope itemtype="//schema.org/WebPage" lang="zh-Hans">
@@ -272,7 +265,7 @@
             
             
               
-                iOS应用之间的跳转解析
+                iOS KVO基础
               
             
           </h1>
@@ -284,8 +277,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-10-27T18:52:15+08:00" content="2016-10-27">
-              2016-10-27
+            <time itemprop="dateCreated" datetime="2016-11-05T15:50:33+08:00" content="2016-11-05">
+              2016-11-05
             </time>
           </span>
 
@@ -298,8 +291,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/iOS进阶/" itemprop="url" rel="index">
-                    <span itemprop="name">iOS进阶</span>
+                  <a href="/categories/iOS-基础/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS 基础</span>
                   </a>
                 </span>
 
@@ -314,8 +307,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/10/27/iOS应用之间的跳转解析/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/27/iOS应用之间的跳转解析/" itemprop="commentsCount"></span>
+                <a href="/2016/11/05/iOS-KVO基础/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/05/iOS-KVO基础/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -325,7 +318,7 @@
 
           
           
-             <span id="/2016/10/27/iOS应用之间的跳转解析/" class="leancloud_visitors" data-flag-title="iOS应用之间的跳转解析">
+             <span id="/2016/11/05/iOS-KVO基础/" class="leancloud_visitors" data-flag-title="iOS KVO基础">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -347,51 +340,34 @@
       
 
       
-        <p>应用之间的跳转，在我们日常使用中是经常见到的，分享到微信啊，支付宝支付啊，等等。接下来，我们就来实现一下这种效果</p>
+        <p>在Objc中有一种观察者模式，即是Key Value Observing(KVO)。利用KVO可以很容易实现视图组件和数据模型的分离。当数据模型的值改变时，会马上触发视图组件，更新视图组件。在Objc中要实现KVO，必须实现NSKeyValueObServing协议，所幸的是NSObject已经实现该协议，也就是说，几乎所有的Objc对象都可以使用KVO。</p>
 <a id="more"></a>
-<h3 id="这是从一个APP直接跳到另外一个APP的效果"><a href="#这是从一个APP直接跳到另外一个APP的效果" class="headerlink" title="这是从一个APP直接跳到另外一个APP的效果"></a>这是从一个APP直接跳到另外一个APP的效果</h3><p><img src="http://o8bxt3lx0.bkt.clouddn.com/jump1.gif" alt="1"></p>
-<h3 id="这是从一个APP跳到另一个APP的指定页面"><a href="#这是从一个APP跳到另一个APP的指定页面" class="headerlink" title="这是从一个APP跳到另一个APP的指定页面"></a>这是从一个APP跳到另一个APP的指定页面</h3><p><img src="http://o8bxt3lx0.bkt.clouddn.com/jump2.gif" alt=""></p>
-<h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><blockquote>
-<p>在开发之中我们经常遇到需要从我们当前程序跳入到另外一个程序中，下面我们来说明一下这实现的过程</p>
-</blockquote>
-<h3 id="常见的跳转场景"><a href="#常见的跳转场景" class="headerlink" title="常见的跳转场景"></a>常见的跳转场景</h3><ul>
-<li>使用第三方登录时，需要跳转社交APP，比如常见的QQ、微信、淘宝、支付宝等</li>
-<li>分享我们的消息到其他APP，最常见的就是分享到QQ和微信，推广我们的APP</li>
-<li>第三方支付，微信和支付宝</li>
-<li>导航，跳转到地图类应用</li>
-<li>跳转到系统的APP，打电话，发短信，发邮件等</li>
+<p>在OC中，KVO的使用步骤一般是：</p>
+<ul>
+<li>被监听者通过 addObserver:forKeyPath:options:context: 方法，添加监听</li>
+<li>监听者重写 observeValueForKeyPath:ofObject:change:context: 方法，实现监听</li>
+<li>被监听者移除监听</li>
 </ul>
-<h3 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h3><p>我们想要打开iOS中的一个应用，只需要拿到这个应用的协议头，我们就可以实现从一个APP跳到另外一个APP</p>
-<blockquote>
-<p>假设我们现在有两个APP，APP-1和APP-2，需要从APP-1跳到APP-2<br>那么我们就需要给APP-2绑定一个URL Schemes(自定义的应用协议头)，在APP-1中我们就可以实现用这个协议头跳到APP-2</p>
-</blockquote>
-<h3 id="一个APP直接跳到另外一个APP实现"><a href="#一个APP直接跳到另外一个APP实现" class="headerlink" title="一个APP直接跳到另外一个APP实现"></a>一个APP直接跳到另外一个APP实现</h3><p>创建两个项目APP-1和APP-2</p>
-<p>在APP-2中，我们来绑定URL Schemes</p>
-<p><img src="http://o8bxt3lx0.bkt.clouddn.com/Snip20161028_1.png" alt="3"></p>
-<p>在APP2的target中绑定协议头为 <strong>APP2</strong></p>
-<p>然后我们在APP-1中添加一个按钮 来实现，点击跳转</p>
-<p><strong><em>注意，这两个APP得在手机上都安装上，才能跳转</em></strong></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">[btn1 addTarget:self action:@selector(jumpToApp2) forControlEvents:UIControlEventTouchUpInside];</div></pre></td></tr></table></figure>
-<p>跳转方法</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">- (void)jumpToApp2&#123;</div><div class="line">    //获取APP2的URL Scheme</div><div class="line">    NSURL *appURL = [NSURL URLWithString:@&quot;APP2://&quot;];</div><div class="line">    </div><div class="line">    //判断手机中是否安装了APP2</div><div class="line">    if ([[UIApplication sharedApplication] canOpenURL:appURL]) &#123;</div><div class="line">        //打开APP2</div><div class="line">        [[UIApplication sharedApplication] openURL:appURL];</div><div class="line">    &#125;else&#123;</div><div class="line">        NSLog(@&quot;没有安装APP2&quot;);</div><div class="line">    &#125;</div><div class="line">    // ---------------如果是iOS9之前，上面代码就可以实现跳转了---------------------</div><div class="line">    // ---------------iOS9之后需要在应用程序中加上白名单，即在APP-1中加上APP-2的白名单---------</div><div class="line">    // ----------------在APP-1的Info中 添加键值对LSApplicationQueriesSchemes---------------------------------</div><div class="line">    </div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>在iOS9之后，跳转 我们需要在APP中设置需要跳转的URL Schemes才能实现跳转  即在Info中添加LSApplicationQueriesSchemes键值对</p>
-<p><img src="http://o8bxt3lx0.bkt.clouddn.com/Snip20161028_2.png" alt="5"></p>
-<p>然后我们就可以实现跳转了</p>
-<p>看一下效果</p>
-<p><img src="http://o8bxt3lx0.bkt.clouddn.com/jump1.gif" alt="1"></p>
-<h3 id="一个APP跳到另一个APP的指定页面"><a href="#一个APP跳到另一个APP的指定页面" class="headerlink" title="一个APP跳到另一个APP的指定页面"></a>一个APP跳到另一个APP的指定页面</h3><p>这个实现起来也很简单的，首先在APP2中新建两个ViewController</p>
-<p>然后在APP-1中添加两个按钮分别是跳转到不同的页面</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">UIButton *btn1 = [[UIButton alloc] initWithFrame:CGRectMake(50, 150, 200, 30)];</div><div class="line">[btn1 setTitle:@&quot;跳转到第一个界面&quot; forState:UIControlStateNormal];</div><div class="line">[btn1 addTarget:self action:@selector(jumpToApp2_1) forControlEvents:UIControlEventTouchUpInside];</div><div class="line">btn1.backgroundColor = [UIColor redColor];</div><div class="line">[self.view addSubview:btn1];</div><div class="line">    </div><div class="line">UIButton *btn2 = [[UIButton alloc] initWithFrame:CGRectMake(50, 200, 200, 30)];</div><div class="line">[btn2 setTitle:@&quot;跳转到第二个界面&quot; forState:UIControlStateNormal];</div><div class="line">[btn2 addTarget:self action:@selector(jumpToApp2_2) forControlEvents:UIControlEventTouchUpInside];</div><div class="line">btn2.backgroundColor = [UIColor redColor];</div></pre></td></tr></table></figure>
-<p>跳转方法</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line"></div><div class="line">- (void)jumpToApp2_1&#123;</div><div class="line">    //获取APP2的URL Scheme</div><div class="line">    NSURL *appURL = [NSURL URLWithString:@&quot;APP2://VC1&quot;];</div><div class="line">    </div><div class="line">    //判断手机中是否安装了APP2</div><div class="line">    if ([[UIApplication sharedApplication] canOpenURL:appURL]) &#123;</div><div class="line">        //打开APP2的ViewController1</div><div class="line">        [[UIApplication sharedApplication] openURL:appURL];</div><div class="line">    &#125;else&#123;</div><div class="line">        NSLog(@&quot;没有安装APP2&quot;);</div><div class="line">    &#125;</div><div class="line">// ---------------如果是iOS9之前，上面代码就可以实现跳转了---------------------</div><div class="line">// ---------------iOS9之后需要在应用程序中加上白名单，即在APP-1中加上APP-2的白名单---------</div><div class="line">// ----------------在APP-1的Info中 添加键值对LSApplicationQueriesSchemes---------------------------------</div><div class="line">    </div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)jumpToApp2_2&#123;</div><div class="line">    //获取APP2的URL Scheme</div><div class="line">    NSURL *appURL = [NSURL URLWithString:@&quot;APP2://VC2&quot;];</div><div class="line">    </div><div class="line">    //判断手机中是否安装了APP2</div><div class="line">    if ([[UIApplication sharedApplication] canOpenURL:appURL]) &#123;</div><div class="line">        //打开APP2ViewController2</div><div class="line">        [[UIApplication sharedApplication] openURL:appURL];</div><div class="line">    &#125;else&#123;</div><div class="line">        NSLog(@&quot;没有安装APP2&quot;);</div><div class="line">    &#125;</div><div class="line">    // ---------------如果是iOS9之前，上面代码就可以实现跳转了---------------------</div><div class="line">    // ---------------iOS9之后需要在应用程序中加上白名单，即在APP-1中加上APP-2的白名单---------</div><div class="line">    // ----------------在APP-1的Info中 添加键值对LSApplicationQueriesSchemes---------------------------------</div><div class="line">    </div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>通过对跳转的协议头添加不同的描述，来实现不同的跳转</p>
-<p>然后我们在APP-2的delegate中 实现方法</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">// 因为现在xcode8 最低支持8.0 所以  我还是用这个方法吧</div><div class="line">-(BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation&#123;</div><div class="line">    </div><div class="line">    //获取根控制器</div><div class="line">    UINavigationController *nvc = (UINavigationController *)self.window.rootViewController;</div><div class="line">//    ViewController *vc = nvc.childViewControllers.firstObject;</div><div class="line">    </div><div class="line">    //每次跳转都必须要在根控制器 这一点比较重要</div><div class="line">    [nvc popToRootViewControllerAnimated:YES];</div><div class="line">    </div><div class="line">    //根据url判断需要展示的VC</div><div class="line">    if ([url.absoluteString containsString:@&quot;VC1&quot;]) &#123;</div><div class="line">        ViewController1 *vc1 = [[ViewController1 alloc] init];</div><div class="line">//        [vc presentViewController:vc1 animated:YES completion:nil];</div><div class="line">        [nvc pushViewController:vc1 animated:YES];</div><div class="line">    &#125;else if([url.absoluteString containsString:@&quot;VC2&quot;])&#123;</div><div class="line">        ViewController2 *vc2 = [[ViewController2 alloc] init];</div><div class="line">        [nvc pushViewController:vc2 animated:YES];</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    return YES;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>实现跳转监听，这样就能跳转到不同的页面了</p>
-<p><img src="http://o8bxt3lx0.bkt.clouddn.com/jump2.gif" alt=""></p>
-<p>源代码放在了</p>
-<p><a href="https://github.com/yangqian111/blog/tree/master/APP-1" target="_blank" rel="external">https://github.com/yangqian111/blog/tree/master/APP-1</a></p>
-<p><a href="https://github.com/yangqian111/blog/tree/master/APP-2" target="_blank" rel="external">https://github.com/yangqian111/blog/tree/master/APP-2</a></p>
+<p>简单的实现一下，首先，我需要一个监听对象，所以创建一个Entity</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">//  Entity.h</div><div class="line">#import &lt;Foundation/Foundation.h&gt;</div><div class="line"></div><div class="line">@interface Entity : NSObject</div><div class="line"></div><div class="line">@property (nonatomic, copy) NSString *name;</div><div class="line"></div><div class="line">/**</div><div class="line"> 因为另外两个属性没有暴露出来 我们只能通过方法来改变</div><div class="line"> */</div><div class="line">- (void)changeName1:(NSString *)name1;</div><div class="line"></div><div class="line">- (void)changeName2:(NSString *)name2;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">//  Entity.m</div><div class="line">@interface Entity()</div><div class="line"></div><div class="line">@property (nonatomic, copy) NSString *name1;</div><div class="line"></div><div class="line">@end</div><div class="line"></div><div class="line">@implementation Entity</div><div class="line">&#123;</div><div class="line">    @private</div><div class="line">    NSString *_name2;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (instancetype)init</div><div class="line">&#123;</div><div class="line">    self = [super init];</div><div class="line">    if (self) &#123;</div><div class="line">        _name = @&quot;name&quot;;</div><div class="line">        _name1 = @&quot;name1&quot;;</div><div class="line">        _name2 = @&quot;name2&quot;;</div><div class="line">    &#125;</div><div class="line">    return self;</div><div class="line">&#125;</div><div class="line"></div><div class="line">-(void)changeName1:(NSString *)name1&#123;</div><div class="line">    _name1 = name1;</div><div class="line">&#125;</div><div class="line"></div><div class="line">-(void)changeName2:(NSString *)name2&#123;</div><div class="line">    _name2 = name2;</div><div class="line">&#125;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
+<p>这里 我们建了三个属性，name,name1,name2，  每个name属性都是不一样的定义，这也是我们日常coding中，最常见的三种属性定义方式。</p>
+<p>待会我们试着对这三个属性都进行监听，看一下效果如何？</p>
+<p>被监听者，已经创建完成了，我们现在需要一个监听者</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">self.model  = [[Entity alloc] init];</div><div class="line">    </div><div class="line">    UIButton *btn1 = [[UIButton alloc] initWithFrame:CGRectMake(100, 100,200, 30)];</div><div class="line">    btn1.tag = 100001;</div><div class="line">    [btn1 addTarget:self action:@selector(changeName:) forControlEvents:UIControlEventTouchUpInside];</div><div class="line">    [btn1 setTitle:@&quot;改变name&quot; forState:UIControlStateNormal];</div><div class="line">    [self.model addObserver:self forKeyPath:@&quot;name&quot; options:NSKeyValueObservingOptionNew context:nil];</div><div class="line">    </div><div class="line">    UIButton *btn2 = [[UIButton alloc] initWithFrame:CGRectMake(100, 200,200, 30)];</div><div class="line">    btn2.tag = 100002;</div><div class="line">    [btn2 addTarget:self action:@selector(changeName:) forControlEvents:UIControlEventTouchUpInside];</div><div class="line">    [btn2 setTitle:@&quot;改变值name1&quot; forState:UIControlStateNormal];</div><div class="line">     [self.model addObserver:self forKeyPath:@&quot;name1&quot; options:NSKeyValueObservingOptionNew context:nil];</div><div class="line">    </div><div class="line">    </div><div class="line">    UIButton *btn3 = [[UIButton alloc] initWithFrame:CGRectMake(100, 300,200, 30)];</div><div class="line">    btn3.tag = 100003;</div><div class="line">    [btn3 addTarget:self action:@selector(changeName:) forControlEvents:UIControlEventTouchUpInside];</div><div class="line">    [btn3 setTitle:@&quot;改变值name2&quot; forState:UIControlStateNormal];</div><div class="line">    [self.model addObserver:self forKeyPath:@&quot;name2&quot; options:NSKeyValueObservingOptionNew context:nil];</div><div class="line">    </div><div class="line">    [self.view addSubview:btn1];</div><div class="line">    [self.view addSubview:btn2];</div><div class="line">    [self.view addSubview:btn3];</div></pre></td></tr></table></figure>
+<p>三个按钮分别对应三个属性，点击每个按钮 触发不同的KVO</p>
+<p>改变model的属性</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">- (void)changeName: (UIButton *)btn&#123;</div><div class="line">    switch (btn.tag) &#123;</div><div class="line">        case 100001:</div><div class="line">            self.model.name = @&quot;change&quot;;</div><div class="line">            break;</div><div class="line">        case 100002:</div><div class="line">            [self.model changeName1:@&quot;change&quot;];</div><div class="line">            break;</div><div class="line">        case 100003:</div><div class="line">            [self.model changeName2:@&quot;changge&quot;];</div><div class="line">            break;</div><div class="line">        default:</div><div class="line">            break;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>当然一定不要忘记了，重写observeValueForKeyPath方法：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">//KVO监听回调</div><div class="line">-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary&lt;NSKeyValueChangeKey,id&gt; *)change context:(void *)context&#123;</div><div class="line">    NSLog(@&quot;%@&quot;, keyPath);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>打印出当前的keypath</p>
+<p>一定不要忘记移除监听</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">-(void)dealloc&#123;</div><div class="line">    [self.model removeObserver:self forKeyPath:@&quot;name&quot;];</div><div class="line">    [self.model removeObserver:self forKeyPath:@&quot;name1&quot;];</div><div class="line">    [self.model removeObserver:self forKeyPath:@&quot;name2&quot;];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>经过试验  我们发现  只有点击第一个按钮，即name属性对应的按钮，才会触发监听。</p>
+<p>从这一点，我们可以发现，只有在.h中暴露出来的属性，才能被KVO监听到，.m中的属性，是不能够被监听到。</p>
+<p>一个简单的KVO  </p>
+<p>demo放在：</p>
+<p><a href="https://github.com/yangqian111/blog/tree/master/iOS%20KVO初探" target="_blank" rel="external">https://github.com/yangqian111/blog/tree/master/iOS%20KVO初探</a></p>
 
       
     </div>
@@ -440,7 +416,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/iOS应用之间的跳转/" rel="tag">#iOS应用之间的跳转</a>
+            <a href="/tags/KVO/" rel="tag">#KVO</a>
           
         </div>
       
@@ -449,17 +425,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/10/26/iOS网络监测区分2、3、4G/" rel="next" title="iOS网络监测区分2、3、4G">
-                <i class="fa fa-chevron-left"></i> iOS网络监测区分2、3、4G
+              <a href="/2016/11/04/iOS-有效编写高质量Objective-C方法-二/" rel="next" title="iOS-有效编写高质量Objective-C方法(二)">
+                <i class="fa fa-chevron-left"></i> iOS-有效编写高质量Objective-C方法(二)
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/10/28/iOS一些基础Tips/" rel="prev" title="iOS一些基础Tips">
-                iOS一些基础Tips <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -485,8 +457,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/10/27/iOS应用之间的跳转解析/"
-           data-title="iOS应用之间的跳转解析" data-url="http://yoursite.com/2016/10/27/iOS应用之间的跳转解析/">
+      <div class="ds-thread" data-thread-key="2016/11/05/iOS-KVO基础/"
+           data-title="iOS KVO基础" data-url="http://yoursite.com/2016/11/05/iOS-KVO基础/">
       </div>
     
   </div>
@@ -577,7 +549,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#这是从一个APP直接跳到另外一个APP的效果"><span class="nav-number">1.</span> <span class="nav-text">这是从一个APP直接跳到另外一个APP的效果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#这是从一个APP跳到另一个APP的指定页面"><span class="nav-number">2.</span> <span class="nav-text">这是从一个APP跳到另一个APP的指定页面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#说明"><span class="nav-number">3.</span> <span class="nav-text">说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常见的跳转场景"><span class="nav-number">4.</span> <span class="nav-text">常见的跳转场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现原理"><span class="nav-number">5.</span> <span class="nav-text">实现原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一个APP直接跳到另外一个APP实现"><span class="nav-number">6.</span> <span class="nav-text">一个APP直接跳到另外一个APP实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一个APP跳到另一个APP的指定页面"><span class="nav-number">7.</span> <span class="nav-text">一个APP跳到另一个APP的指定页面</span></a></li></ol></div>
+              <p class="post-toc-empty">此文章未包含目录</p>
             
           </div>
         </section>
