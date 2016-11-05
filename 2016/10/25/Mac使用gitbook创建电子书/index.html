@@ -361,11 +361,11 @@
 <h2 id="安装gitbook"><a href="#安装gitbook" class="headerlink" title="安装gitbook"></a>安装gitbook</h2><h3 id="安装npm"><a href="#安装npm" class="headerlink" title="安装npm"></a>安装npm</h3><p>从 <a href="https://nodejs.org/#download" target="_blank" rel="external">https://nodejs.org/#download</a> 下载 安装node.js</p>
 <p><img src="http://o8bxt3lx0.bkt.clouddn.com/Snip20161025_1.png" alt="nodejs"></p>
 <p>安装成功之后 打开终端  输入</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm -v</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">npm -v</div></pre></td></tr></table></figure>
 <p>显示如下：</p>
 <p><img src="http://o8bxt3lx0.bkt.clouddn.com/Snip20161025_2.png" alt="1"></p>
 <p>说明安装成功</p>
-<h3 id="安装gitbook-1"><a href="#安装gitbook-1" class="headerlink" title="安装gitbook"></a>安装gitbook</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo npm install -g gitbook-cli</div></pre></td></tr></table></figure>
+<h3 id="安装gitbook-1"><a href="#安装gitbook-1" class="headerlink" title="安装gitbook"></a>安装gitbook</h3><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">sudo npm install -g gitbook-cli</div></pre></td></tr></table></figure>
 <p>安装成功之后  终端：</p>
 <p><img src="http://o8bxt3lx0.bkt.clouddn.com/Snip20161025_3.png" alt="2"></p>
 <p>说明  gitbook安装成功</p>
@@ -373,25 +373,25 @@
 <p>我就在我的用户目录下创建了 testBook</p>
 <p>进入到 当前创建的testBook</p>
 <p><img src="http://o8bxt3lx0.bkt.clouddn.com/Snip20161025_7.png" alt="3"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">touch README.md</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">touch README.md</div></pre></td></tr></table></figure>
 <p><img src="http://o8bxt3lx0.bkt.clouddn.com/Snip20161025_8.png" alt="4"></p>
 <p>README.md相当于是这本书籍的简介 </p>
 <p>然后 继续</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">touch SUMMARY.md</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">touch SUMMARY.md</div></pre></td></tr></table></figure>
 <p>SUMMARY.md 这个是本书籍的目录 </p>
 <p>接下来  我们去到创建的文件夹 testBook下查看</p>
 <p><img src="http://o8bxt3lx0.bkt.clouddn.com/Snip20161025_9.png" alt="5"></p>
 <p>用markdown 工具打开  当然也可以使用文本编辑器(我使用的是MacDown)  语法是markdown语法</p>
 <p>编辑 SUMMARY</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">* [简介](README.md)</div><div class="line">* [第一章](chapter1/README.md)</div><div class="line"> - [第一节](chapter1/section1.md)</div><div class="line"> - [第二节](chapter1/section2.md)</div><div class="line">* [第二章](chapter2/README.md)</div><div class="line"> - [第一节](chapter2/section1.md)</div><div class="line"> - [第二节](chapter2/section2.md)</div><div class="line">* [结束](end/README.md)</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">* [简介](README.md)</div><div class="line">* [第一章](chapter1/README.md)</div><div class="line"> - [第一节](chapter1/section1.md)</div><div class="line"> - [第二节](chapter1/section2.md)</div><div class="line">* [第二章](chapter2/README.md)</div><div class="line"> - [第一节](chapter2/section1.md)</div><div class="line"> - [第二节](chapter2/section2.md)</div><div class="line">* [结束](end/README.md)</div></pre></td></tr></table></figure>
 <p>保存  </p>
 <p>然后打开终端  进入当前目录  运行</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gitbook init</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">gitbook init</div></pre></td></tr></table></figure>
 <p><img src="http://o8bxt3lx0.bkt.clouddn.com/Snip20161025_11.png" alt="6"></p>
 <p>再次查看  目录 就成了：</p>
 <p><img src="http://o8bxt3lx0.bkt.clouddn.com/Snip20161025_12.png" alt="7"></p>
 <p>在终端 继续运行</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gitbook serve</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">gitbook serve</div></pre></td></tr></table></figure>
 <p><img src="http://o8bxt3lx0.bkt.clouddn.com/Snip20161025_13.png" alt="7"></p>
 <p>这时我们打开 浏览器输入 localhost:4000</p>
 <p><img src="http://o8bxt3lx0.bkt.clouddn.com/Snip20161025_14.png" alt="8"></p>
