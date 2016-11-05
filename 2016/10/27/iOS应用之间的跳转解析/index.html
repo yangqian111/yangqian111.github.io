@@ -1,0 +1,875 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="iOS应用之间的跳转," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="应用之间的跳转，在我们日常使用中是经常见到的，分享到微信啊，支付宝支付啊，等等。接下来，我们就来实现一下这种效果">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS应用之间的跳转解析">
+<meta property="og:url" content="http://yoursite.com/2016/10/27/iOS应用之间的跳转解析/index.html">
+<meta property="og:site_name" content="ppsheep">
+<meta property="og:description" content="应用之间的跳转，在我们日常使用中是经常见到的，分享到微信啊，支付宝支付啊，等等。接下来，我们就来实现一下这种效果">
+<meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/jump1.gif">
+<meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/jump2.gif">
+<meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/Snip20161028_1.png">
+<meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/Snip20161028_2.png">
+<meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/jump1.gif">
+<meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/jump2.gif">
+<meta property="og:updated_time" content="2016-11-04T06:50:01.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS应用之间的跳转解析">
+<meta name="twitter:description" content="应用之间的跳转，在我们日常使用中是经常见到的，分享到微信啊，支付宝支付啊，等等。接下来，我们就来实现一下这种效果">
+<meta name="twitter:image" content="http://o8bxt3lx0.bkt.clouddn.com/jump1.gif">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> iOS应用之间的跳转解析 | ppsheep </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?4fa2aea1f41359883e5d92b5cb8bccb8";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">ppsheep</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于我
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            所有文章
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                iOS应用之间的跳转解析
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-10-27T18:52:15+08:00" content="2016-10-27">
+              2016-10-27
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/iOS进阶/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS进阶</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/10/27/iOS应用之间的跳转解析/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/27/iOS应用之间的跳转解析/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/10/27/iOS应用之间的跳转解析/" class="leancloud_visitors" data-flag-title="iOS应用之间的跳转解析">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>应用之间的跳转，在我们日常使用中是经常见到的，分享到微信啊，支付宝支付啊，等等。接下来，我们就来实现一下这种效果</p>
+<a id="more"></a>
+<h3 id="这是从一个APP直接跳到另外一个APP的效果"><a href="#这是从一个APP直接跳到另外一个APP的效果" class="headerlink" title="这是从一个APP直接跳到另外一个APP的效果"></a>这是从一个APP直接跳到另外一个APP的效果</h3><p><img src="http://o8bxt3lx0.bkt.clouddn.com/jump1.gif" alt="1"></p>
+<h3 id="这是从一个APP跳到另一个APP的指定页面"><a href="#这是从一个APP跳到另一个APP的指定页面" class="headerlink" title="这是从一个APP跳到另一个APP的指定页面"></a>这是从一个APP跳到另一个APP的指定页面</h3><p><img src="http://o8bxt3lx0.bkt.clouddn.com/jump2.gif" alt=""></p>
+<h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><blockquote>
+<p>在开发之中我们经常遇到需要从我们当前程序跳入到另外一个程序中，下面我们来说明一下这实现的过程</p>
+</blockquote>
+<h3 id="常见的跳转场景"><a href="#常见的跳转场景" class="headerlink" title="常见的跳转场景"></a>常见的跳转场景</h3><ul>
+<li>使用第三方登录时，需要跳转社交APP，比如常见的QQ、微信、淘宝、支付宝等</li>
+<li>分享我们的消息到其他APP，最常见的就是分享到QQ和微信，推广我们的APP</li>
+<li>第三方支付，微信和支付宝</li>
+<li>导航，跳转到地图类应用</li>
+<li>跳转到系统的APP，打电话，发短信，发邮件等</li>
+</ul>
+<h3 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h3><p>我们想要打开iOS中的一个应用，只需要拿到这个应用的协议头，我们就可以实现从一个APP跳到另外一个APP</p>
+<blockquote>
+<p>假设我们现在有两个APP，APP-1和APP-2，需要从APP-1跳到APP-2<br>那么我们就需要给APP-2绑定一个URL Schemes(自定义的应用协议头)，在APP-1中我们就可以实现用这个协议头跳到APP-2</p>
+</blockquote>
+<h3 id="一个APP直接跳到另外一个APP实现"><a href="#一个APP直接跳到另外一个APP实现" class="headerlink" title="一个APP直接跳到另外一个APP实现"></a>一个APP直接跳到另外一个APP实现</h3><p>创建两个项目APP-1和APP-2</p>
+<p>在APP-2中，我们来绑定URL Schemes</p>
+<p><img src="http://o8bxt3lx0.bkt.clouddn.com/Snip20161028_1.png" alt="3"></p>
+<p>在APP2的target中绑定协议头为 <strong>APP2</strong></p>
+<p>然后我们在APP-1中添加一个按钮 来实现，点击跳转</p>
+<p><strong><em>注意，这两个APP得在手机上都安装上，才能跳转</em></strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[btn1 addTarget:self action:@selector(jumpToApp2) forControlEvents:UIControlEventTouchUpInside];</div></pre></td></tr></table></figure>
+<p>跳转方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">- (void)jumpToApp2&#123;</div><div class="line">    //获取APP2的URL Scheme</div><div class="line">    NSURL *appURL = [NSURL URLWithString:@&quot;APP2://&quot;];</div><div class="line">    </div><div class="line">    //判断手机中是否安装了APP2</div><div class="line">    if ([[UIApplication sharedApplication] canOpenURL:appURL]) &#123;</div><div class="line">        //打开APP2</div><div class="line">        [[UIApplication sharedApplication] openURL:appURL];</div><div class="line">    &#125;else&#123;</div><div class="line">        NSLog(@&quot;没有安装APP2&quot;);</div><div class="line">    &#125;</div><div class="line">    // ---------------如果是iOS9之前，上面代码就可以实现跳转了---------------------</div><div class="line">    // ---------------iOS9之后需要在应用程序中加上白名单，即在APP-1中加上APP-2的白名单---------</div><div class="line">    // ----------------在APP-1的Info中 添加键值对LSApplicationQueriesSchemes---------------------------------</div><div class="line">    </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在iOS9之后，跳转 我们需要在APP中设置需要跳转的URL Schemes才能实现跳转  即在Info中添加LSApplicationQueriesSchemes键值对</p>
+<p><img src="http://o8bxt3lx0.bkt.clouddn.com/Snip20161028_2.png" alt="5"></p>
+<p>然后我们就可以实现跳转了</p>
+<p>看一下效果</p>
+<p><img src="http://o8bxt3lx0.bkt.clouddn.com/jump1.gif" alt="1"></p>
+<h3 id="一个APP跳到另一个APP的指定页面"><a href="#一个APP跳到另一个APP的指定页面" class="headerlink" title="一个APP跳到另一个APP的指定页面"></a>一个APP跳到另一个APP的指定页面</h3><p>这个实现起来也很简单的，首先在APP2中新建两个ViewController</p>
+<p>然后在APP-1中添加两个按钮分别是跳转到不同的页面</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">UIButton *btn1 = [[UIButton alloc] initWithFrame:CGRectMake(50, 150, 200, 30)];</div><div class="line">[btn1 setTitle:@&quot;跳转到第一个界面&quot; forState:UIControlStateNormal];</div><div class="line">[btn1 addTarget:self action:@selector(jumpToApp2_1) forControlEvents:UIControlEventTouchUpInside];</div><div class="line">btn1.backgroundColor = [UIColor redColor];</div><div class="line">[self.view addSubview:btn1];</div><div class="line">    </div><div class="line">UIButton *btn2 = [[UIButton alloc] initWithFrame:CGRectMake(50, 200, 200, 30)];</div><div class="line">[btn2 setTitle:@&quot;跳转到第二个界面&quot; forState:UIControlStateNormal];</div><div class="line">[btn2 addTarget:self action:@selector(jumpToApp2_2) forControlEvents:UIControlEventTouchUpInside];</div><div class="line">btn2.backgroundColor = [UIColor redColor];</div></pre></td></tr></table></figure>
+<p>跳转方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">- (void)jumpToApp2_1&#123;</div><div class="line">    //获取APP2的URL Scheme</div><div class="line">    NSURL *appURL = [NSURL URLWithString:@&quot;APP2://VC1&quot;];</div><div class="line">    </div><div class="line">    //判断手机中是否安装了APP2</div><div class="line">    if ([[UIApplication sharedApplication] canOpenURL:appURL]) &#123;</div><div class="line">        //打开APP2的ViewController1</div><div class="line">        [[UIApplication sharedApplication] openURL:appURL];</div><div class="line">    &#125;else&#123;</div><div class="line">        NSLog(@&quot;没有安装APP2&quot;);</div><div class="line">    &#125;</div><div class="line">// ---------------如果是iOS9之前，上面代码就可以实现跳转了---------------------</div><div class="line">// ---------------iOS9之后需要在应用程序中加上白名单，即在APP-1中加上APP-2的白名单---------</div><div class="line">// ----------------在APP-1的Info中 添加键值对LSApplicationQueriesSchemes---------------------------------</div><div class="line">    </div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)jumpToApp2_2&#123;</div><div class="line">    //获取APP2的URL Scheme</div><div class="line">    NSURL *appURL = [NSURL URLWithString:@&quot;APP2://VC2&quot;];</div><div class="line">    </div><div class="line">    //判断手机中是否安装了APP2</div><div class="line">    if ([[UIApplication sharedApplication] canOpenURL:appURL]) &#123;</div><div class="line">        //打开APP2ViewController2</div><div class="line">        [[UIApplication sharedApplication] openURL:appURL];</div><div class="line">    &#125;else&#123;</div><div class="line">        NSLog(@&quot;没有安装APP2&quot;);</div><div class="line">    &#125;</div><div class="line">    // ---------------如果是iOS9之前，上面代码就可以实现跳转了---------------------</div><div class="line">    // ---------------iOS9之后需要在应用程序中加上白名单，即在APP-1中加上APP-2的白名单---------</div><div class="line">    // ----------------在APP-1的Info中 添加键值对LSApplicationQueriesSchemes---------------------------------</div><div class="line">    </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>通过对跳转的协议头添加不同的描述，来实现不同的跳转</p>
+<p>然后我们在APP-2的delegate中 实现方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">// 因为现在xcode8 最低支持8.0 所以  我还是用这个方法吧</div><div class="line">-(BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation&#123;</div><div class="line">    </div><div class="line">    //获取根控制器</div><div class="line">    UINavigationController *nvc = (UINavigationController *)self.window.rootViewController;</div><div class="line">//    ViewController *vc = nvc.childViewControllers.firstObject;</div><div class="line">    </div><div class="line">    //每次跳转都必须要在根控制器 这一点比较重要</div><div class="line">    [nvc popToRootViewControllerAnimated:YES];</div><div class="line">    </div><div class="line">    //根据url判断需要展示的VC</div><div class="line">    if ([url.absoluteString containsString:@&quot;VC1&quot;]) &#123;</div><div class="line">        ViewController1 *vc1 = [[ViewController1 alloc] init];</div><div class="line">//        [vc presentViewController:vc1 animated:YES completion:nil];</div><div class="line">        [nvc pushViewController:vc1 animated:YES];</div><div class="line">    &#125;else if([url.absoluteString containsString:@&quot;VC2&quot;])&#123;</div><div class="line">        ViewController2 *vc2 = [[ViewController2 alloc] init];</div><div class="line">        [nvc pushViewController:vc2 animated:YES];</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    return YES;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>实现跳转监听，这样就能跳转到不同的页面了</p>
+<p><img src="http://o8bxt3lx0.bkt.clouddn.com/jump2.gif" alt=""></p>
+<p>源代码放在了</p>
+<p><a href="https://github.com/yangqian111/blog/tree/master/APP-1" target="_blank" rel="external">https://github.com/yangqian111/blog/tree/master/APP-1</a></p>
+<p><a href="https://github.com/yangqian111/blog/tree/master/APP-2" target="_blank" rel="external">https://github.com/yangqian111/blog/tree/master/APP-2</a></p>
+<div><br><strong>欢迎大家关注我的公众号，主要是分享一些我在项目中<br>遇到问题的解决方法，还有一些实用技巧</strong><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>个人微信：</strong><image src="http://o8bxt3lx0.bkt.clouddn.com/wechat_card.png" width="190" height="180"></image>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>公众号：</strong>&nbsp;&nbsp;<image src="http://o8bxt3lx0.bkt.clouddn.com/avatar_public_new.jpg" width="220" height="220"><br><br><br><strong>您的支持是我不断写作的动力！</strong><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>微信：</strong><image src="http://o8bxt3lx0.bkt.clouddn.com/141478051735_.pic%E5%89%AF%E6%9C%AC.jpg" width="190" height="180"></image>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>支付宝：</strong>&nbsp;&nbsp;<image src="http://o8bxt3lx0.bkt.clouddn.com/131478051734_.pic%E5%89%AF%E6%9C%AC.jpg" width="220" height="220"><br></image></image></div>
+
+<h3 id="文章也会同步到我的个人博客："><a href="#文章也会同步到我的个人博客：" class="headerlink" title="文章也会同步到我的个人博客："></a>文章也会同步到我的个人博客：</h3><p><a href="http://ppsheep.com" target="_blank" rel="external">http://ppsheep.com</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block； padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/avatar_public.jpg" alt="ppsheep wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎您扫一扫上面的微信公众号，我将同步发送博客内容！</div>
+</div>
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://o8bxt3lx0.bkt.clouddn.com/141478051735_.pic%E5%89%AF%E6%9C%AC.jpg" alt="ppsheep WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="http://o8bxt3lx0.bkt.clouddn.com/131478051734_.pic%E5%89%AF%E6%9C%AC.jpg" alt="ppsheep Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/iOS应用之间的跳转/" rel="tag">#iOS应用之间的跳转</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/10/26/iOS网络监测区分2、3、4G/" rel="next" title="iOS网络监测区分2、3、4G">
+                <i class="fa fa-chevron-left"></i> iOS网络监测区分2、3、4G
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/10/28/iOS一些基础Tips/" rel="prev" title="iOS一些基础Tips">
+                iOS一些基础Tips <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+  <a class="jiathis_button_tsina"></a>
+  <a class="jiathis_button_tqq"></a>
+  <a class="jiathis_button_weixin"></a>
+  <a class="jiathis_button_cqq"></a>
+  <a class="jiathis_button_douban"></a>
+  <a class="jiathis_button_renren"></a>
+  <a class="jiathis_button_qzone"></a>
+  <a class="jiathis_button_kaixin001"></a>
+  <a class="jiathis_button_copy"></a>
+  <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank"></a>
+  <a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+  var jiathis_config={
+    hideMore:false
+  }
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/10/27/iOS应用之间的跳转解析/"
+           data-title="iOS应用之间的跳转解析" data-url="http://yoursite.com/2016/10/27/iOS应用之间的跳转解析/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://o8bxt3lx0.bkt.clouddn.com/avatar_public.jpg"
+               alt="ppsheep" />
+          <p class="site-author-name" itemprop="name">ppsheep</p>
+          <p class="site-description motion-element" itemprop="description">ppsheep</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">18</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://gold.xitu.io/user/57ddfba4128fe10064cbb93a" title="掘金" target="_blank">掘金</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#这是从一个APP直接跳到另外一个APP的效果"><span class="nav-number">1.</span> <span class="nav-text">这是从一个APP直接跳到另外一个APP的效果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#这是从一个APP跳到另一个APP的指定页面"><span class="nav-number">2.</span> <span class="nav-text">这是从一个APP跳到另一个APP的指定页面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#说明"><span class="nav-number">3.</span> <span class="nav-text">说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常见的跳转场景"><span class="nav-number">4.</span> <span class="nav-text">常见的跳转场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现原理"><span class="nav-number">5.</span> <span class="nav-text">实现原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一个APP直接跳到另外一个APP实现"><span class="nav-number">6.</span> <span class="nav-text">一个APP直接跳到另外一个APP实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一个APP跳到另一个APP的指定页面"><span class="nav-number">7.</span> <span class="nav-text">一个APP跳到另一个APP的指定页面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文章也会同步到我的个人博客："><span class="nav-number">8.</span> <span class="nav-text">文章也会同步到我的个人博客：</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ppsheep</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"yangqian111"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("wVNXI1zodIQXjH2YGmNdcNTR-gzGzoHsz", "qglLYXNVHBDUayaqz0RYy6H4");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>
