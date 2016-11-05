@@ -90,7 +90,7 @@
 <meta property="og:url" content="http://yoursite.com/2016/11/03/iOS-有效编写高质量Object-C方法-一/index.html">
 <meta property="og:site_name" content="ppsheep">
 <meta property="og:description" content="之前有读过Effective Objective-C 2.0 觉得受益匪浅，决定再读一遍，应该会有不一样的感受，这里就将阅读的过程记录下来，供自己查阅，也供大家参考。">
-<meta property="og:updated_time" content="2016-11-04T06:44:08.000Z">
+<meta property="og:updated_time" content="2016-11-05T05:50:49.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS 有效编写高质量Objective-C方法(一)">
 <meta name="twitter:description" content="之前有读过Effective Objective-C 2.0 觉得受益匪浅，决定再读一遍，应该会有不一样的感受，这里就将阅读的过程记录下来，供自己查阅，也供大家参考。">
@@ -434,9 +434,6 @@
 <li>在初始化及dealloc方法中，总是应该通过实例变量来读写数据</li>
 <li>在懒加载中应该通过属性来读取数据</li>
 </ul>
-<div><br><strong>欢迎大家关注我的公众号，主要是分享一些我在项目中<br>遇到问题的解决方法，还有一些实用技巧</strong><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>个人微信：</strong><image src="http://o8bxt3lx0.bkt.clouddn.com/wechat_card.png" width="190" height="180"></image>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>公众号：</strong>&nbsp;&nbsp;<image src="http://o8bxt3lx0.bkt.clouddn.com/avatar_public_new.jpg" width="220" height="220"><br><br><br><strong>您的支持是我不断写作的动力！</strong><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>微信：</strong><image src="http://o8bxt3lx0.bkt.clouddn.com/141478051735_.pic%E5%89%AF%E6%9C%AC.jpg" width="190" height="180"></image>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>支付宝：</strong>&nbsp;&nbsp;<image src="http://o8bxt3lx0.bkt.clouddn.com/131478051734_.pic%E5%89%AF%E6%9C%AC.jpg" width="220" height="220"><br></image></image></div>
-
-<h3 id="文章也会同步到我的个人博客："><a href="#文章也会同步到我的个人博客：" class="headerlink" title="文章也会同步到我的个人博客："></a>文章也会同步到我的个人博客：</h3><p><a href="http://ppsheep.com" target="_blank" rel="external">http://ppsheep.com</a></p>
 
       
     </div>
@@ -622,7 +619,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#在类的头文件中尽量少引用其他头文件"><span class="nav-number">1.</span> <span class="nav-text">在类的头文件中尽量少引用其他头文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多用字面量，少用与之等价的方法"><span class="nav-number">2.</span> <span class="nav-text">多用字面量，少用与之等价的方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#字面量数值"><span class="nav-number">2.1.</span> <span class="nav-text">字面量数值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#字面量数组"><span class="nav-number">2.2.</span> <span class="nav-text">字面量数组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#字面量字典"><span class="nav-number">2.3.</span> <span class="nav-text">字面量字典</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多用类型常量，少用-define预处理指令"><span class="nav-number">3.</span> <span class="nav-text">多用类型常量，少用#define预处理指令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#首先讨论不需要对外开放使用的常量"><span class="nav-number">3.1.</span> <span class="nav-text">首先讨论不需要对外开放使用的常量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#需要对外开放的常量"><span class="nav-number">3.2.</span> <span class="nav-text">需要对外开放的常量</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在对象内部尽量直接访问实例变量"><span class="nav-number">4.</span> <span class="nav-text">在对象内部尽量直接访问实例变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文章也会同步到我的个人博客："><span class="nav-number">5.</span> <span class="nav-text">文章也会同步到我的个人博客：</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#在类的头文件中尽量少引用其他头文件"><span class="nav-number">1.</span> <span class="nav-text">在类的头文件中尽量少引用其他头文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多用字面量，少用与之等价的方法"><span class="nav-number">2.</span> <span class="nav-text">多用字面量，少用与之等价的方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#字面量数值"><span class="nav-number">2.1.</span> <span class="nav-text">字面量数值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#字面量数组"><span class="nav-number">2.2.</span> <span class="nav-text">字面量数组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#字面量字典"><span class="nav-number">2.3.</span> <span class="nav-text">字面量字典</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多用类型常量，少用-define预处理指令"><span class="nav-number">3.</span> <span class="nav-text">多用类型常量，少用#define预处理指令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#首先讨论不需要对外开放使用的常量"><span class="nav-number">3.1.</span> <span class="nav-text">首先讨论不需要对外开放使用的常量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#需要对外开放的常量"><span class="nav-number">3.2.</span> <span class="nav-text">需要对外开放的常量</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在对象内部尽量直接访问实例变量"><span class="nav-number">4.</span> <span class="nav-text">在对象内部尽量直接访问实例变量</span></a></li></ol></div>
             
           </div>
         </section>
