@@ -90,7 +90,7 @@
 <meta property="og:url" content="http://yoursite.com/2016/11/07/iOS-应用之间跳转传输数据以及跳回源程序/index.html">
 <meta property="og:site_name" content="ppsheep">
 <meta property="og:description" content="之前写了一篇关于APP之间跳转的文章，期间有同学说能否出一个类似于微信登录或者支付宝支付之类的，跳转到支付宝获得消息再调回源程序，并且带上信息。今天我们就再来聊聊，实现这样一种效果，没看过之前应用跳转的，请移步:    http://ppsheep.com/2016/10/27/iOS应用之间的跳转解析/">
-<meta property="og:updated_time" content="2016-11-07T08:22:44.000Z">
+<meta property="og:updated_time" content="2016-11-07T08:33:01.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS 应用之间跳转传输数据以及跳回源程序">
 <meta name="twitter:description" content="之前写了一篇关于APP之间跳转的文章，期间有同学说能否出一个类似于微信登录或者支付宝支付之类的，跳转到支付宝获得消息再调回源程序，并且带上信息。今天我们就再来聊聊，实现这样一种效果，没看过之前应用跳转的，请移步:    http://ppsheep.com/2016/10/27/iOS应用之间的跳转解析/">
@@ -361,6 +361,9 @@
  <figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">  /**</div><div class="line"> 跳转回来</div><div class="line"> */</div><div class="line">-(BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary&lt;UIApplicationOpenURLOptionsKey,id&gt; *)options&#123;</div><div class="line">    if ([url.absoluteString containsString:@&quot;back&quot;]) &#123;</div><div class="line">        //拿到参数</div><div class="line">        NSRange range = [url.absoluteString rangeOfString:@&quot;?&quot;];</div><div class="line">        NSString *paramStr = [url.absoluteString substringFromIndex:range.location+1];//去除问号</div><div class="line">        NSArray *params = [paramStr componentsSeparatedByString:@&quot;&amp;&quot;];</div><div class="line">        NSLog(@&quot;%@&quot;,params);</div><div class="line">    &#125;</div><div class="line">    return YES;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>这样我们也拿到了APP2跳回来的数据</p>
 <p>在iOS10中跳转的API有更新，具体的变化可以看API 我这里就不列出来了</p>
+<p>源代码放在：</p>
+<p><a href="https://github.com/yangqian111/blog/tree/master/APP-2" target="_blank" rel="external">https://github.com/yangqian111/blog/tree/master/APP-2</a></p>
+<p><a href="https://github.com/yangqian111/blog/tree/master/APP-1" target="_blank" rel="external">https://github.com/yangqian111/blog/tree/master/APP-1</a></p>
 
       
     </div>
