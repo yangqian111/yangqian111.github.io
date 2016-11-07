@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="iOS区分2、3、4G网络," />
+  <meta name="keywords" content="iOS应用之间的跳转," />
 
 
 
@@ -84,22 +84,16 @@
 
 
 
-<meta name="description" content="如果有在使用AFNetworking朋友知道，在AF里只能区分当前网络是WiFi网络还是蜂窝网络在3G、4G出现以后，我们就有一个新需求，需要区分2G、3G、4G网络了，虽然同为蜂窝网络但是速度可是千差万别，有时我们会感觉到4G比WiFi还快，当然流量也是跑的相当肉痛
-下面我们就来讲一讲怎么区分2G 3G 4G网络">
+<meta name="description" content="之前写了一篇关于APP之间跳转的文章，期间有同学说能否出一个类似于微信登录或者支付宝支付之类的，跳转到支付宝获得消息再调回源程序，并且带上信息。今天我们就再来聊聊，实现这样一种效果，没看过之前应用跳转的，请移步:    http://ppsheep.com/2016/10/27/iOS应用之间的跳转解析/">
 <meta property="og:type" content="article">
-<meta property="og:title" content="iOS网络监测区分2、3、4G">
-<meta property="og:url" content="http://yoursite.com/2016/10/26/iOS网络监测区分2、3、4G/index.html">
+<meta property="og:title" content="iOS 应用之间跳转传输数据以及跳回源程序">
+<meta property="og:url" content="http://yoursite.com/2016/11/07/iOS-应用之间跳转传输数据以及跳回源程序/index.html">
 <meta property="og:site_name" content="ppsheep">
-<meta property="og:description" content="如果有在使用AFNetworking朋友知道，在AF里只能区分当前网络是WiFi网络还是蜂窝网络在3G、4G出现以后，我们就有一个新需求，需要区分2G、3G、4G网络了，虽然同为蜂窝网络但是速度可是千差万别，有时我们会感觉到4G比WiFi还快，当然流量也是跑的相当肉痛
-下面我们就来讲一讲怎么区分2G 3G 4G网络">
-<meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/Snip20161026_1.png">
-<meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/Snip20161026_2.png">
-<meta property="og:updated_time" content="2016-11-05T05:52:25.000Z">
+<meta property="og:description" content="之前写了一篇关于APP之间跳转的文章，期间有同学说能否出一个类似于微信登录或者支付宝支付之类的，跳转到支付宝获得消息再调回源程序，并且带上信息。今天我们就再来聊聊，实现这样一种效果，没看过之前应用跳转的，请移步:    http://ppsheep.com/2016/10/27/iOS应用之间的跳转解析/">
+<meta property="og:updated_time" content="2016-11-07T08:22:44.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="iOS网络监测区分2、3、4G">
-<meta name="twitter:description" content="如果有在使用AFNetworking朋友知道，在AF里只能区分当前网络是WiFi网络还是蜂窝网络在3G、4G出现以后，我们就有一个新需求，需要区分2G、3G、4G网络了，虽然同为蜂窝网络但是速度可是千差万别，有时我们会感觉到4G比WiFi还快，当然流量也是跑的相当肉痛
-下面我们就来讲一讲怎么区分2G 3G 4G网络">
-<meta name="twitter:image" content="http://o8bxt3lx0.bkt.clouddn.com/Snip20161026_1.png">
+<meta name="twitter:title" content="iOS 应用之间跳转传输数据以及跳回源程序">
+<meta name="twitter:description" content="之前写了一篇关于APP之间跳转的文章，期间有同学说能否出一个类似于微信登录或者支付宝支付之类的，跳转到支付宝获得消息再调回源程序，并且带上信息。今天我们就再来聊聊，实现这样一种效果，没看过之前应用跳转的，请移步:    http://ppsheep.com/2016/10/27/iOS应用之间的跳转解析/">
 
 
 
@@ -120,10 +114,10 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2016/10/26/iOS网络监测区分2、3、4G/"/>
+  <link rel="canonical" href="http://yoursite.com/2016/11/07/iOS-应用之间跳转传输数据以及跳回源程序/"/>
 
 
-  <title> iOS网络监测区分2、3、4G | ppsheep </title>
+  <title> iOS 应用之间跳转传输数据以及跳回源程序 | ppsheep </title>
 </head>
 
 <body itemscope itemtype="//schema.org/WebPage" lang="zh-Hans">
@@ -271,7 +265,7 @@
             
             
               
-                iOS网络监测区分2、3、4G
+                iOS 应用之间跳转传输数据以及跳回源程序
               
             
           </h1>
@@ -283,8 +277,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-10-26T19:07:14+08:00" content="2016-10-26">
-              2016-10-26
+            <time itemprop="dateCreated" datetime="2016-11-07T11:15:19+08:00" content="2016-11-07">
+              2016-11-07
             </time>
           </span>
 
@@ -297,8 +291,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/iOS基础-网络组件/" itemprop="url" rel="index">
-                    <span itemprop="name">iOS基础 网络组件</span>
+                  <a href="/categories/iOS进阶/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS进阶</span>
                   </a>
                 </span>
 
@@ -313,8 +307,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/10/26/iOS网络监测区分2、3、4G/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/26/iOS网络监测区分2、3、4G/" itemprop="commentsCount"></span>
+                <a href="/2016/11/07/iOS-应用之间跳转传输数据以及跳回源程序/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/07/iOS-应用之间跳转传输数据以及跳回源程序/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -324,7 +318,7 @@
 
           
           
-             <span id="/2016/10/26/iOS网络监测区分2、3、4G/" class="leancloud_visitors" data-flag-title="iOS网络监测区分2、3、4G">
+             <span id="/2016/11/07/iOS-应用之间跳转传输数据以及跳回源程序/" class="leancloud_visitors" data-flag-title="iOS 应用之间跳转传输数据以及跳回源程序">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -346,29 +340,27 @@
       
 
       
-        <p>如果有在使用AFNetworking朋友知道，在AF里只能区分当前网络是WiFi网络还是蜂窝网络在3G、4G出现以后，我们就有一个新需求，需要区分2G、3G、4G网络了，虽然同为蜂窝网络但是速度可是千差万别，有时我们会感觉到4G比WiFi还快，当然流量也是跑的相当肉痛</p>
-<p>下面我们就来讲一讲怎么区分2G 3G 4G网络<br><a id="more"></a></p>
-<h3 id="下载Reachability"><a href="#下载Reachability" class="headerlink" title="下载Reachability"></a>下载Reachability</h3><p>首先我们需要下载苹果官方的一个示例工程 </p>
-<p><a href="https://developer.apple.com/library/content/samplecode/Reachability/Introduction/Intro.html" target="_blank" rel="external">https://developer.apple.com/library/content/samplecode/Reachability/Introduction/Intro.html</a></p>
-<p>在这个工程里有我们需要用到的 苹果官方提供的实时监测网络的类 我们是在这个基础上 稍作修改就可以做到</p>
-<p>进入网页 </p>
-<p><img src="http://o8bxt3lx0.bkt.clouddn.com/Snip20161026_1.png" alt="1"></p>
-<p>在示例代码中 将Reachability类拷贝到我们的项目当中</p>
-<p><img src="http://o8bxt3lx0.bkt.clouddn.com/Snip20161026_2.png" alt="2"></p>
-<h3 id="修改Reachability"><a href="#修改Reachability" class="headerlink" title="修改Reachability"></a>修改Reachability</h3><p>首先修改Reachability类中的网络类型枚举:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">typedef enum : NSInteger &#123;</div><div class="line">	NotReachable = 0,</div><div class="line">	ReachableViaWiFi,</div><div class="line">	ReachableViaWWAN,</div><div class="line">    kReachableVia2G,</div><div class="line">    kReachableVia3G,</div><div class="line">    kReachableVia4G</div><div class="line">&#125; NetworkStatus;</div></pre></td></tr></table></figure>
-<p>然后再.m文件中 找到方法</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">- (NetworkStatus)networkStatusForFlags:(SCNetworkReachabilityFlags)flags;</div></pre></td></tr></table></figure>
-<p>增加判断2G 3G 4G的方法<br>在 if ((flags &amp; kSCNetworkReachabilityFlagsIsWWAN) == kSCNetworkReachabilityFlagsIsWWAN) 判断中加上代码</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">if ((flags &amp; kSCNetworkReachabilityFlagsIsWWAN) == kSCNetworkReachabilityFlagsIsWWAN)</div><div class="line">	&#123;</div><div class="line">        returnValue = ReachableViaWWAN;</div><div class="line">        </div><div class="line">        CTTelephonyNetworkInfo *phonyNetwork = [[CTTelephonyNetworkInfo alloc] init];</div><div class="line">        NSString *currentStr = phonyNetwork.currentRadioAccessTechnology;</div><div class="line">        if (currentStr) &#123;</div><div class="line">            if ([currentStr isEqualToString:CTRadioAccessTechnologyLTE]) &#123;</div><div class="line">                return kReachableVia4G;</div><div class="line">            &#125;else if ([currentStr isEqualToString:CTRadioAccessTechnologyGPRS]|| [currentStr isEqualToString:CTRadioAccessTechnologyEdge])&#123;</div><div class="line">                return kReachableVia2G;</div><div class="line">            &#125;else&#123;</div><div class="line">                return kReachableVia3G;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        if ((flags &amp; kSCNetworkReachabilityFlagsTransientConnection) == kSCNetworkReachabilityFlagsTransientConnection) &#123;</div><div class="line">            if((flags &amp; kSCNetworkReachabilityFlagsConnectionRequired) == kSCNetworkReachabilityFlagsConnectionRequired) &#123;</div><div class="line">                return kReachableVia2G;</div><div class="line">            &#125;</div><div class="line">            return kReachableVia3G;</div><div class="line">        &#125;</div><div class="line">        return ReachableViaWWAN;</div><div class="line">	&#125;</div></pre></td></tr></table></figure>
-<p>在需要用到的地方引入我们修改过后的Reachability</p>
-<h3 id="使用Reachability"><a href="#使用Reachability" class="headerlink" title="使用Reachability"></a>使用Reachability</h3><p>监听网络变化</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">//添加网络监测</div><div class="line">    [[NSNotificationCenter defaultCenter] addObserver:self</div><div class="line">                                             selector:@selector(reachabilityChanged:)</div><div class="line">                                                 name: kReachabilityChangedNotification</div><div class="line">                                               object: nil];</div><div class="line">    </div><div class="line">    //开启网络监测</div><div class="line">    self.intertReach = [Reachability reachabilityForInternetConnection];</div><div class="line">    [self.intertReach startNotifier];</div><div class="line">    </div><div class="line">    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(100, 100, 300, 30)];</div><div class="line">    [self.view addSubview:label];</div><div class="line">    self.label = label;</div><div class="line">    </div><div class="line">    //获取当前的网络状态</div><div class="line">    NetworkStatus status = [self.intertReach currentReachabilityStatus];</div><div class="line">    [self judgeNetWorkStatus:status];</div></pre></td></tr></table></figure>
-<p>当网络发生改变时 会触发</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">/**</div><div class="line"> 当网络状态发生变换时 会触发这个方法</div><div class="line"></div><div class="line"> @param no 通知</div><div class="line"> */</div><div class="line">- (void)reachabilityChanged:(NSNotification *)no&#123;</div><div class="line">    Reachability* curReach = [no object];</div><div class="line">    NSParameterAssert([curReach isKindOfClass: [Reachability class]]);</div><div class="line">    NetworkStatus status = [curReach currentReachabilityStatus];</div><div class="line">    [self judgeNetWorkStatus:status];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>还是很简单的 </p>
-<p>源代码 放在了</p>
-<p><a href="https://github.com/yangqian111/blog/tree/master/iOS网络区分2、3、4G" target="_blank" rel="external">https://github.com/yangqian111/blog/tree/master/iOS网络区分2、3、4G</a></p>
+        <p>之前写了一篇关于APP之间跳转的文章，期间有同学说能否出一个类似于微信登录或者支付宝支付之类的，跳转到支付宝获得消息再调回源程序，并且带上信息。今天我们就再来聊聊，实现这样一种效果，没看过之前应用跳转的，请移步:<br>    <a href="http://ppsheep.com/2016/10/27/iOS应用之间的跳转解析/" target="_blank" rel="external">http://ppsheep.com/2016/10/27/iOS应用之间的跳转解析/</a></p>
+<a id="more"></a>
+<p>之前我们说到APP之间的跳转，其实就是通过一个URL Schemes进行跳转，APP之间的传值，其实也是通过这个URL进行传值。</p>
+<p>再有我们想跳回原来程序，那么我们还需要知道源程序的URL Schemes，这样我们才能跳回到源程序，所以在传递参数的时候 我们还需要把源程序的URL Schemes传递过去。</p>
+<p>我们需要传递的参数：</p>
+<ul>
+<li>当前APP的 URL Schemes</li>
+<li>我们需要传递的实际参数</li>
+</ul>
+<p><strong>还有一个重要的事情，因为我们需要从APP2跳回APP1，所以我们还需要设置APP1的URL Schemes，怎么设置，我这里就不写出来了，具体可以看上一篇跳转解析</strong></p>
+<p>我们之前知道 打开另一个APP，是打开一个URL<br> APP2://类似于这种，那我们会想到一般我们http有一种方式携带参数 <a href="http://url?name=?&amp;age=?" target="_blank" rel="external">http://url?name=?&amp;age=?</a></p>
+<p> 我们APP之间的传递参数方式其实也是这样的方式</p>
+ <figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">//获取APP2的URL Scheme 还需要带上当前App的APP1</div><div class="line">  NSString *URLScheme = @&quot;APP2://APP1&quot;;</div><div class="line">  </div><div class="line">  //我们参数需要穿name age</div><div class="line">  NSString *params = @&quot;name=yq&amp;age=23&quot;;</div><div class="line">  //接下来加上我们需要携带的参数</div><div class="line">  NSString *realURL = [NSString stringWithFormat:@&quot;%@?%@&quot;,URLScheme,params];</div><div class="line">  </div><div class="line">  NSURL *appURL = [NSURL URLWithString:realURL];</div><div class="line">  </div><div class="line">  //判断手机中是否安装了APP2</div><div class="line">  if ([[UIApplication sharedApplication] canOpenURL:appURL]) &#123;</div><div class="line">      //打开APP2ViewController2</div><div class="line">      [[UIApplication sharedApplication] openURL:appURL];</div><div class="line">  &#125;else&#123;</div><div class="line">      NSLog(@&quot;没有安装APP2&quot;);</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+<p> 我们最终的appURL 是： </p>
+ <figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">APP2://APP1?name=yq&amp;age=23</div></pre></td></tr></table></figure>
+<p> 我们在APP2中处理这个跳转的URL</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">-(BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation&#123;</div><div class="line">	if ([url.absoluteString containsString:@&quot;APP1&quot;])&#123;</div><div class="line">       NSLog(@&quot;%@&quot;,url);</div><div class="line">       </div><div class="line">       //拿到源程序的</div><div class="line">       NSString * urlschemes = [[url.absoluteString componentsSeparatedByString:@&quot;//&quot;][1] componentsSeparatedByString:@&quot;?&quot;][0];</div><div class="line">       </div><div class="line">       //拿到参数</div><div class="line">       NSRange range = [url.absoluteString rangeOfString:@&quot;?&quot;];</div><div class="line">       NSString *paramStr = [url.absoluteString substringFromIndex:range.location+1];//去除问号</div><div class="line">       NSArray *params = [paramStr componentsSeparatedByString:@&quot;&amp;&quot;];</div><div class="line">       NSLog(@&quot;%@&quot;,params);</div><div class="line">       </div><div class="line">       //跳回源程序</div><div class="line">       dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^&#123;</div><div class="line">           // 延时3s模拟处理后回调指定的 URL Schemes并传递结果</div><div class="line">           </div><div class="line">           if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@&quot;APP2://&quot;]]) &#123;</div><div class="line">               </div><div class="line">               NSLog(@&quot;跳转成功&quot;);</div><div class="line">               </div><div class="line">               [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@&quot;%@://back?name=back&amp;code=200&quot;,urlschemes]]];</div><div class="line">               </div><div class="line">           &#125;else&#123;</div><div class="line">               NSLog(@&quot;跳转失败&quot;);</div><div class="line">               NSLog(@&quot;未安装应用!&quot;);</div><div class="line">           &#125;</div><div class="line">       &#125;);</div><div class="line">   &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p> 在APP2中  我们拿到了APP1传递的参数 放在了params数组中，同样的 我们在APP1中再处理从APP2跳回来的信息</p>
+ <figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">  /**</div><div class="line"> 跳转回来</div><div class="line"> */</div><div class="line">-(BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary&lt;UIApplicationOpenURLOptionsKey,id&gt; *)options&#123;</div><div class="line">    if ([url.absoluteString containsString:@&quot;back&quot;]) &#123;</div><div class="line">        //拿到参数</div><div class="line">        NSRange range = [url.absoluteString rangeOfString:@&quot;?&quot;];</div><div class="line">        NSString *paramStr = [url.absoluteString substringFromIndex:range.location+1];//去除问号</div><div class="line">        NSArray *params = [paramStr componentsSeparatedByString:@&quot;&amp;&quot;];</div><div class="line">        NSLog(@&quot;%@&quot;,params);</div><div class="line">    &#125;</div><div class="line">    return YES;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这样我们也拿到了APP2跳回来的数据</p>
+<p>在iOS10中跳转的API有更新，具体的变化可以看API 我这里就不列出来了</p>
 
       
     </div>
@@ -417,7 +409,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/iOS区分2、3、4G网络/" rel="tag">#iOS区分2、3、4G网络</a>
+            <a href="/tags/iOS应用之间的跳转/" rel="tag">#iOS应用之间的跳转</a>
           
         </div>
       
@@ -426,17 +418,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/10/25/Mac使用gitbook创建电子书/" rel="next" title="Mac使用gitbook创建电子书">
-                <i class="fa fa-chevron-left"></i> Mac使用gitbook创建电子书
+              <a href="/2016/11/07/iOS基础开发技巧-一/" rel="next" title="iOS基础开发技巧(一)">
+                <i class="fa fa-chevron-left"></i> iOS基础开发技巧(一)
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/10/27/iOS应用之间的跳转解析/" rel="prev" title="iOS应用之间的跳转解析">
-                iOS应用之间的跳转解析 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -462,8 +450,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/10/26/iOS网络监测区分2、3、4G/"
-           data-title="iOS网络监测区分2、3、4G" data-url="http://yoursite.com/2016/10/26/iOS网络监测区分2、3、4G/">
+      <div class="ds-thread" data-thread-key="2016/11/07/iOS-应用之间跳转传输数据以及跳回源程序/"
+           data-title="iOS 应用之间跳转传输数据以及跳回源程序" data-url="http://yoursite.com/2016/11/07/iOS-应用之间跳转传输数据以及跳回源程序/">
       </div>
     
   </div>
@@ -554,7 +542,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#下载Reachability"><span class="nav-number">1.</span> <span class="nav-text">下载Reachability</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改Reachability"><span class="nav-number">2.</span> <span class="nav-text">修改Reachability</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用Reachability"><span class="nav-number">3.</span> <span class="nav-text">使用Reachability</span></a></li></ol></div>
+              <p class="post-toc-empty">此文章未包含目录</p>
             
           </div>
         </section>
