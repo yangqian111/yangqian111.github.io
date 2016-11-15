@@ -90,7 +90,7 @@
 <meta property="og:url" content="http://yoursite.com/2016/11/09/iOS基础开发技巧-二/index.html">
 <meta property="og:site_name" content="ppsheep">
 <meta property="og:description" content="这里主要讲一些我在日常开发中用到的一些小的技巧，其实也算不上技巧吧，就是省去一些不必要的代码，或者有的小问题困扰你很久说不行在这里你能找到答案">
-<meta property="og:updated_time" content="2016-11-09T14:48:22.000Z">
+<meta property="og:updated_time" content="2016-11-15T09:03:51.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS基础开发技巧-二">
 <meta name="twitter:description" content="这里主要讲一些我在日常开发中用到的一些小的技巧，其实也算不上技巧吧，就是省去一些不必要的代码，或者有的小问题困扰你很久说不行在这里你能找到答案">
@@ -321,7 +321,7 @@
       
 
       
-        <p><strong>这里主要讲一些我在日常开发中用到的一些小的技巧，其实也算不上技巧吧，就是省去一些不必要的代码，或者有的小问题困扰你很久说不行在这里你能找到答案</strong></p>
+        <p>这里主要讲一些我在日常开发中用到的一些小的技巧，其实也算不上技巧吧，就是省去一些不必要的代码，或者有的小问题困扰你很久说不行在这里你能找到答案</p>
 <a id="more"></a>
 <h3 id="打印系统所有已注册的字体名称"><a href="#打印系统所有已注册的字体名称" class="headerlink" title="打印系统所有已注册的字体名称"></a>打印系统所有已注册的字体名称</h3><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">- (void)enumerateFonts&#123;</div><div class="line">    for(NSString *familyName in [UIFont familyNames])</div><div class="line">    &#123;</div><div class="line">        NSLog(@&quot;%@&quot;,familyName);</div><div class="line">        NSArray *fontNames = [UIFont fontNamesForFamilyName:familyName];</div><div class="line">        for(NSString *fontName in fontNames)</div><div class="line">        &#123;</div><div class="line">            NSLog(@&quot;\t|- %@&quot;,fontName);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h3 id="字符串反转"><a href="#字符串反转" class="headerlink" title="字符串反转"></a>字符串反转</h3><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">- (NSString*)reverseWordsInString:(NSString*)str</div><div class="line">&#123;</div><div class="line">    NSMutableString *reverString = [NSMutableString stringWithCapacity:str.length];</div><div class="line">    [str enumerateSubstringsInRange:NSMakeRange(0, str.length) options:NSStringEnumerationReverse | NSStringEnumerationByComposedCharacterSequences  usingBlock:^(NSString *substring, NSRange substringRange, NSRange enclosingRange, BOOL *stop) &#123;</div><div class="line">        [reverString appendString:substring];</div><div class="line">    &#125;];</div><div class="line">    return reverString;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
@@ -406,6 +406,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2016/11/15/iOS动画技巧-一/" rel="prev" title="iOS动画技巧(一)">
+                iOS动画技巧(一) <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -476,7 +480,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">22</span>
+              <span class="site-state-item-count">23</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

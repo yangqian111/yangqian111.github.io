@@ -84,20 +84,18 @@
 
 
 
-<meta name="description" content="在IM应用当中，我们的聊天页面再熟悉不过了，在聊天页面中每条消息都有一个背景气泡，但是在微信中呢，图片的背景气泡却没有，而是图片本身成为了一个气泡的样式，我们来看看微信的样式是怎么样的，今天就来实现这样一种样式：">
+<meta name="description" content="前几天确实工作上的事情比较多，没写几篇，今天继续吧  今天主要是介绍一下iOS中一些动画的使用，关于动画会出一个系列吧，我也是边写边学，就一起分享出来，大家一起共同学习了，如果有什么问题，可以在文章下面评论，或者直接给我公众号发消息，公众号消息比较容易看到，评论就不太容易注意到">
 <meta property="og:type" content="article">
-<meta property="og:title" content="iOS 微信聊天消息的图片气泡实现">
-<meta property="og:url" content="http://yoursite.com/2016/11/02/iOS-微信聊天消息的图片气泡实现/index.html">
+<meta property="og:title" content="iOS动画技巧(一)">
+<meta property="og:url" content="http://yoursite.com/2016/11/15/iOS动画技巧-一/index.html">
 <meta property="og:site_name" content="ppsheep">
-<meta property="og:description" content="在IM应用当中，我们的聊天页面再熟悉不过了，在聊天页面中每条消息都有一个背景气泡，但是在微信中呢，图片的背景气泡却没有，而是图片本身成为了一个气泡的样式，我们来看看微信的样式是怎么样的，今天就来实现这样一种样式：">
-<meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/Snip20161102_4.png">
-<meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/Snip20161102_5.png">
-<meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/Snip20161102_6.png">
-<meta property="og:updated_time" content="2016-11-05T05:50:37.000Z">
+<meta property="og:description" content="前几天确实工作上的事情比较多，没写几篇，今天继续吧  今天主要是介绍一下iOS中一些动画的使用，关于动画会出一个系列吧，我也是边写边学，就一起分享出来，大家一起共同学习了，如果有什么问题，可以在文章下面评论，或者直接给我公众号发消息，公众号消息比较容易看到，评论就不太容易注意到">
+<meta property="og:image" content="http://image18-c.poco.cn/mypoco/myphoto/20161115/17/18380075820161115173018047.jpg?1144x737_120">
+<meta property="og:updated_time" content="2016-11-15T09:42:44.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="iOS 微信聊天消息的图片气泡实现">
-<meta name="twitter:description" content="在IM应用当中，我们的聊天页面再熟悉不过了，在聊天页面中每条消息都有一个背景气泡，但是在微信中呢，图片的背景气泡却没有，而是图片本身成为了一个气泡的样式，我们来看看微信的样式是怎么样的，今天就来实现这样一种样式：">
-<meta name="twitter:image" content="http://o8bxt3lx0.bkt.clouddn.com/Snip20161102_4.png">
+<meta name="twitter:title" content="iOS动画技巧(一)">
+<meta name="twitter:description" content="前几天确实工作上的事情比较多，没写几篇，今天继续吧  今天主要是介绍一下iOS中一些动画的使用，关于动画会出一个系列吧，我也是边写边学，就一起分享出来，大家一起共同学习了，如果有什么问题，可以在文章下面评论，或者直接给我公众号发消息，公众号消息比较容易看到，评论就不太容易注意到">
+<meta name="twitter:image" content="http://image18-c.poco.cn/mypoco/myphoto/20161115/17/18380075820161115173018047.jpg?1144x737_120">
 
 
 
@@ -118,10 +116,10 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2016/11/02/iOS-微信聊天消息的图片气泡实现/"/>
+  <link rel="canonical" href="http://yoursite.com/2016/11/15/iOS动画技巧-一/"/>
 
 
-  <title> iOS 微信聊天消息的图片气泡实现 | ppsheep </title>
+  <title> iOS动画技巧(一) | ppsheep </title>
 </head>
 
 <body itemscope itemtype="//schema.org/WebPage" lang="zh-Hans">
@@ -269,7 +267,7 @@
             
             
               
-                iOS 微信聊天消息的图片气泡实现
+                iOS动画技巧(一)
               
             
           </h1>
@@ -281,8 +279,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-11-02T18:01:48+08:00" content="2016-11-02">
-              2016-11-02
+            <time itemprop="dateCreated" datetime="2016-11-15T17:00:23+08:00" content="2016-11-15">
+              2016-11-15
             </time>
           </span>
 
@@ -292,8 +290,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/11/02/iOS-微信聊天消息的图片气泡实现/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/02/iOS-微信聊天消息的图片气泡实现/" itemprop="commentsCount"></span>
+                <a href="/2016/11/15/iOS动画技巧-一/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/15/iOS动画技巧-一/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -303,7 +301,7 @@
 
           
           
-             <span id="/2016/11/02/iOS-微信聊天消息的图片气泡实现/" class="leancloud_visitors" data-flag-title="iOS 微信聊天消息的图片气泡实现">
+             <span id="/2016/11/15/iOS动画技巧-一/" class="leancloud_visitors" data-flag-title="iOS动画技巧(一)">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -325,22 +323,15 @@
       
 
       
-        <p>在IM应用当中，我们的聊天页面再熟悉不过了，在聊天页面中每条消息都有一个背景气泡，但是在微信中呢，图片的背景气泡却没有，而是图片本身成为了一个气泡的样式，我们来看看微信的样式是怎么样的，今天就来实现这样一种样式：<br><a id="more"></a></p>
-<p><img src="http://o8bxt3lx0.bkt.clouddn.com/Snip20161102_4.png" alt=""></p>
-<p>其实实现起来还是很简单的，说一下思路：</p>
-<p>我准备用CAShapeLayer来实现，具体的做法就是：</p>
-<ul>
-<li>准备一张这种气泡效果的背景图，然后将这个气泡图做成一个layer实例，并且通过contentCenter或者contentRect拉伸至我们需要展示的UIImageView大小</li>
-<li>将做好的layer实例赋给UIImageView</li>
-<li>再将imageview赋上图片就行了</li>
-</ul>
-<p>废话少说 我们上代码</p>
-<p>准备一张这种图片</p>
-<p><img src="http://o8bxt3lx0.bkt.clouddn.com/Snip20161102_5.png" alt=""></p>
-<p>然后  神奇的事情来了  几行代码搞定</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">CGRect frame = CGRectMake(100, 100, 100, 150);</div><div class="line">    </div><div class="line">UIImageView *image = [[UIImageView alloc] initWithFrame:frame];</div><div class="line">    </div><div class="line">CAShapeLayer *layer = [CAShapeLayer layer];</div><div class="line">    </div><div class="line">layer.frame = image.bounds;</div><div class="line">layer.contents = (id)[UIImage imageNamed:@&quot;chat_box_blue&quot;].CGImage;</div><div class="line">layer.contentsCenter = CGRectMake(0.5, 0.5, 0.1, 0.1);</div><div class="line">layer.contentsScale = [UIScreen mainScreen].scale;</div><div class="line">    </div><div class="line">image.layer.mask = layer;</div><div class="line">image.layer.frame = image.frame;</div><div class="line">image.image = [UIImage imageNamed:@&quot;image&quot;];</div><div class="line">[self.view addSubview:image];</div></pre></td></tr></table></figure>
-<p>看一下效果</p>
-<p><img src="http://o8bxt3lx0.bkt.clouddn.com/Snip20161102_6.png" alt=""></p>
+        <p><strong>欢迎大家关注我的公众号，我会定期分享一些我在项目中遇到问题的解决办法和一些iOS实用的技巧，现阶段主要是整理出一些基础的知识记录下来</strong></p>
+<div align="middle"><br>    <image src="http://ac-mhke0kuv.clouddn.com/830a4ead8294ceff5160.jpg"></image><br></div>
+
+<p>文章也会同步更新到我的博客：<br><a href="http://ppsheep.com" target="_blank" rel="external">http://ppsheep.com</a></p>
+<p>关于动画，在iOS中我们见的太多了，基本上现在每个APP或多或少都会加上一些动画，在这个动画系列中，我并不会实现很多很炫的动画，很炫的动画，现在开源的已经有很多了，成熟的也已经有很多，在这里，我主要是讲一些对于动画的理解，对于动画的由来以及实现原理等等。</p>
+<h3 id="动画的由来"><a href="#动画的由来" class="headerlink" title="动画的由来"></a>动画的由来</h3><p>在iOS中所有的视图都是从UIView的基类派生而来，UIView可以处理触摸事件，可以支持基于Core Graphics绘图，也能够做一些简单的动画，比如旋转、缩放或者其他一些滑动渐变的动画。但是实际上，这是苹果为我们封装了一层，真正实现动画的其实是一个叫做图层的玩意儿(CALayer)，UIView所做的一切动画，都是苹果从CALayer封装而来。</p>
+<h3 id="CALayer"><a href="#CALayer" class="headerlink" title="CALayer"></a>CALayer</h3><p>CALayer类在概念上和UIView类似，也可以像View一样添加一些子layer(图片，文本等等)，也能够像View一样，管理子图层的位置大小等等，并且，CALayer有一些非常重要的属性和方法，iOS中的动画就是通过这些来做动画和变换，CALayer和UIView最大的不同就是CALayer不处理用户的交互。</p>
+<h3 id="UIView和CALayer的关系"><a href="#UIView和CALayer的关系" class="headerlink" title="UIView和CALayer的关系"></a>UIView和CALayer的关系</h3><p>每一个UIView都有一个CALayer实例属性，UIView的职责就是创建并创建这个图层，以确保在子视图被创建时，子图层也能够被创建，子视图被添加和移除的时候，子图层也能够做相对的添加移除操作。 他们的关系是一一对应的。</p>
+<p><img src="http://image18-c.poco.cn/mypoco/myphoto/20161115/17/18380075820161115173018047.jpg?1144x737_120" alt=""></p>
 
       
     </div>
@@ -392,17 +383,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/11/02/iOS使用UIDataDetectorType简单验证手机号、邮箱、网址/" rel="next" title="iOS使用UIDataDetectorType简单验证手机号、邮箱、网址">
-                <i class="fa fa-chevron-left"></i> iOS使用UIDataDetectorType简单验证手机号、邮箱、网址
+              <a href="/2016/11/09/iOS基础开发技巧-二/" rel="next" title="iOS基础开发技巧-二">
+                <i class="fa fa-chevron-left"></i> iOS基础开发技巧-二
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/11/03/iOS-有效编写高质量Object-C方法-一/" rel="prev" title="iOS 有效编写高质量Objective-C方法(一)">
-                iOS 有效编写高质量Objective-C方法(一) <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -428,8 +415,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/11/02/iOS-微信聊天消息的图片气泡实现/"
-           data-title="iOS 微信聊天消息的图片气泡实现" data-url="http://yoursite.com/2016/11/02/iOS-微信聊天消息的图片气泡实现/">
+      <div class="ds-thread" data-thread-key="2016/11/15/iOS动画技巧-一/"
+           data-title="iOS动画技巧(一)" data-url="http://yoursite.com/2016/11/15/iOS动画技巧-一/">
       </div>
     
   </div>
@@ -520,7 +507,7 @@
               
             
             
-              <p class="post-toc-empty">此文章未包含目录</p>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#动画的由来"><span class="nav-number">1.</span> <span class="nav-text">动画的由来</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CALayer"><span class="nav-number">2.</span> <span class="nav-text">CALayer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UIView和CALayer的关系"><span class="nav-number">3.</span> <span class="nav-text">UIView和CALayer的关系</span></a></li></ol></div>
             
           </div>
         </section>
