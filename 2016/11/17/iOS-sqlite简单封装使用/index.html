@@ -1,0 +1,826 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="sqlite," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
+
+
+
+
+
+
+<meta name="description" content="sqlite几乎在每个APP编码都会涉及到，它是一种轻量级的数据库，在手机端使用起来极其方便，因为SQLite原生的接口都是使用C写的，不是特别友好，所有有一个强大库就出现了FMDB，今天我们基于FMDB来进行二次封装">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS sqlite简单封装使用">
+<meta property="og:url" content="http://yoursite.com/2016/11/17/iOS-sqlite简单封装使用/index.html">
+<meta property="og:site_name" content="ppsheep">
+<meta property="og:description" content="sqlite几乎在每个APP编码都会涉及到，它是一种轻量级的数据库，在手机端使用起来极其方便，因为SQLite原生的接口都是使用C写的，不是特别友好，所有有一个强大库就出现了FMDB，今天我们基于FMDB来进行二次封装">
+<meta property="og:image" content="http://ww2.sinaimg.cn/large/006tNc79jw1f9v75zwsfkj307d0gv0tu.jpg">
+<meta property="og:updated_time" content="2016-11-17T09:04:28.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS sqlite简单封装使用">
+<meta name="twitter:description" content="sqlite几乎在每个APP编码都会涉及到，它是一种轻量级的数据库，在手机端使用起来极其方便，因为SQLite原生的接口都是使用C写的，不是特别友好，所有有一个强大库就出现了FMDB，今天我们基于FMDB来进行二次封装">
+<meta name="twitter:image" content="http://ww2.sinaimg.cn/large/006tNc79jw1f9v75zwsfkj307d0gv0tu.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/11/17/iOS-sqlite简单封装使用/"/>
+
+
+  <title> iOS sqlite简单封装使用 | ppsheep </title>
+</head>
+
+<body itemscope itemtype="//schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?4fa2aea1f41359883e5d92b5cb8bccb8";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">ppsheep</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+            关于我
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                iOS sqlite简单封装使用
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-11-17T16:38:49+08:00" content="2016-11-17">
+              2016-11-17
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/sqlite数据库/" itemprop="url" rel="index">
+                    <span itemprop="name">sqlite数据库</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/11/17/iOS-sqlite简单封装使用/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/17/iOS-sqlite简单封装使用/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/11/17/iOS-sqlite简单封装使用/" class="leancloud_visitors" data-flag-title="iOS sqlite简单封装使用">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><strong>欢迎大家关注我的公众号，我会定期分享一些我在项目中遇到问题的解决办法和一些iOS实用的技巧，现阶段主要是整理出一些基础的知识记录下来</strong></p>
+<div align="middle"><br>    <image src="http://ac-mhke0kuv.clouddn.com/830a4ead8294ceff5160.jpg"></image><br></div>
+
+<p>文章也会同步更新到我的博客：<br><a href="http://ppsheep.com" target="_blank" rel="external">http://ppsheep.com</a></p>
+<h3 id="项目结构"><a href="#项目结构" class="headerlink" title="项目结构"></a>项目结构</h3><p>首先来看一下我的项目结构</p>
+<p><img src="http://ww2.sinaimg.cn/large/006tNc79jw1f9v75zwsfkj307d0gv0tu.jpg" alt=""></p>
+<h3 id="封装思路"><a href="#封装思路" class="headerlink" title="封装思路"></a>封装思路</h3><p>数据层的基本封装思路是：</p>
+<ul>
+<li>首先我们需要一个数据库管理类，这个管理类主要是管理数据库文件，因为我们可能会有很多个数据库文件，需要这样一个管理类</li>
+<li>一个基础的BaseDBStore，其中主要是我们需要执行的一些基本的操作，包括增、删、改、查，然后每个模块需要使用到数据库的时候，他们有单独的子模块，是从Base继承而来</li>
+</ul>
+<p>数据库管理类的实现代码:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">#import &lt;Foundation/Foundation.h&gt;</div><div class="line">#import &quot;FMDB.h&quot;</div><div class="line"></div><div class="line">@interface PPSDBManager : NSObject</div><div class="line"></div><div class="line"></div><div class="line">/**</div><div class="line"> *  DB队列  还可以定义其他的数据库 这里只是一个示例</div><div class="line"> */</div><div class="line">@property (nonatomic, strong) FMDatabaseQueue *commonQueue;</div><div class="line"></div><div class="line">+ (PPSDBManager *)sharedInstance;</div><div class="line"></div><div class="line">/**</div><div class="line"> 创建数据库文件</div><div class="line"></div><div class="line"> @param userId 传入用户id</div><div class="line"> @return 数据库文件地址</div><div class="line"> */</div><div class="line">+ (NSString *)dbPath:(NSString *)userId;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
+<p>这里加入了用户思想，即每个用户是一个数据库文件，这样好区分，而且每个用户可以拥有不同的数据库文件，这里只创建了一个，当然还可以创建很多个</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">#import &quot;PPSDBManager.h&quot;</div><div class="line"></div><div class="line">static PPSDBManager *manager;</div><div class="line">@implementation PPSDBManager</div><div class="line"></div><div class="line">+(PPSDBManager *)sharedInstance&#123;</div><div class="line">    static dispatch_once_t onceToken;</div><div class="line">    dispatch_once(&amp;onceToken, ^&#123;</div><div class="line">        NSString *userID = @&quot;ppsheep&quot;;//随便写了一个id</div><div class="line">        manager = [[PPSDBManager alloc] initWithUserId:userID];</div><div class="line">    &#125;);</div><div class="line">    return manager;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">/**</div><div class="line"> 一般的，如果有用户的APP，这里就可以传入当前用户的id 用以区分数据库</div><div class="line"> 这里我就随便写了</div><div class="line"> @param userId 用户id</div><div class="line"> @return 实例</div><div class="line"> */</div><div class="line">- (instancetype)initWithUserId:(NSString *)userId&#123;</div><div class="line">    if (self = [super init]) &#123;</div><div class="line">        NSString *commonQueuePath = [PPSDBManager dbPath:userId];</div><div class="line">        self.commonQueue = [FMDatabaseQueue databaseQueueWithPath:commonQueuePath];</div><div class="line">    &#125;</div><div class="line">    return self;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">/**</div><div class="line"> 数据库文件地址</div><div class="line"></div><div class="line"> @return 地址</div><div class="line"> */</div><div class="line">+ (NSString *)dbPath: (NSString *)userId&#123;</div><div class="line">     NSString *path = [NSString stringWithFormat:@&quot;%@/User/%@/Setting/DB/&quot;, NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0], userId];</div><div class="line">    if (![[NSFileManager defaultManager] fileExistsAtPath:path]) &#123;</div><div class="line">        //创建数据库文件</div><div class="line">        NSError *error;</div><div class="line">        [[NSFileManager defaultManager] createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:&amp;error];</div><div class="line">        if (error) &#123;</div><div class="line">            NSLog(@&quot;创建数据库文件失败：%@&quot;,path);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    return [path stringByAppendingString:@&quot;common.sqlite3&quot;];</div><div class="line">&#125;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
+<p>BaseStore</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">#import &lt;Foundation/Foundation.h&gt;</div><div class="line">#import &quot;PPSDBManager.h&quot;</div><div class="line"></div><div class="line">@interface PPSDBBaseStore : NSObject</div><div class="line"></div><div class="line"></div><div class="line">// 数据库操作队列(从NADBManager中获取，默认使用commonQueue)</div><div class="line">@property (nonatomic, weak) FMDatabaseQueue *dbQueue;</div><div class="line"></div><div class="line">/**</div><div class="line"> *  表创建</div><div class="line"> */</div><div class="line">- (BOOL)createTable:(NSString*)tableName withSQL:(NSString*)sqlString;</div><div class="line"></div><div class="line">/*</div><div class="line"> *  执行带数组参数的sql语句 (增，删，改)</div><div class="line"> */</div><div class="line">-(BOOL)excuteSQL:(NSString*)sqlString withArrParameter:(NSArray*)arrParameter;</div><div class="line"></div><div class="line">/*</div><div class="line"> *  执行带字典参数的sql语句 (增，删，改)</div><div class="line"> */</div><div class="line">-(BOOL)excuteSQL:(NSString*)sqlString withDicParameter:(NSDictionary*)dicParameter;</div><div class="line"></div><div class="line">/*</div><div class="line"> *  执行格式化的sql语句 (增，删，改)</div><div class="line"> */</div><div class="line">- (BOOL)excuteSQL:(NSString *)sqlString,...;</div><div class="line"></div><div class="line">/**</div><div class="line"> *  执行查询指令</div><div class="line"> */</div><div class="line">- (void)excuteQuerySQL:(NSString*)sqlStr resultBlock:(void (^)(FMResultSet * rsSet))resultBlock;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
+<p>Base定义的一些基础的操作，注释都写的很清楚，我就不一一解释了</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">//查询语句</div><div class="line">- (BOOL)excuteSQL:(NSString *)sqlString,...</div><div class="line">&#123;</div><div class="line">    __block BOOL ok = NO;</div><div class="line">    if (self.dbQueue) &#123;</div><div class="line">        va_list args;</div><div class="line">        va_list *p_args;</div><div class="line">        p_args = &amp;args;</div><div class="line">        va_start(args, sqlString);</div><div class="line">        [self.dbQueue inDatabase:^(FMDatabase *db) &#123;</div><div class="line">            ok = [db executeUpdate:sqlString withVAList:*p_args];</div><div class="line">        &#125;];</div><div class="line">        va_end(args);</div><div class="line">    &#125;</div><div class="line">    return ok;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>带参数的查询方法:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">- (BOOL)excuteSQL:(NSString *)sqlString withArrParameter:(NSArray *)arrParameter</div><div class="line">&#123;</div><div class="line">    __block BOOL ok = NO;</div><div class="line">    if (self.dbQueue) &#123;</div><div class="line">        [self.dbQueue inDatabase:^(FMDatabase *db) &#123;</div><div class="line">            ok = [db executeUpdate:sqlString withArgumentsInArray:arrParameter];</div><div class="line">        &#125;];</div><div class="line">    &#125;</div><div class="line">    return ok;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Base里面的方法，都是调用FMDB</p>
+<h3 id="User模块"><a href="#User模块" class="headerlink" title="User模块"></a>User模块</h3><p>现在，我们有一个User模块，需要实现用户的存取，首先，我们需要一个装SQL的文件，分离SQL</p>
+<p>PPSDBUserSQL.h</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">#ifndef PPSDBUserSQL_h</div><div class="line">#define PPSDBUserSQL_h</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">#define     USER_TABLE_NAME              @&quot;user&quot;</div><div class="line">/**</div><div class="line"> *  建表</div><div class="line"> *</div><div class="line"> *  @param uid   当前用户Corp邮箱前缀</div><div class="line"> *  @param fid    好友Corp邮箱前缀</div><div class="line"> *  @param email   Corp邮箱</div><div class="line"> *</div><div class="line"> *  @return</div><div class="line"> */</div><div class="line">#define     SQL_CREATE_USER_TABLE        </div><div class="line">			@&quot;CREATE TABLE IF NOT EXISTS %@(\</div><div class="line">                    uid TEXT,\</div><div class="line">                    name TEXT,\</div><div class="line">                    email TEXT,\</div><div class="line">                    phoneNum TEXT,\</div><div class="line">                    ext1 TEXT,\</div><div class="line">                    ext2 TEXT,\</div><div class="line">                    ext3 TEXT,\</div><div class="line">                    ext4 INTEGER DEFAULT (0),\</div><div class="line">                    ext5 INTEGER DEFAULT (0),\</div><div class="line">                    ext6 INTEGER DEFAULT (0),\</div><div class="line">                    PRIMARY KEY(uid))&quot;</div><div class="line"></div><div class="line">#define     SQL_ADD_USER      @&quot;INSERT OR REPLACE INTO %@ ( uid, name, email, phoneNum, ext1, ext2, ext3, ext4, ext5, ext6) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)&quot;</div><div class="line"></div><div class="line">#define     SQL_SELECT_USER   @&quot;SELECT * FROM %@ WHERE uid = &apos;%@&apos;&quot;</div><div class="line"></div><div class="line">#define     SQL_GET_ALL_USER   @&quot;SELECT * FROM %@ &quot;</div><div class="line"></div><div class="line">#define     SQL_DELETE_USER    @&quot;DELETE FROM %@ WHERE uid = &apos;%@&apos;&quot;</div><div class="line"></div><div class="line">#define     SQL_UPDATE_USER    @&quot;UPDATE %@ SET name = ?, email = ?, phoneNum = ? WHERE uid = &apos;%@&apos; &quot;</div><div class="line"></div><div class="line"></div><div class="line">#endif /* PPSDBUserSQL_h */</div></pre></td></tr></table></figure>
+<p>然后是具体的操作User的Store 包含了基本的</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">#import &quot;PPSDBBaseStore.h&quot;</div><div class="line"></div><div class="line">@class PPSUser;</div><div class="line">@interface PPSDBUserStore : PPSDBBaseStore</div><div class="line"></div><div class="line">//改</div><div class="line">- (BOOL)updateUserData:(NSArray *)users;</div><div class="line"></div><div class="line">//增</div><div class="line">- (BOOL)addUser:(NSArray *)users;</div><div class="line"></div><div class="line">//查</div><div class="line">- (NSMutableArray *)usersByUserIds:(NSArray *)userIds;</div><div class="line"></div><div class="line">//删</div><div class="line">- (BOOL)deleteUserByUid:(NSArray *)userIds;</div><div class="line"></div><div class="line">- (NSArray *)allUsers;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
+<p>批量查询用户，传入id数组</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">-(NSMutableArray *)usersByUserIds:(NSArray *)userIds&#123;</div><div class="line">    NSArray *ids = [userIds copy];</div><div class="line">    __block NSMutableArray *data = [[NSMutableArray alloc] init];</div><div class="line">    </div><div class="line">    for (NSString *userId in ids) &#123;</div><div class="line">      NSString *sqlString = [NSString stringWithFormat:SQL_SELECT_USER, USER_TABLE_NAME, userId];</div><div class="line">        [self excuteQuerySQL:sqlString resultBlock:^(FMResultSet *retSet) &#123;</div><div class="line">            while ([retSet next]) &#123;</div><div class="line">                NSDictionary *dic = @&#123;</div><div class="line">                                      @&quot;userId&quot; : [retSet stringForColumn:@&quot;uid&quot;],</div><div class="line">                                      @&quot;email&quot; : [retSet stringForColumn:@&quot;email&quot;],</div><div class="line">                                      @&quot;name&quot; : [retSet stringForColumn:@&quot;name&quot;],</div><div class="line">                                      @&quot;phoneNum&quot; : [retSet stringForColumn:@&quot;phoneNum&quot;],</div><div class="line">                                      &#125;;</div><div class="line">                PPSUser *user = [[PPSUser alloc] initWithDic:dic];</div><div class="line">                [data addObject:user];</div><div class="line">            &#125;</div><div class="line">            [retSet close];</div><div class="line">        &#125;];</div><div class="line">    &#125;</div><div class="line">    return data;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>批量更新用户，传入用户数组</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">-(BOOL)updateUserData:(NSArray *)users&#123;</div><div class="line">    NSArray *userCopy = [users copy];</div><div class="line">    BOOL ok = YES;</div><div class="line">    for (PPSUser *user in userCopy) &#123;</div><div class="line">        NSString *sql = [NSString stringWithFormat:SQL_UPDATE_USER, USER_TABLE_NAME, user.userId];</div><div class="line">        NSArray *arrPara = [NSArray arrayWithObjects:</div><div class="line">                            PPSNoNilString(user.name),</div><div class="line">                            PPSNoNilString(user.email),</div><div class="line">                            PPSNoNilString(user.phoneNum),</div><div class="line">                            @&quot;&quot;, @&quot;&quot;, @&quot;&quot;, @0, @0, @0,  nil];</div><div class="line">        ok = [self excuteSQL:sql withArrParameter:arrPara];</div><div class="line">    &#125;</div><div class="line">    return ok;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><p>为了方便，我就直接在ViewController中写了，在真正的开发中，一般都会在管理类中进行数据库操作</p>
+<p>懒加载一个用户数据库</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">-(PPSDBUserStore *)store&#123;</div><div class="line">    if (!_store) &#123;</div><div class="line">        _store = [[PPSDBUserStore alloc] init];</div><div class="line">    &#125;</div><div class="line">    return _store;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>初始化用户，直接插入</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">- (void)initUsers&#123;</div><div class="line">    NSMutableArray *arr = [NSMutableArray array];</div><div class="line">    for (int i=0; i&lt;10; i++) &#123;</div><div class="line">        PPSUser *user = [[PPSUser alloc] init];</div><div class="line">        user.userId = [NSString stringWithFormat:@&quot;%ld_userId&quot;,(long)i];</div><div class="line">        user.name = [NSString stringWithFormat:@&quot;%ld_userName&quot;,(long)i];</div><div class="line">        user.email = [NSString stringWithFormat:@&quot;%ld_email&quot;,(long)i];</div><div class="line">        user.phoneNum = [NSString stringWithFormat:@&quot;%ld_phoneNum&quot;,(long)i];</div><div class="line">        [arr addObject:user];</div><div class="line">    &#125;</div><div class="line">    [self.store addUser:arr];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>我就不再贴代码出来了，项目工程，我放在了</p>
+<p><a href="https://github.com/yangqian111/blog/tree/master/iOS%20sqlite使用" target="_blank" rel="external">https://github.com/yangqian111/blog/tree/master/iOS%20sqlite使用</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/avatar_public.jpg" alt="ppsheep wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎您扫一扫上面的微信公众号，我将同步发送博客内容！</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://o8bxt3lx0.bkt.clouddn.com/141478051735_.pic%E5%89%AF%E6%9C%AC.jpg" alt="ppsheep WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="http://o8bxt3lx0.bkt.clouddn.com/131478051734_.pic%E5%89%AF%E6%9C%AC.jpg" alt="ppsheep Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/sqlite/" rel="tag">#sqlite</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/11/17/iOS每个ViewController一个NavigationBar/" rel="next" title="iOS每个ViewController一个NavigationBar">
+                <i class="fa fa-chevron-left"></i> iOS每个ViewController一个NavigationBar
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/11/17/iOS-sqlite简单封装使用/"
+           data-title="iOS sqlite简单封装使用" data-url="http://yoursite.com/2016/11/17/iOS-sqlite简单封装使用/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://o8bxt3lx0.bkt.clouddn.com/avatar_public.jpg"
+               alt="ppsheep" />
+          <p class="site-author-name" itemprop="name">ppsheep</p>
+          <p class="site-description motion-element" itemprop="description">ppsheep</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">25</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#项目结构"><span class="nav-number">1.</span> <span class="nav-text">项目结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#封装思路"><span class="nav-number">2.</span> <span class="nav-text">封装思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#User模块"><span class="nav-number">3.</span> <span class="nav-text">User模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用"><span class="nav-number">4.</span> <span class="nav-text">使用</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ppsheep</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"yangqian111"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("wVNXI1zodIQXjH2YGmNdcNTR-gzGzoHsz", "qglLYXNVHBDUayaqz0RYy6H4");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+
+</body>
+</html>
