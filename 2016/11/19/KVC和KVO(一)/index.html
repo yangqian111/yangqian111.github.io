@@ -91,7 +91,7 @@
 <meta property="og:site_name" content="ppsheep">
 <meta property="og:description" content="Key-value coding (KVC) 和 key-value observing (KVO) 是两种能让我们驾驭 Objective-C 动态特性并简化代码的机制。在这篇文章里，我们将接触一些如何利用这些特性的例子。">
 <meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/blog/2016-11-21-KVC%26KVO-%E4%B8%80-.gif">
-<meta property="og:updated_time" content="2016-11-21T03:08:49.000Z">
+<meta property="og:updated_time" content="2016-11-21T03:19:52.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="KVC和KVO(一)">
 <meta name="twitter:description" content="Key-value coding (KVC) 和 key-value observing (KVO) 是两种能让我们驾驭 Objective-C 动态特性并简化代码的机制。在这篇文章里，我们将接触一些如何利用这些特性的例子。">
@@ -394,6 +394,8 @@
 <figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">- (void)updateLComponent:(UISlider *)sender;</div><div class="line">&#123;</div><div class="line">    self.labColor.lComponent = sender.value;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)updateAComponent:(UISlider *)sender;</div><div class="line">&#123;</div><div class="line">    self.labColor.aComponent = sender.value;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)updateBComponent:(UISlider *)sender;</div><div class="line">&#123;</div><div class="line">    self.labColor.bComponent = sender.value;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>我们来看一下效果</p>
 <p><img src="http://o8bxt3lx0.bkt.clouddn.com/blog/2016-11-21-KVC%26KVO-%E4%B8%80-.gif" alt=""></p>
+<p>源工程:</p>
+<p><a href="https://github.com/yangqian111/blog/tree/master/iOS%20KVC和KVO(一" target="_blank" rel="external">https://github.com/yangqian111/blog/tree/master/iOS%20KVC和KVO(一</a>)</p>
 <p>参考:<br>    <a href="https://www.objccn.io/issue-7-3/" target="_blank" rel="external">https://www.objccn.io/issue-7-3/</a></p>
 
       
