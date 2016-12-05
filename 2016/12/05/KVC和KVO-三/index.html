@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="iOS UITableView上下滑动控制底部按钮出现," />
+  <meta name="keywords" content="KVC和KVO," />
 
 
 
@@ -84,18 +84,16 @@
 
 
 
-<meta name="description" content="一个简单的小功能，忘记在哪个APP上看到过，就做来玩一玩  实现起来还是很简单的">
+<meta name="description" content="继续我们之前的KVC和KVO系列，这是这个系列的最后一篇，这两周都没怎么写东西，估计这一周过后，文章更新会正常了，手头上的事情多了，就不想写了，写出来的东西也是粗制滥造">
 <meta property="og:type" content="article">
-<meta property="og:title" content="iOS UITableView上下滑动控制底部按钮出现">
-<meta property="og:url" content="http://yoursite.com/2016/11/01/iOS-UITableView上下滑动控制底部按钮出现/index.html">
+<meta property="og:title" content="KVC和KVO(三)">
+<meta property="og:url" content="http://yoursite.com/2016/12/05/KVC和KVO-三/index.html">
 <meta property="og:site_name" content="ppsheep">
-<meta property="og:description" content="一个简单的小功能，忘记在哪个APP上看到过，就做来玩一玩  实现起来还是很简单的">
-<meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/UITableView%20Scroll.gif">
-<meta property="og:updated_time" content="2016-11-05T05:51:31.000Z">
+<meta property="og:description" content="继续我们之前的KVC和KVO系列，这是这个系列的最后一篇，这两周都没怎么写东西，估计这一周过后，文章更新会正常了，手头上的事情多了，就不想写了，写出来的东西也是粗制滥造">
+<meta property="og:updated_time" content="2016-12-05T02:24:55.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="iOS UITableView上下滑动控制底部按钮出现">
-<meta name="twitter:description" content="一个简单的小功能，忘记在哪个APP上看到过，就做来玩一玩  实现起来还是很简单的">
-<meta name="twitter:image" content="http://o8bxt3lx0.bkt.clouddn.com/UITableView%20Scroll.gif">
+<meta name="twitter:title" content="KVC和KVO(三)">
+<meta name="twitter:description" content="继续我们之前的KVC和KVO系列，这是这个系列的最后一篇，这两周都没怎么写东西，估计这一周过后，文章更新会正常了，手头上的事情多了，就不想写了，写出来的东西也是粗制滥造">
 
 
 
@@ -116,10 +114,10 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2016/11/01/iOS-UITableView上下滑动控制底部按钮出现/"/>
+  <link rel="canonical" href="http://yoursite.com/2016/12/05/KVC和KVO-三/"/>
 
 
-  <title> iOS UITableView上下滑动控制底部按钮出现 | ppsheep </title>
+  <title> KVC和KVO(三) | ppsheep </title>
 </head>
 
 <body itemscope itemtype="//schema.org/WebPage" lang="zh-Hans">
@@ -267,7 +265,7 @@
             
             
               
-                iOS UITableView上下滑动控制底部按钮出现
+                KVC和KVO(三)
               
             
           </h1>
@@ -279,8 +277,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-11-01T16:01:51+08:00" content="2016-11-01">
-              2016-11-01
+            <time itemprop="dateCreated" datetime="2016-12-05T10:04:32+08:00" content="2016-12-05">
+              2016-12-05
             </time>
           </span>
 
@@ -293,8 +291,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/iOS-基础/" itemprop="url" rel="index">
-                    <span itemprop="name">iOS 基础</span>
+                  <a href="/categories/KVC和KVO/" itemprop="url" rel="index">
+                    <span itemprop="name">KVC和KVO</span>
                   </a>
                 </span>
 
@@ -309,8 +307,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/11/01/iOS-UITableView上下滑动控制底部按钮出现/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/01/iOS-UITableView上下滑动控制底部按钮出现/" itemprop="commentsCount"></span>
+                <a href="/2016/12/05/KVC和KVO-三/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/05/KVC和KVO-三/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -320,7 +318,7 @@
 
           
           
-             <span id="/2016/11/01/iOS-UITableView上下滑动控制底部按钮出现/" class="leancloud_visitors" data-flag-title="iOS UITableView上下滑动控制底部按钮出现">
+             <span id="/2016/12/05/KVC和KVO-三/" class="leancloud_visitors" data-flag-title="KVC和KVO(三)">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -342,23 +340,49 @@
       
 
       
-        <p>一个简单的小功能，忘记在哪个APP上看到过，就做来玩一玩  实现起来还是很简单的<br><a id="more"></a><br>先看一下效果</p>
-<p><img src="http://o8bxt3lx0.bkt.clouddn.com/UITableView%20Scroll.gif" alt="1"></p>
-<p>分析一下我们需要实现的：</p>
-<ul>
-<li>UITableView 向上滑动时隐藏底部的按钮</li>
-<li>UITableView 向下滑动时，底部按钮出现</li>
-<li>UITableView 到达底部时，底部按钮也出现</li>
-</ul>
-<p>创建工程啥的我都不讲了吧</p>
-<p>在viewDidload中加上view</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">//加上这句  UIScrollView的Content就不会自动偏移64(导航栏和状态栏的高度)</div><div class="line">    self.automaticallyAdjustsScrollViewInsets = NO;</div><div class="line">    </div><div class="line">    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, SCREEN.width, SCREEN.height-64) style:UITableViewStylePlain];</div><div class="line">    tableView.delegate = self;</div><div class="line">    tableView.dataSource = self;</div><div class="line">    [self.view addSubview:tableView];</div><div class="line">    self.tableView = tableView;</div><div class="line">    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@&quot;cell&quot;];</div><div class="line">    </div><div class="line">    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];</div><div class="line">    btn.frame = CGRectMake(self.view.frame.size.width / 2 - 25, self.view.frame.size.height - 50, 50, 50);</div><div class="line">    [btn setBackgroundImage:[UIImage imageNamed:@&quot;comments&quot;] forState:UIControlStateNormal];</div><div class="line">    self.btn = btn;</div><div class="line">    [self.view addSubview:self.btn];</div></pre></td></tr></table></figure>
-<p>处理UIScrollView的滑动，一般都是在scrollViewDidScroll:方法中，这次也不例外</p>
-<p>我们在这里监听当前scrollview的滑动距离 滑动方向等</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line"></div><div class="line">#pragma mark - UITableView delegate</div><div class="line">-(void)scrollViewDidScroll:(UIScrollView *)scrollView&#123;</div><div class="line">    if (scrollView.contentOffset.y &gt; self.offsetY &amp;&amp; scrollView.contentOffset.y &gt; 0) &#123;//向上滑动</div><div class="line">        //按钮消失</div><div class="line">        [UIView transitionWithView:self.btn duration:0.1 options:UIViewAnimationOptionTransitionNone animations:^&#123;</div><div class="line">            self.btn.frame = CGRectMake(SCREEN.width / 2 - 25, SCREEN.height, 50, 50);</div><div class="line">        &#125; completion:NULL];</div><div class="line">    &#125;else if (scrollView.contentOffset.y &lt; self.offsetY )&#123;//向下滑动</div><div class="line">        //按钮出现</div><div class="line">        [UIView transitionWithView:self.btn duration:0.1 options:UIViewAnimationOptionTransitionNone animations:^&#123;</div><div class="line">            self.btn.frame = CGRectMake(SCREEN.width / 2 - 25, SCREEN.height - 50, 50, 50);</div><div class="line">        &#125; completion:NULL];</div><div class="line">    &#125;</div><div class="line">    self.offsetY = scrollView.contentOffset.y;//将当前位移变成缓存位移</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>这样一个  特别简单的小功能  就实现了 </p>
-<p>源码放在了：</p>
-<p><a href="https://github.com/yangqian111/blog/tree/master/iOS%20UITableView上下滑动控制底部按钮出现" target="_blank" rel="external">https://github.com/yangqian111/blog/tree/master/iOS%20UITableView上下滑动控制底部按钮出现</a></p>
+        <p><strong>欢迎大家关注我的公众号，我会定期分享一些我在项目中遇到问题的解决办法和一些iOS实用的技巧，现阶段主要是整理出一些基础的知识记录下来</strong></p>
+<div align="middle"><br>    <image src="http://ac-mhke0kuv.clouddn.com/830a4ead8294ceff5160.jpg"></image><br></div>
+
+<p>文章也会同步更新到我的博客：<br><a href="http://ppsheep.com" target="_blank" rel="external">http://ppsheep.com</a></p>
+<h3 id="KVO和线程"><a href="#KVO和线程" class="headerlink" title="KVO和线程"></a>KVO和线程</h3><p>KVO 行为是同步的 并且发生与所观察的值发生变化的同样的线程上。这听起来有点拗口，简单点说，就是监听行为发生的线程和所观察的值发生变化的线程，肯定是同一个线程，这样我们使用的时候就需要注意了：</p>
+<p>当我们试图从其他线程改变属性值的时候我们应当十分小心，除非能确定所有的观察者都用线程安全的方法处理 KVO 通知</p>
+<p>通常来说，我们不推荐把 KVO 和多线程混起来。如果我们要用多个队列和线程，我们不应该在它们互相之间用 KVO。</p>
+<h3 id="KVC"><a href="#KVC" class="headerlink" title="KVC"></a>KVC</h3><p>最简单的 KVC 能让我们通过以下的形式访问属性：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">@property (nonatomic, copy) NSString *name;</div></pre></td></tr></table></figure>
+<p>取值：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">NSString *n = [object valueForKey:@&quot;name&quot;]</div></pre></td></tr></table></figure>
+<p>设定：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">[object setValue:@&quot;Daniel&quot; forKey:@&quot;name&quot;]</div></pre></td></tr></table></figure>
+<p>这个不仅可以访问作为对象属性，而且也能访问一些标量（例如 int 和 CGFloat）和 struct（例如 CGRect）。Foundation 框架会为我们自动封装它们。举例来说，如果有以下属性：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">@property (nonatomic) CGFloat height;</div></pre></td></tr></table></figure>
+<p>我们可以这样设置:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">[object setValue:@(20) forKey:@&quot;height&quot;]</div></pre></td></tr></table></figure>
+<h3 id="键路径-key-path"><a href="#键路径-key-path" class="headerlink" title="键路径 (key path)"></a>键路径 (key path)</h3><p>KVC 同样允许我们通过关系来访问对象。假设 person 对象有属性 address，address 有属性 city，我们可以这样通过 person 来访问 city：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">[person valueForKeyPath:@&quot;address.city&quot;]</div></pre></td></tr></table></figure>
+<p>值得注意的是这里我们调用 -valueForKeyPath: 而不是 -valueForKey:</p>
+<h3 id="Key-Value-Coding-Without-property"><a href="#Key-Value-Coding-Without-property" class="headerlink" title="Key-Value Coding Without @property"></a>Key-Value Coding Without @property</h3><p>不需要 @property 的 KVC</p>
+<p>我们可以实现一个支持 KVC 而不用 @property 和 @synthesize 或是自动 synthesize 的属性。最直接的方式是添加 -<key> 和 -set<key>: 方法。例如我们想要 name ，我们这样做：</key></key></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">- (NSString *)name;</div><div class="line">- (void)setName:(NSString *)name;</div></pre></td></tr></table></figure>
+<p>这完全等于 @property 的实现方式。</p>
+<p>但是当标量和 struct 的值被传入 nil 的时候尤其需要注意。假设我们要 height 属性支持 KVC 我们写了以下的方法：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">- (CGFloat)height;</div><div class="line">- (void)setHeight:(CGFloat)height;</div></pre></td></tr></table></figure>
+<p>然后我们这样调用：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">[object setValue:nil forKey:@&quot;height&quot;]</div></pre></td></tr></table></figure>
+<p>这会抛出一个 exception。要正确的处理 nil，我们要像这样 override -setNilValueForKey:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">- (void)setNilValueForKey:(NSString *)key</div><div class="line">&#123;</div><div class="line">    if ([key isEqualToString:@&quot;height&quot;]) &#123;</div><div class="line">        [self setValue:@0 forKey:key];</div><div class="line">    &#125; else</div><div class="line">        [super setNilValueForKey:key];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="集合的操作"><a href="#集合的操作" class="headerlink" title="集合的操作"></a>集合的操作</h3><p>一个常常被忽视的 KVC 特性是它对集合操作的支持。举个例子，我们可以这样来获得一个数组中最大的值：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">NSArray *a = @[@4, @84, @2];</div><div class="line">NSLog(@&quot;max = %@&quot;, [a valueForKeyPath:@&quot;@max.self&quot;]);</div></pre></td></tr></table></figure>
+<p>或者说，我们有一个 Transaction 对象的数组，对象有属性 amount 的话，我们可以这样获得最大的 amount：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">NSArray *a = @[transaction1, transaction2, transaction3];</div><div class="line">NSLog(@&quot;max = %@&quot;, [a valueForKeyPath:@&quot;@max.amount&quot;]);</div></pre></td></tr></table></figure>
+<p>当我们调用 [a valueForKeyPath:@”@max.amount”] 的时候，它会在数组 a 的每个元素中调用 -valueForKey:@”amount” 然后返回最大的那个。</p>
+<h3 id="常见的-KVO-错误"><a href="#常见的-KVO-错误" class="headerlink" title="常见的 KVO 错误"></a>常见的 KVO 错误</h3><p>首先，KVO 兼容是 API 的一部分。如果类的所有者不保证某个属性兼容 KVO，我们就不能保证 KVO 正常工作。苹果文档里有 KVO 兼容属性的文档。例如，NSProgress 类的大多数属性都是兼容 KVO 的。</p>
+<p>当做出改变以后，有些人试着放空的 -willChange 和 -didChange 方法来强制 KVO 的触发。KVO 通知虽然会生效，但是这样做破坏了有依赖于 NSKeyValueObservingOld 选项的观察者。详细来说，这影响了 KVO 对观察键路径 (key path) 的原生支持。KVO 在观察键路径 (key path) 时依赖于 NSKeyValueObservingOld 属性。</p>
+<p>我们也要指出有些集合是不能被观察的。KVO 旨在观察关系 (relationship) 而不是集合。我们不能观察 NSArray，我们只能观察一个对象的属性——而这个属性有可能是 NSArray。举例说，如果我们有一个 ContactList 对象，我们可以观察它的 contacts 属性。但是我们不能向要观察对象的 -addObserver:forKeyPath:… 传入一个 NSArray。</p>
+<p>相似地，观察 self 不是永远都生效的。而且这不是一个好的设计。</p>
+<h3 id="调试-KVO"><a href="#调试-KVO" class="headerlink" title="调试 KVO"></a>调试 KVO</h3><p>你可以在 lldb 里查看一个被观察对象的所有观察信息。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">(lldb) po [observedObject observationInfo]</div></pre></td></tr></table></figure>
+<p>这会打印出有关谁观察谁之类的很多信息。</p>
+<p>这个信息的格式不是公开的，我们不能让任何东西依赖它，因为苹果随时都可以改变它。不过这是一个很强大的排错工具。</p>
 
       
     </div>
@@ -407,7 +431,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/iOS-UITableView上下滑动控制底部按钮出现/" rel="tag">#iOS UITableView上下滑动控制底部按钮出现</a>
+            <a href="/tags/KVC和KVO/" rel="tag">#KVC和KVO</a>
           
         </div>
       
@@ -416,17 +440,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/10/31/iOS-UIScrollView上滑隐藏UINavigationBar/" rel="next" title="iOS UIScrollView上滑隐藏UINavigationBar">
-                <i class="fa fa-chevron-left"></i> iOS UIScrollView上滑隐藏UINavigationBar
+              <a href="/2016/11/28/KVC和KVO-二/" rel="next" title="KVC和KVO(二)">
+                <i class="fa fa-chevron-left"></i> KVC和KVO(二)
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/11/02/iOS使用UIDataDetectorType简单验证手机号、邮箱、网址/" rel="prev" title="iOS使用UIDataDetectorType简单验证手机号、邮箱、网址">
-                iOS使用UIDataDetectorType简单验证手机号、邮箱、网址 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -452,8 +472,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/11/01/iOS-UITableView上下滑动控制底部按钮出现/"
-           data-title="iOS UITableView上下滑动控制底部按钮出现" data-url="http://yoursite.com/2016/11/01/iOS-UITableView上下滑动控制底部按钮出现/">
+      <div class="ds-thread" data-thread-key="2016/12/05/KVC和KVO-三/"
+           data-title="KVC和KVO(三)" data-url="http://yoursite.com/2016/12/05/KVC和KVO-三/">
       </div>
     
   </div>
@@ -544,7 +564,7 @@
               
             
             
-              <p class="post-toc-empty">此文章未包含目录</p>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#KVO和线程"><span class="nav-number">1.</span> <span class="nav-text">KVO和线程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#KVC"><span class="nav-number">2.</span> <span class="nav-text">KVC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#键路径-key-path"><span class="nav-number">3.</span> <span class="nav-text">键路径 (key path)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Key-Value-Coding-Without-property"><span class="nav-number">4.</span> <span class="nav-text">Key-Value Coding Without @property</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#集合的操作"><span class="nav-number">5.</span> <span class="nav-text">集合的操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常见的-KVO-错误"><span class="nav-number">6.</span> <span class="nav-text">常见的 KVO 错误</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#调试-KVO"><span class="nav-number">7.</span> <span class="nav-text">调试 KVO</span></a></li></ol></div>
             
           </div>
         </section>
