@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="KVC和KVO," />
+  <meta name="keywords" content="更轻量级的ViewController," />
 
 
 
@@ -84,18 +84,16 @@
 
 
 
-<meta name="description" content="Key-value coding (KVC) 和 key-value observing (KVO) 是两种能让我们驾驭 Objective-C 动态特性并简化代码的机制。在这篇文章里，我们将接触一些如何利用这些特性的例子。">
+<meta name="description" content="View controllers 通常是 iOS 项目中最大的文件，并且它们包含了许多不必要的代码。所以 View controllers 中的代码几乎总是复用率最低的。接下来我将结合一些我自己看到的东西和平时在使用的方法，来节省ViewController中的代码量。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="KVC和KVO(一)">
-<meta property="og:url" content="http://yoursite.com/2016/11/19/KVC和KVO(一)/index.html">
+<meta property="og:title" content="ViewControllers瘦身计划(一)">
+<meta property="og:url" content="http://yoursite.com/2016/12/05/ViewControllers瘦身计划-一/index.html">
 <meta property="og:site_name" content="ppsheep">
-<meta property="og:description" content="Key-value coding (KVC) 和 key-value observing (KVO) 是两种能让我们驾驭 Objective-C 动态特性并简化代码的机制。在这篇文章里，我们将接触一些如何利用这些特性的例子。">
-<meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/blog/2016-11-21-KVC%26KVO-%E4%B8%80-.gif">
-<meta property="og:updated_time" content="2016-11-21T03:19:52.000Z">
+<meta property="og:description" content="View controllers 通常是 iOS 项目中最大的文件，并且它们包含了许多不必要的代码。所以 View controllers 中的代码几乎总是复用率最低的。接下来我将结合一些我自己看到的东西和平时在使用的方法，来节省ViewController中的代码量。">
+<meta property="og:updated_time" content="2016-12-06T01:58:42.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="KVC和KVO(一)">
-<meta name="twitter:description" content="Key-value coding (KVC) 和 key-value observing (KVO) 是两种能让我们驾驭 Objective-C 动态特性并简化代码的机制。在这篇文章里，我们将接触一些如何利用这些特性的例子。">
-<meta name="twitter:image" content="http://o8bxt3lx0.bkt.clouddn.com/blog/2016-11-21-KVC%26KVO-%E4%B8%80-.gif">
+<meta name="twitter:title" content="ViewControllers瘦身计划(一)">
+<meta name="twitter:description" content="View controllers 通常是 iOS 项目中最大的文件，并且它们包含了许多不必要的代码。所以 View controllers 中的代码几乎总是复用率最低的。接下来我将结合一些我自己看到的东西和平时在使用的方法，来节省ViewController中的代码量。">
 
 
 
@@ -116,10 +114,10 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2016/11/19/KVC和KVO(一)/"/>
+  <link rel="canonical" href="http://yoursite.com/2016/12/05/ViewControllers瘦身计划-一/"/>
 
 
-  <title> KVC和KVO(一) | ppsheep </title>
+  <title> ViewControllers瘦身计划(一) | ppsheep </title>
 </head>
 
 <body itemscope itemtype="//schema.org/WebPage" lang="zh-Hans">
@@ -267,7 +265,7 @@
             
             
               
-                KVC和KVO(一)
+                ViewControllers瘦身计划(一)
               
             
           </h1>
@@ -279,8 +277,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-11-19T16:08:32+08:00" content="2016-11-19">
-              2016-11-19
+            <time itemprop="dateCreated" datetime="2016-12-05T22:29:37+08:00" content="2016-12-05">
+              2016-12-05
             </time>
           </span>
 
@@ -293,8 +291,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/KVC和KVO/" itemprop="url" rel="index">
-                    <span itemprop="name">KVC和KVO</span>
+                  <a href="/categories/iOS进阶/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS进阶</span>
                   </a>
                 </span>
 
@@ -309,8 +307,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/11/19/KVC和KVO(一)/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/19/KVC和KVO(一)/" itemprop="commentsCount"></span>
+                <a href="/2016/12/05/ViewControllers瘦身计划-一/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/05/ViewControllers瘦身计划-一/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -320,7 +318,7 @@
 
           
           
-             <span id="/2016/11/19/KVC和KVO(一)/" class="leancloud_visitors" data-flag-title="KVC和KVO(一)">
+             <span id="/2016/12/05/ViewControllers瘦身计划-一/" class="leancloud_visitors" data-flag-title="ViewControllers瘦身计划(一)">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -346,57 +344,34 @@
 <div align="middle"><br>    <image src="http://ac-mhke0kuv.clouddn.com/830a4ead8294ceff5160.jpg"></image><br></div>
 
 <p>文章也会同步更新到我的博客：<br><a href="http://ppsheep.com" target="_blank" rel="external">http://ppsheep.com</a></p>
-<h3 id="观察model对象的变化"><a href="#观察model对象的变化" class="headerlink" title="观察model对象的变化"></a>观察model对象的变化</h3><p>在 Cocoa 的模型-视图-控制器 (Model-view-controller)架构里，控制器负责让视图和模型同步。这一共有两步：当 model 对象改变的时候，视图应该随之改变以反映模型的变化；当用户和控制器交互的时候，模型也应该做出相应的改变。</p>
-<p>KVO 能帮助我们让视图和模型保持同步。控制器可以观察视图依赖的属性变化。</p>
-<p>让我们看一个例子：我们的模型类 LabColor 代表一种 Lab色彩空间里的颜色。和 RGB 不同，这种色彩空间有三个元素 L, a, b。我们要做一个用来改变这些值的滑块和一个显示颜色的方块区域。</p>
-<p>我们的模型类有以下三个用来代表颜色的属性：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">@property (nonatomic) double lComponent;</div><div class="line">@property (nonatomic) double aComponent;</div><div class="line">@property (nonatomic) double bComponent;</div></pre></td></tr></table></figure>
-<h3 id="依赖的属性"><a href="#依赖的属性" class="headerlink" title="依赖的属性"></a>依赖的属性</h3><p>我们需要从这个类创建一个 UIColor 对象来显示出颜色。我们添加三个额外的属性，分别对应 R, G, B：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">@property (nonatomic, readonly) double redComponent;</div><div class="line">@property (nonatomic, readonly) double greenComponent;</div><div class="line">@property (nonatomic, readonly) double blueComponent;</div><div class="line"></div><div class="line">@property (nonatomic, strong, readonly) UIColor *color;</div></pre></td></tr></table></figure>
-<p>有了这些以后，我们就可以创建这个类的接口了：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">@interface LabColor : NSObject</div><div class="line"></div><div class="line">@property (nonatomic) double lComponent;</div><div class="line">@property (nonatomic) double aComponent;</div><div class="line">@property (nonatomic) double bComponent;</div><div class="line"></div><div class="line">@property (nonatomic, readonly) double redComponent;</div><div class="line">@property (nonatomic, readonly) double greenComponent;</div><div class="line">@property (nonatomic, readonly) double blueComponent;</div><div class="line"></div><div class="line">@property (nonatomic, strong, readonly) UIColor *color;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
-<p>维基百科提供了转换 RGB 到 Lab 色彩空间的算法。写成方法之后如下所示：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">- (double)greenComponent;</div><div class="line">&#123;</div><div class="line">    return D65TristimulusValues[1] * inverseF(1./116. * (self.lComponent + 16) + 1./500. * self.aComponent);</div><div class="line">&#125;</div><div class="line"></div><div class="line">[...]</div><div class="line"></div><div class="line">- (UIColor *)color</div><div class="line">&#123;</div><div class="line">    return [UIColor colorWithRed:self.redComponent * 0.01 green:self.greenComponent * 0.01 blue:self.blueComponent * 0.01 alpha:1.];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>这些代码没什么令人激动的地方。有趣的是 greenComponent 属性依赖于 lComponent 和 aComponent。不论何时设置 lComponent 的值，我们需要让 RGB 三个 component 中与其相关的成员以及 color 属性都要得到通知以保持一致。这一点这在 KVO 中很重要。</p>
-<p>Foundation 框架提供的表示属性依赖的机制如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">+ (NSSet *)keyPathsForValuesAffectingValueForKey:(NSString *)key</div></pre></td></tr></table></figure>
-<p>更详细的如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">+ (NSSet *)keyPathsForValuesAffecting&lt;键名&gt;</div></pre></td></tr></table></figure>
-<p>在我们的例子中如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">+ (NSSet *)keyPathsForValuesAffectingRedComponent</div><div class="line">&#123;</div><div class="line">    return [NSSet setWithObject:@&quot;lComponent&quot;];</div><div class="line">&#125;</div><div class="line"></div><div class="line">+ (NSSet *)keyPathsForValuesAffectingGreenComponent</div><div class="line">&#123;</div><div class="line">    return [NSSet setWithObjects:@&quot;lComponent&quot;, @&quot;aComponent&quot;, nil];</div><div class="line">&#125;</div><div class="line"></div><div class="line">+ (NSSet *)keyPathsForValuesAffectingBlueComponent</div><div class="line">&#123;</div><div class="line">    return [NSSet setWithObjects:@&quot;lComponent&quot;, @&quot;bComponent&quot;, nil];</div><div class="line">&#125;</div><div class="line"></div><div class="line">+ (NSSet *)keyPathsForValuesAffectingColor</div><div class="line">&#123;</div><div class="line">    return [NSSet setWithObjects:@&quot;redComponent&quot;, @&quot;greenComponent&quot;, @&quot;blueComponent&quot;, nil];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><strong>注意</strong></p>
-<p>这里解释一下，可能有一些朋友对这里的对象依赖关系不是特别清楚。我们拿出一个来解释</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">+ (NSSet *)keyPathsForValuesAffectingGreenComponent</div><div class="line">&#123;</div><div class="line">    return [NSSet setWithObjects:@&quot;lComponent&quot;, @&quot;aComponent&quot;, nil];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><strong>重要</strong></p>
-<p>在这个方法中，它代表的意思是当lComponent属性，或者aComponent属性改变时，需要通知到greenComponent，就相当于，lComponent或者aComponent中的任何一个作出改变时，可以认为greenComponent也发生了改变，如果这时，有一个监听对象，在监听greenComponent，那么当我们改变lComponent或aComponent，这个监听会被触发</p>
-<p>至于这个方法怎么得来的，在peoperty中定义了该属性，你只要敲keyPath就会自动提示出来，有哪些可以设置依赖了</p>
-<p>在我们的color中</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">+ (NSSet *)keyPathsForValuesAffectingColor</div><div class="line">&#123;</div><div class="line">    return [NSSet setWithObjects:@&quot;redComponent&quot;, @&quot;greenComponent&quot;, @&quot;blueComponent&quot;, nil];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>color是依赖于redComponent、greenComponent和blueComponent，这样 我们就能知道，改变lComponent、aComponent、bComponent任何一个，都会触发color的监听</p>
-<p>现在我们完整的表达了属性之间的依赖关系。请注意，我们可以把这些属性链接起来。打个比方，如果我们写一个子类去 override redComponent 方法，这些依赖关系仍然能正常工作。</p>
-<h3 id="观察变化"><a href="#观察变化" class="headerlink" title="观察变化"></a>观察变化</h3><p>现在让我们目光转向控制器。 UIViewController 的子类拥有 LabColor model 对象作为其属性。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">@interface ViewController ()</div><div class="line"></div><div class="line">@property (nonatomic, strong) LabColor *labColor;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
-<p>我们把视图控制器注册为观察者来接收 KVO 的通知，这可以用以下 NSObject 的方法来实现：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">- (void)addObserver:(NSObject *)anObserver</div><div class="line">         forKeyPath:(NSString *)keyPath</div><div class="line">            options:(NSKeyValueObservingOptions)options</div><div class="line">            context:(void *)context</div></pre></td></tr></table></figure>
-<p>这会让以下方法：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">- (void)observeValueForKeyPath:(NSString *)keyPath</div><div class="line">                      ofObject:(id)object</div><div class="line">                        change:(NSDictionary *)change</div><div class="line">                       context:(void *)context</div></pre></td></tr></table></figure>
-<p>在当 keyPath 的值改变的时候在观察者 anObserver 上面被调用。这个 API 看起来有一点吓人。更糟糕的是，我们还得记得调用以下的方法</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">- (void)removeObserver:(NSObject *)anObserver</div><div class="line">            forKeyPath:(NSString *)keyPath</div></pre></td></tr></table></figure>
-<p>来移除观察者，否则我们我们的 app 会因为某些奇怪的原因崩溃。</p>
-<p>对于大多数的应用来说，KVO 可以通过辅助类用一种更简单优雅的方式实现。我们在视图控制器添加以下的观察记号（Observation token）属性：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">@property (nonatomic, strong) id colorObserveToken;</div></pre></td></tr></table></figure>
-<p>当 labColor 在视图控制器中被设置时，我们只要 override labColor 的 setter 方法就行了：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">- (void)setLabColor:(LabColor *)labColor</div><div class="line">&#123;</div><div class="line">    _labColor = labColor;</div><div class="line">    self.colorObserveToken = [KeyValueObserver observeObject:labColor</div><div class="line">                                                     keyPath:@&quot;color&quot;</div><div class="line">                                                      target:self</div><div class="line">                                                    selector:@selector(colorDidChange:)</div><div class="line">                                                     options:NSKeyValueObservingOptionInitial];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)colorDidChange:(NSDictionary *)change;</div><div class="line">&#123;</div><div class="line">    self.colorView.backgroundColor = self.labColor.color;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>我们封装一个KeyValueObserver辅助类</p>
-<p>KeyValueObserver 辅助类 封装了 -addObserver:forKeyPath:options:context:，-observeValueForKeyPath:ofObject:change:context:和-removeObserverForKeyPath: 的调用，让视图控制器远离杂乱的代码。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">// 其中__attribute__((warn_unused_result))这个的意思是，当调用这个方法时，必须要检查返回值，或者使用返回值，不然编译器直接报警告</div><div class="line"></div><div class="line">+ (NSObject *)observeObject:(id)object keyPath:(NSString*)keyPath target:(id)target selector:(SEL)selector __attribute__((warn_unused_result));</div><div class="line"></div><div class="line"></div><div class="line">+ (NSObject *)observeObject:(id)object keyPath:(NSString*)keyPath target:(id)target selector:(SEL)selector options:(NSKeyValueObservingOptions)options __attribute__((warn_unused_result));</div></pre></td></tr></table></figure>
-<h3 id="整合到一起"><a href="#整合到一起" class="headerlink" title="整合到一起"></a>整合到一起</h3><p>视图控制器需要对 L，a，b 的滑块控制做出反应：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">- (void)updateLComponent:(UISlider *)sender;</div><div class="line">&#123;</div><div class="line">    self.labColor.lComponent = sender.value;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)updateAComponent:(UISlider *)sender;</div><div class="line">&#123;</div><div class="line">    self.labColor.aComponent = sender.value;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)updateBComponent:(UISlider *)sender;</div><div class="line">&#123;</div><div class="line">    self.labColor.bComponent = sender.value;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>我们来看一下效果</p>
-<p><img src="http://o8bxt3lx0.bkt.clouddn.com/blog/2016-11-21-KVC%26KVO-%E4%B8%80-.gif" alt=""></p>
-<p>源工程:</p>
-<p><a href="https://github.com/yangqian111/blog/tree/master/iOS%20KVC和KVO(一" target="_blank" rel="external">https://github.com/yangqian111/blog/tree/master/iOS%20KVC和KVO(一</a>)</p>
-<p>参考:<br>    <a href="https://www.objccn.io/issue-7-3/" target="_blank" rel="external">https://www.objccn.io/issue-7-3/</a></p>
+<h3 id="把-Data-Source-和其他-Protocols-分离出来"><a href="#把-Data-Source-和其他-Protocols-分离出来" class="headerlink" title="把 Data Source 和其他 Protocols 分离出来"></a>把 Data Source 和其他 Protocols 分离出来</h3><p>我们在平时的编码中，最经常使用到的一个控件就是UITableView了，那我们每次需要使用到tableview的时候，都需要写一些重复的代码，比如</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">#pragma mark - tableview datasource</div><div class="line"></div><div class="line">#pragma mark - tableview datasource</div><div class="line"></div><div class="line">- (PPSFriend *)friendAtIndexPath:(NSIndexPath *)indexPath&#123;</div><div class="line">    return self.friends[indexPath.row];</div><div class="line">&#125;</div><div class="line"></div><div class="line">-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section&#123;</div><div class="line">    return self.friends.count;</div><div class="line">&#125;</div><div class="line"></div><div class="line">-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath&#123;</div><div class="line">    PPSFriendCell *cell = [tableView dequeueReusableCellWithIdentifier:@&quot;friendCell&quot; forIndexPath:indexPath];</div><div class="line">    PPSFriend *friend = [self friendAtIndexPath:indexPath];</div><div class="line">    cell.textLabel.text = friend.name;</div><div class="line">    return cell;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>像上面一些代码，我们每天都在写，每次用到UITableView都需要重写这些毫无技术可言的代码，那我们试想一下能否写一个封装类，将这些重复的方法全部封起来，多次使用呢？答案当然是，可以的。</p>
+<p>上面的代码，其实都是在围绕着friends这个数组做一系列的事情，我们可以独立出来一个类，使用一个block或者delegate来设置cell，当然这取决于你的习惯。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">#pragma mark - tableview config cell</div><div class="line">- (void)configCell&#123;</div><div class="line">    void (^configCell)(PPSFriendCell *, PPSFriend *) = ^(PPSFriendCell *cell, PPSFriend *friend)&#123;</div><div class="line">        cell.textLabel.text = friend.name;</div><div class="line">    &#125;;</div><div class="line">    PPSArrayDatasource *datasources = [[PPSArrayDatasource alloc] initWithItems:self.friends cellIdentifier:@&quot;friendCell&quot; configureCellBlock:configCell];</div><div class="line">    self.tableView.dataSource = datasources;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>现在，你可以把 view controller 中的这 3 个方法去掉了，取而代之，你可以创建一个 PPSArrayDatasource 类的实例作为 table view 的 data source。</p>
+<p>现在你不用担心把一个 index path 映射到数组中的位置了，每次你想把这个数组显示到一个 table view 中时，你都可以复用这些代码。你也可以实现一些额外的方法，比如 </p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">tableView:commitEditingStyle:forRowAtIndexPath:</div></pre></td></tr></table></figure>
+<h4 id="多个section"><a href="#多个section" class="headerlink" title="多个section"></a>多个section</h4><p>还有一种情况，如果是多个section的情况下，我们还可以再扩展一下，将block定义为</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">typedef void(^TableViewCellConfigureBlock)(id cell, id item, NSIndexPath *indexPath);</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">#pragma mark - tableview config cell</div><div class="line">- (void)configCell&#123;</div><div class="line">    void (^configCell)(PPSFriendCell *, PPSFriend *, NSIndexPath *) = ^(PPSFriendCell *cell, PPSFriend *friend, NSIndexPath *indexPath)&#123;</div><div class="line">        cell.textLabel.text = friend.name;</div><div class="line">    &#125;;</div><div class="line">    PPSArrayDatasource *datasources = [[PPSArrayDatasource alloc] initWithItems:self.friends cellIdentifier:@&quot;friendCell&quot; configureCellBlock:configCell];</div><div class="line">    self.tableView.dataSource = datasources;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>那么在PPSArrayDatasource的items中装的应该就是一个一个的数组了，分别对应的每个section，这里我只是针对这种情况说明一下，不管是多个section还是单个section都可以使用这种方法，来瘦身</p>
+<p>在 table view controllers 之间共享。</p>
+<p>这样的好处在于，你可以单独测试这个类，再也不用写第二遍。该原则同样适用于数组之外的其他对象。</p>
+<h3 id="将业务逻辑移到model中"><a href="#将业务逻辑移到model中" class="headerlink" title="将业务逻辑移到model中"></a>将业务逻辑移到model中</h3><p>下面是在viewcontroller中写的用来查找一个用户的目前的优先事项的列表：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">- (void)loadPriorities &#123;</div><div class="line">    NSDate* now = [NSDate date];</div><div class="line">    NSString* formatString = @&quot;startDate = %@&quot;;</div><div class="line">    NSPredicate* predicate = [NSPredicate predicateWithFormat:formatString, now, now];</div><div class="line">    NSSet* priorities = [self.user.priorities filteredSetUsingPredicate:predicate];</div><div class="line">    self.priorities = [priorities allObjects];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>把这些代码移动到 User 类的 category 中会变得更加清晰，处理之后，在 View Controller.m 中看起来就是这样：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">- (void)loadPriorities &#123;</div><div class="line">    self.priorities = [user currentPriorities];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在 User+Extensions.m 中：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">- (NSArray*)currentPriorities &#123;</div><div class="line">    NSDate* now = [NSDate date];</div><div class="line">    NSString* formatString = @&quot;startDate = %@&quot;;</div><div class="line">    NSPredicate* predicate = [NSPredicate predicateWithFormat:formatString, now, now];</div><div class="line">    return [[self.priorities filteredSetUsingPredicate:predicate] allObjects];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>有些代码不能被轻松地移动到 model 对象中，但明显和 model 代码紧密联系，对于这种情况，我们可以使用一个 Store：</p>
+<h3 id="创建store类"><a href="#创建store类" class="headerlink" title="创建store类"></a>创建store类</h3><p>在一些情况下中，我们需要加载文件并解析它。下面就是 view controller 中的代码：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">- (void)readArchive &#123;</div><div class="line">    NSBundle* bundle = [NSBundle bundleForClass:[self class]];</div><div class="line">    NSURL *archiveURL = [bundle URLForResource:@&quot;photodata&quot;</div><div class="line">                                 withExtension:@&quot;bin&quot;];</div><div class="line">    NSAssert(archiveURL != nil, @&quot;Unable to find archive in bundle.&quot;);</div><div class="line">    NSData *data = [NSData dataWithContentsOfURL:archiveURL</div><div class="line">                                         options:0</div><div class="line">                                           error:NULL];</div><div class="line">    NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];</div><div class="line">    _users = [unarchiver decodeObjectOfClass:[NSArray class] forKey:@&quot;users&quot;];</div><div class="line">    _photos = [unarchiver decodeObjectOfClass:[NSArray class] forKey:@&quot;photos&quot;];</div><div class="line">    [unarchiver finishDecoding];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>但是 view controller 没必要知道这些，所以我们可以创建了一个 Store 对象来做这些事。通过分离，我们就可以复用这些代码，单独测试他们，并且让 view controller 保持小巧。Store 对象会关心数据加载、缓存和设置数据栈。它也经常被称为服务层或者仓库。</p>
+<h3 id="把网络层请求逻辑移到model层"><a href="#把网络层请求逻辑移到model层" class="headerlink" title="把网络层请求逻辑移到model层"></a>把网络层请求逻辑移到model层</h3><p>和上面的主题相似：不要在 view controller 中做网络请求的逻辑。取而代之，你应该将它们封装到另一个类中。这样，你的 view controller 就可以在之后通过使用回调（比如一个 completion 的 block）来请求网络了。这样的好处是，缓存和错误控制也可以在这个类里面完成。</p>
+<h3 id="把View移到View层"><a href="#把View移到View层" class="headerlink" title="把View移到View层"></a>把View移到View层</h3><p>不应该在 view controller 中构建复杂的 view 层次结构。你可以使用 Interface Builder 或者把 views 封装到一个 UIView 子类当中。例如，如果你要创建一个选择日期的控件，把它放到一个名为 DatePickerView 的类中会比把所有的事情都在 view controller 中做好好得多。再一次，这样增加了可复用性并保持了简单。</p>
+<p>简单来说，就是将一个viewcontroller中复杂的view构造，放到一个单独的view类中，然在viewcontroller中，只需要构建一个这个类就行。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>我们已经看到一些用来创建更小巧的 view controllers 的技术。我们并不是想把这些技术应用到每一个可能的角落，只是我们有一个目标：写可维护的代码。知道这些模式后，我们就更有可能把那些笨重的 view controllers 变得更整洁。</p>
 
       
     </div>
@@ -445,7 +420,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/KVC和KVO/" rel="tag">#KVC和KVO</a>
+            <a href="/tags/更轻量级的ViewController/" rel="tag">#更轻量级的ViewController</a>
           
         </div>
       
@@ -454,17 +429,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/11/18/iOS图形几何学基础-动画基础之二/" rel="next" title="iOS图形几何学基础-动画基础之二">
-                <i class="fa fa-chevron-left"></i> iOS图形几何学基础-动画基础之二
+              <a href="/2016/12/05/KVC和KVO-三/" rel="next" title="KVC和KVO(三)">
+                <i class="fa fa-chevron-left"></i> KVC和KVO(三)
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/11/28/KVC和KVO-二/" rel="prev" title="KVC和KVO(二)">
-                KVC和KVO(二) <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -490,8 +461,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/11/19/KVC和KVO(一)/"
-           data-title="KVC和KVO(一)" data-url="http://yoursite.com/2016/11/19/KVC和KVO(一)/">
+      <div class="ds-thread" data-thread-key="2016/12/05/ViewControllers瘦身计划-一/"
+           data-title="ViewControllers瘦身计划(一)" data-url="http://yoursite.com/2016/12/05/ViewControllers瘦身计划-一/">
       </div>
     
   </div>
@@ -582,7 +553,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#观察model对象的变化"><span class="nav-number">1.</span> <span class="nav-text">观察model对象的变化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#依赖的属性"><span class="nav-number">2.</span> <span class="nav-text">依赖的属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#观察变化"><span class="nav-number">3.</span> <span class="nav-text">观察变化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#整合到一起"><span class="nav-number">4.</span> <span class="nav-text">整合到一起</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#把-Data-Source-和其他-Protocols-分离出来"><span class="nav-number">1.</span> <span class="nav-text">把 Data Source 和其他 Protocols 分离出来</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#多个section"><span class="nav-number">1.1.</span> <span class="nav-text">多个section</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#将业务逻辑移到model中"><span class="nav-number">2.</span> <span class="nav-text">将业务逻辑移到model中</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建store类"><span class="nav-number">3.</span> <span class="nav-text">创建store类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#把网络层请求逻辑移到model层"><span class="nav-number">4.</span> <span class="nav-text">把网络层请求逻辑移到model层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#把View移到View层"><span class="nav-number">5.</span> <span class="nav-text">把View移到View层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">6.</span> <span class="nav-text">总结</span></a></li></ol></div>
             
           </div>
         </section>
