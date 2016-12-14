@@ -90,10 +90,12 @@
 <meta property="og:url" content="http://yoursite.com/2016/12/14/ViewControllers瘦身计划-二/index.html">
 <meta property="og:site_name" content="ppsheep">
 <meta property="og:description" content="在上一篇文章中  我们讲了通过整合tableview的代理，来达到代码复用，减少控制器代码量的效果，今天我们接着来讲另外的一些方法来减轻控制器代码量，整合封装，提高代码的可读性。">
-<meta property="og:updated_time" content="2016-12-14T03:51:39.000Z">
+<meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/blog/2016-12-14-032856.jpg">
+<meta property="og:updated_time" content="2016-12-14T03:58:34.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ViewControllers瘦身计划(二)">
 <meta name="twitter:description" content="在上一篇文章中  我们讲了通过整合tableview的代理，来达到代码复用，减少控制器代码量的效果，今天我们接着来讲另外的一些方法来减轻控制器代码量，整合封装，提高代码的可读性。">
+<meta name="twitter:image" content="http://o8bxt3lx0.bkt.clouddn.com/blog/2016-12-14-032856.jpg">
 
 
 
@@ -360,6 +362,7 @@
 <p>我想要使用这个UITableViewController来管理我的tableview</p>
 <p>然后  我还有一个view controller，在这个view controller中  我既要包含这个table view  还要有其他的view  用上面的加自controller来实现</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><div class="line"></div><div class="line">@implementation ViewController</div><div class="line"></div><div class="line">- (void)viewDidLoad &#123;</div><div class="line">    [super viewDidLoad];</div><div class="line">    [self addMyTableViewController];</div><div class="line">    [self addOtherView];</div><div class="line">&#125;</div><div class="line"></div><div class="line">//添加zicontroller</div><div class="line">- (void)addMyTableViewController&#123;</div><div class="line">    MyTableViewController *vc = [[MyTableViewController alloc] init];</div><div class="line">    [self addChildViewController:vc];</div><div class="line">    CGRect frame = self.view.bounds;</div><div class="line">    frame.size.height = 300;</div><div class="line">    vc.view.frame = frame;</div><div class="line">    [self.view addSubview:vc.view];</div><div class="line">    [vc didMoveToParentViewController:self];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)addOtherView&#123;</div><div class="line">    UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(20, 400, 100, 30)];</div><div class="line">    btn.backgroundColor = [UIColor redColor];</div><div class="line">    [self.view addSubview:btn];</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">- (void)didReceiveMemoryWarning &#123;</div><div class="line">    [super didReceiveMemoryWarning];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><img src="http://o8bxt3lx0.bkt.clouddn.com/blog/2016-12-14-032856.jpg" alt=""></p>
 <p>如果我们使用了这种方法，那么我们就需要在子controller 和 父 controller之间建立起通信渠道，因为，如果点击了cell，在父类中我需要知道，虽然这样看起来是额外的开销，但是我们的代码变得非常清晰，复用性也更高</p>
 <p>我们怎样建立起通信呢，当然最简单的就是使用delegate，这个就比较简单的了</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">#import &lt;UIKit/UIKit.h&gt;</div><div class="line"></div><div class="line">@protocol MyTableViewControllerDelegate &lt;NSObject&gt;</div><div class="line"></div><div class="line">- (void)didSelectCell;</div><div class="line"></div><div class="line">@end</div><div class="line"></div><div class="line"></div><div class="line">@interface MyTableViewController : UITableViewController</div><div class="line"></div><div class="line">@property (nonatomic, weak) id&lt;MyTableViewControllerDelegate&gt; delegate;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
@@ -375,6 +378,8 @@
 <figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">-(void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated&#123;</div><div class="line">    [super setHighlighted:highlighted animated:animated];</div><div class="line">    if (highlighted) &#123;</div><div class="line">        //高亮时改变cell的状态</div><div class="line">    &#125;else&#123;</div><div class="line">        //非高亮时改变</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>Table view controllers（以及其他的 controller 对象！）应该在 model 和 view 对象之间扮演协调者和调解者的角色。它不应该关心明显属于 view 层或 model 层的任务。你应该始终记住这点，这样 delegate 和 data source 方法会变得更小巧，最多包含一些简单的样板代码。</p>
 <p>这不仅减少了 table view controllers 那样的大小和复杂性，而且还把业务逻辑和 view 的逻辑放到了更合适的地方。Controller 层的里里外外的实现细节都被封装成了简单的 API，最终，它变得更加容易理解，也更利于团队协作。</p>
+<p>参考:</p>
+<p><a href="https://www.objccn.io/issue-1-2/" target="_blank" rel="external">https://www.objccn.io/issue-1-2/</a></p>
 
       
     </div>
