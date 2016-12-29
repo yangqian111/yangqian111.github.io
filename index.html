@@ -345,34 +345,12 @@
 
       
         
-          
-            <h3 id="常量变量"><a href="#常量变量" class="headerlink" title="常量变量"></a>常量变量</h3><p>首先呢，每门语言都是从常量变量讲起，Swift当然也不例外</p>
-<p>在Swift中常量  使用 let声明   变量使用var声明<br>不像OC或者Java 我们在声明常量变量时，可以不加类型，编译器能够帮助我们推断出类型，像这样</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">let myName = &quot;Yang Qian&quot;</div><div class="line"></div><div class="line">var myAge = 23</div></pre></td></tr></table></figure>
-<p>在上面两行中，并没有指明 myAge 和  myName 的类型，编译器也没有报错，当然，我们也是可以声明他们的类型的：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">let myName: String = &quot;Yang Qian&quot;</div><div class="line"></div><div class="line">let myAge: Int  = 23</div><div class="line"></div><div class="line">let 🐶🐮 = &quot;dogcow&quot;</div></pre></td></tr></table></figure>
-<p><em>注意</em>这里有一个书写规范，苹果在文档中特意提醒了，在声明类型的时候，需要在冒号后面空一格，保持格式一致。</p>
-<blockquote>
-<p><strong>常量(let)一旦声明，便不可更改。变量(var)可进行更改</strong></p>
-</blockquote>
-<h3 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h3><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">// This is a comment. 这是一行注释</div><div class="line"></div><div class="line">/*</div><div class="line"> 这是多行注释</div><div class="line"> */</div></pre></td></tr></table></figure>
-<h3 id="分号"><a href="#分号" class="headerlink" title="分号"></a>分号</h3><p>关于分号呢，在Swift中，每个语句结束是不用写分号的，当然也可以写，但是我们推荐呢，还是不要写了，苹果都说不用写了，你还写干嘛，而且现在看一些开源的Swift代码，大神都没写分号。</p>
-<p>但是存在一种情况，就是如果你想在一行写多个语句，那每个语句之间你就需要用分号隔开了</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">//这样就会报错了</div><div class="line">let myName: String = &quot;Yang Qian&quot; let myAge: Int  = 23</div><div class="line">//要这样写</div><div class="line">let myName: String = &quot;Yang Qian&quot; ; let myAge: Int  = 23</div></pre></td></tr></table></figure>
-<p>这样的代码也太丑了吧，还是一行一个语句吧，养成良好的代码习惯</p>
-<h3 id="整数Int"><a href="#整数Int" class="headerlink" title="整数Int"></a>整数Int</h3><p>在Swift上，提供了一个特殊的整数类型Int，在32位的机器上运行，那这个整数的长度就是和Int32相同，如果实在64为机器上运行，那这个整数的长度就是Int64的，一般来说  我们直接使用Int就已经OK了。</p>
-<h3 id="无类型UInt"><a href="#无类型UInt" class="headerlink" title="无类型UInt"></a>无类型UInt</h3><p>无符号类型，一般呢我们不使用，为什么呢？  苹果文档上讲的</p>
-<blockquote>
-<p>Use UInt only when you specifically need an unsigned integer type with the same size as the platform’s native word size. If this is not the case, Int is preferred, even when the values to be stored are known to be non-negative</p>
-</blockquote>
-<h3 id="类型别名"><a href="#类型别名" class="headerlink" title="类型别名"></a>类型别名</h3><p>类型别名  就是给现有的类型加上一个我们自己自定义的名称  使用关键字 typealias定义</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">//这样，我们就将UInt16定义成了 AudioSample</div><div class="line">typealias AudioSample = UInt16</div><div class="line"></div><div class="line">var maxAmplitudeFound = AudioSample.min</div><div class="line">// 等价于  var maxAmplitudeFound = UInt16.min</div></pre></td></tr></table></figure>
-<h3 id="Booleans"><a href="#Booleans" class="headerlink" title="Booleans"></a>Booleans</h3><p>现在我们的布尔值  不再是OC 中的  Yes 和  No 了  需要使用  true  false</p>
-<p>而且 现在呢，我们也不能再使用int的  0  1 来表示  true 或者false 了  之前呢  OC是可以这样使用的  但是在swift中，编译器就会报错了</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">let i = 1</div><div class="line">if i &#123;</div><div class="line">    // this example will not compile, and will report an error</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>这样，苹果讲了，是会报错的</p>
-
-          
+          <p>Swift  该来的还是要来的，Swift使用范围越来越广，你不用，大家都会用，然后呢。。。你又落后了。。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/12/28/Swift第一波/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
