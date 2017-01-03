@@ -345,7 +345,7 @@
         <p><strong>欢迎大家关注我的公众号，我会定期分享一些我在项目中遇到问题的解决办法和一些iOS实用的技巧，现阶段主要是整理出一些基础的知识记录下来</strong></p>
 <div align="middle"><br>    <image src="http://ac-mhke0kuv.clouddn.com/830a4ead8294ceff5160.jpg"></image><br></div>
 
-<p>文章也会同步更新到我的博客：<br><a href="http://ppsheep.com" target="_blank" rel="external">http://ppsheep.com</a></p>
+<p>文章也会同步更新到我的博客：<br><a href="http://ppsheep.com">http://ppsheep.com</a></p>
 <h3 id="KVO和线程"><a href="#KVO和线程" class="headerlink" title="KVO和线程"></a>KVO和线程</h3><p>KVO 行为是同步的 并且发生与所观察的值发生变化的同样的线程上。这听起来有点拗口，简单点说，就是监听行为发生的线程和所观察的值发生变化的线程，肯定是同一个线程，这样我们使用的时候就需要注意了：</p>
 <p>当我们试图从其他线程改变属性值的时候我们应当十分小心，除非能确定所有的观察者都用线程安全的方法处理 KVO 通知</p>
 <p>通常来说，我们不推荐把 KVO 和多线程混起来。如果我们要用多个队列和线程，我们不应该在它们互相之间用 KVO。</p>
@@ -475,9 +475,6 @@
 
           </div>
           
-
-  <p>热评文章</p>
-  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
 
 
           

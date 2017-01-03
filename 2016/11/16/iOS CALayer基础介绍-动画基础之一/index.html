@@ -358,7 +358,7 @@
         <p><strong>欢迎大家关注我的公众号，我会定期分享一些我在项目中遇到问题的解决办法和一些iOS实用的技巧，现阶段主要是整理出一些基础的知识记录下来</strong></p>
 <div align="middle"><br>    <image src="http://ac-mhke0kuv.clouddn.com/830a4ead8294ceff5160.jpg"></image><br></div>
 
-<p>文章也会同步更新到我的博客：<br><a href="http://ppsheep.com" target="_blank" rel="external">http://ppsheep.com</a></p>
+<p>文章也会同步更新到我的博客：<br><a href="http://ppsheep.com">http://ppsheep.com</a></p>
 <h3 id="动画的由来"><a href="#动画的由来" class="headerlink" title="动画的由来"></a>动画的由来</h3><p>在iOS中所有的视图都是从UIView的基类派生而来，UIView可以处理触摸事件，可以支持基于Core Graphics绘图，也能够做一些简单的动画，比如旋转、缩放或者其他一些滑动渐变的动画。但是实际上，这是苹果为我们封装了一层，真正实现动画的其实是一个叫做图层的玩意儿(CALayer)，UIView所做的一切动画，都是苹果从CALayer封装而来。</p>
 <h3 id="CALayer"><a href="#CALayer" class="headerlink" title="CALayer"></a>CALayer</h3><p>CALayer类在概念上和UIView类似，也可以像View一样添加一些子layer(图片，文本等等)，也能够像View一样，管理子图层的位置大小等等，并且，CALayer有一些非常重要的属性和方法，iOS中的动画就是通过这些来做动画和变换，CALayer和UIView最大的不同就是CALayer不处理用户的交互。</p>
 <h3 id="UIView和CALayer的关系"><a href="#UIView和CALayer的关系" class="headerlink" title="UIView和CALayer的关系"></a>UIView和CALayer的关系</h3><p>每一个UIView都有一个CALayer实例属性，UIView的职责就是创建并创建这个图层，以确保在子视图被创建时，子图层也能够被创建，子视图被添加和移除的时候，子图层也能够做相对的添加移除操作。 他们的关系是一一对应的。</p>
@@ -548,9 +548,6 @@
 
           </div>
           
-
-  <p>热评文章</p>
-  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
 
 
           

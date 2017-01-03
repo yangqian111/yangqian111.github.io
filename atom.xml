@@ -342,7 +342,7 @@
     <content type="html"><![CDATA[<p><strong>欢迎大家关注我的公众号，我会定期分享一些我在项目中遇到问题的解决办法和一些iOS实用的技巧，现阶段主要是整理出一些基础的知识记录下来</strong></p>
 <div align="middle"><br>    <image src="http://ac-mhke0kuv.clouddn.com/830a4ead8294ceff5160.jpg"></image><br></div>
 
-<p>文章也会同步更新到我的博客：<br><a href="http://ppsheep.com" target="_blank" rel="external">http://ppsheep.com</a></p>
+<p>文章也会同步更新到我的博客：<br><a href="http://ppsheep.com">http://ppsheep.com</a></p>
 <h3 id="获取当前设备的IP地址"><a href="#获取当前设备的IP地址" class="headerlink" title="获取当前设备的IP地址"></a>获取当前设备的IP地址</h3><p>对于公网的IP当然，在我们本地设备上是不能够获取到的，至少我没有找到方法获取到出口IP地址，但是局域网的IP还是能够获取到的，这里ipv4和ipv6 都能够获取出来</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">+ (NSString *)deviceIPAdress</div><div class="line">&#123;</div><div class="line">    NSString *address = @&quot;&quot;;</div><div class="line">    struct ifaddrs *interfaces = NULL;</div><div class="line">    struct ifaddrs *temp_addr = NULL;</div><div class="line">    int success = 0;</div><div class="line">    </div><div class="line">    success = getifaddrs(&amp;interfaces);</div><div class="line">    </div><div class="line">    if (success == 0) &#123;  // 0 表示获取成功</div><div class="line">        </div><div class="line">        temp_addr = interfaces;</div><div class="line">        while (temp_addr != NULL) &#123;</div><div class="line">            </div><div class="line">            if ([[NSString stringWithUTF8String:temp_addr-&gt;ifa_name] isEqualToString:@&quot;en0&quot;] || [[NSString stringWithUTF8String:temp_addr-&gt;ifa_name] isEqualToString:@&quot;pdp_ip0&quot;])</div><div class="line">                &#123;</div><div class="line">                //如果是IPV4地址，直接转化</div><div class="line">                if (temp_addr-&gt;ifa_addr-&gt;sa_family == AF_INET)&#123;</div><div class="line">                    </div><div class="line">                    // Get NSString from C String</div><div class="line">                    address = [self formatIPV4Address:((struct sockaddr_in *)temp_addr-&gt;ifa_addr)-&gt;sin_addr];</div><div class="line">                &#125;</div><div class="line">                </div><div class="line">                //如果是IPV6地址</div><div class="line">                else if (temp_addr-&gt;ifa_addr-&gt;sa_family == AF_INET6)&#123;</div><div class="line">                    address = [self formatIPV6Address:((struct sockaddr_in6 *)temp_addr-&gt;ifa_addr)-&gt;sin6_addr];</div><div class="line">                    if (address &amp;&amp; ![address isEqualToString:@&quot;&quot;] &amp;&amp; ![address.uppercaseString hasPrefix:@&quot;FE80&quot;]) break;</div><div class="line">                &#125;</div><div class="line">                &#125;</div><div class="line">            </div><div class="line">            temp_addr = temp_addr-&gt;ifa_next;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    freeifaddrs(interfaces);</div><div class="line">    </div><div class="line">    //以FE80开始的地址是单播地址</div><div class="line">    if (address &amp;&amp; ![address isEqualToString:@&quot;&quot;] &amp;&amp; ![address.uppercaseString hasPrefix:@&quot;FE80&quot;]) &#123;</div><div class="line">        return address;</div><div class="line">    &#125; else &#123;</div><div class="line">        return @&quot;127.0.0.1&quot;;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h3 id="获取当前设备网关地址"><a href="#获取当前设备网关地址" class="headerlink" title="获取当前设备网关地址"></a>获取当前设备网关地址</h3><p>网关地址，通俗点  就是路由器的地址，也是相对于局域网 这里需要区分一下ipv4和ipv6，两种获取网关地址的方法是不一样</p>
@@ -385,7 +385,7 @@
     <content type="html"><![CDATA[<p><strong>欢迎大家关注我的公众号，我会定期分享一些我在项目中遇到问题的解决办法和一些iOS实用的技巧，现阶段主要是整理出一些基础的知识记录下来</strong></p>
 <div align="middle"><br>    <image src="http://ac-mhke0kuv.clouddn.com/830a4ead8294ceff5160.jpg"></image><br></div>
 
-<p>文章也会同步更新到我的博客：<br><a href="http://ppsheep.com" target="_blank" rel="external">http://ppsheep.com</a></p>
+<p>文章也会同步更新到我的博客：<br><a href="http://ppsheep.com">http://ppsheep.com</a></p>
 <h3 id="OS-X和iOS中的并发编程"><a href="#OS-X和iOS中的并发编程" class="headerlink" title="OS X和iOS中的并发编程"></a>OS X和iOS中的并发编程</h3><p>在OS X和iOS中，Apple都为我们提供了相同的并发编程API。pthread 、 NSThread 、GCD 、NSOperationQueue。</p>
 <h4 id="pthread"><a href="#pthread" class="headerlink" title="pthread"></a>pthread</h4><p>pthread是比较底层的并发API，这个用起来并不是那么容易，而且在我们日常的编码过程中，我们也应该抛弃掉这种效率极低的并发编程方式。这里就不对这种并发做过多详细的介绍。</p>
 <h4 id="NSThread"><a href="#NSThread" class="headerlink" title="NSThread"></a>NSThread</h4><p>NSThread这个我们听起来就很熟悉了，实际上，这是Apple对pthread的一个封装，封装成了Objectivc-C的接口API，在cocoa环境中，我们能够轻易使用NSThread来进行并发编程。</p>
@@ -448,7 +448,7 @@
     <content type="html"><![CDATA[<p><strong>欢迎大家关注我的公众号，我会定期分享一些我在项目中遇到问题的解决办法和一些iOS实用的技巧，现阶段主要是整理出一些基础的知识记录下来</strong></p>
 <div align="middle"><br>    <image src="http://ac-mhke0kuv.clouddn.com/830a4ead8294ceff5160.jpg"></image><br></div>
 
-<p>文章也会同步更新到我的博客：<br><a href="http://ppsheep.com" target="_blank" rel="external">http://ppsheep.com</a></p>
+<p>文章也会同步更新到我的博客：<br><a href="http://ppsheep.com">http://ppsheep.com</a></p>
 <h3 id="UITableViewController的使用"><a href="#UITableViewController的使用" class="headerlink" title="UITableViewController的使用"></a>UITableViewController的使用</h3><p>TableView在iOS应用程序中是非常通用的组件，Apple为我们提供了tableview专属的view controller类UITableViewController。Table view controller实现了一些非常有用的特性，来避免一遍又一遍的写那些死板的代码！</p>
 <p>但是，我们经常会遇到这样一个问题，table view controller 只限于管理一个全屏展示的table view。大多数情况下，我们想达到的效果就是这样，但是如果不是呢，我们就只能使用通常的控制器，其实还有其他的方法来达到使用table view controller 的目的。</p>
 <h4 id="UITableViewController的特性"><a href="#UITableViewController的特性" class="headerlink" title="UITableViewController的特性"></a>UITableViewController的特性</h4><p>Table view controllers 会在第一次显示 table view 的时候帮你加载其数据。另外，它还会帮你切换 table view 的编辑模式、响应键盘通知、以及一些小任务，比如闪现侧边的滑动提示条和清除选中时的背景色。为了让这些特性生效，当你在子类中覆写类似 viewWillAppear: 或者 viewDidAppear: 等事件方法时，需要调用 super 版本。</p>
@@ -508,7 +508,7 @@
     <content type="html"><![CDATA[<p><strong>欢迎大家关注我的公众号，我会定期分享一些我在项目中遇到问题的解决办法和一些iOS实用的技巧，现阶段主要是整理出一些基础的知识记录下来</strong></p>
 <div align="middle"><br>    <image src="http://ac-mhke0kuv.clouddn.com/830a4ead8294ceff5160.jpg"></image><br></div>
 
-<p>文章也会同步更新到我的博客：<br><a href="http://ppsheep.com" target="_blank" rel="external">http://ppsheep.com</a></p>
+<p>文章也会同步更新到我的博客：<br><a href="http://ppsheep.com">http://ppsheep.com</a></p>
 <h3 id="把-Data-Source-和其他-Protocols-分离出来"><a href="#把-Data-Source-和其他-Protocols-分离出来" class="headerlink" title="把 Data Source 和其他 Protocols 分离出来"></a>把 Data Source 和其他 Protocols 分离出来</h3><p>我们在平时的编码中，最经常使用到的一个控件就是UITableView了，那我们每次需要使用到tableview的时候，都需要写一些重复的代码，比如</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">#pragma mark - tableview datasource</div><div class="line"></div><div class="line">#pragma mark - tableview datasource</div><div class="line"></div><div class="line">- (PPSFriend *)friendAtIndexPath:(NSIndexPath *)indexPath&#123;</div><div class="line">    return self.friends[indexPath.row];</div><div class="line">&#125;</div><div class="line"></div><div class="line">-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section&#123;</div><div class="line">    return self.friends.count;</div><div class="line">&#125;</div><div class="line"></div><div class="line">-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath&#123;</div><div class="line">    PPSFriendCell *cell = [tableView dequeueReusableCellWithIdentifier:@&quot;friendCell&quot; forIndexPath:indexPath];</div><div class="line">    PPSFriend *friend = [self friendAtIndexPath:indexPath];</div><div class="line">    cell.textLabel.text = friend.name;</div><div class="line">    return cell;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>像上面一些代码，我们每天都在写，每次用到UITableView都需要重写这些毫无技术可言的代码，那我们试想一下能否写一个封装类，将这些重复的方法全部封起来，多次使用呢？答案当然是，可以的。</p>
@@ -562,7 +562,7 @@
     <content type="html"><![CDATA[<p><strong>欢迎大家关注我的公众号，我会定期分享一些我在项目中遇到问题的解决办法和一些iOS实用的技巧，现阶段主要是整理出一些基础的知识记录下来</strong></p>
 <div align="middle"><br>    <image src="http://ac-mhke0kuv.clouddn.com/830a4ead8294ceff5160.jpg"></image><br></div>
 
-<p>文章也会同步更新到我的博客：<br><a href="http://ppsheep.com" target="_blank" rel="external">http://ppsheep.com</a></p>
+<p>文章也会同步更新到我的博客：<br><a href="http://ppsheep.com">http://ppsheep.com</a></p>
 <h3 id="KVO和线程"><a href="#KVO和线程" class="headerlink" title="KVO和线程"></a>KVO和线程</h3><p>KVO 行为是同步的 并且发生与所观察的值发生变化的同样的线程上。这听起来有点拗口，简单点说，就是监听行为发生的线程和所观察的值发生变化的线程，肯定是同一个线程，这样我们使用的时候就需要注意了：</p>
 <p>当我们试图从其他线程改变属性值的时候我们应当十分小心，除非能确定所有的观察者都用线程安全的方法处理 KVO 通知</p>
 <p>通常来说，我们不推荐把 KVO 和多线程混起来。如果我们要用多个队列和线程，我们不应该在它们互相之间用 KVO。</p>
@@ -629,8 +629,8 @@
     <content type="html"><![CDATA[<p><strong>欢迎大家关注我的公众号，我会定期分享一些我在项目中遇到问题的解决办法和一些iOS实用的技巧，现阶段主要是整理出一些基础的知识记录下来</strong></p>
 <div align="middle"><br>    <image src="http://ac-mhke0kuv.clouddn.com/830a4ead8294ceff5160.jpg"></image><br></div>
 
-<p>文章也会同步更新到我的博客：<br><a href="http://ppsheep.com" target="_blank" rel="external">http://ppsheep.com</a></p>
-<p>在上一篇文章中，我们讲到，通过键值观察，属性依赖，来讲解KVC，如果没有看过上一篇文章的，请移步<br><a href="http://ppsheep.com/2016/11/19/KVC和KVO(一)/" target="_blank" rel="external">http://ppsheep.com/2016/11/19/KVC和KVO(一)/</a></p>
+<p>文章也会同步更新到我的博客：<br><a href="http://ppsheep.com">http://ppsheep.com</a></p>
+<p>在上一篇文章中，我们讲到，通过键值观察，属性依赖，来讲解KVC，如果没有看过上一篇文章的，请移步<br><a href="http://ppsheep.com/2016/11/19/KVC和KVO(一)/">http://ppsheep.com/2016/11/19/KVC和KVO(一)/</a></p>
 <h3 id="手动通知和自动通知"><a href="#手动通知和自动通知" class="headerlink" title="手动通知和自动通知"></a>手动通知和自动通知</h3><p>在OC中，消息通知扮演着很重要的角色，在我们在调用 LabColor 类的 -setLComponent:方法时，会触发以下方法的调用</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">- (void)willChangeValueForKey:(NSString *)key</div></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">- (void)didChangeValueForKey:(NSString *)key</div></pre></td></tr></table></figure>
@@ -689,7 +689,7 @@
     <content type="html"><![CDATA[<p><strong>欢迎大家关注我的公众号，我会定期分享一些我在项目中遇到问题的解决办法和一些iOS实用的技巧，现阶段主要是整理出一些基础的知识记录下来</strong></p>
 <div align="middle"><br>    <image src="http://ac-mhke0kuv.clouddn.com/830a4ead8294ceff5160.jpg"></image><br></div>
 
-<p>文章也会同步更新到我的博客：<br><a href="http://ppsheep.com" target="_blank" rel="external">http://ppsheep.com</a></p>
+<p>文章也会同步更新到我的博客：<br><a href="http://ppsheep.com">http://ppsheep.com</a></p>
 <h3 id="观察model对象的变化"><a href="#观察model对象的变化" class="headerlink" title="观察model对象的变化"></a>观察model对象的变化</h3><p>在 Cocoa 的模型-视图-控制器 (Model-view-controller)架构里，控制器负责让视图和模型同步。这一共有两步：当 model 对象改变的时候，视图应该随之改变以反映模型的变化；当用户和控制器交互的时候，模型也应该做出相应的改变。</p>
 <p>KVO 能帮助我们让视图和模型保持同步。控制器可以观察视图依赖的属性变化。</p>
 <p>让我们看一个例子：我们的模型类 LabColor 代表一种 Lab色彩空间里的颜色。和 RGB 不同，这种色彩空间有三个元素 L, a, b。我们要做一个用来改变这些值的滑块和一个显示颜色的方块区域。</p>
@@ -766,7 +766,7 @@
     <content type="html"><![CDATA[<p><strong>欢迎大家关注我的公众号，我会定期分享一些我在项目中遇到问题的解决办法和一些iOS实用的技巧，现阶段主要是整理出一些基础的知识记录下来</strong></p>
 <div align="middle"><br>    <image src="http://ac-mhke0kuv.clouddn.com/830a4ead8294ceff5160.jpg"></image><br></div>
 
-<p>文章也会同步更新到我的博客：<br><a href="http://ppsheep.com" target="_blank" rel="external">http://ppsheep.com</a></p>
+<p>文章也会同步更新到我的博客：<br><a href="http://ppsheep.com">http://ppsheep.com</a></p>
 <h3 id="布局"><a href="#布局" class="headerlink" title="布局"></a>布局</h3><p>UIView有三个比较重要的布局属性：</p>
 <ul>
 <li>frame    (代表了图层的外部坐标，也就是相对于父视图的位置)</li>
@@ -869,7 +869,7 @@
     <content type="html"><![CDATA[<p><strong>欢迎大家关注我的公众号，我会定期分享一些我在项目中遇到问题的解决办法和一些iOS实用的技巧，现阶段主要是整理出一些基础的知识记录下来</strong></p>
 <div align="middle"><br>    <image src="http://ac-mhke0kuv.clouddn.com/830a4ead8294ceff5160.jpg"></image><br></div>
 
-<p>文章也会同步更新到我的博客：<br><a href="http://ppsheep.com" target="_blank" rel="external">http://ppsheep.com</a></p>
+<p>文章也会同步更新到我的博客：<br><a href="http://ppsheep.com">http://ppsheep.com</a></p>
 <h3 id="项目结构"><a href="#项目结构" class="headerlink" title="项目结构"></a>项目结构</h3><p>首先来看一下我的项目结构</p>
 <p><img src="http://ww2.sinaimg.cn/large/006tNc79jw1f9v75zwsfkj307d0gv0tu.jpg" alt=""></p>
 <h3 id="封装思路"><a href="#封装思路" class="headerlink" title="封装思路"></a>封装思路</h3><p>数据层的基本封装思路是：</p>
@@ -929,7 +929,7 @@
     <content type="html"><![CDATA[<p><strong>欢迎大家关注我的公众号，我会定期分享一些我在项目中遇到问题的解决办法和一些iOS实用的技巧，现阶段主要是整理出一些基础的知识记录下来</strong></p>
 <div align="middle"><br>    <image src="http://ac-mhke0kuv.clouddn.com/830a4ead8294ceff5160.jpg"></image><br></div>
 
-<p>文章也会同步更新到我的博客：<br><a href="http://ppsheep.com" target="_blank" rel="external">http://ppsheep.com</a></p>
+<p>文章也会同步更新到我的博客：<br><a href="http://ppsheep.com">http://ppsheep.com</a></p>
 <p>我们先来看看已经有的一些APP使用的这种效果</p>
 <p>这是天猫APP的效果，注意观察他的导航栏</p>
 <p><img src="http://i.imgur.com/Hz7Ixkj.gif" alt=""></p>
@@ -992,7 +992,7 @@
     <content type="html"><![CDATA[<p><strong>欢迎大家关注我的公众号，我会定期分享一些我在项目中遇到问题的解决办法和一些iOS实用的技巧，现阶段主要是整理出一些基础的知识记录下来</strong></p>
 <div align="middle"><br>    <image src="http://ac-mhke0kuv.clouddn.com/830a4ead8294ceff5160.jpg"></image><br></div>
 
-<p>文章也会同步更新到我的博客：<br><a href="http://ppsheep.com" target="_blank" rel="external">http://ppsheep.com</a></p>
+<p>文章也会同步更新到我的博客：<br><a href="http://ppsheep.com">http://ppsheep.com</a></p>
 <h3 id="动画的由来"><a href="#动画的由来" class="headerlink" title="动画的由来"></a>动画的由来</h3><p>在iOS中所有的视图都是从UIView的基类派生而来，UIView可以处理触摸事件，可以支持基于Core Graphics绘图，也能够做一些简单的动画，比如旋转、缩放或者其他一些滑动渐变的动画。但是实际上，这是苹果为我们封装了一层，真正实现动画的其实是一个叫做图层的玩意儿(CALayer)，UIView所做的一切动画，都是苹果从CALayer封装而来。</p>
 <h3 id="CALayer"><a href="#CALayer" class="headerlink" title="CALayer"></a>CALayer</h3><p>CALayer类在概念上和UIView类似，也可以像View一样添加一些子layer(图片，文本等等)，也能够像View一样，管理子图层的位置大小等等，并且，CALayer有一些非常重要的属性和方法，iOS中的动画就是通过这些来做动画和变换，CALayer和UIView最大的不同就是CALayer不处理用户的交互。</p>
 <h3 id="UIView和CALayer的关系"><a href="#UIView和CALayer的关系" class="headerlink" title="UIView和CALayer的关系"></a>UIView和CALayer的关系</h3><p>每一个UIView都有一个CALayer实例属性，UIView的职责就是创建并创建这个图层，以确保在子视图被创建时，子图层也能够被创建，子视图被添加和移除的时候，子图层也能够做相对的添加移除操作。 他们的关系是一一对应的。</p>
@@ -1295,7 +1295,7 @@
     <published>2016-11-07T03:15:19.000Z</published>
     <updated>2016-11-07T08:33:01.000Z</updated>
     
-    <content type="html"><![CDATA[<p>之前写了一篇关于APP之间跳转的文章，期间有同学说能否出一个类似于微信登录或者支付宝支付之类的，跳转到支付宝获得消息再调回源程序，并且带上信息。今天我们就再来聊聊，实现这样一种效果，没看过之前应用跳转的，请移步:<br>    <a href="http://ppsheep.com/2016/10/27/iOS应用之间的跳转解析/" target="_blank" rel="external">http://ppsheep.com/2016/10/27/iOS应用之间的跳转解析/</a></p>
+    <content type="html"><![CDATA[<p>之前写了一篇关于APP之间跳转的文章，期间有同学说能否出一个类似于微信登录或者支付宝支付之类的，跳转到支付宝获得消息再调回源程序，并且带上信息。今天我们就再来聊聊，实现这样一种效果，没看过之前应用跳转的，请移步:<br>    <a href="http://ppsheep.com/2016/10/27/iOS应用之间的跳转解析/">http://ppsheep.com/2016/10/27/iOS应用之间的跳转解析/</a></p>
 <a id="more"></a>
 <p>之前我们说到APP之间的跳转，其实就是通过一个URL Schemes进行跳转，APP之间的传值，其实也是通过这个URL进行传值。</p>
 <p>再有我们想跳回原来程序，那么我们还需要知道源程序的URL Schemes，这样我们才能跳回到源程序，所以在传递参数的时候 我们还需要把源程序的URL Schemes传递过去。</p>
