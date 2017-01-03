@@ -4,9 +4,9 @@
   
   <link href="/atom.xml" rel="self"/>
   
-  <link href="http://yoursite.com/"/>
+  <link href="http://ppsheep.com/"/>
   <updated>2016-12-29T07:59:06.000Z</updated>
-  <id>http://yoursite.com/</id>
+  <id>http://ppsheep.com/</id>
   
   <author>
     <name>ppsheep</name>
@@ -17,8 +17,8 @@
   
   <entry>
     <title>Swift第三波</title>
-    <link href="http://yoursite.com/2016/12/29/Swift%E7%AC%AC%E4%B8%89%E6%B3%A2/"/>
-    <id>http://yoursite.com/2016/12/29/Swift第三波/</id>
+    <link href="http://ppsheep.com/2016/12/29/Swift%E7%AC%AC%E4%B8%89%E6%B3%A2/"/>
+    <id>http://ppsheep.com/2016/12/29/Swift第三波/</id>
     <published>2016-12-29T06:43:07.000Z</published>
     <updated>2016-12-29T07:59:06.000Z</updated>
     
@@ -67,17 +67,17 @@
     
     </summary>
     
-      <category term="Swift官方教程学习笔记" scheme="http://yoursite.com/categories/Swift%E5%AE%98%E6%96%B9%E6%95%99%E7%A8%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+      <category term="Swift官方教程学习笔记" scheme="http://ppsheep.com/categories/Swift%E5%AE%98%E6%96%B9%E6%95%99%E7%A8%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
     
-      <category term="Swift官方教程学习笔记" scheme="http://yoursite.com/tags/Swift%E5%AE%98%E6%96%B9%E6%95%99%E7%A8%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+      <category term="Swift官方教程学习笔记" scheme="http://ppsheep.com/tags/Swift%E5%AE%98%E6%96%B9%E6%95%99%E7%A8%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
   <entry>
     <title>Swift第二波</title>
-    <link href="http://yoursite.com/2016/12/29/Swift%E7%AC%AC%E4%BA%8C%E6%B3%A2/"/>
-    <id>http://yoursite.com/2016/12/29/Swift第二波/</id>
+    <link href="http://ppsheep.com/2016/12/29/Swift%E7%AC%AC%E4%BA%8C%E6%B3%A2/"/>
+    <id>http://ppsheep.com/2016/12/29/Swift第二波/</id>
     <published>2016-12-29T05:41:15.000Z</published>
     <updated>2016-12-29T06:42:06.000Z</updated>
     
@@ -143,17 +143,17 @@
     
     </summary>
     
-      <category term="Swift官方教程学习笔记" scheme="http://yoursite.com/categories/Swift%E5%AE%98%E6%96%B9%E6%95%99%E7%A8%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+      <category term="Swift官方教程学习笔记" scheme="http://ppsheep.com/categories/Swift%E5%AE%98%E6%96%B9%E6%95%99%E7%A8%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
     
-      <category term="Swift官方教程学习笔记" scheme="http://yoursite.com/tags/Swift%E5%AE%98%E6%96%B9%E6%95%99%E7%A8%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+      <category term="Swift官方教程学习笔记" scheme="http://ppsheep.com/tags/Swift%E5%AE%98%E6%96%B9%E6%95%99%E7%A8%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
   <entry>
     <title>Swift第一波</title>
-    <link href="http://yoursite.com/2016/12/28/Swift%E7%AC%AC%E4%B8%80%E6%B3%A2/"/>
-    <id>http://yoursite.com/2016/12/28/Swift第一波/</id>
+    <link href="http://ppsheep.com/2016/12/28/Swift%E7%AC%AC%E4%B8%80%E6%B3%A2/"/>
+    <id>http://ppsheep.com/2016/12/28/Swift第一波/</id>
     <published>2016-12-28T11:13:10.000Z</published>
     <updated>2016-12-29T05:37:10.000Z</updated>
     
@@ -212,17 +212,17 @@
     
     </summary>
     
-      <category term="Swift官方教程学习笔记" scheme="http://yoursite.com/categories/Swift%E5%AE%98%E6%96%B9%E6%95%99%E7%A8%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+      <category term="Swift官方教程学习笔记" scheme="http://ppsheep.com/categories/Swift%E5%AE%98%E6%96%B9%E6%95%99%E7%A8%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
     
-      <category term="Swift官方教程学习笔记" scheme="http://yoursite.com/tags/Swift%E5%AE%98%E6%96%B9%E6%95%99%E7%A8%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+      <category term="Swift官方教程学习笔记" scheme="http://ppsheep.com/tags/Swift%E5%AE%98%E6%96%B9%E6%95%99%E7%A8%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
   <entry>
     <title>iOS-有效编写高质量Objective-C方法(五)</title>
-    <link href="http://yoursite.com/2016/12/28/iOS-%E6%9C%89%E6%95%88%E7%BC%96%E5%86%99%E9%AB%98%E8%B4%A8%E9%87%8FObjective-C%E6%96%B9%E6%B3%95-%E4%BA%94/"/>
-    <id>http://yoursite.com/2016/12/28/iOS-有效编写高质量Objective-C方法-五/</id>
+    <link href="http://ppsheep.com/2016/12/28/iOS-%E6%9C%89%E6%95%88%E7%BC%96%E5%86%99%E9%AB%98%E8%B4%A8%E9%87%8FObjective-C%E6%96%B9%E6%B3%95-%E4%BA%94/"/>
+    <id>http://ppsheep.com/2016/12/28/iOS-有效编写高质量Objective-C方法-五/</id>
     <published>2016-12-28T09:41:04.000Z</published>
     <updated>2016-12-30T09:59:27.000Z</updated>
     
@@ -235,8 +235,8 @@
   
   <entry>
     <title>iOS-有效编写高质量Objective-C方法(四)</title>
-    <link href="http://yoursite.com/2016/12/28/iOS-%E6%9C%89%E6%95%88%E7%BC%96%E5%86%99%E9%AB%98%E8%B4%A8%E9%87%8FObjective-C%E6%96%B9%E6%B3%95-%E5%9B%9B/"/>
-    <id>http://yoursite.com/2016/12/28/iOS-有效编写高质量Objective-C方法-四/</id>
+    <link href="http://ppsheep.com/2016/12/28/iOS-%E6%9C%89%E6%95%88%E7%BC%96%E5%86%99%E9%AB%98%E8%B4%A8%E9%87%8FObjective-C%E6%96%B9%E6%B3%95-%E5%9B%9B/"/>
+    <id>http://ppsheep.com/2016/12/28/iOS-有效编写高质量Objective-C方法-四/</id>
     <published>2016-12-28T07:45:28.000Z</published>
     <updated>2016-12-29T03:44:21.000Z</updated>
     
@@ -292,17 +292,17 @@
     
     </summary>
     
-      <category term="iOS 编写高质量代码的方法" scheme="http://yoursite.com/categories/iOS-%E7%BC%96%E5%86%99%E9%AB%98%E8%B4%A8%E9%87%8F%E4%BB%A3%E7%A0%81%E7%9A%84%E6%96%B9%E6%B3%95/"/>
+      <category term="iOS 编写高质量代码的方法" scheme="http://ppsheep.com/categories/iOS-%E7%BC%96%E5%86%99%E9%AB%98%E8%B4%A8%E9%87%8F%E4%BB%A3%E7%A0%81%E7%9A%84%E6%96%B9%E6%B3%95/"/>
     
     
-      <category term="iOS 编写高质量代码" scheme="http://yoursite.com/tags/iOS-%E7%BC%96%E5%86%99%E9%AB%98%E8%B4%A8%E9%87%8F%E4%BB%A3%E7%A0%81/"/>
+      <category term="iOS 编写高质量代码" scheme="http://ppsheep.com/tags/iOS-%E7%BC%96%E5%86%99%E9%AB%98%E8%B4%A8%E9%87%8F%E4%BB%A3%E7%A0%81/"/>
     
   </entry>
   
   <entry>
     <title>Swift谈一谈</title>
-    <link href="http://yoursite.com/2016/12/28/swift%E8%B0%88%E4%B8%80%E8%B0%88/"/>
-    <id>http://yoursite.com/2016/12/28/swift谈一谈/</id>
+    <link href="http://ppsheep.com/2016/12/28/swift%E8%B0%88%E4%B8%80%E8%B0%88/"/>
+    <id>http://ppsheep.com/2016/12/28/swift谈一谈/</id>
     <published>2016-12-28T03:48:07.000Z</published>
     <updated>2016-12-28T07:31:54.000Z</updated>
     
@@ -325,17 +325,17 @@
     
     </summary>
     
-      <category term="Swift" scheme="http://yoursite.com/categories/Swift/"/>
+      <category term="Swift" scheme="http://ppsheep.com/categories/Swift/"/>
     
     
-      <category term="Swift" scheme="http://yoursite.com/tags/Swift/"/>
+      <category term="Swift" scheme="http://ppsheep.com/tags/Swift/"/>
     
   </entry>
   
   <entry>
     <title>iOS获取当前设备的信息-网络相关</title>
-    <link href="http://yoursite.com/2016/12/16/iOS%E8%8E%B7%E5%8F%96%E5%BD%93%E5%89%8D%E8%AE%BE%E5%A4%87%E7%9A%84%E4%BF%A1%E6%81%AF-%E7%BD%91%E7%BB%9C%E7%9B%B8%E5%85%B3/"/>
-    <id>http://yoursite.com/2016/12/16/iOS获取当前设备的信息-网络相关/</id>
+    <link href="http://ppsheep.com/2016/12/16/iOS%E8%8E%B7%E5%8F%96%E5%BD%93%E5%89%8D%E8%AE%BE%E5%A4%87%E7%9A%84%E4%BF%A1%E6%81%AF-%E7%BD%91%E7%BB%9C%E7%9B%B8%E5%85%B3/"/>
+    <id>http://ppsheep.com/2016/12/16/iOS获取当前设备的信息-网络相关/</id>
     <published>2016-12-16T06:57:18.000Z</published>
     <updated>2016-12-16T08:27:02.000Z</updated>
     
@@ -368,17 +368,17 @@
     
     </summary>
     
-      <category term="iOS网络相关信息" scheme="http://yoursite.com/categories/iOS%E7%BD%91%E7%BB%9C%E7%9B%B8%E5%85%B3%E4%BF%A1%E6%81%AF/"/>
+      <category term="iOS网络相关信息" scheme="http://ppsheep.com/categories/iOS%E7%BD%91%E7%BB%9C%E7%9B%B8%E5%85%B3%E4%BF%A1%E6%81%AF/"/>
     
     
-      <category term="iOS网络相关" scheme="http://yoursite.com/tags/iOS%E7%BD%91%E7%BB%9C%E7%9B%B8%E5%85%B3/"/>
+      <category term="iOS网络相关" scheme="http://ppsheep.com/tags/iOS%E7%BD%91%E7%BB%9C%E7%9B%B8%E5%85%B3/"/>
     
   </entry>
   
   <entry>
     <title>iOS中的并发编程</title>
-    <link href="http://yoursite.com/2016/12/14/iOS%E4%B8%AD%E7%9A%84%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B-%E4%B8%80/"/>
-    <id>http://yoursite.com/2016/12/14/iOS中的并发编程-一/</id>
+    <link href="http://ppsheep.com/2016/12/14/iOS%E4%B8%AD%E7%9A%84%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B-%E4%B8%80/"/>
+    <id>http://ppsheep.com/2016/12/14/iOS中的并发编程-一/</id>
     <published>2016-12-14T07:09:03.000Z</published>
     <updated>2016-12-29T09:33:45.000Z</updated>
     
@@ -431,17 +431,17 @@
     
     </summary>
     
-      <category term="iOS中的并发编程" scheme="http://yoursite.com/categories/iOS%E4%B8%AD%E7%9A%84%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/"/>
+      <category term="iOS中的并发编程" scheme="http://ppsheep.com/categories/iOS%E4%B8%AD%E7%9A%84%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/"/>
     
     
-      <category term="iOS中的并发编程" scheme="http://yoursite.com/tags/iOS%E4%B8%AD%E7%9A%84%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/"/>
+      <category term="iOS中的并发编程" scheme="http://ppsheep.com/tags/iOS%E4%B8%AD%E7%9A%84%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/"/>
     
   </entry>
   
   <entry>
     <title>ViewControllers瘦身计划(二)</title>
-    <link href="http://yoursite.com/2016/12/14/ViewControllers%E7%98%A6%E8%BA%AB%E8%AE%A1%E5%88%92-%E4%BA%8C/"/>
-    <id>http://yoursite.com/2016/12/14/ViewControllers瘦身计划-二/</id>
+    <link href="http://ppsheep.com/2016/12/14/ViewControllers%E7%98%A6%E8%BA%AB%E8%AE%A1%E5%88%92-%E4%BA%8C/"/>
+    <id>http://ppsheep.com/2016/12/14/ViewControllers瘦身计划-二/</id>
     <published>2016-12-14T02:24:25.000Z</published>
     <updated>2016-12-14T03:58:34.000Z</updated>
     
@@ -491,17 +491,17 @@
     
     </summary>
     
-      <category term="iOS进阶" scheme="http://yoursite.com/categories/iOS%E8%BF%9B%E9%98%B6/"/>
+      <category term="iOS进阶" scheme="http://ppsheep.com/categories/iOS%E8%BF%9B%E9%98%B6/"/>
     
     
-      <category term="更轻量级的ViewController" scheme="http://yoursite.com/tags/%E6%9B%B4%E8%BD%BB%E9%87%8F%E7%BA%A7%E7%9A%84ViewController/"/>
+      <category term="更轻量级的ViewController" scheme="http://ppsheep.com/tags/%E6%9B%B4%E8%BD%BB%E9%87%8F%E7%BA%A7%E7%9A%84ViewController/"/>
     
   </entry>
   
   <entry>
     <title>ViewControllers瘦身计划(一)</title>
-    <link href="http://yoursite.com/2016/12/05/ViewControllers%E7%98%A6%E8%BA%AB%E8%AE%A1%E5%88%92-%E4%B8%80/"/>
-    <id>http://yoursite.com/2016/12/05/ViewControllers瘦身计划-一/</id>
+    <link href="http://ppsheep.com/2016/12/05/ViewControllers%E7%98%A6%E8%BA%AB%E8%AE%A1%E5%88%92-%E4%B8%80/"/>
+    <id>http://ppsheep.com/2016/12/05/ViewControllers瘦身计划-一/</id>
     <published>2016-12-05T14:29:37.000Z</published>
     <updated>2016-12-06T01:58:42.000Z</updated>
     
@@ -545,17 +545,17 @@
     
     </summary>
     
-      <category term="iOS进阶" scheme="http://yoursite.com/categories/iOS%E8%BF%9B%E9%98%B6/"/>
+      <category term="iOS进阶" scheme="http://ppsheep.com/categories/iOS%E8%BF%9B%E9%98%B6/"/>
     
     
-      <category term="更轻量级的ViewController" scheme="http://yoursite.com/tags/%E6%9B%B4%E8%BD%BB%E9%87%8F%E7%BA%A7%E7%9A%84ViewController/"/>
+      <category term="更轻量级的ViewController" scheme="http://ppsheep.com/tags/%E6%9B%B4%E8%BD%BB%E9%87%8F%E7%BA%A7%E7%9A%84ViewController/"/>
     
   </entry>
   
   <entry>
     <title>KVC和KVO(三)</title>
-    <link href="http://yoursite.com/2016/12/05/KVC%E5%92%8CKVO-%E4%B8%89/"/>
-    <id>http://yoursite.com/2016/12/05/KVC和KVO-三/</id>
+    <link href="http://ppsheep.com/2016/12/05/KVC%E5%92%8CKVO-%E4%B8%89/"/>
+    <id>http://ppsheep.com/2016/12/05/KVC和KVO-三/</id>
     <published>2016-12-05T02:04:32.000Z</published>
     <updated>2016-12-05T02:27:58.000Z</updated>
     
@@ -612,17 +612,17 @@
     
     </summary>
     
-      <category term="KVC和KVO" scheme="http://yoursite.com/categories/KVC%E5%92%8CKVO/"/>
+      <category term="KVC和KVO" scheme="http://ppsheep.com/categories/KVC%E5%92%8CKVO/"/>
     
     
-      <category term="KVC和KVO" scheme="http://yoursite.com/tags/KVC%E5%92%8CKVO/"/>
+      <category term="KVC和KVO" scheme="http://ppsheep.com/tags/KVC%E5%92%8CKVO/"/>
     
   </entry>
   
   <entry>
     <title>KVC和KVO(二)</title>
-    <link href="http://yoursite.com/2016/11/28/KVC%E5%92%8CKVO-%E4%BA%8C/"/>
-    <id>http://yoursite.com/2016/11/28/KVC和KVO-二/</id>
+    <link href="http://ppsheep.com/2016/11/28/KVC%E5%92%8CKVO-%E4%BA%8C/"/>
+    <id>http://ppsheep.com/2016/11/28/KVC和KVO-二/</id>
     <published>2016-11-28T01:30:54.000Z</published>
     <updated>2016-11-28T02:47:05.000Z</updated>
     
@@ -672,17 +672,17 @@
     
     </summary>
     
-      <category term="KVC和KVO" scheme="http://yoursite.com/categories/KVC%E5%92%8CKVO/"/>
+      <category term="KVC和KVO" scheme="http://ppsheep.com/categories/KVC%E5%92%8CKVO/"/>
     
     
-      <category term="KVC和KVO" scheme="http://yoursite.com/tags/KVC%E5%92%8CKVO/"/>
+      <category term="KVC和KVO" scheme="http://ppsheep.com/tags/KVC%E5%92%8CKVO/"/>
     
   </entry>
   
   <entry>
     <title>KVC和KVO(一)</title>
-    <link href="http://yoursite.com/2016/11/19/KVC%E5%92%8CKVO(%E4%B8%80)/"/>
-    <id>http://yoursite.com/2016/11/19/KVC和KVO(一)/</id>
+    <link href="http://ppsheep.com/2016/11/19/KVC%E5%92%8CKVO(%E4%B8%80)/"/>
+    <id>http://ppsheep.com/2016/11/19/KVC和KVO(一)/</id>
     <published>2016-11-19T08:08:32.000Z</published>
     <updated>2016-11-21T03:19:52.000Z</updated>
     
@@ -749,17 +749,17 @@
     
     </summary>
     
-      <category term="KVC和KVO" scheme="http://yoursite.com/categories/KVC%E5%92%8CKVO/"/>
+      <category term="KVC和KVO" scheme="http://ppsheep.com/categories/KVC%E5%92%8CKVO/"/>
     
     
-      <category term="KVC和KVO" scheme="http://yoursite.com/tags/KVC%E5%92%8CKVO/"/>
+      <category term="KVC和KVO" scheme="http://ppsheep.com/tags/KVC%E5%92%8CKVO/"/>
     
   </entry>
   
   <entry>
     <title>iOS图形几何学基础-动画基础之二</title>
-    <link href="http://yoursite.com/2016/11/18/iOS%E5%9B%BE%E5%BD%A2%E5%87%A0%E4%BD%95%E5%AD%A6%E5%9F%BA%E7%A1%80-%E5%8A%A8%E7%94%BB%E5%9F%BA%E7%A1%80%E4%B9%8B%E4%BA%8C/"/>
-    <id>http://yoursite.com/2016/11/18/iOS图形几何学基础-动画基础之二/</id>
+    <link href="http://ppsheep.com/2016/11/18/iOS%E5%9B%BE%E5%BD%A2%E5%87%A0%E4%BD%95%E5%AD%A6%E5%9F%BA%E7%A1%80-%E5%8A%A8%E7%94%BB%E5%9F%BA%E7%A1%80%E4%B9%8B%E4%BA%8C/"/>
+    <id>http://ppsheep.com/2016/11/18/iOS图形几何学基础-动画基础之二/</id>
     <published>2016-11-18T05:58:09.000Z</published>
     <updated>2016-11-19T07:49:58.000Z</updated>
     
@@ -852,17 +852,17 @@
     
     </summary>
     
-      <category term="iOS动画基础" scheme="http://yoursite.com/categories/iOS%E5%8A%A8%E7%94%BB%E5%9F%BA%E7%A1%80/"/>
+      <category term="iOS动画基础" scheme="http://ppsheep.com/categories/iOS%E5%8A%A8%E7%94%BB%E5%9F%BA%E7%A1%80/"/>
     
     
-      <category term="动画基础" scheme="http://yoursite.com/tags/%E5%8A%A8%E7%94%BB%E5%9F%BA%E7%A1%80/"/>
+      <category term="动画基础" scheme="http://ppsheep.com/tags/%E5%8A%A8%E7%94%BB%E5%9F%BA%E7%A1%80/"/>
     
   </entry>
   
   <entry>
     <title>iOS sqlite简单封装使用</title>
-    <link href="http://yoursite.com/2016/11/17/iOS-sqlite%E7%AE%80%E5%8D%95%E5%B0%81%E8%A3%85%E4%BD%BF%E7%94%A8/"/>
-    <id>http://yoursite.com/2016/11/17/iOS-sqlite简单封装使用/</id>
+    <link href="http://ppsheep.com/2016/11/17/iOS-sqlite%E7%AE%80%E5%8D%95%E5%B0%81%E8%A3%85%E4%BD%BF%E7%94%A8/"/>
+    <id>http://ppsheep.com/2016/11/17/iOS-sqlite简单封装使用/</id>
     <published>2016-11-17T08:38:49.000Z</published>
     <updated>2016-11-17T09:04:28.000Z</updated>
     
@@ -912,17 +912,17 @@
     
     </summary>
     
-      <category term="sqlite数据库" scheme="http://yoursite.com/categories/sqlite%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+      <category term="sqlite数据库" scheme="http://ppsheep.com/categories/sqlite%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
     
     
-      <category term="sqlite" scheme="http://yoursite.com/tags/sqlite/"/>
+      <category term="sqlite" scheme="http://ppsheep.com/tags/sqlite/"/>
     
   </entry>
   
   <entry>
     <title>iOS每个ViewController一个NavigationBar</title>
-    <link href="http://yoursite.com/2016/11/17/iOS%E6%AF%8F%E4%B8%AAViewController%E4%B8%80%E4%B8%AANavigationBar/"/>
-    <id>http://yoursite.com/2016/11/17/iOS每个ViewController一个NavigationBar/</id>
+    <link href="http://ppsheep.com/2016/11/17/iOS%E6%AF%8F%E4%B8%AAViewController%E4%B8%80%E4%B8%AANavigationBar/"/>
+    <id>http://ppsheep.com/2016/11/17/iOS每个ViewController一个NavigationBar/</id>
     <published>2016-11-17T05:03:38.000Z</published>
     <updated>2016-11-17T06:23:09.000Z</updated>
     
@@ -984,8 +984,8 @@
   
   <entry>
     <title>iOS CALayer基础介绍-动画基础之一</title>
-    <link href="http://yoursite.com/2016/11/16/iOS%20CALayer%E5%9F%BA%E7%A1%80%E4%BB%8B%E7%BB%8D-%E5%8A%A8%E7%94%BB%E5%9F%BA%E7%A1%80%E4%B9%8B%E4%B8%80/"/>
-    <id>http://yoursite.com/2016/11/16/iOS CALayer基础介绍-动画基础之一/</id>
+    <link href="http://ppsheep.com/2016/11/16/iOS%20CALayer%E5%9F%BA%E7%A1%80%E4%BB%8B%E7%BB%8D-%E5%8A%A8%E7%94%BB%E5%9F%BA%E7%A1%80%E4%B9%8B%E4%B8%80/"/>
+    <id>http://ppsheep.com/2016/11/16/iOS CALayer基础介绍-动画基础之一/</id>
     <published>2016-11-16T10:40:46.000Z</published>
     <updated>2016-11-19T07:48:21.000Z</updated>
     
@@ -1102,17 +1102,17 @@
     
     </summary>
     
-      <category term="iOS动画基础" scheme="http://yoursite.com/categories/iOS%E5%8A%A8%E7%94%BB%E5%9F%BA%E7%A1%80/"/>
+      <category term="iOS动画基础" scheme="http://ppsheep.com/categories/iOS%E5%8A%A8%E7%94%BB%E5%9F%BA%E7%A1%80/"/>
     
     
-      <category term="动画基础" scheme="http://yoursite.com/tags/%E5%8A%A8%E7%94%BB%E5%9F%BA%E7%A1%80/"/>
+      <category term="动画基础" scheme="http://ppsheep.com/tags/%E5%8A%A8%E7%94%BB%E5%9F%BA%E7%A1%80/"/>
     
   </entry>
   
   <entry>
     <title>iOS基础开发技巧-二</title>
-    <link href="http://yoursite.com/2016/11/09/iOS%E5%9F%BA%E7%A1%80%E5%BC%80%E5%8F%91%E6%8A%80%E5%B7%A7-%E4%BA%8C/"/>
-    <id>http://yoursite.com/2016/11/09/iOS基础开发技巧-二/</id>
+    <link href="http://ppsheep.com/2016/11/09/iOS%E5%9F%BA%E7%A1%80%E5%BC%80%E5%8F%91%E6%8A%80%E5%B7%A7-%E4%BA%8C/"/>
+    <id>http://ppsheep.com/2016/11/09/iOS基础开发技巧-二/</id>
     <published>2016-11-09T08:51:35.000Z</published>
     <updated>2016-11-15T09:03:51.000Z</updated>
     
@@ -1155,8 +1155,8 @@
   
   <entry>
     <title>iOS-有效编写高质量Objective-C方法-三</title>
-    <link href="http://yoursite.com/2016/11/08/iOS-%E6%9C%89%E6%95%88%E7%BC%96%E5%86%99%E9%AB%98%E8%B4%A8%E9%87%8FObjective-C%E6%96%B9%E6%B3%95-%E4%B8%89/"/>
-    <id>http://yoursite.com/2016/11/08/iOS-有效编写高质量Objective-C方法-三/</id>
+    <link href="http://ppsheep.com/2016/11/08/iOS-%E6%9C%89%E6%95%88%E7%BC%96%E5%86%99%E9%AB%98%E8%B4%A8%E9%87%8FObjective-C%E6%96%B9%E6%B3%95-%E4%B8%89/"/>
+    <id>http://ppsheep.com/2016/11/08/iOS-有效编写高质量Objective-C方法-三/</id>
     <published>2016-11-08T01:49:28.000Z</published>
     <updated>2016-11-09T08:17:06.000Z</updated>
     
@@ -1281,17 +1281,17 @@
     
     </summary>
     
-      <category term="iOS 编写高质量代码的方法" scheme="http://yoursite.com/categories/iOS-%E7%BC%96%E5%86%99%E9%AB%98%E8%B4%A8%E9%87%8F%E4%BB%A3%E7%A0%81%E7%9A%84%E6%96%B9%E6%B3%95/"/>
+      <category term="iOS 编写高质量代码的方法" scheme="http://ppsheep.com/categories/iOS-%E7%BC%96%E5%86%99%E9%AB%98%E8%B4%A8%E9%87%8F%E4%BB%A3%E7%A0%81%E7%9A%84%E6%96%B9%E6%B3%95/"/>
     
     
-      <category term="iOS 编写高质量代码" scheme="http://yoursite.com/tags/iOS-%E7%BC%96%E5%86%99%E9%AB%98%E8%B4%A8%E9%87%8F%E4%BB%A3%E7%A0%81/"/>
+      <category term="iOS 编写高质量代码" scheme="http://ppsheep.com/tags/iOS-%E7%BC%96%E5%86%99%E9%AB%98%E8%B4%A8%E9%87%8F%E4%BB%A3%E7%A0%81/"/>
     
   </entry>
   
   <entry>
     <title>iOS 应用之间跳转传输数据以及跳回源程序</title>
-    <link href="http://yoursite.com/2016/11/07/iOS-%E5%BA%94%E7%94%A8%E4%B9%8B%E9%97%B4%E8%B7%B3%E8%BD%AC%E4%BC%A0%E8%BE%93%E6%95%B0%E6%8D%AE%E4%BB%A5%E5%8F%8A%E8%B7%B3%E5%9B%9E%E6%BA%90%E7%A8%8B%E5%BA%8F/"/>
-    <id>http://yoursite.com/2016/11/07/iOS-应用之间跳转传输数据以及跳回源程序/</id>
+    <link href="http://ppsheep.com/2016/11/07/iOS-%E5%BA%94%E7%94%A8%E4%B9%8B%E9%97%B4%E8%B7%B3%E8%BD%AC%E4%BC%A0%E8%BE%93%E6%95%B0%E6%8D%AE%E4%BB%A5%E5%8F%8A%E8%B7%B3%E5%9B%9E%E6%BA%90%E7%A8%8B%E5%BA%8F/"/>
+    <id>http://ppsheep.com/2016/11/07/iOS-应用之间跳转传输数据以及跳回源程序/</id>
     <published>2016-11-07T03:15:19.000Z</published>
     <updated>2016-11-07T08:33:01.000Z</updated>
     
@@ -1327,10 +1327,10 @@
     
     </summary>
     
-      <category term="iOS进阶" scheme="http://yoursite.com/categories/iOS%E8%BF%9B%E9%98%B6/"/>
+      <category term="iOS进阶" scheme="http://ppsheep.com/categories/iOS%E8%BF%9B%E9%98%B6/"/>
     
     
-      <category term="iOS应用之间的跳转" scheme="http://yoursite.com/tags/iOS%E5%BA%94%E7%94%A8%E4%B9%8B%E9%97%B4%E7%9A%84%E8%B7%B3%E8%BD%AC/"/>
+      <category term="iOS应用之间的跳转" scheme="http://ppsheep.com/tags/iOS%E5%BA%94%E7%94%A8%E4%B9%8B%E9%97%B4%E7%9A%84%E8%B7%B3%E8%BD%AC/"/>
     
   </entry>
   
