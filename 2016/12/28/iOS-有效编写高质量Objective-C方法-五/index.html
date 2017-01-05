@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="iOS 编写高质量代码," />
 
 
 
@@ -86,16 +86,20 @@
 
 
 
-<meta name="description" content="一个就职于网易的初级iOS开发者，目前正在修炼自己，博客建立不久，正在寻找更好的写作方式。。。。。。。 目前还在维护一个微信公众号，即我的头像二维码，博客的内容，我会同步到微信公众号，欢迎大家关注">
+<meta name="description" content="我们前面的4篇文章，已经将Effective OC 的前两章节讲完了，接下来几篇文章，主要会讲我们在平时编码中的一些习惯，一些细节问题的处理，包括接口和API的设计，协议delegate和分类的使用等。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="iOS-有效编写高质量Objective-C方法(五)">
 <meta property="og:url" content="http://ppsheep.com/2016/12/28/iOS-有效编写高质量Objective-C方法-五/index.html">
 <meta property="og:site_name" content="ppsheep">
-<meta property="og:description" content="一个就职于网易的初级iOS开发者，目前正在修炼自己，博客建立不久，正在寻找更好的写作方式。。。。。。。 目前还在维护一个微信公众号，即我的头像二维码，博客的内容，我会同步到微信公众号，欢迎大家关注">
-<meta property="og:updated_time" content="2016-12-30T09:59:27.000Z">
+<meta property="og:description" content="我们前面的4篇文章，已经将Effective OC 的前两章节讲完了，接下来几篇文章，主要会讲我们在平时编码中的一些习惯，一些细节问题的处理，包括接口和API的设计，协议delegate和分类的使用等。">
+<meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/blog/2017-01-05-064844.jpg">
+<meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/blog/2017-01-05-065009.jpg">
+<meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/blog/2017-01-05-082705.jpg">
+<meta property="og:updated_time" content="2017-01-05T08:38:16.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS-有效编写高质量Objective-C方法(五)">
-<meta name="twitter:description" content="一个就职于网易的初级iOS开发者，目前正在修炼自己，博客建立不久，正在寻找更好的写作方式。。。。。。。 目前还在维护一个微信公众号，即我的头像二维码，博客的内容，我会同步到微信公众号，欢迎大家关注">
+<meta name="twitter:description" content="我们前面的4篇文章，已经将Effective OC 的前两章节讲完了，接下来几篇文章，主要会讲我们在平时编码中的一些习惯，一些细节问题的处理，包括接口和API的设计，协议delegate和分类的使用等。">
+<meta name="twitter:image" content="http://o8bxt3lx0.bkt.clouddn.com/blog/2017-01-05-064844.jpg">
 
 
 
@@ -285,6 +289,25 @@
           </span>
 
           
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/iOS-编写高质量代码的方法/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS 编写高质量代码的方法</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
 
           
             
@@ -323,7 +346,73 @@
       
 
       
-        
+        <p>我们前面的4篇文章，已经将Effective OC 的前两章节讲完了，接下来几篇文章，主要会讲我们在平时编码中的一些习惯，一些细节问题的处理，包括接口和API的设计，协议delegate和分类的使用等。<br><a id="more"></a></p>
+<h4 id="用前缀避免命名空间的冲突"><a href="#用前缀避免命名空间的冲突" class="headerlink" title="用前缀避免命名空间的冲突"></a>用前缀避免命名空间的冲突</h4><p>因为OC和其他语言不同，没有命名空间这一说法，因此，我们在给类起名时，要设法避免潜在的命名冲突。发生命名冲突时，我们经常会看到这样的错误：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">duplicate symbol _OBJC_METACLASS_$_XXXXX in:</div><div class="line">	build/something.o</div><div class="line">	build/something_else.o</div><div class="line">duplicate symbol _OBJC_CLASS_$_XXXXX in:</div><div class="line">	build/something.o</div><div class="line">	build/something_else.o</div></pre></td></tr></table></figure>
+<p>上面的情况，意思为有两个地方都实现了名为XXXXX的类，这种情况，往往出现在，我们引用多个第三方库，第三方库之间命名冲突、或者是我们自己工程中的命名与第三方库冲突。</p>
+<p>所以我们在编写类名时，一般都会加上跟自己工程相关的一些前缀，而且在xcode中是有一个功能，让我们在新建类时，自动给我们加上前缀：</p>
+<p><img src="http://o8bxt3lx0.bkt.clouddn.com/blog/2017-01-05-064844.jpg" alt=""></p>
+<p>这样在我们新建类时，默认就会有一个PPS的前缀：</p>
+<p><img src="http://o8bxt3lx0.bkt.clouddn.com/blog/2017-01-05-065009.jpg" alt=""></p>
+<p><strong>注意:</strong></p>
+<p>如果你正在编写第三方库，供别人使用，那么请一定要为你的所有类名加上你自定义的前缀，这样，别人用你的SDK才不会出现上面的冲突情况，这一点非常重要。</p>
+<h4 id="提供“全能初始化方法”"><a href="#提供“全能初始化方法”" class="headerlink" title="提供“全能初始化方法”"></a>提供“全能初始化方法”</h4><p>首先，我们来解释一下什么是全能初始化方法：</p>
+<p>举个例子吧</p>
+<p>在NSDate类中，初始化方法有下面这几种：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">- (instancetype)init;</div><div class="line">- (instancetype)initWithTimeIntervalSinceReferenceDate:(NSTimeInterval)ti;</div><div class="line">- (instancetype)initWithTimeIntervalSinceNow:(NSTimeInterval)secs;</div><div class="line">- (instancetype)initWithTimeIntervalSince1970:(NSTimeInterval)secs;</div><div class="line">- (instancetype)initWithTimeInterval:(NSTimeInterval)secsToBeAdded sinceDate:(NSDate *)date;</div></pre></td></tr></table></figure>
+<p>在上面的几个初始化方法中，(instancetype)initWithTimeIntervalSinceReferenceDate:是全能初始化方法，意思就是</p>
+<p>其他的初始化方法，都是最终都是调用它，生成了NSDate类。</p>
+<p>为什么要引入全能初始化方法这个概念呢？在我们平时编码中，经常在生成一个类时，传入一些参数，才能使这个类进行正常的工作，如果我们设计时，这个类有很多的初始化方法，然而进行一段时间编码过后，我们发觉需要修改这个类的底层数据，就是生成这个类必须要使用到的一些数据，那么，这么多的初始化方法，我们都得修改，如果我们有一个全能初始化方法，那么我们只需要改动这个全能初始化方法，底层数据就已经改变。</p>
+<h5 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h5><p>这里还是引入一个例子：</p>
+<p>比如我们要编写一个表示矩形的类：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">#import &lt;Foundation/Foundation.h&gt;</div><div class="line"></div><div class="line">@interface EOCRectangle : NSObject</div><div class="line"></div><div class="line">@property (nonatomic, assign, readonly) float width;</div><div class="line">@property (nonatomic, assign, readonly) float height;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
+<p>这里，为什么将长宽设置成readonly，我们在后面一篇文章中讲，这样一来，我们就需要提供一个初始方法来设置这两个参数：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">- (instancetype)initWithWidth:(float)width</div><div class="line">                    andHeight:(float)height;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">-(instancetype)initWithWidth:(float)width andHeight:(float)height&#123;</div><div class="line">    if (self = [super init]) &#123;</div><div class="line">        _width = width;</div><div class="line">        _height = height;</div><div class="line">    &#125;</div><div class="line">    return self;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这里我们会碰到一个问题，如果有人直接用</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">[[EOCRectangle alloc] init];</div></pre></td></tr></table></figure>
+<p>这个方法来初始化，我们 的长宽不是没办法设置了，那这个类肯定不能正常工作，我们不希望看到这种情况发生，通常，我们有两种方法处理：</p>
+<p>第一，在init方法中，传入默认的值，就是讲类必须的参数的默认值传入，形成一个类</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">-(instancetype)init&#123;</div><div class="line">    return [self initWithWidth:5.0f andHeight:10.0f];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>第二种方法，是我们不希望开发者调用init方法，这样类就不能正常工作，我们可以在init方法中，抛出异常，但是一般我们不这样处理，在OC中，只有发生严重错误时，我们才抛出异常</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">-(instancetype)init&#123;</div><div class="line">    @throw [NSException exceptionWithName:NSInternalInconsistencyException reason:@&quot;不允许调用这个初始化方法，请调用initWithWidth:andHeight:方法&quot; userInfo:nil];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h5 id="在继承中处理全能初始化方法"><a href="#在继承中处理全能初始化方法" class="headerlink" title="在继承中处理全能初始化方法"></a>在继承中处理全能初始化方法</h5><p>如果我们现在需要创建一个正方形类EOCSquare类，让他继承自EOCRectangle类，这很正常，正方形的长宽必须相等。那么我们需要提供一个传入边长的初始化方法。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">- (instancetype)initWithDimension:(float)dimension;</div></pre></td></tr></table></figure>
+<p>在实现中：调用父类的方法，传入相同的长宽，即是一个正方形</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">- (instancetype)initWithDimension:(float)dimension&#123;</div><div class="line">    return [super initWithWidth:dimension andHeight:dimension];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>然而，即使我们提供了传入边长的初始化，方法，调用者还是可能会调用initWithWidth:andHeight:或者init方法来初始化，这是我们不愿意看到的，于是就有一个重要的结论：</p>
+<p><strong>如果子类的全能初始化方法和父类的全能初始化方法不同，那么总是应该覆写父类的全能初始化方法</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">-(instancetype)initWithWidth:(float)width andHeight:(float)height&#123;</div><div class="line">    float dimension = MAX(width, height);</div><div class="line">    return [self initWithDimension:dimension];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这时，我们发现，不管调用者调用了initWithWidth:andHeight:还是init方法，都能够正常初始化EOCSquare了，因为如果开发者调用initWithWidth:andHeight:，那么因为我们EOCSquare覆写了，所以调用的是EOCSquare的方法，如果调用者调用了init方法，那么最终调用到的还是EOCSquare的全能初始化方法。</p>
+<p>但是，我们一般不覆写父类的全能初始化方法，这样显得毫不合理，改变父类的全能初始化方法逻辑，所以我们一般这样处理，在子类中，覆盖父类的全能初始化方法，并且抛出异常</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">-(instancetype)initWithWidth:(float)width andHeight:(float)height&#123;</div><div class="line">    @throw [NSException exceptionWithName:NSInternalInconsistencyException reason:@&quot;不允许调用这个初始化方法，请调用initWithDimension:方法&quot; userInfo:nil];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这样一来，我们还需要覆写init方法</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">-(instancetype)init&#123;</div><div class="line">    return [self initWithDimension:5.0f];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这样，我们就认为，开发者在初始化正方形时，只能传入相应的边长，如果传入长宽，那么认为是调用者自己犯了错误。</p>
+<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><ul>
+<li>在类中提供一个全能初始化方法，并指明其他初始化方法都需要调用全能初始化方法</li>
+<li>若全能初始化方法不同，则子类应该覆写超类的全能初始化方法</li>
+<li>如果超类的全能初始化方法不适用于子类，那么应该在子类中覆写超类的全能初始化方法,并且在其中抛出异常</li>
+</ul>
+<h4 id="实现description"><a href="#实现description" class="headerlink" title="实现description"></a>实现description</h4><p>在调试程序时，我们经常需要将对象的信息打印出来，最常用到的方式就是：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">NSLog(@&quot;object = %@&quot;,object);</div></pre></td></tr></table></figure>
+<p>在打印数组或者字典上，这样是很好用的：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">NSArray *arr = @[@&quot;111&quot;,@&quot;222&quot;];</div><div class="line">NSLog(@&quot;arr = %@&quot;,arr);</div><div class="line"></div><div class="line">//打印出</div><div class="line">arr = (</div><div class="line">    111,</div><div class="line">    222</div><div class="line">)</div></pre></td></tr></table></figure>
+<p>但是如我们在自定义的类中，就不会像刚才那样输出了，输出的往往是这样：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">EOCRectangle *rectangle = [[EOCRectangle alloc] initWithWidth:10 andHeight:5];</div><div class="line">NSLog(@&quot;rectangle = %@&quot;, rectangle);</div><div class="line"></div><div class="line">//打印输出</div><div class="line">rectangle = &lt;EOCRectangle: 0x1740068f0&gt;</div></pre></td></tr></table></figure>
+<p>输出的是一堆内存地址</p>
+<p>这样一点也不好调试，要想输出对象的信息，我们需要在类中，重写description方法，在写的时候，我们可以借助NSDictionary的输出格式</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">-(NSString *)description&#123;</div><div class="line">    return [NSString stringWithFormat:@&quot;%@:%p,%@&quot;,</div><div class="line">            [self class],</div><div class="line">            self,</div><div class="line">          @&#123;</div><div class="line">            @&quot;width&quot;:@(_width),</div><div class="line">            @&quot;height&quot;:@(_height),</div><div class="line">            &#125;];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这样我们的输出就是这样的：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">rectangle = EOCRectangle:0x17000b2b0, &#123;</div><div class="line">    height = 5;</div><div class="line">    width = 10;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>简单明了</p>
+<p>还有一个方法:debugDescription</p>
+<p>这个方法，是我们在调试的时候，打断点，在xcode的控制台输出的时候，需要打印的东西</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">-(NSString *)debugDescription&#123;</div><div class="line">    return @&quot;po 的时候打印我&quot;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>我们在类EOCRectangle重写了debugDescription方法，然后再控制台打印</p>
+<p><img src="http://o8bxt3lx0.bkt.clouddn.com/blog/2017-01-05-082705.jpg" alt=""></p>
+<p>这下明白了吧，好，今天先到这里。</p>
+
       
     </div>
 
@@ -368,6 +457,12 @@
     </div>
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/iOS-编写高质量代码/" rel="tag">#iOS 编写高质量代码</a>
+          
+        </div>
       
 
       
@@ -456,7 +551,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">39</span>
+              <span class="site-state-item-count">40</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -464,7 +559,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-count">14</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -473,7 +568,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-count">25</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -547,7 +642,7 @@
               
             
             
-              <p class="post-toc-empty">此文章未包含目录</p>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#用前缀避免命名空间的冲突"><span class="nav-number">1.</span> <span class="nav-text">用前缀避免命名空间的冲突</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#提供“全能初始化方法”"><span class="nav-number">2.</span> <span class="nav-text">提供“全能初始化方法”</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#实例"><span class="nav-number">2.1.</span> <span class="nav-text">实例</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#在继承中处理全能初始化方法"><span class="nav-number">2.2.</span> <span class="nav-text">在继承中处理全能初始化方法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#总结"><span class="nav-number">2.3.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实现description"><span class="nav-number">3.</span> <span class="nav-text">实现description</span></a></li></ol></div>
             
           </div>
         </section>

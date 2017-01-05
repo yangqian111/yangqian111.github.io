@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://ppsheep.com/"/>
-  <updated>2016-12-29T07:59:06.000Z</updated>
+  <updated>2017-01-03T07:01:20.000Z</updated>
   <id>http://ppsheep.com/</id>
   
   <author>
@@ -14,6 +14,50 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>iOS ping网络小工具</title>
+    <link href="http://ppsheep.com/2017/01/03/iOS-ping%E7%BD%91%E7%BB%9C%E5%B0%8F%E5%B7%A5%E5%85%B7/"/>
+    <id>http://ppsheep.com/2017/01/03/iOS-ping网络小工具/</id>
+    <published>2017-01-03T05:30:44.000Z</published>
+    <updated>2017-01-03T07:01:20.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>Apple官方有一个SimplePing的demo，用于对网络进行检测，就跟我们电脑端的ping效果相同，在一些情况下，我们可以用来进行网络速度的检测，这里将官方给出的demo进行封装，便于我们的使用，源码我会放在文章末尾。</p>
+<a id="more"></a>
+<h3 id="SimplePing"><a href="#SimplePing" class="headerlink" title="SimplePing"></a>SimplePing</h3><p>首先，我们需要到苹果的开发者网站，下载demo </p>
+<p><a href="https://developer.apple.com/library/content/samplecode/SimplePing/Introduction/Intro.html" target="_blank" rel="external">https://developer.apple.com/library/content/samplecode/SimplePing/Introduction/Intro.html</a></p>
+<p><img src="http://o8bxt3lx0.bkt.clouddn.com/blog/2017-01-03-053734.jpg" alt=""></p>
+<h3 id="PPSPingItem"><a href="#PPSPingItem" class="headerlink" title="PPSPingItem"></a>PPSPingItem</h3><p>新建一个我们的自己的工程，将刚才下载的例子中的SimplePing 头文件和实现文件 两个文件拷贝到我们的工程中</p>
+<p>首先，我们新建一个model PPSPingItem  用来封装我们在网络ping过程中，返回的一些数据，便于数据展示</p>
+<p>我们来看一张电脑的终端ping的样式：</p>
+<p><img src="http://o8bxt3lx0.bkt.clouddn.com/blog/2017-01-03-054734.jpg" alt=""></p>
+<p>我们在手机端要实现的也是这种效果</p>
+<p>PPSPingItem：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">#import &lt;Foundation/Foundation.h&gt;</div><div class="line"></div><div class="line">typedef NS_ENUM(NSUInteger, PPSPingStatus)&#123;</div><div class="line">    PPSPingStatusDidStart,//开始</div><div class="line">    PPSPingStatusDidFailToSendPacket,//发送数据包失败</div><div class="line">    PPSPingStatusDidReceivePacket,//收到数据包</div><div class="line">    PPSPingStatusDidReceiveUnexpectedPacket,//数据包数据错误</div><div class="line">    PPSPingStatusDidTimeout,//超时</div><div class="line">    PPSPingStatusError,//错误</div><div class="line">    PPSPingStatusFinished,//完成</div><div class="line">&#125;;</div><div class="line"></div><div class="line"></div><div class="line">@interface PPSPingItem : NSObject</div><div class="line"></div><div class="line">/**</div><div class="line"> </div><div class="line"> ping www.163.com</div><div class="line"> </div><div class="line"> PING 163.xdwscache.ourglb0.com (183.134.24.71): 56 data bytes</div><div class="line"> </div><div class="line"> 64 bytes from 183.134.24.71: icmp_seq=0 ttl=53 time=12.914 ms</div><div class="line"> 64 bytes from 183.134.24.71: icmp_seq=1 ttl=53 time=15.136 ms</div><div class="line"> </div><div class="line"> --- 163.xdwscache.ourglb0.com ping statistics ---</div><div class="line"> 2 packets transmitted, 2 packets received, 0.0% packet loss</div><div class="line"> </div><div class="line"> */</div><div class="line"></div><div class="line">/**</div><div class="line"> 对应上面的一个ping解释属性</div><div class="line"> */</div><div class="line"></div><div class="line">@property(nonatomic) NSString *originalAddress; // 163.xdwscache.ourglb0.com</div><div class="line"></div><div class="line">@property(nonatomic, copy) NSString *IPAddress;// 183.134.24.71</div><div class="line"></div><div class="line">@property(nonatomic) NSUInteger dateBytesLength;// 64</div><div class="line"></div><div class="line">@property(nonatomic) double     timeMilliseconds;//time</div><div class="line"></div><div class="line">@property(nonatomic) NSInteger  timeToLive;//ttl</div><div class="line"></div><div class="line">@property(nonatomic) NSInteger  ICMPSequence;//icmp_seq</div><div class="line"></div><div class="line">@property(nonatomic) PPSPingStatus status;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
+<p>PPSPingItem中的属性，在我们ping网络过程中，返回数据时需要用到。</p>
+<h3 id="PPSPingServices"><a href="#PPSPingServices" class="headerlink" title="PPSPingServices"></a>PPSPingServices</h3><p>PPSPingServices是一个服务类，用作ping的入口，一个管理类，供外部调用，在PPSPingServices类中，我将发起网络ping的接口做成了block，当然，如果你更喜欢delegate，也可以使用delegate实现</p>
+<p>首先，一个类方法，调起Ping服务</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">/**</div><div class="line"> 开始收集Ping网络消息</div><div class="line"> </div><div class="line"> @param address 域名</div><div class="line"> @param handler 回调包信息 每次收到的网络信息</div><div class="line"> @return PPSPingServices</div><div class="line"> */</div><div class="line">+ (PPSPingServices *)startPingAddress:(NSString *)address</div><div class="line">                      callbackHandler:(void(^)(PPSPingItem *pingItem, NSArray *pingItems))handler;</div></pre></td></tr></table></figure>
+<p>在实现文件中，我们需要实现SimplePingDelegate，delegate中一共有6个方法，分别对应这ping的不同状态</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">//开始进行网络检测</div><div class="line">- (void)simplePing:(SimplePing *)pinger didStartWithAddress:(NSData *)address;</div><div class="line">//网络检测失败</div><div class="line">- (void)simplePing:(SimplePing *)pinger didFailWithError:(NSError *)error;</div><div class="line">//发送网络包成功</div><div class="line">- (void)simplePing:(SimplePing *)pinger didSendPacket:(NSData *)packet sequenceNumber:(uint16_t)sequenceNumber;</div><div class="line">//发送网络包失败</div><div class="line">- (void)simplePing:(SimplePing *)pinger didFailToSendPacket:(NSData *)packet sequenceNumber:(uint16_t)sequenceNumber error:(NSError *)error;</div><div class="line">//收到网络包回应</div><div class="line">- (void)simplePing:(SimplePing *)pinger didReceivePingResponsePacket:(NSData *)packet sequenceNumber:(uint16_t)sequenceNumber;</div><div class="line">//收到错误的网络包</div><div class="line">- (void)simplePing:(SimplePing *)pinger didReceiveUnexpectedPacket:(NSData *)packet;</div></pre></td></tr></table></figure>
+<p>开始ping网络数据：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">/**</div><div class="line"> 开始网络ping网络</div><div class="line"></div><div class="line"> @param sender 按钮</div><div class="line"> */</div><div class="line">- (IBAction)startPing:(id)sender &#123;</div><div class="line"> self.pingService = [PPSPingServices startPingAddress:_domainTextFiled.text callbackHandler:^(PPSPingItem *pingItem, NSArray *pingItems) &#123;</div><div class="line">     NSLog(@&quot;%@&quot;,pingItem);</div><div class="line"> &#125;];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在服务类中，我们开始ping网络，会在6个delegate方法中，分别获得ping网络的返回值，</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line"></div><div class="line"></div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Apple官方有一个SimplePing的demo，用于对网络进行检测，就跟我们电脑端的ping效果相同，在一些情况下，我们可以用来进行网络速度的检测，这里将官方给出的demo进行封装，便于我们的使用，源码我会放在文章末尾。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="iOS基础 网络组件" scheme="http://ppsheep.com/categories/iOS%E5%9F%BA%E7%A1%80-%E7%BD%91%E7%BB%9C%E7%BB%84%E4%BB%B6/"/>
+    
+    
+      <category term="ping工具" scheme="http://ppsheep.com/tags/ping%E5%B7%A5%E5%85%B7/"/>
+    
+  </entry>
   
   <entry>
     <title>Swift第三波</title>
@@ -224,12 +268,86 @@
     <link href="http://ppsheep.com/2016/12/28/iOS-%E6%9C%89%E6%95%88%E7%BC%96%E5%86%99%E9%AB%98%E8%B4%A8%E9%87%8FObjective-C%E6%96%B9%E6%B3%95-%E4%BA%94/"/>
     <id>http://ppsheep.com/2016/12/28/iOS-有效编写高质量Objective-C方法-五/</id>
     <published>2016-12-28T09:41:04.000Z</published>
-    <updated>2016-12-30T09:59:27.000Z</updated>
+    <updated>2017-01-05T08:38:16.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>我们前面的4篇文章，已经将Effective OC 的前两章节讲完了，接下来几篇文章，主要会讲我们在平时编码中的一些习惯，一些细节问题的处理，包括接口和API的设计，协议delegate和分类的使用等。<br><a id="more"></a></p>
+<h4 id="用前缀避免命名空间的冲突"><a href="#用前缀避免命名空间的冲突" class="headerlink" title="用前缀避免命名空间的冲突"></a>用前缀避免命名空间的冲突</h4><p>因为OC和其他语言不同，没有命名空间这一说法，因此，我们在给类起名时，要设法避免潜在的命名冲突。发生命名冲突时，我们经常会看到这样的错误：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">duplicate symbol _OBJC_METACLASS_$_XXXXX in:</div><div class="line">	build/something.o</div><div class="line">	build/something_else.o</div><div class="line">duplicate symbol _OBJC_CLASS_$_XXXXX in:</div><div class="line">	build/something.o</div><div class="line">	build/something_else.o</div></pre></td></tr></table></figure>
+<p>上面的情况，意思为有两个地方都实现了名为XXXXX的类，这种情况，往往出现在，我们引用多个第三方库，第三方库之间命名冲突、或者是我们自己工程中的命名与第三方库冲突。</p>
+<p>所以我们在编写类名时，一般都会加上跟自己工程相关的一些前缀，而且在xcode中是有一个功能，让我们在新建类时，自动给我们加上前缀：</p>
+<p><img src="http://o8bxt3lx0.bkt.clouddn.com/blog/2017-01-05-064844.jpg" alt=""></p>
+<p>这样在我们新建类时，默认就会有一个PPS的前缀：</p>
+<p><img src="http://o8bxt3lx0.bkt.clouddn.com/blog/2017-01-05-065009.jpg" alt=""></p>
+<p><strong>注意:</strong></p>
+<p>如果你正在编写第三方库，供别人使用，那么请一定要为你的所有类名加上你自定义的前缀，这样，别人用你的SDK才不会出现上面的冲突情况，这一点非常重要。</p>
+<h4 id="提供“全能初始化方法”"><a href="#提供“全能初始化方法”" class="headerlink" title="提供“全能初始化方法”"></a>提供“全能初始化方法”</h4><p>首先，我们来解释一下什么是全能初始化方法：</p>
+<p>举个例子吧</p>
+<p>在NSDate类中，初始化方法有下面这几种：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">- (instancetype)init;</div><div class="line">- (instancetype)initWithTimeIntervalSinceReferenceDate:(NSTimeInterval)ti;</div><div class="line">- (instancetype)initWithTimeIntervalSinceNow:(NSTimeInterval)secs;</div><div class="line">- (instancetype)initWithTimeIntervalSince1970:(NSTimeInterval)secs;</div><div class="line">- (instancetype)initWithTimeInterval:(NSTimeInterval)secsToBeAdded sinceDate:(NSDate *)date;</div></pre></td></tr></table></figure>
+<p>在上面的几个初始化方法中，(instancetype)initWithTimeIntervalSinceReferenceDate:是全能初始化方法，意思就是</p>
+<p>其他的初始化方法，都是最终都是调用它，生成了NSDate类。</p>
+<p>为什么要引入全能初始化方法这个概念呢？在我们平时编码中，经常在生成一个类时，传入一些参数，才能使这个类进行正常的工作，如果我们设计时，这个类有很多的初始化方法，然而进行一段时间编码过后，我们发觉需要修改这个类的底层数据，就是生成这个类必须要使用到的一些数据，那么，这么多的初始化方法，我们都得修改，如果我们有一个全能初始化方法，那么我们只需要改动这个全能初始化方法，底层数据就已经改变。</p>
+<h5 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h5><p>这里还是引入一个例子：</p>
+<p>比如我们要编写一个表示矩形的类：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">#import &lt;Foundation/Foundation.h&gt;</div><div class="line"></div><div class="line">@interface EOCRectangle : NSObject</div><div class="line"></div><div class="line">@property (nonatomic, assign, readonly) float width;</div><div class="line">@property (nonatomic, assign, readonly) float height;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
+<p>这里，为什么将长宽设置成readonly，我们在后面一篇文章中讲，这样一来，我们就需要提供一个初始方法来设置这两个参数：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">- (instancetype)initWithWidth:(float)width</div><div class="line">                    andHeight:(float)height;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">-(instancetype)initWithWidth:(float)width andHeight:(float)height&#123;</div><div class="line">    if (self = [super init]) &#123;</div><div class="line">        _width = width;</div><div class="line">        _height = height;</div><div class="line">    &#125;</div><div class="line">    return self;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这里我们会碰到一个问题，如果有人直接用</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">[[EOCRectangle alloc] init];</div></pre></td></tr></table></figure>
+<p>这个方法来初始化，我们 的长宽不是没办法设置了，那这个类肯定不能正常工作，我们不希望看到这种情况发生，通常，我们有两种方法处理：</p>
+<p>第一，在init方法中，传入默认的值，就是讲类必须的参数的默认值传入，形成一个类</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">-(instancetype)init&#123;</div><div class="line">    return [self initWithWidth:5.0f andHeight:10.0f];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>第二种方法，是我们不希望开发者调用init方法，这样类就不能正常工作，我们可以在init方法中，抛出异常，但是一般我们不这样处理，在OC中，只有发生严重错误时，我们才抛出异常</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">-(instancetype)init&#123;</div><div class="line">    @throw [NSException exceptionWithName:NSInternalInconsistencyException reason:@&quot;不允许调用这个初始化方法，请调用initWithWidth:andHeight:方法&quot; userInfo:nil];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h5 id="在继承中处理全能初始化方法"><a href="#在继承中处理全能初始化方法" class="headerlink" title="在继承中处理全能初始化方法"></a>在继承中处理全能初始化方法</h5><p>如果我们现在需要创建一个正方形类EOCSquare类，让他继承自EOCRectangle类，这很正常，正方形的长宽必须相等。那么我们需要提供一个传入边长的初始化方法。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">- (instancetype)initWithDimension:(float)dimension;</div></pre></td></tr></table></figure>
+<p>在实现中：调用父类的方法，传入相同的长宽，即是一个正方形</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">- (instancetype)initWithDimension:(float)dimension&#123;</div><div class="line">    return [super initWithWidth:dimension andHeight:dimension];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>然而，即使我们提供了传入边长的初始化，方法，调用者还是可能会调用initWithWidth:andHeight:或者init方法来初始化，这是我们不愿意看到的，于是就有一个重要的结论：</p>
+<p><strong>如果子类的全能初始化方法和父类的全能初始化方法不同，那么总是应该覆写父类的全能初始化方法</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">-(instancetype)initWithWidth:(float)width andHeight:(float)height&#123;</div><div class="line">    float dimension = MAX(width, height);</div><div class="line">    return [self initWithDimension:dimension];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这时，我们发现，不管调用者调用了initWithWidth:andHeight:还是init方法，都能够正常初始化EOCSquare了，因为如果开发者调用initWithWidth:andHeight:，那么因为我们EOCSquare覆写了，所以调用的是EOCSquare的方法，如果调用者调用了init方法，那么最终调用到的还是EOCSquare的全能初始化方法。</p>
+<p>但是，我们一般不覆写父类的全能初始化方法，这样显得毫不合理，改变父类的全能初始化方法逻辑，所以我们一般这样处理，在子类中，覆盖父类的全能初始化方法，并且抛出异常</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">-(instancetype)initWithWidth:(float)width andHeight:(float)height&#123;</div><div class="line">    @throw [NSException exceptionWithName:NSInternalInconsistencyException reason:@&quot;不允许调用这个初始化方法，请调用initWithDimension:方法&quot; userInfo:nil];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这样一来，我们还需要覆写init方法</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">-(instancetype)init&#123;</div><div class="line">    return [self initWithDimension:5.0f];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这样，我们就认为，开发者在初始化正方形时，只能传入相应的边长，如果传入长宽，那么认为是调用者自己犯了错误。</p>
+<h5 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h5><ul>
+<li>在类中提供一个全能初始化方法，并指明其他初始化方法都需要调用全能初始化方法</li>
+<li>若全能初始化方法不同，则子类应该覆写超类的全能初始化方法</li>
+<li>如果超类的全能初始化方法不适用于子类，那么应该在子类中覆写超类的全能初始化方法,并且在其中抛出异常</li>
+</ul>
+<h4 id="实现description"><a href="#实现description" class="headerlink" title="实现description"></a>实现description</h4><p>在调试程序时，我们经常需要将对象的信息打印出来，最常用到的方式就是：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">NSLog(@&quot;object = %@&quot;,object);</div></pre></td></tr></table></figure>
+<p>在打印数组或者字典上，这样是很好用的：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">NSArray *arr = @[@&quot;111&quot;,@&quot;222&quot;];</div><div class="line">NSLog(@&quot;arr = %@&quot;,arr);</div><div class="line"></div><div class="line">//打印出</div><div class="line">arr = (</div><div class="line">    111,</div><div class="line">    222</div><div class="line">)</div></pre></td></tr></table></figure>
+<p>但是如我们在自定义的类中，就不会像刚才那样输出了，输出的往往是这样：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">EOCRectangle *rectangle = [[EOCRectangle alloc] initWithWidth:10 andHeight:5];</div><div class="line">NSLog(@&quot;rectangle = %@&quot;, rectangle);</div><div class="line"></div><div class="line">//打印输出</div><div class="line">rectangle = &lt;EOCRectangle: 0x1740068f0&gt;</div></pre></td></tr></table></figure>
+<p>输出的是一堆内存地址</p>
+<p>这样一点也不好调试，要想输出对象的信息，我们需要在类中，重写description方法，在写的时候，我们可以借助NSDictionary的输出格式</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">-(NSString *)description&#123;</div><div class="line">    return [NSString stringWithFormat:@&quot;%@:%p,%@&quot;,</div><div class="line">            [self class],</div><div class="line">            self,</div><div class="line">          @&#123;</div><div class="line">            @&quot;width&quot;:@(_width),</div><div class="line">            @&quot;height&quot;:@(_height),</div><div class="line">            &#125;];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这样我们的输出就是这样的：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">rectangle = EOCRectangle:0x17000b2b0, &#123;</div><div class="line">    height = 5;</div><div class="line">    width = 10;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>简单明了</p>
+<p>还有一个方法:debugDescription</p>
+<p>这个方法，是我们在调试的时候，打断点，在xcode的控制台输出的时候，需要打印的东西</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">-(NSString *)debugDescription&#123;</div><div class="line">    return @&quot;po 的时候打印我&quot;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>我们在类EOCRectangle重写了debugDescription方法，然后再控制台打印</p>
+<p><img src="http://o8bxt3lx0.bkt.clouddn.com/blog/2017-01-05-082705.jpg" alt=""></p>
+<p>这下明白了吧，好，今天先到这里。</p>
+]]></content>
     
     <summary type="html">
     
+      &lt;p&gt;我们前面的4篇文章，已经将Effective OC 的前两章节讲完了，接下来几篇文章，主要会讲我们在平时编码中的一些习惯，一些细节问题的处理，包括接口和API的设计，协议delegate和分类的使用等。&lt;br&gt;
+    
     </summary>
     
+      <category term="iOS 编写高质量代码的方法" scheme="http://ppsheep.com/categories/iOS-%E7%BC%96%E5%86%99%E9%AB%98%E8%B4%A8%E9%87%8F%E4%BB%A3%E7%A0%81%E7%9A%84%E6%96%B9%E6%B3%95/"/>
+    
+    
+      <category term="iOS 编写高质量代码" scheme="http://ppsheep.com/tags/iOS-%E7%BC%96%E5%86%99%E9%AB%98%E8%B4%A8%E9%87%8F%E4%BB%A3%E7%A0%81/"/>
     
   </entry>
   
@@ -337,7 +455,7 @@
     <link href="http://ppsheep.com/2016/12/16/iOS%E8%8E%B7%E5%8F%96%E5%BD%93%E5%89%8D%E8%AE%BE%E5%A4%87%E7%9A%84%E4%BF%A1%E6%81%AF-%E7%BD%91%E7%BB%9C%E7%9B%B8%E5%85%B3/"/>
     <id>http://ppsheep.com/2016/12/16/iOS获取当前设备的信息-网络相关/</id>
     <published>2016-12-16T06:57:18.000Z</published>
-    <updated>2016-12-16T08:27:02.000Z</updated>
+    <updated>2017-01-03T05:34:02.000Z</updated>
     
     <content type="html"><![CDATA[<p><strong>欢迎大家关注我的公众号，我会定期分享一些我在项目中遇到问题的解决办法和一些iOS实用的技巧，现阶段主要是整理出一些基础的知识记录下来</strong></p>
 <div align="middle"><br>    <image src="http://ac-mhke0kuv.clouddn.com/830a4ead8294ceff5160.jpg"></image><br></div>
@@ -368,10 +486,10 @@
     
     </summary>
     
-      <category term="iOS网络相关信息" scheme="http://ppsheep.com/categories/iOS%E7%BD%91%E7%BB%9C%E7%9B%B8%E5%85%B3%E4%BF%A1%E6%81%AF/"/>
+      <category term="iOS基础 网络组件" scheme="http://ppsheep.com/categories/iOS%E5%9F%BA%E7%A1%80-%E7%BD%91%E7%BB%9C%E7%BB%84%E4%BB%B6/"/>
     
     
-      <category term="iOS网络相关" scheme="http://ppsheep.com/tags/iOS%E7%BD%91%E7%BB%9C%E7%9B%B8%E5%85%B3/"/>
+      <category term="域名解析 网络判断" scheme="http://ppsheep.com/tags/%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90-%E7%BD%91%E7%BB%9C%E5%88%A4%E6%96%AD/"/>
     
   </entry>
   
@@ -1285,52 +1403,6 @@
     
     
       <category term="iOS 编写高质量代码" scheme="http://ppsheep.com/tags/iOS-%E7%BC%96%E5%86%99%E9%AB%98%E8%B4%A8%E9%87%8F%E4%BB%A3%E7%A0%81/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>iOS 应用之间跳转传输数据以及跳回源程序</title>
-    <link href="http://ppsheep.com/2016/11/07/iOS-%E5%BA%94%E7%94%A8%E4%B9%8B%E9%97%B4%E8%B7%B3%E8%BD%AC%E4%BC%A0%E8%BE%93%E6%95%B0%E6%8D%AE%E4%BB%A5%E5%8F%8A%E8%B7%B3%E5%9B%9E%E6%BA%90%E7%A8%8B%E5%BA%8F/"/>
-    <id>http://ppsheep.com/2016/11/07/iOS-应用之间跳转传输数据以及跳回源程序/</id>
-    <published>2016-11-07T03:15:19.000Z</published>
-    <updated>2016-11-07T08:33:01.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>之前写了一篇关于APP之间跳转的文章，期间有同学说能否出一个类似于微信登录或者支付宝支付之类的，跳转到支付宝获得消息再调回源程序，并且带上信息。今天我们就再来聊聊，实现这样一种效果，没看过之前应用跳转的，请移步:<br>    <a href="http://ppsheep.com/2016/10/27/iOS应用之间的跳转解析/">http://ppsheep.com/2016/10/27/iOS应用之间的跳转解析/</a></p>
-<a id="more"></a>
-<p>之前我们说到APP之间的跳转，其实就是通过一个URL Schemes进行跳转，APP之间的传值，其实也是通过这个URL进行传值。</p>
-<p>再有我们想跳回原来程序，那么我们还需要知道源程序的URL Schemes，这样我们才能跳回到源程序，所以在传递参数的时候 我们还需要把源程序的URL Schemes传递过去。</p>
-<p>我们需要传递的参数：</p>
-<ul>
-<li>当前APP的 URL Schemes</li>
-<li>我们需要传递的实际参数</li>
-</ul>
-<p><strong>还有一个重要的事情，因为我们需要从APP2跳回APP1，所以我们还需要设置APP1的URL Schemes，怎么设置，我这里就不写出来了，具体可以看上一篇跳转解析</strong></p>
-<p>我们之前知道 打开另一个APP，是打开一个URL<br> APP2://类似于这种，那我们会想到一般我们http有一种方式携带参数 <a href="http://url?name=?&amp;age=?" target="_blank" rel="external">http://url?name=?&amp;age=?</a></p>
-<p> 我们APP之间的传递参数方式其实也是这样的方式</p>
- <figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">//获取APP2的URL Scheme 还需要带上当前App的APP1</div><div class="line">  NSString *URLScheme = @&quot;APP2://APP1&quot;;</div><div class="line">  </div><div class="line">  //我们参数需要穿name age</div><div class="line">  NSString *params = @&quot;name=yq&amp;age=23&quot;;</div><div class="line">  //接下来加上我们需要携带的参数</div><div class="line">  NSString *realURL = [NSString stringWithFormat:@&quot;%@?%@&quot;,URLScheme,params];</div><div class="line">  </div><div class="line">  NSURL *appURL = [NSURL URLWithString:realURL];</div><div class="line">  </div><div class="line">  //判断手机中是否安装了APP2</div><div class="line">  if ([[UIApplication sharedApplication] canOpenURL:appURL]) &#123;</div><div class="line">      //打开APP2ViewController2</div><div class="line">      [[UIApplication sharedApplication] openURL:appURL];</div><div class="line">  &#125;else&#123;</div><div class="line">      NSLog(@&quot;没有安装APP2&quot;);</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
-<p> 我们最终的appURL 是： </p>
- <figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">APP2://APP1?name=yq&amp;age=23</div></pre></td></tr></table></figure>
-<p> 我们在APP2中处理这个跳转的URL</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">-(BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation&#123;</div><div class="line">	if ([url.absoluteString containsString:@&quot;APP1&quot;])&#123;</div><div class="line">       NSLog(@&quot;%@&quot;,url);</div><div class="line">       </div><div class="line">       //拿到源程序的</div><div class="line">       NSString * urlschemes = [[url.absoluteString componentsSeparatedByString:@&quot;//&quot;][1] componentsSeparatedByString:@&quot;?&quot;][0];</div><div class="line">       </div><div class="line">       //拿到参数</div><div class="line">       NSRange range = [url.absoluteString rangeOfString:@&quot;?&quot;];</div><div class="line">       NSString *paramStr = [url.absoluteString substringFromIndex:range.location+1];//去除问号</div><div class="line">       NSArray *params = [paramStr componentsSeparatedByString:@&quot;&amp;&quot;];</div><div class="line">       NSLog(@&quot;%@&quot;,params);</div><div class="line">       </div><div class="line">       //跳回源程序</div><div class="line">       dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^&#123;</div><div class="line">           // 延时3s模拟处理后回调指定的 URL Schemes并传递结果</div><div class="line">           </div><div class="line">           if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@&quot;APP2://&quot;]]) &#123;</div><div class="line">               </div><div class="line">               NSLog(@&quot;跳转成功&quot;);</div><div class="line">               </div><div class="line">               [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@&quot;%@://back?name=back&amp;code=200&quot;,urlschemes]]];</div><div class="line">               </div><div class="line">           &#125;else&#123;</div><div class="line">               NSLog(@&quot;跳转失败&quot;);</div><div class="line">               NSLog(@&quot;未安装应用!&quot;);</div><div class="line">           &#125;</div><div class="line">       &#125;);</div><div class="line">   &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p> 在APP2中  我们拿到了APP1传递的参数 放在了params数组中，同样的 我们在APP1中再处理从APP2跳回来的信息</p>
- <figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">  /**</div><div class="line"> 跳转回来</div><div class="line"> */</div><div class="line">-(BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary&lt;UIApplicationOpenURLOptionsKey,id&gt; *)options&#123;</div><div class="line">    if ([url.absoluteString containsString:@&quot;back&quot;]) &#123;</div><div class="line">        //拿到参数</div><div class="line">        NSRange range = [url.absoluteString rangeOfString:@&quot;?&quot;];</div><div class="line">        NSString *paramStr = [url.absoluteString substringFromIndex:range.location+1];//去除问号</div><div class="line">        NSArray *params = [paramStr componentsSeparatedByString:@&quot;&amp;&quot;];</div><div class="line">        NSLog(@&quot;%@&quot;,params);</div><div class="line">    &#125;</div><div class="line">    return YES;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>这样我们也拿到了APP2跳回来的数据</p>
-<p>在iOS10中跳转的API有更新，具体的变化可以看API 我这里就不列出来了</p>
-<p>源代码放在：</p>
-<p><a href="https://github.com/yangqian111/blog/tree/master/APP-2" target="_blank" rel="external">https://github.com/yangqian111/blog/tree/master/APP-2</a></p>
-<p><a href="https://github.com/yangqian111/blog/tree/master/APP-1" target="_blank" rel="external">https://github.com/yangqian111/blog/tree/master/APP-1</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;之前写了一篇关于APP之间跳转的文章，期间有同学说能否出一个类似于微信登录或者支付宝支付之类的，跳转到支付宝获得消息再调回源程序，并且带上信息。今天我们就再来聊聊，实现这样一种效果，没看过之前应用跳转的，请移步:&lt;br&gt;    &lt;a href=&quot;http://ppsheep.com/2016/10/27/iOS应用之间的跳转解析/&quot;&gt;http://ppsheep.com/2016/10/27/iOS应用之间的跳转解析/&lt;/a&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="iOS进阶" scheme="http://ppsheep.com/categories/iOS%E8%BF%9B%E9%98%B6/"/>
-    
-    
-      <category term="iOS应用之间的跳转" scheme="http://ppsheep.com/tags/iOS%E5%BA%94%E7%94%A8%E4%B9%8B%E9%97%B4%E7%9A%84%E8%B7%B3%E8%BD%AC/"/>
     
   </entry>
   

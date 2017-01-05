@@ -68,11 +68,13 @@
 <link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="iOS中的并发编程," />
+  <meta name="keywords" content="ping工具," />
 
 
 
 
+
+  <link rel="alternate" href="/atom.xml" title="ppsheep" type="application/atom+xml" />
 
 
 
@@ -84,16 +86,19 @@
 
 
 
-<meta name="description" content="上一篇我们讲了在iOS和OSX中能够用到的并发编程，这一节我们将讨论，在后台进行进行的一些并发操作，例如网络访问，文件读取写入，UI绘制等等。">
+<meta name="description" content="Apple官方有一个SimplePing的demo，用于对网络进行检测，就跟我们电脑端的ping效果相同，在一些情况下，我们可以用来进行网络速度的检测，这里将官方给出的demo进行封装，便于我们的使用，源码我会放在文章末尾。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="iOS中的并发编程(二)">
-<meta property="og:url" content="http://yoursite.com/2016/12/14/iOS中的并发编程-二/index.html">
+<meta property="og:title" content="iOS ping网络小工具">
+<meta property="og:url" content="http://ppsheep.com/2017/01/03/iOS-ping网络小工具/index.html">
 <meta property="og:site_name" content="ppsheep">
-<meta property="og:description" content="上一篇我们讲了在iOS和OSX中能够用到的并发编程，这一节我们将讨论，在后台进行进行的一些并发操作，例如网络访问，文件读取写入，UI绘制等等。">
-<meta property="og:updated_time" content="2016-12-14T08:37:16.000Z">
+<meta property="og:description" content="Apple官方有一个SimplePing的demo，用于对网络进行检测，就跟我们电脑端的ping效果相同，在一些情况下，我们可以用来进行网络速度的检测，这里将官方给出的demo进行封装，便于我们的使用，源码我会放在文章末尾。">
+<meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/blog/2017-01-03-053734.jpg">
+<meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/blog/2017-01-03-054734.jpg">
+<meta property="og:updated_time" content="2017-01-03T07:01:20.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="iOS中的并发编程(二)">
-<meta name="twitter:description" content="上一篇我们讲了在iOS和OSX中能够用到的并发编程，这一节我们将讨论，在后台进行进行的一些并发操作，例如网络访问，文件读取写入，UI绘制等等。">
+<meta name="twitter:title" content="iOS ping网络小工具">
+<meta name="twitter:description" content="Apple官方有一个SimplePing的demo，用于对网络进行检测，就跟我们电脑端的ping效果相同，在一些情况下，我们可以用来进行网络速度的检测，这里将官方给出的demo进行封装，便于我们的使用，源码我会放在文章末尾。">
+<meta name="twitter:image" content="http://o8bxt3lx0.bkt.clouddn.com/blog/2017-01-03-053734.jpg">
 
 
 
@@ -101,7 +106,7 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     scheme: 'Mist',
-    sidebar: {"position":"left","display":"post"},
+    sidebar: {"position":"left","display":"always"},
     fancybox: true,
     motion: true,
     duoshuo: {
@@ -114,10 +119,10 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2016/12/14/iOS中的并发编程-二/"/>
+  <link rel="canonical" href="http://ppsheep.com/2017/01/03/iOS-ping网络小工具/"/>
 
 
-  <title> iOS中的并发编程(二) | ppsheep </title>
+  <title> iOS ping网络小工具 | ppsheep </title>
 </head>
 
 <body itemscope itemtype="//schema.org/WebPage" lang="zh-Hans">
@@ -196,14 +201,6 @@
         </li>
       
         
-        <li class="menu-item menu-item-about">
-          <a href="/about" rel="section">
-            
-            关于我
-          </a>
-        </li>
-      
-        
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
             
@@ -216,6 +213,14 @@
           <a href="/tags" rel="section">
             
             标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+            关于我
           </a>
         </li>
       
@@ -265,7 +270,7 @@
             
             
               
-                iOS中的并发编程(二)
+                iOS ping网络小工具
               
             
           </h1>
@@ -277,8 +282,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-12-14T16:33:02+08:00" content="2016-12-14">
-              2016-12-14
+            <time itemprop="dateCreated" datetime="2017-01-03T13:30:44+08:00" content="2017-01-03">
+              2017-01-03
             </time>
           </span>
 
@@ -291,8 +296,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/iOS中的并发编程/" itemprop="url" rel="index">
-                    <span itemprop="name">iOS中的并发编程</span>
+                  <a href="/categories/iOS基础-网络组件/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS基础 网络组件</span>
                   </a>
                 </span>
 
@@ -307,8 +312,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/12/14/iOS中的并发编程-二/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/14/iOS中的并发编程-二/" itemprop="commentsCount"></span>
+                <a href="/2017/01/03/iOS-ping网络小工具/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/03/iOS-ping网络小工具/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -318,7 +323,7 @@
 
           
           
-             <span id="/2016/12/14/iOS中的并发编程-二/" class="leancloud_visitors" data-flag-title="iOS中的并发编程(二)">
+             <span id="/2017/01/03/iOS-ping网络小工具/" class="leancloud_visitors" data-flag-title="iOS ping网络小工具">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -340,10 +345,28 @@
       
 
       
-        <p><strong>欢迎大家关注我的公众号，我会定期分享一些我在项目中遇到问题的解决办法和一些iOS实用的技巧，现阶段主要是整理出一些基础的知识记录下来</strong></p>
-<div align="middle"><br>    <image src="http://ac-mhke0kuv.clouddn.com/830a4ead8294ceff5160.jpg"></image><br></div>
-
-<p>文章也会同步更新到我的博客：<br><a href="http://ppsheep.com" target="_blank" rel="external">http://ppsheep.com</a></p>
+        <p>Apple官方有一个SimplePing的demo，用于对网络进行检测，就跟我们电脑端的ping效果相同，在一些情况下，我们可以用来进行网络速度的检测，这里将官方给出的demo进行封装，便于我们的使用，源码我会放在文章末尾。</p>
+<a id="more"></a>
+<h3 id="SimplePing"><a href="#SimplePing" class="headerlink" title="SimplePing"></a>SimplePing</h3><p>首先，我们需要到苹果的开发者网站，下载demo </p>
+<p><a href="https://developer.apple.com/library/content/samplecode/SimplePing/Introduction/Intro.html" target="_blank" rel="external">https://developer.apple.com/library/content/samplecode/SimplePing/Introduction/Intro.html</a></p>
+<p><img src="http://o8bxt3lx0.bkt.clouddn.com/blog/2017-01-03-053734.jpg" alt=""></p>
+<h3 id="PPSPingItem"><a href="#PPSPingItem" class="headerlink" title="PPSPingItem"></a>PPSPingItem</h3><p>新建一个我们的自己的工程，将刚才下载的例子中的SimplePing 头文件和实现文件 两个文件拷贝到我们的工程中</p>
+<p>首先，我们新建一个model PPSPingItem  用来封装我们在网络ping过程中，返回的一些数据，便于数据展示</p>
+<p>我们来看一张电脑的终端ping的样式：</p>
+<p><img src="http://o8bxt3lx0.bkt.clouddn.com/blog/2017-01-03-054734.jpg" alt=""></p>
+<p>我们在手机端要实现的也是这种效果</p>
+<p>PPSPingItem：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">#import &lt;Foundation/Foundation.h&gt;</div><div class="line"></div><div class="line">typedef NS_ENUM(NSUInteger, PPSPingStatus)&#123;</div><div class="line">    PPSPingStatusDidStart,//开始</div><div class="line">    PPSPingStatusDidFailToSendPacket,//发送数据包失败</div><div class="line">    PPSPingStatusDidReceivePacket,//收到数据包</div><div class="line">    PPSPingStatusDidReceiveUnexpectedPacket,//数据包数据错误</div><div class="line">    PPSPingStatusDidTimeout,//超时</div><div class="line">    PPSPingStatusError,//错误</div><div class="line">    PPSPingStatusFinished,//完成</div><div class="line">&#125;;</div><div class="line"></div><div class="line"></div><div class="line">@interface PPSPingItem : NSObject</div><div class="line"></div><div class="line">/**</div><div class="line"> </div><div class="line"> ping www.163.com</div><div class="line"> </div><div class="line"> PING 163.xdwscache.ourglb0.com (183.134.24.71): 56 data bytes</div><div class="line"> </div><div class="line"> 64 bytes from 183.134.24.71: icmp_seq=0 ttl=53 time=12.914 ms</div><div class="line"> 64 bytes from 183.134.24.71: icmp_seq=1 ttl=53 time=15.136 ms</div><div class="line"> </div><div class="line"> --- 163.xdwscache.ourglb0.com ping statistics ---</div><div class="line"> 2 packets transmitted, 2 packets received, 0.0% packet loss</div><div class="line"> </div><div class="line"> */</div><div class="line"></div><div class="line">/**</div><div class="line"> 对应上面的一个ping解释属性</div><div class="line"> */</div><div class="line"></div><div class="line">@property(nonatomic) NSString *originalAddress; // 163.xdwscache.ourglb0.com</div><div class="line"></div><div class="line">@property(nonatomic, copy) NSString *IPAddress;// 183.134.24.71</div><div class="line"></div><div class="line">@property(nonatomic) NSUInteger dateBytesLength;// 64</div><div class="line"></div><div class="line">@property(nonatomic) double     timeMilliseconds;//time</div><div class="line"></div><div class="line">@property(nonatomic) NSInteger  timeToLive;//ttl</div><div class="line"></div><div class="line">@property(nonatomic) NSInteger  ICMPSequence;//icmp_seq</div><div class="line"></div><div class="line">@property(nonatomic) PPSPingStatus status;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
+<p>PPSPingItem中的属性，在我们ping网络过程中，返回数据时需要用到。</p>
+<h3 id="PPSPingServices"><a href="#PPSPingServices" class="headerlink" title="PPSPingServices"></a>PPSPingServices</h3><p>PPSPingServices是一个服务类，用作ping的入口，一个管理类，供外部调用，在PPSPingServices类中，我将发起网络ping的接口做成了block，当然，如果你更喜欢delegate，也可以使用delegate实现</p>
+<p>首先，一个类方法，调起Ping服务</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">/**</div><div class="line"> 开始收集Ping网络消息</div><div class="line"> </div><div class="line"> @param address 域名</div><div class="line"> @param handler 回调包信息 每次收到的网络信息</div><div class="line"> @return PPSPingServices</div><div class="line"> */</div><div class="line">+ (PPSPingServices *)startPingAddress:(NSString *)address</div><div class="line">                      callbackHandler:(void(^)(PPSPingItem *pingItem, NSArray *pingItems))handler;</div></pre></td></tr></table></figure>
+<p>在实现文件中，我们需要实现SimplePingDelegate，delegate中一共有6个方法，分别对应这ping的不同状态</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">//开始进行网络检测</div><div class="line">- (void)simplePing:(SimplePing *)pinger didStartWithAddress:(NSData *)address;</div><div class="line">//网络检测失败</div><div class="line">- (void)simplePing:(SimplePing *)pinger didFailWithError:(NSError *)error;</div><div class="line">//发送网络包成功</div><div class="line">- (void)simplePing:(SimplePing *)pinger didSendPacket:(NSData *)packet sequenceNumber:(uint16_t)sequenceNumber;</div><div class="line">//发送网络包失败</div><div class="line">- (void)simplePing:(SimplePing *)pinger didFailToSendPacket:(NSData *)packet sequenceNumber:(uint16_t)sequenceNumber error:(NSError *)error;</div><div class="line">//收到网络包回应</div><div class="line">- (void)simplePing:(SimplePing *)pinger didReceivePingResponsePacket:(NSData *)packet sequenceNumber:(uint16_t)sequenceNumber;</div><div class="line">//收到错误的网络包</div><div class="line">- (void)simplePing:(SimplePing *)pinger didReceiveUnexpectedPacket:(NSData *)packet;</div></pre></td></tr></table></figure>
+<p>开始ping网络数据：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">/**</div><div class="line"> 开始网络ping网络</div><div class="line"></div><div class="line"> @param sender 按钮</div><div class="line"> */</div><div class="line">- (IBAction)startPing:(id)sender &#123;</div><div class="line"> self.pingService = [PPSPingServices startPingAddress:_domainTextFiled.text callbackHandler:^(PPSPingItem *pingItem, NSArray *pingItems) &#123;</div><div class="line">     NSLog(@&quot;%@&quot;,pingItem);</div><div class="line"> &#125;];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在服务类中，我们开始ping网络，会在6个delegate方法中，分别获得ping网络的返回值，</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line"></div><div class="line"></div></pre></td></tr></table></figure>
 
       
     </div>
@@ -392,7 +415,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/iOS中的并发编程/" rel="tag">#iOS中的并发编程</a>
+            <a href="/tags/ping工具/" rel="tag">#ping工具</a>
           
         </div>
       
@@ -401,17 +424,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/12/14/iOS中的并发编程-一/" rel="next" title="iOS中的并发编程(一)">
-                <i class="fa fa-chevron-left"></i> iOS中的并发编程(一)
+              <a href="/2016/12/29/Swift第三波/" rel="next" title="Swift第三波">
+                <i class="fa fa-chevron-left"></i> Swift第三波
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/12/16/iOS获取当前设备的信息-网络相关/" rel="prev" title="iOS获取当前设备的信息-网络相关">
-                iOS获取当前设备的信息-网络相关 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -437,8 +456,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/12/14/iOS中的并发编程-二/"
-           data-title="iOS中的并发编程(二)" data-url="http://yoursite.com/2016/12/14/iOS中的并发编程-二/">
+      <div class="ds-thread" data-thread-key="2017/01/03/iOS-ping网络小工具/"
+           data-title="iOS ping网络小工具" data-url="http://ppsheep.com/2017/01/03/iOS-ping网络小工具/">
       </div>
     
   </div>
@@ -478,7 +497,7 @@
                src="http://o8bxt3lx0.bkt.clouddn.com/avatar_public.jpg"
                alt="ppsheep" />
           <p class="site-author-name" itemprop="name">ppsheep</p>
-          <p class="site-description motion-element" itemprop="description">ppsheep</p>
+          <p class="site-description motion-element" itemprop="description">一个就职于网易的初级iOS开发者，目前正在修炼自己，博客建立不久，正在寻找更好的写作方式。。。。。。。 目前还在维护一个微信公众号，即我的头像二维码，博客的内容，我会同步到微信公众号，欢迎大家关注</p>
         </div>
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
@@ -491,7 +510,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-count">14</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -500,7 +519,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-count">25</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -509,8 +528,53 @@
         </nav>
 
         
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
 
         <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/yangqian111" target="_blank" title="github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  github
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://mp.weixin.qq.com/s?__biz=MzI2NTUwOTI1MA==&mid=100000031&idx=1&sn=06aa9c48ce44e5e3c8f749165d337d73&chksm=6a9d01f25dea88e44ebd78ca9a502f5466d4121397c3441580771b6944741d7a32a606486d0c&scene=18&key=4a874d92793fbeb0bca44c58c7f560332608ad6bee7c6d6c0b6798bd741f1e995f6d83a41ba8cdaa89d046d624fd569489e1c7947ef080b8069d7bd291cb171420098c464951bdeb48920b2fa99a33af&ascene=0&uin=MzI5ODUzOTE1&devicetype=iMac+MacBookPro12%2C1+OSX+OSX+10.12.2+build(16C67)&version=12010210&nettype=WIFI&fontScale=100&pass_ticket=qTNsRor5ktcrsYFdBDK8i9BcJRYTf8Poc1MYvl7626S1waZOJPR3NPfOroB14Shf" target="_blank" title="公众号">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  公众号
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://ppsheep.com/about/" target="_blank" title="联系我">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  联系我
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://ppsheep.com/about/" target="_blank" title="博客评论不能及时回复，请微信联系">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  博客评论不能及时回复，请微信联系
+                </a>
+              </span>
+            
           
         </div>
 
@@ -529,7 +593,7 @@
               
             
             
-              <p class="post-toc-empty">此文章未包含目录</p>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#SimplePing"><span class="nav-number">1.</span> <span class="nav-text">SimplePing</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PPSPingItem"><span class="nav-number">2.</span> <span class="nav-text">PPSPingItem</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PPSPingServices"><span class="nav-number">3.</span> <span class="nav-text">PPSPingServices</span></a></li></ol></div>
             
           </div>
         </section>
@@ -547,8 +611,8 @@
       <div class="footer-inner">
         <div class="copyright" >
   
-  &copy; 
-  <span itemprop="copyrightYear">2016</span>
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -786,6 +850,21 @@
 
 
   
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
 
   
 
