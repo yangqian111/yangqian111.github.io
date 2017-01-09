@@ -60,146 +60,11 @@
   </entry>
   
   <entry>
-    <title>Swift第三波</title>
-    <link href="http://ppsheep.com/2016/12/29/Swift%E7%AC%AC%E4%B8%89%E6%B3%A2/"/>
-    <id>http://ppsheep.com/2016/12/29/Swift第三波/</id>
-    <published>2016-12-29T06:43:07.000Z</published>
-    <updated>2016-12-29T07:59:06.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>这一节，我们来讲一下，Swift的一些基本运算操作，所有的运算操作，我们都在这一节讲完，这些对于已经有过编程经验的同学来说，已经足够了。都是很简单的，这一节，讲完，我们就学习我们我们今后编码使用最频繁的String</p>
-<a id="more"></a>
-<h3 id="赋值操作"><a href="#赋值操作" class="headerlink" title="赋值操作"></a>赋值操作</h3><p>很简单，就是一个加号</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">let a = 10</div><div class="line">let b = 5</div><div class="line">b = a</div><div class="line">print(b)</div><div class="line">//b输出 10</div></pre></td></tr></table></figure>
-<p>元组赋值</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">let (x,y) = (1,2)</div><div class="line">//好了赋值好了 x = 1 y = 2</div></pre></td></tr></table></figure>
-<h3 id="基本运算"><a href="#基本运算" class="headerlink" title="基本运算"></a>基本运算</h3><p>加减乘除我就不讲了吧</p>
-<p>这里有一个还是要讲一下，字符串的加法  这个在Swift中是特有的</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">let a = &quot;我是&quot;</div><div class="line">let b = &quot;程序员&quot;</div><div class="line">let c = a + b</div><div class="line">print(c)</div><div class="line">//我是程序员</div></pre></td></tr></table></figure>
-<h3 id="取余运算"><a href="#取余运算" class="headerlink" title="取余运算"></a>取余运算</h3><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">9%2 = 1  等价于  (4*2)+1  余下一个1</div><div class="line"></div><div class="line">-9%2 = -1 等价于  (-4*2)+ -1  余下一个 -1</div></pre></td></tr></table></figure>
-<h3 id="负号的使用"><a href="#负号的使用" class="headerlink" title="负号的使用"></a>负号的使用</h3><p>负负得正 这个我们都知道的哦 </p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">let a = -1</div><div class="line">let b = -a</div><div class="line">//b现在是1</div><div class="line">let c = -b</div><div class="line">//现在c是-1</div></pre></td></tr></table></figure>
-<h3 id="使用"><a href="#使用" class="headerlink" title="+=使用"></a>+=使用</h3><p>这个  大家也在其他的语言中见过</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">let a = 10</div><div class="line">a+=2  //a = a+2</div><div class="line">print(a)//输出12</div></pre></td></tr></table></figure>
-<p>但是需要注意的是  我们没有这样的用法</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">let b = a+=2 //这种用法是错误的</div></pre></td></tr></table></figure>
-<h3 id="比较运算符"><a href="#比较运算符" class="headerlink" title="比较运算符"></a>比较运算符</h3><p>==  等于</p>
-<p>!=  不等于</p>
-<p>></p>
-<p>&lt;</p>
-<p>>=</p>
-<p>&lt;=</p>
-<p>这里还有一个字符串的比较</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">let a = &quot;world&quot;</div><div class="line">let b = &quot;world&quot;</div><div class="line">if a == b &#123;</div><div class="line">	//这里是能够执行到的  这为真， 这里需要注意下</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>元组的比较</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">(2,&quot;abc&quot;)&gt;(1,&quot;bca&quot;)  //2&gt;1  </div><div class="line">(1,&quot;abc&quot;)&lt;(1,&quot;bca&quot;)  //1相同 比较abc和bca 先比较第一个字母  </div><div class="line">(1,&quot;abc&quot;) == (1,&quot;abc&quot;)</div></pre></td></tr></table></figure>
-<h3 id="三目运算"><a href="#三目运算" class="headerlink" title="三目运算"></a>三目运算</h3><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">let contentHeight = 40</div><div class="line">let hasHeader = true</div><div class="line">let rowHeight = contentHeight + (hasHeader ? 50 : 20)</div><div class="line">// rowHeight is equal to 90</div></pre></td></tr></table></figure>
-<h3 id="空合运算"><a href="#空合运算" class="headerlink" title="空合运算"></a>空合运算</h3><p>这个空合运算时针对值为nil的时候来做的</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">let defaultColorName = &quot;red&quot;</div><div class="line">var userDefinedColorName: String?   // defaults to nil</div><div class="line"> </div><div class="line">var colorNameToUse = userDefinedColorName ?? defaultColorName</div></pre></td></tr></table></figure>
-<p>这里如果userDefinedColorName不是nil的话colorNameToUse的值就是userDefinedColorName的值，如果userDefinedColorName是nil 那么colorNameToUse的值，就是defaultColorName的值</p>
-<h3 id="区间运算符"><a href="#区间运算符" class="headerlink" title="区间运算符"></a>区间运算符</h3><p>闭合运算，包含两端</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">for index in 1...5 &#123;</div><div class="line">    print(&quot;\(index) times 5 is \(index * 5)&quot;)</div><div class="line">&#125;</div><div class="line">// 1 times 5 is 5</div><div class="line">// 2 times 5 is 10</div><div class="line">// 3 times 5 is 15</div><div class="line">// 4 times 5 is 20</div><div class="line">// 5 times 5 is 25</div></pre></td></tr></table></figure>
-<p>半开合运算  包含左端 不包含右端</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">let names = [&quot;Anna&quot;, &quot;Alex&quot;, &quot;Brian&quot;, &quot;Jack&quot;]</div><div class="line">let count = names.count</div><div class="line">for i in 0..&lt;count &#123;</div><div class="line">    print(&quot;Person \(i + 1) is called \(names[i])&quot;)</div><div class="line">&#125;</div><div class="line">// Person 1 is called Anna</div><div class="line">// Person 2 is called Alex</div><div class="line">// Person 3 is called Brian</div><div class="line">// Person 4 is called Jack</div></pre></td></tr></table></figure>
-<h3 id="逻辑运算"><a href="#逻辑运算" class="headerlink" title="逻辑运算"></a>逻辑运算</h3><p>逻辑运算  包括 </p>
-<p>!非<br>&amp;&amp; 且<br>|| 或</p>
-<p>基础的运算符完成了，接下来我们就开始学习String了</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;这一节，我们来讲一下，Swift的一些基本运算操作，所有的运算操作，我们都在这一节讲完，这些对于已经有过编程经验的同学来说，已经足够了。都是很简单的，这一节，讲完，我们就学习我们我们今后编码使用最频繁的String&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="Swift官方教程学习笔记" scheme="http://ppsheep.com/categories/Swift%E5%AE%98%E6%96%B9%E6%95%99%E7%A8%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-    
-      <category term="Swift官方教程学习笔记" scheme="http://ppsheep.com/tags/Swift%E5%AE%98%E6%96%B9%E6%95%99%E7%A8%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Swift第二波</title>
-    <link href="http://ppsheep.com/2016/12/29/Swift%E7%AC%AC%E4%BA%8C%E6%B3%A2/"/>
-    <id>http://ppsheep.com/2016/12/29/Swift第二波/</id>
-    <published>2016-12-29T05:41:15.000Z</published>
-    <updated>2016-12-29T06:42:06.000Z</updated>
-    
-    <content type="html"><![CDATA[<h3 id="Optionals-可选类型"><a href="#Optionals-可选类型" class="headerlink" title="Optionals 可选类型"></a>Optionals 可选类型</h3><p>使用可选类型，用来处理值可能缺失的情况，这样一来，我们的代码安全性能够提升很多</p>
-<p>一般来说，这个可选类型就两种情况</p>
-<ul>
-<li>有值  就是x</li>
-<li>无值  就是nil</li>
-</ul>
-<a id="more"></a>
-<blockquote>
-<p>我们知道在OC中，是没有这个概念的，在OC中，比如我们有一个方法，有返回值，如果是返回的是对象，要么就是返回对象实例，要么返回nil表示值缺失。但是我们遇到需要返回枚举，我们就没办法了，一般我们会定义一个NotFound这种类型，但是在Swift我们就不需要了</p>
-</blockquote>
-<p>我们举个例子</p>
-<p>如果我们想讲一个字符串，强转成一个Int整形，我们知道，不可能每个字符串都能转成整数，像”123”这种可以转成整形，但是”ni hao”这种，能转成整形吗？你在逗我</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">let testString = &quot;123&quot;</div><div class="line">let testString1 = &quot;ni hao&quot;</div><div class="line"></div><div class="line">let testInt1 = Int(testString1)</div><div class="line">let testInt2 = Int(testString)</div></pre></td></tr></table></figure>
-<p><img src="http://o8bxt3lx0.bkt.clouddn.com/blog/2016-12-29-055540.jpg" alt=""></p>
-<p>这样代码并不会报错</p>
-<p>我们可以手动来设置optional值</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">var serverResponseCode: Int? = 404</div><div class="line">// serverResponseCode contains an actual Int value of 404</div><div class="line">serverResponseCode = nil</div><div class="line">// serverResponseCode now contains no value</div></pre></td></tr></table></figure>
-<p><strong>注意，在Swift中，nil的定义和Objective-C中的nil定义不相同，在Swift中，nil只是用来表示值缺失，不管是对象，还是Int之类的基础类型，都可以使用nil来表示值缺失，但是在OC中就只有对象可以使用，因为在OC中是表示一个指向不存在对象的指针</strong></p>
-<p>如果你像下面这样定义了一个变量，不需要你声明他为nil，编译器会自动为他赋值nil，这根OC中  还是有较大的差别的</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">var surveyAnswer: String?</div></pre></td></tr></table></figure>
-<p>同样的，我们还是和OC一样，可以使用==或者!=来判断是否是nil</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">if surveyAnswer != nil&#123;</div><div class="line">	//做什么</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>如果，我们能够确定，这个变量，肯定是有值的，那么我们就可以使用强制解包，在其后面加上一个!</p>
-<p>像这样</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">if surveyAnswer != nil&#123;</div><div class="line">	//我们已经知道surveyAnswer是肯定有值的</div><div class="line">	print(surveyAnswer!)//强制解包 输出</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><strong>在我们强制解包的时候，一定要确保这个值是有的，不然，会出现错误，导致程序崩溃</strong></p>
-<h3 id="可选绑定"><a href="#可选绑定" class="headerlink" title="可选绑定"></a>可选绑定</h3><p>这个  厉害了，很好用的</p>
-<p>我们可以在if 和 while 语句中使用 我就直接上代码了</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">if let actualNumber = Int(possibleNumber) &#123;</div><div class="line">    print(&quot;\&quot;\(possibleNumber)\&quot; has an integer value of \(actualNumber)&quot;)</div><div class="line">&#125; else &#123;</div><div class="line">    print(&quot;\&quot;\(possibleNumber)\&quot; could not be converted to an integer&quot;)</div><div class="line">&#125;</div><div class="line">// Prints &quot;&quot;123&quot; has an integer value of 123”</div></pre></td></tr></table></figure>
-<p>我们上面讲过，这个强转，转出来是一个optional值，我们在if语句中判断这个值，如果存在，则将这个值赋给actualNumber常量，在判断语句中需要使用到，如果转出来是一个nil，那么就跳到另外的语句中</p>
-<p>还有更强大的</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">if let firstNumber = Int(&quot;4&quot;), </div><div class="line">	let secondNumber = Int(&quot;42&quot;), </div><div class="line">	firstNumber &lt; secondNumber &amp;&amp; secondNumber &lt; 100 </div><div class="line">&#123;</div><div class="line">    print(&quot;\(firstNumber) &lt; \(secondNumber) &lt; 100&quot;)</div><div class="line">&#125;</div><div class="line">// Prints &quot;4 &lt; 42 &lt; 100&quot;</div><div class="line"> </div><div class="line">if let firstNumber = Int(&quot;4&quot;)</div><div class="line"> &#123;</div><div class="line">    if let secondNumber = Int(&quot;42&quot;) </div><div class="line">    &#123;</div><div class="line">        if firstNumber &lt; secondNumber &amp;&amp; secondNumber &lt; 100 </div><div class="line">        &#123;</div><div class="line">            print(&quot;\(firstNumber) &lt; \(secondNumber) &lt; 100&quot;)</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">// Prints &quot;4 &lt; 42 &lt; 100”</div></pre></td></tr></table></figure>
-<p>这么强大 的  if语句</p>
-<h3 id="隐式解析"><a href="#隐式解析" class="headerlink" title="隐式解析"></a>隐式解析</h3><p>有时候，我们很确定，一些变量或者常量，肯定是有值的，不需要声明为optional，不然我们每次使用的时候，都需要加上!来进行解包</p>
-<p>Swift为我们提供了隐式声明</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">let absolutString: String! = &quot;我肯定是有值的&quot;</div><div class="line"></div><div class="line">print(absolutString)//可以直接使用，不需要解包</div></pre></td></tr></table></figure>
-<h3 id="错误处理"><a href="#错误处理" class="headerlink" title="错误处理"></a>错误处理</h3><p>如果之前有写过Java的同学肯定对try catch很熟悉  在Swift中，使用try catch来进行错误的捕获和处理</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line"></div><div class="line">func makeASandwich() throws &#123;</div><div class="line">    // 这个函数可能会抛出错误异常</div><div class="line">&#125;</div><div class="line"></div><div class="line"> </div><div class="line">do &#123;</div><div class="line">    try makeASandwich()//开始做三明治</div><div class="line">    eatASandwich()//开始吃三明治</div><div class="line">&#125; catch SandwichError.outOfCleanDishes &#123;//这里捕获到了异常，没有干净的盘子</div><div class="line">    washDishes()</div><div class="line">&#125; catch SandwichError.missingIngredients(let ingredients) &#123;//又捕获到了异常，没有原材料</div><div class="line">    buyGroceries(ingredients)//买原材料</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="断言"><a href="#断言" class="headerlink" title="断言"></a>断言</h3><p>断言是很好用的一个东西，而且鼓励大家使用断言。</p>
-<p>断言是什么意思呢？就是我们在运行一个函数时，有事我们需要某个参数，比如一个Int一定要是一个大于0的数，如果不大于0，我们的函数就无法运行了，这时候，我们就可以使用断言了</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">let age = -3</div><div class="line"></div><div class="line">assert(age &gt;= 0, &quot;A person&apos;s age cannot be less than zero&quot;)</div></pre></td></tr></table></figure>
-<p>这样程序就会检查age是否是大于等于0 的  如果不符合，程序就会终止，并且我们能够很快知道 为什么程序会终止</p>
-<p>那我们什么时候需要用到断言呢？</p>
-<ul>
-<li>当传入一个int的下标时，比如传入数组的索引，这个整数的值可能会太大或者太小</li>
-<li>需要给函数传入一个值，但是非法的值可能导致函数不能正常执行。</li>
-<li>一个可选值现在是nil，但是后面的代码运行需要一个非nil值</li>
-</ul>
-<p>到这里，我们Swift的基础部分就算是讲完了，后面就接着讲基础的一些运算，很快我们过掉，这些都是很简单的部分</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;Optionals-可选类型&quot;&gt;&lt;a href=&quot;#Optionals-可选类型&quot; class=&quot;headerlink&quot; title=&quot;Optionals 可选类型&quot;&gt;&lt;/a&gt;Optionals 可选类型&lt;/h3&gt;&lt;p&gt;使用可选类型，用来处理值可能缺失的情况，这样一来，我们的代码安全性能够提升很多&lt;/p&gt;
-&lt;p&gt;一般来说，这个可选类型就两种情况&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;有值  就是x&lt;/li&gt;
-&lt;li&gt;无值  就是nil&lt;/li&gt;
-&lt;/ul&gt;
-    
-    </summary>
-    
-      <category term="Swift官方教程学习笔记" scheme="http://ppsheep.com/categories/Swift%E5%AE%98%E6%96%B9%E6%95%99%E7%A8%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-    
-      <category term="Swift官方教程学习笔记" scheme="http://ppsheep.com/tags/Swift%E5%AE%98%E6%96%B9%E6%95%99%E7%A8%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Swift第一波</title>
-    <link href="http://ppsheep.com/2016/12/28/Swift%E7%AC%AC%E4%B8%80%E6%B3%A2/"/>
-    <id>http://ppsheep.com/2016/12/28/Swift第一波/</id>
+    <title>Swift教程(一)—基础部分、基本运算符</title>
+    <link href="http://ppsheep.com/2016/12/28/Swift%E6%95%99%E7%A8%8B(%E4%B8%80)%E2%80%94%E5%9F%BA%E7%A1%80%E9%83%A8%E5%88%86%E3%80%81%E5%9F%BA%E6%9C%AC%E8%BF%90%E7%AE%97%E7%AC%A6/"/>
+    <id>http://ppsheep.com/2016/12/28/Swift教程(一)—基础部分、基本运算符/</id>
     <published>2016-12-28T11:13:10.000Z</published>
-    <updated>2016-12-29T05:37:10.000Z</updated>
+    <updated>2017-01-09T01:52:26.000Z</updated>
     
     <content type="html"><![CDATA[<p>Swift  该来的还是要来的，Swift使用范围越来越广，你不用，大家都会用，然后呢。。。你又落后了。。</p>
 <a id="more"></a>
@@ -248,6 +113,89 @@
 <p>然后我们来输出:</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">print(&quot;The status code is \(http200Status.statusCode)&quot;)</div><div class="line">// Prints &quot;The status code is 200</div></pre></td></tr></table></figure>
 <p>简直太强大了，我个人最喜欢 那种点语法</p>
+<h3 id="Optionals-可选类型"><a href="#Optionals-可选类型" class="headerlink" title="Optionals 可选类型"></a>Optionals 可选类型</h3><p>使用可选类型，用来处理值可能缺失的情况，这样一来，我们的代码安全性能够提升很多</p>
+<p>一般来说，这个可选类型就两种情况</p>
+<ul>
+<li>有值  就是x</li>
+<li>无值  就是nil</li>
+</ul>
+<!--more-->
+<blockquote>
+<p>我们知道在OC中，是没有这个概念的，在OC中，比如我们有一个方法，有返回值，如果是返回的是对象，要么就是返回对象实例，要么返回nil表示值缺失。但是我们遇到需要返回枚举，我们就没办法了，一般我们会定义一个NotFound这种类型，但是在Swift我们就不需要了</p>
+</blockquote>
+<p>我们举个例子</p>
+<p>如果我们想讲一个字符串，强转成一个Int整形，我们知道，不可能每个字符串都能转成整数，像”123”这种可以转成整形，但是”ni hao”这种，能转成整形吗？你在逗我</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">let testString = &quot;123&quot;</div><div class="line">let testString1 = &quot;ni hao&quot;</div><div class="line"></div><div class="line">let testInt1 = Int(testString1)</div><div class="line">let testInt2 = Int(testString)</div></pre></td></tr></table></figure>
+<p><img src="http://o8bxt3lx0.bkt.clouddn.com/blog/2016-12-29-055540.jpg" alt=""></p>
+<p>这样代码并不会报错</p>
+<p>我们可以手动来设置optional值</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">var serverResponseCode: Int? = 404</div><div class="line">// serverResponseCode contains an actual Int value of 404</div><div class="line">serverResponseCode = nil</div><div class="line">// serverResponseCode now contains no value</div></pre></td></tr></table></figure>
+<p><strong>注意，在Swift中，nil的定义和Objective-C中的nil定义不相同，在Swift中，nil只是用来表示值缺失，不管是对象，还是Int之类的基础类型，都可以使用nil来表示值缺失，但是在OC中就只有对象可以使用，因为在OC中是表示一个指向不存在对象的指针</strong></p>
+<p>如果你像下面这样定义了一个变量，不需要你声明他为nil，编译器会自动为他赋值nil，这根OC中  还是有较大的差别的</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">var surveyAnswer: String?</div></pre></td></tr></table></figure>
+<p>同样的，我们还是和OC一样，可以使用==或者!=来判断是否是nil</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">if surveyAnswer != nil&#123;</div><div class="line">	//做什么</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果，我们能够确定，这个变量，肯定是有值的，那么我们就可以使用强制解包，在其后面加上一个!</p>
+<p>像这样</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">if surveyAnswer != nil&#123;</div><div class="line">	//我们已经知道surveyAnswer是肯定有值的</div><div class="line">	print(surveyAnswer!)//强制解包 输出</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>在我们强制解包的时候，一定要确保这个值是有的，不然，会出现错误，导致程序崩溃</strong></p>
+<h3 id="可选绑定"><a href="#可选绑定" class="headerlink" title="可选绑定"></a>可选绑定</h3><p>这个  厉害了，很好用的</p>
+<p>我们可以在if 和 while 语句中使用 我就直接上代码了</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">if let actualNumber = Int(possibleNumber) &#123;</div><div class="line">    print(&quot;\&quot;\(possibleNumber)\&quot; has an integer value of \(actualNumber)&quot;)</div><div class="line">&#125; else &#123;</div><div class="line">    print(&quot;\&quot;\(possibleNumber)\&quot; could not be converted to an integer&quot;)</div><div class="line">&#125;</div><div class="line">// Prints &quot;&quot;123&quot; has an integer value of 123”</div></pre></td></tr></table></figure>
+<p>我们上面讲过，这个强转，转出来是一个optional值，我们在if语句中判断这个值，如果存在，则将这个值赋给actualNumber常量，在判断语句中需要使用到，如果转出来是一个nil，那么就跳到另外的语句中</p>
+<p>还有更强大的</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">if let firstNumber = Int(&quot;4&quot;), </div><div class="line">	let secondNumber = Int(&quot;42&quot;), </div><div class="line">	firstNumber &lt; secondNumber &amp;&amp; secondNumber &lt; 100 </div><div class="line">&#123;</div><div class="line">    print(&quot;\(firstNumber) &lt; \(secondNumber) &lt; 100&quot;)</div><div class="line">&#125;</div><div class="line">// Prints &quot;4 &lt; 42 &lt; 100&quot;</div><div class="line"> </div><div class="line">if let firstNumber = Int(&quot;4&quot;)</div><div class="line"> &#123;</div><div class="line">    if let secondNumber = Int(&quot;42&quot;) </div><div class="line">    &#123;</div><div class="line">        if firstNumber &lt; secondNumber &amp;&amp; secondNumber &lt; 100 </div><div class="line">        &#123;</div><div class="line">            print(&quot;\(firstNumber) &lt; \(secondNumber) &lt; 100&quot;)</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">// Prints &quot;4 &lt; 42 &lt; 100”</div></pre></td></tr></table></figure>
+<p>这么强大 的  if语句</p>
+<h3 id="隐式解析"><a href="#隐式解析" class="headerlink" title="隐式解析"></a>隐式解析</h3><p>有时候，我们很确定，一些变量或者常量，肯定是有值的，不需要声明为optional，不然我们每次使用的时候，都需要加上!来进行解包</p>
+<p>Swift为我们提供了隐式声明</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">let absolutString: String! = &quot;我肯定是有值的&quot;</div><div class="line"></div><div class="line">print(absolutString)//可以直接使用，不需要解包</div></pre></td></tr></table></figure>
+<h3 id="错误处理"><a href="#错误处理" class="headerlink" title="错误处理"></a>错误处理</h3><p>如果之前有写过Java的同学肯定对try catch很熟悉  在Swift中，使用try catch来进行错误的捕获和处理</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line"></div><div class="line">func makeASandwich() throws &#123;</div><div class="line">    // 这个函数可能会抛出错误异常</div><div class="line">&#125;</div><div class="line"></div><div class="line"> </div><div class="line">do &#123;</div><div class="line">    try makeASandwich()//开始做三明治</div><div class="line">    eatASandwich()//开始吃三明治</div><div class="line">&#125; catch SandwichError.outOfCleanDishes &#123;//这里捕获到了异常，没有干净的盘子</div><div class="line">    washDishes()</div><div class="line">&#125; catch SandwichError.missingIngredients(let ingredients) &#123;//又捕获到了异常，没有原材料</div><div class="line">    buyGroceries(ingredients)//买原材料</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="断言"><a href="#断言" class="headerlink" title="断言"></a>断言</h3><p>断言是很好用的一个东西，而且鼓励大家使用断言。</p>
+<p>断言是什么意思呢？就是我们在运行一个函数时，有事我们需要某个参数，比如一个Int一定要是一个大于0的数，如果不大于0，我们的函数就无法运行了，这时候，我们就可以使用断言了</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">let age = -3</div><div class="line"></div><div class="line">assert(age &gt;= 0, &quot;A person&apos;s age cannot be less than zero&quot;)</div></pre></td></tr></table></figure>
+<p>这样程序就会检查age是否是大于等于0 的  如果不符合，程序就会终止，并且我们能够很快知道 为什么程序会终止</p>
+<p>那我们什么时候需要用到断言呢？</p>
+<ul>
+<li>当传入一个int的下标时，比如传入数组的索引，这个整数的值可能会太大或者太小</li>
+<li>需要给函数传入一个值，但是非法的值可能导致函数不能正常执行。</li>
+<li>一个可选值现在是nil，但是后面的代码运行需要一个非nil值</li>
+</ul>
+<h3 id="赋值操作"><a href="#赋值操作" class="headerlink" title="赋值操作"></a>赋值操作</h3><p>很简单，就是一个加号</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">let a = 10</div><div class="line">let b = 5</div><div class="line">b = a</div><div class="line">print(b)</div><div class="line">//b输出 10</div></pre></td></tr></table></figure>
+<p>元组赋值</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">let (x,y) = (1,2)</div><div class="line">//好了赋值好了 x = 1 y = 2</div></pre></td></tr></table></figure>
+<h3 id="基本运算"><a href="#基本运算" class="headerlink" title="基本运算"></a>基本运算</h3><p>加减乘除我就不讲了吧</p>
+<p>这里有一个还是要讲一下，字符串的加法  这个在Swift中是特有的</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">let a = &quot;我是&quot;</div><div class="line">let b = &quot;程序员&quot;</div><div class="line">let c = a + b</div><div class="line">print(c)</div><div class="line">//我是程序员</div></pre></td></tr></table></figure>
+<h3 id="取余运算"><a href="#取余运算" class="headerlink" title="取余运算"></a>取余运算</h3><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">9%2 = 1  等价于  (4*2)+1  余下一个1</div><div class="line"></div><div class="line">-9%2 = -1 等价于  (-4*2)+ -1  余下一个 -1</div></pre></td></tr></table></figure>
+<h3 id="负号的使用"><a href="#负号的使用" class="headerlink" title="负号的使用"></a>负号的使用</h3><p>负负得正 这个我们都知道的哦 </p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">let a = -1</div><div class="line">let b = -a</div><div class="line">//b现在是1</div><div class="line">let c = -b</div><div class="line">//现在c是-1</div></pre></td></tr></table></figure>
+<h3 id="使用"><a href="#使用" class="headerlink" title="+=使用"></a>+=使用</h3><p>这个  大家也在其他的语言中见过</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">let a = 10</div><div class="line">a+=2  //a = a+2</div><div class="line">print(a)//输出12</div></pre></td></tr></table></figure>
+<p>但是需要注意的是  我们没有这样的用法</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">let b = a+=2 //这种用法是错误的</div></pre></td></tr></table></figure>
+<h3 id="比较运算符"><a href="#比较运算符" class="headerlink" title="比较运算符"></a>比较运算符</h3><p>==  等于</p>
+<p>!=  不等于</p>
+<p>></p>
+<p>&lt;</p>
+<p>>=</p>
+<p>&lt;=</p>
+<p>这里还有一个字符串的比较</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">let a = &quot;world&quot;</div><div class="line">let b = &quot;world&quot;</div><div class="line">if a == b &#123;</div><div class="line">	//这里是能够执行到的  这为真， 这里需要注意下</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>元组的比较</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">(2,&quot;abc&quot;)&gt;(1,&quot;bca&quot;)  //2&gt;1  </div><div class="line">(1,&quot;abc&quot;)&lt;(1,&quot;bca&quot;)  //1相同 比较abc和bca 先比较第一个字母  </div><div class="line">(1,&quot;abc&quot;) == (1,&quot;abc&quot;)</div></pre></td></tr></table></figure>
+<h3 id="三目运算"><a href="#三目运算" class="headerlink" title="三目运算"></a>三目运算</h3><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">let contentHeight = 40</div><div class="line">let hasHeader = true</div><div class="line">let rowHeight = contentHeight + (hasHeader ? 50 : 20)</div><div class="line">// rowHeight is equal to 90</div></pre></td></tr></table></figure>
+<h3 id="空合运算"><a href="#空合运算" class="headerlink" title="空合运算"></a>空合运算</h3><p>这个空合运算时针对值为nil的时候来做的</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">let defaultColorName = &quot;red&quot;</div><div class="line">var userDefinedColorName: String?   // defaults to nil</div><div class="line"> </div><div class="line">var colorNameToUse = userDefinedColorName ?? defaultColorName</div></pre></td></tr></table></figure>
+<p>这里如果userDefinedColorName不是nil的话colorNameToUse的值就是userDefinedColorName的值，如果userDefinedColorName是nil 那么colorNameToUse的值，就是defaultColorName的值</p>
+<h3 id="区间运算符"><a href="#区间运算符" class="headerlink" title="区间运算符"></a>区间运算符</h3><p>闭合运算，包含两端</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">for index in 1...5 &#123;</div><div class="line">    print(&quot;\(index) times 5 is \(index * 5)&quot;)</div><div class="line">&#125;</div><div class="line">// 1 times 5 is 5</div><div class="line">// 2 times 5 is 10</div><div class="line">// 3 times 5 is 15</div><div class="line">// 4 times 5 is 20</div><div class="line">// 5 times 5 is 25</div></pre></td></tr></table></figure>
+<p>半开合运算  包含左端 不包含右端</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">let names = [&quot;Anna&quot;, &quot;Alex&quot;, &quot;Brian&quot;, &quot;Jack&quot;]</div><div class="line">let count = names.count</div><div class="line">for i in 0..&lt;count &#123;</div><div class="line">    print(&quot;Person \(i + 1) is called \(names[i])&quot;)</div><div class="line">&#125;</div><div class="line">// Person 1 is called Anna</div><div class="line">// Person 2 is called Alex</div><div class="line">// Person 3 is called Brian</div><div class="line">// Person 4 is called Jack</div></pre></td></tr></table></figure>
+<h3 id="逻辑运算"><a href="#逻辑运算" class="headerlink" title="逻辑运算"></a>逻辑运算</h3><p>逻辑运算  包括 </p>
+<p>!非<br>&amp;&amp; 且<br>|| 或</p>
+<p>基础的运算符完成了，接下来我们就开始学习String了</p>
 ]]></content>
     
     <summary type="html">
@@ -1403,6 +1351,107 @@
     
     
       <category term="iOS 编写高质量代码" scheme="http://ppsheep.com/tags/iOS-%E7%BC%96%E5%86%99%E9%AB%98%E8%B4%A8%E9%87%8F%E4%BB%A3%E7%A0%81/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>iOS 应用之间跳转传输数据以及跳回源程序</title>
+    <link href="http://ppsheep.com/2016/11/07/iOS-%E5%BA%94%E7%94%A8%E4%B9%8B%E9%97%B4%E8%B7%B3%E8%BD%AC%E4%BC%A0%E8%BE%93%E6%95%B0%E6%8D%AE%E4%BB%A5%E5%8F%8A%E8%B7%B3%E5%9B%9E%E6%BA%90%E7%A8%8B%E5%BA%8F/"/>
+    <id>http://ppsheep.com/2016/11/07/iOS-应用之间跳转传输数据以及跳回源程序/</id>
+    <published>2016-11-07T03:15:19.000Z</published>
+    <updated>2016-11-07T08:33:01.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>之前写了一篇关于APP之间跳转的文章，期间有同学说能否出一个类似于微信登录或者支付宝支付之类的，跳转到支付宝获得消息再调回源程序，并且带上信息。今天我们就再来聊聊，实现这样一种效果，没看过之前应用跳转的，请移步:<br>    <a href="http://ppsheep.com/2016/10/27/iOS应用之间的跳转解析/">http://ppsheep.com/2016/10/27/iOS应用之间的跳转解析/</a></p>
+<a id="more"></a>
+<p>之前我们说到APP之间的跳转，其实就是通过一个URL Schemes进行跳转，APP之间的传值，其实也是通过这个URL进行传值。</p>
+<p>再有我们想跳回原来程序，那么我们还需要知道源程序的URL Schemes，这样我们才能跳回到源程序，所以在传递参数的时候 我们还需要把源程序的URL Schemes传递过去。</p>
+<p>我们需要传递的参数：</p>
+<ul>
+<li>当前APP的 URL Schemes</li>
+<li>我们需要传递的实际参数</li>
+</ul>
+<p><strong>还有一个重要的事情，因为我们需要从APP2跳回APP1，所以我们还需要设置APP1的URL Schemes，怎么设置，我这里就不写出来了，具体可以看上一篇跳转解析</strong></p>
+<p>我们之前知道 打开另一个APP，是打开一个URL<br> APP2://类似于这种，那我们会想到一般我们http有一种方式携带参数 <a href="http://url?name=?&amp;age=?" target="_blank" rel="external">http://url?name=?&amp;age=?</a></p>
+<p> 我们APP之间的传递参数方式其实也是这样的方式</p>
+ <figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">//获取APP2的URL Scheme 还需要带上当前App的APP1</div><div class="line">  NSString *URLScheme = @&quot;APP2://APP1&quot;;</div><div class="line">  </div><div class="line">  //我们参数需要穿name age</div><div class="line">  NSString *params = @&quot;name=yq&amp;age=23&quot;;</div><div class="line">  //接下来加上我们需要携带的参数</div><div class="line">  NSString *realURL = [NSString stringWithFormat:@&quot;%@?%@&quot;,URLScheme,params];</div><div class="line">  </div><div class="line">  NSURL *appURL = [NSURL URLWithString:realURL];</div><div class="line">  </div><div class="line">  //判断手机中是否安装了APP2</div><div class="line">  if ([[UIApplication sharedApplication] canOpenURL:appURL]) &#123;</div><div class="line">      //打开APP2ViewController2</div><div class="line">      [[UIApplication sharedApplication] openURL:appURL];</div><div class="line">  &#125;else&#123;</div><div class="line">      NSLog(@&quot;没有安装APP2&quot;);</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+<p> 我们最终的appURL 是： </p>
+ <figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">APP2://APP1?name=yq&amp;age=23</div></pre></td></tr></table></figure>
+<p> 我们在APP2中处理这个跳转的URL</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">-(BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation&#123;</div><div class="line">	if ([url.absoluteString containsString:@&quot;APP1&quot;])&#123;</div><div class="line">       NSLog(@&quot;%@&quot;,url);</div><div class="line">       </div><div class="line">       //拿到源程序的</div><div class="line">       NSString * urlschemes = [[url.absoluteString componentsSeparatedByString:@&quot;//&quot;][1] componentsSeparatedByString:@&quot;?&quot;][0];</div><div class="line">       </div><div class="line">       //拿到参数</div><div class="line">       NSRange range = [url.absoluteString rangeOfString:@&quot;?&quot;];</div><div class="line">       NSString *paramStr = [url.absoluteString substringFromIndex:range.location+1];//去除问号</div><div class="line">       NSArray *params = [paramStr componentsSeparatedByString:@&quot;&amp;&quot;];</div><div class="line">       NSLog(@&quot;%@&quot;,params);</div><div class="line">       </div><div class="line">       //跳回源程序</div><div class="line">       dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^&#123;</div><div class="line">           // 延时3s模拟处理后回调指定的 URL Schemes并传递结果</div><div class="line">           </div><div class="line">           if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@&quot;APP2://&quot;]]) &#123;</div><div class="line">               </div><div class="line">               NSLog(@&quot;跳转成功&quot;);</div><div class="line">               </div><div class="line">               [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@&quot;%@://back?name=back&amp;code=200&quot;,urlschemes]]];</div><div class="line">               </div><div class="line">           &#125;else&#123;</div><div class="line">               NSLog(@&quot;跳转失败&quot;);</div><div class="line">               NSLog(@&quot;未安装应用!&quot;);</div><div class="line">           &#125;</div><div class="line">       &#125;);</div><div class="line">   &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p> 在APP2中  我们拿到了APP1传递的参数 放在了params数组中，同样的 我们在APP1中再处理从APP2跳回来的信息</p>
+ <figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">  /**</div><div class="line"> 跳转回来</div><div class="line"> */</div><div class="line">-(BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary&lt;UIApplicationOpenURLOptionsKey,id&gt; *)options&#123;</div><div class="line">    if ([url.absoluteString containsString:@&quot;back&quot;]) &#123;</div><div class="line">        //拿到参数</div><div class="line">        NSRange range = [url.absoluteString rangeOfString:@&quot;?&quot;];</div><div class="line">        NSString *paramStr = [url.absoluteString substringFromIndex:range.location+1];//去除问号</div><div class="line">        NSArray *params = [paramStr componentsSeparatedByString:@&quot;&amp;&quot;];</div><div class="line">        NSLog(@&quot;%@&quot;,params);</div><div class="line">    &#125;</div><div class="line">    return YES;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这样我们也拿到了APP2跳回来的数据</p>
+<p>在iOS10中跳转的API有更新，具体的变化可以看API 我这里就不列出来了</p>
+<p>源代码放在：</p>
+<p><a href="https://github.com/yangqian111/blog/tree/master/APP-2" target="_blank" rel="external">https://github.com/yangqian111/blog/tree/master/APP-2</a></p>
+<p><a href="https://github.com/yangqian111/blog/tree/master/APP-1" target="_blank" rel="external">https://github.com/yangqian111/blog/tree/master/APP-1</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;之前写了一篇关于APP之间跳转的文章，期间有同学说能否出一个类似于微信登录或者支付宝支付之类的，跳转到支付宝获得消息再调回源程序，并且带上信息。今天我们就再来聊聊，实现这样一种效果，没看过之前应用跳转的，请移步:&lt;br&gt;    &lt;a href=&quot;http://ppsheep.com/2016/10/27/iOS应用之间的跳转解析/&quot;&gt;http://ppsheep.com/2016/10/27/iOS应用之间的跳转解析/&lt;/a&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="iOS进阶" scheme="http://ppsheep.com/categories/iOS%E8%BF%9B%E9%98%B6/"/>
+    
+    
+      <category term="iOS应用之间的跳转" scheme="http://ppsheep.com/tags/iOS%E5%BA%94%E7%94%A8%E4%B9%8B%E9%97%B4%E7%9A%84%E8%B7%B3%E8%BD%AC/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>iOS基础开发技巧(一)</title>
+    <link href="http://ppsheep.com/2016/11/07/iOS%E5%9F%BA%E7%A1%80%E5%BC%80%E5%8F%91%E6%8A%80%E5%B7%A7-%E4%B8%80/"/>
+    <id>http://ppsheep.com/2016/11/07/iOS基础开发技巧-一/</id>
+    <published>2016-11-07T01:43:23.000Z</published>
+    <updated>2016-11-07T02:39:45.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><strong>这里主要讲一些我在日常开发中用到的一些小的技巧，其实也算不上技巧吧，就是省去一些不必要的代码，或者有的小问题困扰你很久说不行在这里你能找到答案</strong></p>
+<a id="more"></a>
+<h3 id="在UIView的扩展-快速修改frame"><a href="#在UIView的扩展-快速修改frame" class="headerlink" title="在UIView的扩展 快速修改frame"></a>在UIView的扩展 快速修改frame</h3><p>在iOS修改view的frame，我们经常需要写一大堆代码，来修改frame中的一个小属性，这里有一个方法，就是直接修改frame的每个值</p>
+<p>新建一个category UIView+PPSFrame.h</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">#import &lt;UIKit/UIKit.h&gt;</div><div class="line"></div><div class="line">@interface UIView (PPSFrame)</div><div class="line"></div><div class="line">@property (assign, nonatomic) CGFloat    top;//上 相当于frame.origin.y</div><div class="line">@property (assign, nonatomic) CGFloat    bottom;//下 相当于frame.size.height + frame.origin.y</div><div class="line">@property (assign, nonatomic) CGFloat    left;//相当于frame.origin.x</div><div class="line">@property (assign, nonatomic) CGFloat    right;//相当于frame.origin.x+frame.size.width</div><div class="line"></div><div class="line">@property (assign, nonatomic) CGFloat    centerX;</div><div class="line">@property (assign, nonatomic) CGFloat    centerY;</div><div class="line"></div><div class="line">@property (assign, nonatomic) CGFloat    width;</div><div class="line">@property (assign, nonatomic) CGFloat    height;</div><div class="line">@property (assign, nonatomic) CGSize    size;</div><div class="line"></div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
+<p>在.m文件中设置各个属性</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">#import &quot;UIView+Layout.h&quot;</div><div class="line"></div><div class="line">@implementation UIView (Layout)</div><div class="line"></div><div class="line">@dynamic top;</div><div class="line">@dynamic bottom;</div><div class="line">@dynamic left;</div><div class="line">@dynamic right;</div><div class="line"></div><div class="line">@dynamic width;</div><div class="line">@dynamic height;</div><div class="line"></div><div class="line">@dynamic size;</div><div class="line"></div><div class="line">- (CGFloat)top</div><div class="line">&#123;</div><div class="line">    return self.frame.origin.y;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)setTop:(CGFloat)top</div><div class="line">&#123;</div><div class="line">    CGRect frame = self.frame;</div><div class="line">    frame.origin.y = top;</div><div class="line">    self.frame = frame;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (CGFloat)left</div><div class="line">&#123;</div><div class="line">    return self.frame.origin.x;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)setLeft:(CGFloat)left</div><div class="line">&#123;</div><div class="line">    CGRect frame = self.frame;</div><div class="line">    frame.origin.x = left;</div><div class="line">    self.frame = frame;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (CGFloat)bottom</div><div class="line">&#123;</div><div class="line">    return self.frame.size.height + self.frame.origin.y;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)setBottom:(CGFloat)bottom</div><div class="line">&#123;</div><div class="line">    CGRect frame = self.frame;</div><div class="line">    frame.origin.y = bottom - frame.size.height;</div><div class="line">    self.frame = frame;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (CGFloat)right</div><div class="line">&#123;</div><div class="line">    return self.frame.size.width + self.frame.origin.x;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)setRight:(CGFloat)right</div><div class="line">&#123;</div><div class="line">    CGRect frame = self.frame;</div><div class="line">    frame.origin.x = right - frame.size.width;</div><div class="line">    self.frame = frame;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (CGFloat)centerX</div><div class="line">&#123;</div><div class="line">    return self.center.x;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)setCenterX:(CGFloat)centerX</div><div class="line">&#123;</div><div class="line">    CGPoint center = self.center;</div><div class="line">    center.x = centerX;</div><div class="line">    self.center = center;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (CGFloat)centerY</div><div class="line">&#123;</div><div class="line">    return self.center.y;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)setCenterY:(CGFloat)centerY</div><div class="line">&#123;</div><div class="line">    CGPoint center = self.center;</div><div class="line">    center.y = centerY;</div><div class="line">    self.center = center;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (CGFloat)width</div><div class="line">&#123;</div><div class="line">    return self.frame.size.width;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)setWidth:(CGFloat)width</div><div class="line">&#123;</div><div class="line">    CGRect frame = self.frame;</div><div class="line">    frame.size.width = width;</div><div class="line">    self.frame = frame;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (CGFloat)height</div><div class="line">&#123;</div><div class="line">    return self.frame.size.height;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)setHeight:(CGFloat)height</div><div class="line">&#123;</div><div class="line">    CGRect frame = self.frame;</div><div class="line">    frame.size.height = height;</div><div class="line">    self.frame = frame;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (CGSize)size</div><div class="line">&#123;</div><div class="line">    return self.frame.size;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)setSize:(CGSize)size</div><div class="line">&#123;</div><div class="line">    CGRect frame = self.frame;</div><div class="line">    frame.size = size;</div><div class="line">    self.frame = frame;</div><div class="line">&#125;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
+<h3 id="iOS-OC项目的pch文件使用"><a href="#iOS-OC项目的pch文件使用" class="headerlink" title="iOS OC项目的pch文件使用"></a>iOS OC项目的pch文件使用</h3><p>在项目中如果我们需要一些公共的引用，或者一些全局的宏  那我们经常在pch中设置好</p>
+<p>具体怎么设置呢 在项目下新建一个pch文件 </p>
+<p><img src="http://o8bxt3lx0.bkt.clouddn.com/Snip20161028_3.png" alt="1"></p>
+<p>一般我会取名 项目名-PrefixHeader</p>
+<p>在target——&gt;Bulid Setting 中 设置 PrefixHeader<br><img src="http://o8bxt3lx0.bkt.clouddn.com/Snip20161028_6.png" alt="2"></p>
+<p>我的项目文件夹结构</p>
+<p><img src="http://o8bxt3lx0.bkt.clouddn.com/Snip20161028_5.png" alt=""></p>
+<p>$(SRCROOT)这个是指工程的根目录</p>
+<p>找到这个pch文件就行  然后启动APP就会编译这个文件了</p>
+<p>pch.h中 </p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">//</div><div class="line">//  APP-1-PrefixHeader.pch</div><div class="line">//  APP-1</div><div class="line">//</div><div class="line">//  Created by 羊谦 on 2016/10/28.</div><div class="line">//  Copyright © 2016年 羊谦. All rights reserved.</div><div class="line">//</div><div class="line"></div><div class="line">#ifndef APP_1_PrefixHeader_pch</div><div class="line">#define APP_1_PrefixHeader_pch</div><div class="line"></div><div class="line">//在这里直接定义你的宏变量   或者公共引用就行</div><div class="line"></div><div class="line">#endif /* APP_1_PrefixHeader_pch */</div></pre></td></tr></table></figure>
+<h3 id="UITableView的Group样式下顶部空白处理"><a href="#UITableView的Group样式下顶部空白处理" class="headerlink" title="UITableView的Group样式下顶部空白处理"></a>UITableView的Group样式下顶部空白处理</h3><p>要给tableHeaderView赋一个高度不为0的view才能处理顶部留白</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">//分组列表头部空白处理</div><div class="line">UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0.1)];</div><div class="line">self.tableView.tableHeaderView = view;</div></pre></td></tr></table></figure>
+<h3 id="获取某个view的Controller"><a href="#获取某个view的Controller" class="headerlink" title="获取某个view的Controller"></a>获取某个view的Controller</h3><p>其实就是根据view的响应链，来查找viewcontroller</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">- (UIViewController *)viewController</div><div class="line">&#123;</div><div class="line">  UIViewController *viewController = nil;  </div><div class="line">  UIResponder *next = self.nextResponder;</div><div class="line">  while (next)</div><div class="line">  &#123;</div><div class="line">    if ([next isKindOfClass:[UIViewController class]])</div><div class="line">    &#123;</div><div class="line">      viewController = (UIViewController *)next;      </div><div class="line">      break;    </div><div class="line">    &#125;    </div><div class="line">    next = next.nextResponder;  </div><div class="line">  &#125; </div><div class="line">    return viewController;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="清空NSUserDefaults的记录"><a href="#清空NSUserDefaults的记录" class="headerlink" title="清空NSUserDefaults的记录"></a>清空NSUserDefaults的记录</h3><p>方法一：是获取当前的app的bundleId NSUserDefaults中有方法根据bundleId清空记录</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];</div><div class="line">[[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];</div></pre></td></tr></table></figure>
+<p>方法二：获取所有存储在NSUserDefaults中的数据，因为是按照key-value形式存储，所以循环key就能够删除数据</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">- (void)clearDefaults&#123;</div><div class="line">	NSUserDefaults * defs = [NSUserDefaults standardUserDefaults];</div><div class="line">    NSDictionary * dict = [defs dictionaryRepresentation];</div><div class="line">    for (id key in dict)</div><div class="line">    &#123;</div><div class="line">        [defs removeObjectForKey:key];</div><div class="line">    &#125;</div><div class="line">    [defs synchronize];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="GCD-timer定时器的使用"><a href="#GCD-timer定时器的使用" class="headerlink" title="GCD timer定时器的使用"></a>GCD timer定时器的使用</h3><p>这里的定时器，是一个每秒在主线程跑的一个方法</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">__block int countSecond = 30; //倒计时</div><div class="line">   dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);</div><div class="line">   dispatch_source_t timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0,queue);</div><div class="line">   dispatch_source_set_timer(timer,dispatch_walltime(NULL, 0),1.0*NSEC_PER_SEC, 0); //每秒执行</div><div class="line">   dispatch_source_set_event_handler(timer, ^&#123;</div><div class="line">       if (countSecond==0) &#123; //倒计时完毕</div><div class="line">           //@&quot;倒计时结束，关闭&quot;</div><div class="line">           dispatch_source_cancel(timer);</div><div class="line">           dispatch_async(dispatch_get_main_queue(), ^&#123;</div><div class="line">               //倒计时完毕需要执行的操作</div><div class="line">           &#125;);</div><div class="line">       &#125;else&#123; //倒计时</div><div class="line">           NSLog(@&quot;%@&quot;, [NSString stringWithFormat:@&quot;%ld&quot;,(long)countSecond]);</div><div class="line">           dispatch_async(dispatch_get_main_queue(), ^&#123;</div><div class="line">               //每秒需要执行的操作</div><div class="line">               //在这里更新UI之类的</div><div class="line">           &#125;);</div><div class="line"></div><div class="line">           countSecond--;</div><div class="line">       &#125;</div><div class="line">   &#125;);</div><div class="line">   dispatch_resume(timer);</div></pre></td></tr></table></figure>
+<h3 id="计算文件大小"><a href="#计算文件大小" class="headerlink" title="计算文件大小"></a>计算文件大小</h3><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">- (long long)fileSizeAtPath:(NSString *)path</div><div class="line">&#123;</div><div class="line">    NSFileManager *fileManager = [NSFileManager defaultManager];</div><div class="line"></div><div class="line">    if ([fileManager fileExistsAtPath:path])</div><div class="line">    &#123;</div><div class="line">        long long size = [fileManager attributesOfItemAtPath:path error:nil].fileSize;</div><div class="line">        return size;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    return 0;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="计算文件夹大小"><a href="#计算文件夹大小" class="headerlink" title="计算文件夹大小"></a>计算文件夹大小</h3><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">- (long long)folderSizeAtPath:(NSString *)path</div><div class="line">&#123;</div><div class="line">    NSFileManager *fileManager = [NSFileManager defaultManager];</div><div class="line"></div><div class="line">    long long folderSize = 0;</div><div class="line"></div><div class="line">    if ([fileManager fileExistsAtPath:path])</div><div class="line">    &#123;</div><div class="line">        NSArray *childerFiles = [fileManager subpathsAtPath:path];</div><div class="line">        for (NSString *fileName in childerFiles)</div><div class="line">        &#123;</div><div class="line">            NSString *fileAbsolutePath = [path stringByAppendingPathComponent:fileName];</div><div class="line">            if ([fileManager fileExistsAtPath:fileAbsolutePath])</div><div class="line">            &#123;</div><div class="line">                long long size = [fileManager attributesOfItemAtPath:fileAbsolutePath error:nil].fileSize;</div><div class="line">                folderSize += size;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    return folderSize;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="向上取整和向下取整"><a href="#向上取整和向下取整" class="headerlink" title="向上取整和向下取整"></a>向上取整和向下取整</h3><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">floor(x)函数，是一个向下取整函数，是一个C函数 即是去不大于x的一个最大整数</div><div class="line">floor(3.12) = 3 floor(4.9) = 4</div><div class="line"></div><div class="line">与floor(x)函数对应的是ceil函数</div><div class="line">这个即是向上取整了</div><div class="line">ceil(3.9) = 4  ceil(1.2) = 2</div></pre></td></tr></table></figure>
+<h3 id="给任何一个view设置一张图片"><a href="#给任何一个view设置一张图片" class="headerlink" title="给任何一个view设置一张图片"></a>给任何一个view设置一张图片</h3><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">UIImage *image = [UIImage imageNamed:@&quot;image&quot;];</div><div class="line">self.MYView.layer.contents = (__bridge id _Nullable)(image.CGImage);</div><div class="line">self.MYView.layer.contentsRect = CGRectMake(0, 0, 0.5, 0.5);</div></pre></td></tr></table></figure>
+<p>未完待续。。。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;strong&gt;这里主要讲一些我在日常开发中用到的一些小的技巧，其实也算不上技巧吧，就是省去一些不必要的代码，或者有的小问题困扰你很久说不行在这里你能找到答案&lt;/strong&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="iOS基础" scheme="http://ppsheep.com/categories/iOS%E5%9F%BA%E7%A1%80/"/>
+    
+    
+      <category term="iOSTips" scheme="http://ppsheep.com/tags/iOSTips/"/>
     
   </entry>
   
