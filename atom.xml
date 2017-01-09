@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://ppsheep.com/"/>
-  <updated>2017-01-09T09:54:44.000Z</updated>
+  <updated>2017-01-09T09:57:02.000Z</updated>
   <id>http://ppsheep.com/</id>
   
   <author>
@@ -16,11 +16,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>Swift教程(三)—字符串和字符</title>
-    <link href="http://ppsheep.com/2017/01/09/Swift%E6%95%99%E7%A8%8B(%E4%B8%89)%E2%80%94%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%92%8C%E5%AD%97%E7%AC%A6/"/>
-    <id>http://ppsheep.com/2017/01/09/Swift教程(三)—字符串和字符/</id>
+    <title>Swift教程(二)—字符串和字符</title>
+    <link href="http://ppsheep.com/2017/01/09/Swift%E6%95%99%E7%A8%8B(%E4%BA%8C)%E2%80%94%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%92%8C%E5%AD%97%E7%AC%A6/"/>
+    <id>http://ppsheep.com/2017/01/09/Swift教程(二)—字符串和字符/</id>
     <published>2017-01-09T08:15:22.000Z</published>
-    <updated>2017-01-09T09:54:44.000Z</updated>
+    <updated>2017-01-09T09:57:02.000Z</updated>
     
     <content type="html"><![CDATA[<p>这个章节，我们讲Swift中的字符串和字符，需要说明的是在Swift中String和OC中的NSString进行了无缝衔接，这就意味着，String类型的字符串可以直接调用NSString中暴露出来的方法，不需要进行类型转换。</p>
 <a id="more"></a>
