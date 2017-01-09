@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="更轻量级的ViewController," />
+  <meta name="keywords" content="Swift官方教程学习笔记," />
 
 
 
@@ -86,18 +86,16 @@
 
 
 
-<meta name="description" content="在上一篇文章中  我们讲了通过整合tableview的代理，来达到代码复用，减少控制器代码量的效果，今天我们接着来讲另外的一些方法来减轻控制器代码量，整合封装，提高代码的可读性。">
+<meta name="description" content="这个章节，我们讲Swift中的字符串和字符，需要说明的是在Swift中String和OC中的NSString进行了无缝衔接，这就意味着，String类型的字符串可以直接调用NSString中暴露出来的方法，不需要进行类型转换。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ViewControllers瘦身计划(二)">
-<meta property="og:url" content="http://ppsheep.com/2016/12/14/ViewControllers瘦身计划-二/index.html">
+<meta property="og:title" content="Swift教程(三)—字符串和字符">
+<meta property="og:url" content="http://ppsheep.com/2017/01/09/Swift教程(三)—字符串和字符/index.html">
 <meta property="og:site_name" content="ppsheep">
-<meta property="og:description" content="在上一篇文章中  我们讲了通过整合tableview的代理，来达到代码复用，减少控制器代码量的效果，今天我们接着来讲另外的一些方法来减轻控制器代码量，整合封装，提高代码的可读性。">
-<meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/blog/2016-12-14-032856.jpg">
-<meta property="og:updated_time" content="2016-12-14T03:58:34.000Z">
+<meta property="og:description" content="这个章节，我们讲Swift中的字符串和字符，需要说明的是在Swift中String和OC中的NSString进行了无缝衔接，这就意味着，String类型的字符串可以直接调用NSString中暴露出来的方法，不需要进行类型转换。">
+<meta property="og:updated_time" content="2017-01-09T09:54:44.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ViewControllers瘦身计划(二)">
-<meta name="twitter:description" content="在上一篇文章中  我们讲了通过整合tableview的代理，来达到代码复用，减少控制器代码量的效果，今天我们接着来讲另外的一些方法来减轻控制器代码量，整合封装，提高代码的可读性。">
-<meta name="twitter:image" content="http://o8bxt3lx0.bkt.clouddn.com/blog/2016-12-14-032856.jpg">
+<meta name="twitter:title" content="Swift教程(三)—字符串和字符">
+<meta name="twitter:description" content="这个章节，我们讲Swift中的字符串和字符，需要说明的是在Swift中String和OC中的NSString进行了无缝衔接，这就意味着，String类型的字符串可以直接调用NSString中暴露出来的方法，不需要进行类型转换。">
 
 
 
@@ -118,10 +116,10 @@
 
 
 
-  <link rel="canonical" href="http://ppsheep.com/2016/12/14/ViewControllers瘦身计划-二/"/>
+  <link rel="canonical" href="http://ppsheep.com/2017/01/09/Swift教程(三)—字符串和字符/"/>
 
 
-  <title> ViewControllers瘦身计划(二) | ppsheep </title>
+  <title> Swift教程(三)—字符串和字符 | ppsheep </title>
 </head>
 
 <body itemscope itemtype="//schema.org/WebPage" lang="zh-Hans">
@@ -269,7 +267,7 @@
             
             
               
-                ViewControllers瘦身计划(二)
+                Swift教程(三)—字符串和字符
               
             
           </h1>
@@ -281,8 +279,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-12-14T10:24:25+08:00" content="2016-12-14">
-              2016-12-14
+            <time itemprop="dateCreated" datetime="2017-01-09T16:15:22+08:00" content="2017-01-09">
+              2017-01-09
             </time>
           </span>
 
@@ -295,8 +293,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/iOS进阶/" itemprop="url" rel="index">
-                    <span itemprop="name">iOS进阶</span>
+                  <a href="/categories/Swift官方教程学习笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">Swift官方教程学习笔记</span>
                   </a>
                 </span>
 
@@ -311,8 +309,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2016/12/14/ViewControllers瘦身计划-二/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/14/ViewControllers瘦身计划-二/" itemprop="commentsCount"></span>
+                <a href="/2017/01/09/Swift教程(三)—字符串和字符/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/09/Swift教程(三)—字符串和字符/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -322,7 +320,7 @@
 
           
           
-             <span id="/2016/12/14/ViewControllers瘦身计划-二/" class="leancloud_visitors" data-flag-title="ViewControllers瘦身计划(二)">
+             <span id="/2017/01/09/Swift教程(三)—字符串和字符/" class="leancloud_visitors" data-flag-title="Swift教程(三)—字符串和字符">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -344,44 +342,50 @@
       
 
       
-        <p><strong>欢迎大家关注我的公众号，我会定期分享一些我在项目中遇到问题的解决办法和一些iOS实用的技巧，现阶段主要是整理出一些基础的知识记录下来</strong></p>
-<div align="middle"><br>    <image src="http://ac-mhke0kuv.clouddn.com/830a4ead8294ceff5160.jpg"></image><br></div>
-
-<p>文章也会同步更新到我的博客：<br><a href="http://ppsheep.com">http://ppsheep.com</a></p>
-<h3 id="UITableViewController的使用"><a href="#UITableViewController的使用" class="headerlink" title="UITableViewController的使用"></a>UITableViewController的使用</h3><p>TableView在iOS应用程序中是非常通用的组件，Apple为我们提供了tableview专属的view controller类UITableViewController。Table view controller实现了一些非常有用的特性，来避免一遍又一遍的写那些死板的代码！</p>
-<p>但是，我们经常会遇到这样一个问题，table view controller 只限于管理一个全屏展示的table view。大多数情况下，我们想达到的效果就是这样，但是如果不是呢，我们就只能使用通常的控制器，其实还有其他的方法来达到使用table view controller 的目的。</p>
-<h4 id="UITableViewController的特性"><a href="#UITableViewController的特性" class="headerlink" title="UITableViewController的特性"></a>UITableViewController的特性</h4><p>Table view controllers 会在第一次显示 table view 的时候帮你加载其数据。另外，它还会帮你切换 table view 的编辑模式、响应键盘通知、以及一些小任务，比如闪现侧边的滑动提示条和清除选中时的背景色。为了让这些特性生效，当你在子类中覆写类似 viewWillAppear: 或者 viewDidAppear: 等事件方法时，需要调用 super 版本。</p>
-<p>Table view controllers 相对于标准 view controllers 的一个特别的好处是它支持 Apple 实现的“下拉刷新”。目前，文档中唯一的使用 UIRefreshControl 的方式就是通过 table view controller ，虽然通过努力在其他地方也能让它工作（例如直接将UIRefreshControl直接addSubView到tableview），但很可能在下一次 iOS 更新的时候就不行了。</p>
-<p>这些要素加一起，为我们提供了大部分 Apple 所定义的标准 table view 交互行为，如果你的应用恰好符合这些标准，那么直接使用 table view controllers 来避免写那些死板的代码是个很好的方法。</p>
-<h4 id="UITableViewController的限制"><a href="#UITableViewController的限制" class="headerlink" title="UITableViewController的限制"></a>UITableViewController的限制</h4><p>Table view controllers 的 view 属性永远都是一个 table view。如果你稍后决定在 table view 旁边显示一些东西（比如一个地图，一个小的按钮），如果不依赖于那些奇怪的 hacks，估计就没什么办法了。</p>
-<p>如果你是用代码或 .xib 文件来定义的界面，那么迁移到一个标准 view controller 将会非常简单。但是如果你使用了 storyboards，那么这个过程要多包含几个步骤。除非重新创建，否则你并不能在 storyboards 中将 table view controller 改成一个标准的 view controller。这意味着你必须将所有内容拷贝到新的 view controller，然后再重新连接一遍。</p>
-<p>最后，你需要把迁移后丢失的 table view controller 的特性给补回来。大多数都是 viewWillAppear: 或 viewDidAppear: 中简单的一条语句。切换编辑模式需要实现一个 action 方法，用来切换 table view 的 editing 属性。大多数工作来自重新创建对键盘的支持。</p>
-<p>在选择这条路之前，其实还有一个更轻松的选择，它可以通过分离我们需要关心的功能（关注点分离），让你获得额外的好处：</p>
-<h4 id="使用-Child-View-Controllers"><a href="#使用-Child-View-Controllers" class="headerlink" title="使用 Child View Controllers"></a>使用 Child View Controllers</h4><p>和完全抛弃 table view controller 不同，你还可以将它作为 child view controller 添加到其他 view controller 中。这样，parent view controller 在管理其他的你需要的新加的界面元素的同时，table view controller 还可以继续管理它的 table view。</p>
-<p>我们来看代码：</p>
-<p>我有一个UITableViewController</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line"></div><div class="line">@interface MyTableViewController ()</div><div class="line"></div><div class="line">@end</div><div class="line"></div><div class="line">@implementation MyTableViewController</div><div class="line"></div><div class="line">- (void)viewDidLoad &#123;</div><div class="line">    [super viewDidLoad];</div><div class="line">    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@&quot;cell&quot;];</div><div class="line">    self.refreshControl = [[UIRefreshControl alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)didReceiveMemoryWarning &#123;</div><div class="line">    [super didReceiveMemoryWarning];</div><div class="line">    </div><div class="line">&#125;</div><div class="line"></div><div class="line">#pragma mark - Table view data source</div><div class="line"></div><div class="line">- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView &#123;</div><div class="line"></div><div class="line">    return 1;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section &#123;</div><div class="line"></div><div class="line">    return 10;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath &#123;</div><div class="line">    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@&quot;cell&quot; forIndexPath:indexPath];</div><div class="line">    </div><div class="line">    cell.textLabel.text = [NSString stringWithFormat:@&quot;%ld&quot;,(long)indexPath.row];</div><div class="line">    </div><div class="line">    return cell;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>我想要使用这个UITableViewController来管理我的tableview</p>
-<p>然后  我还有一个view controller，在这个view controller中  我既要包含这个table view  还要有其他的view  用上面的加自controller来实现</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line"></div><div class="line">@implementation ViewController</div><div class="line"></div><div class="line">- (void)viewDidLoad &#123;</div><div class="line">    [super viewDidLoad];</div><div class="line">    [self addMyTableViewController];</div><div class="line">    [self addOtherView];</div><div class="line">&#125;</div><div class="line"></div><div class="line">//添加zicontroller</div><div class="line">- (void)addMyTableViewController&#123;</div><div class="line">    MyTableViewController *vc = [[MyTableViewController alloc] init];</div><div class="line">    [self addChildViewController:vc];</div><div class="line">    CGRect frame = self.view.bounds;</div><div class="line">    frame.size.height = 300;</div><div class="line">    vc.view.frame = frame;</div><div class="line">    [self.view addSubview:vc.view];</div><div class="line">    [vc didMoveToParentViewController:self];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)addOtherView&#123;</div><div class="line">    UIButton *btn = [[UIButton alloc] initWithFrame:CGRectMake(20, 400, 100, 30)];</div><div class="line">    btn.backgroundColor = [UIColor redColor];</div><div class="line">    [self.view addSubview:btn];</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">- (void)didReceiveMemoryWarning &#123;</div><div class="line">    [super didReceiveMemoryWarning];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><img src="http://o8bxt3lx0.bkt.clouddn.com/blog/2016-12-14-032856.jpg" alt=""></p>
-<p>如果我们使用了这种方法，那么我们就需要在子controller 和 父 controller之间建立起通信渠道，因为，如果点击了cell，在父类中我需要知道，虽然这样看起来是额外的开销，但是我们的代码变得非常清晰，复用性也更高</p>
-<p>我们怎样建立起通信呢，当然最简单的就是使用delegate，这个就比较简单的了</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">#import &lt;UIKit/UIKit.h&gt;</div><div class="line"></div><div class="line">@protocol MyTableViewControllerDelegate &lt;NSObject&gt;</div><div class="line"></div><div class="line">- (void)didSelectCell;</div><div class="line"></div><div class="line">@end</div><div class="line"></div><div class="line"></div><div class="line">@interface MyTableViewController : UITableViewController</div><div class="line"></div><div class="line">@property (nonatomic, weak) id&lt;MyTableViewControllerDelegate&gt; delegate;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
-<p>传递点击事件</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath&#123;</div><div class="line">    [tableView deselectRowAtIndexPath:indexPath animated:YES];</div><div class="line">    if ([self.delegate respondsToSelector:@selector(didSelectCell)]) &#123;</div><div class="line">        [self.delegate didSelectCell];</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>在父controller中捕获点击事件</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">MyTableViewController *vc = [[MyTableViewController alloc] init];</div><div class="line">vc.delegate = self;</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">-(void)didSelectCell&#123;</div><div class="line">    NSLog(@&quot;点击&quot;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="在cell内部控制cell的状态"><a href="#在cell内部控制cell的状态" class="headerlink" title="在cell内部控制cell的状态"></a>在cell内部控制cell的状态</h3><p>如果我们想自定义cell内部的状态，在点击cell的时候  自定义高亮样式 我们知道有这样的delegate方法，让我们在view controller中操作，但是我们要讲的就是减少view controller的代码</p>
-<p>首先我们来看看在view controller 中 怎样来改变</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">- (void)tableView:(UITableView *)tableView</div><div class="line">        didHighlightRowAtIndexPath:(NSIndexPath *)indexPath</div><div class="line">&#123;</div><div class="line">   //高亮时</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)tableView:(UITableView *)tableView</div><div class="line">        didUnhighlightRowAtIndexPath:(NSIndexPath *)indexPath</div><div class="line">&#123;</div><div class="line">    //非高亮</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>View 的实现细节和 delegate 的实现交织在一起了。我们应该把这些细节移到 cell 自身中去。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">-(void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated&#123;</div><div class="line">    [super setHighlighted:highlighted animated:animated];</div><div class="line">    if (highlighted) &#123;</div><div class="line">        //高亮时改变cell的状态</div><div class="line">    &#125;else&#123;</div><div class="line">        //非高亮时改变</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>Table view controllers（以及其他的 controller 对象！）应该在 model 和 view 对象之间扮演协调者和调解者的角色。它不应该关心明显属于 view 层或 model 层的任务。你应该始终记住这点，这样 delegate 和 data source 方法会变得更小巧，最多包含一些简单的样板代码。</p>
-<p>这不仅减少了 table view controllers 那样的大小和复杂性，而且还把业务逻辑和 view 的逻辑放到了更合适的地方。Controller 层的里里外外的实现细节都被封装成了简单的 API，最终，它变得更加容易理解，也更利于团队协作。</p>
-<p>参考:</p>
-<p><a href="https://www.objccn.io/issue-1-2/" target="_blank" rel="external">https://www.objccn.io/issue-1-2/</a></p>
+        <p>这个章节，我们讲Swift中的字符串和字符，需要说明的是在Swift中String和OC中的NSString进行了无缝衔接，这就意味着，String类型的字符串可以直接调用NSString中暴露出来的方法，不需要进行类型转换。</p>
+<a id="more"></a>
+<h3 id="初始化空字符串"><a href="#初始化空字符串" class="headerlink" title="初始化空字符串"></a>初始化空字符串</h3><p>创建一个字符串，可以使用字面量初始化，也可以使用初始化方法：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">var emptyString = &quot;&quot;               // 空字符串字面量</div><div class="line">var anotherEmptyString = String()  // 初始化方法</div><div class="line">// 两个字符串均为空并等价。</div></pre></td></tr></table></figure>
+<p>要检测是否为空，可以使用isEmpty:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">if emptyString.isEmpty &#123;</div><div class="line">    print(&quot;Nothing to see here&quot;)</div><div class="line">&#125;</div><div class="line">// 打印输出：&quot;Nothing to see here</div></pre></td></tr></table></figure>
+<h3 id="字符串可变性"><a href="#字符串可变性" class="headerlink" title="字符串可变性"></a>字符串可变性</h3><p>在Swift中，字符串和OC中的不同，如果需要改变字符串，只需要将字符串定义为变量就行，如果要保证字符串不可改变，那么可以直接将字符串定义为let常量，这样字符串就不可改变</p>
+<h3 id="字符串是值类型"><a href="#字符串是值类型" class="headerlink" title="字符串是值类型"></a>字符串是值类型</h3><p>我们之前说过，在Swift中，值类型的数据传递，都是通过拷贝的方式，String也是值类型的数据，在传递过程中，是使用的拷贝形式传递。</p>
+<h3 id="使用字符"><a href="#使用字符" class="headerlink" title="使用字符"></a>使用字符</h3><p>可以使用for-in方法来遍历字符串中的字符：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">for character in &quot;Dog!🐶&quot;.characters &#123;</div><div class="line">    print(character)</div><div class="line">&#125;</div><div class="line">// D</div><div class="line">// o</div><div class="line">// g</div><div class="line">// !</div><div class="line">// 🐶</div></pre></td></tr></table></figure>
+<p>通过Character类型，我们可以创建一个单独的字符常量或者变量</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">let exclamationMark: Character = &quot;!&quot;</div></pre></td></tr></table></figure>
+<p>字符串还可以通过一个字符数组来初始化</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">let catCharacters: [Character] = [&quot;C&quot;, &quot;a&quot;, &quot;t&quot;, &quot;!&quot;, &quot;🐱&quot;]</div><div class="line">let catString = String(catCharacters)</div><div class="line">print(catString)</div><div class="line">// 打印输出：&quot;Cat!🐱</div></pre></td></tr></table></figure>
+<h3 id="连接字符串"><a href="#连接字符串" class="headerlink" title="连接字符串"></a>连接字符串</h3><p>连接字符串可以直接使用+进行字符串的连接</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">let string1 = &quot;hello&quot;</div><div class="line">let string2 = &quot; there&quot;</div><div class="line">var welcome = string1 + string2</div><div class="line">// welcome 现在等于 &quot;hello there</div></pre></td></tr></table></figure>
+<p>+=对于字符串也是管用的</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">var instruction = &quot;look over&quot;</div><div class="line">instruction += string2</div><div class="line">// instruction 现在等于 &quot;look over there&quot;</div></pre></td></tr></table></figure>
+<p>另外还有appen()方法</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">let exclamationMark: Character = &quot;!&quot;</div><div class="line">welcome.append(exclamationMark)</div><div class="line">// welcome 现在等于 &quot;hello there!”</div></pre></td></tr></table></figure>
+<h3 id="字符串插值"><a href="#字符串插值" class="headerlink" title="字符串插值"></a>字符串插值</h3><p>在Swift中，我们可以直接将int float类型的值直接插入到string中，不需要先进行类型转换，再进行插入</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">let multiplier = 3</div><div class="line">let message = &quot;\(multiplier) times 2.5 is \(Double(multiplier) * 2.5)&quot;</div><div class="line">// message 是 &quot;3 times 2.5 is 7.5”</div></pre></td></tr></table></figure>
+<h3 id="计算字符串字符数量"><a href="#计算字符串字符数量" class="headerlink" title="计算字符串字符数量"></a>计算字符串字符数量</h3><p>使用count方法  string.characters.count</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">let unusualMenagerie = &quot;Koala 🐨, Snail 🐌, Penguin 🐧, Dromedary 🐪&quot;</div><div class="line">print(&quot;unusualMenagerie has \(unusualMenagerie.characters.count) characters&quot;)</div><div class="line">// 打印输出 &quot;unusualMenagerie has 40 characters”</div></pre></td></tr></table></figure>
+<h3 id="访问和修改字符串"><a href="#访问和修改字符串" class="headerlink" title="访问和修改字符串"></a>访问和修改字符串</h3><h4 id="字符串索引"><a href="#字符串索引" class="headerlink" title="字符串索引"></a>字符串索引</h4><p>每一个String值都有一个关联的索引(index)类型，String.Index，它对应着字符串中的每一个Character的位置。</p>
+<p>我们知道不同的字符占用的内存空间不同，所以，我们不能使用integer来做索引</p>
+<p>使用startIndex可以获取字符串的首个索引，使用endIndex可以获取字符串的最后一个位置的索引</p>
+<p>通过调用 String 的 index(before:) 或 index(after:) 方法，可以立即得到前面或后面的一个索引。您还可以通过调用 index(_:offsetBy:) 方法来获取对应偏移量的索引，这种方式可以避免多次调用 index(before:) 或 index(after:) 方法。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">let greeting = &quot;Guten Tag!&quot;</div><div class="line">greeting[greeting.startIndex]</div><div class="line">// G</div><div class="line">greeting[greeting.index(before: greeting.endIndex)]</div><div class="line">// !</div><div class="line">greeting[greeting.index(after: greeting.startIndex)]</div><div class="line">// u</div><div class="line"></div><div class="line">let index = greeting.index(greeting.startIndex, offsetBy: 7)</div><div class="line">greeting[index]</div><div class="line">// a</div></pre></td></tr></table></figure>
+<p>使用characters的indices属性，会创建一个包含全部索引的范围，我们可以用这个来遍历字符串中的每一个字符</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">for index in greeting.characters.indices &#123;</div><div class="line">   print(&quot;\(greeting[index]) &quot;, terminator: &quot;&quot;)</div><div class="line">&#125;</div><div class="line">// 打印输出 &quot;G u t e n   T a g !</div></pre></td></tr></table></figure>
+<h4 id="插入和删除"><a href="#插入和删除" class="headerlink" title="插入和删除"></a>插入和删除</h4><p>调用 insert(_:at:) 方法可以在一个字符串的指定索引插入一个字符，调用 insert(contentsOf:at:) 方法可以在一个字符串的指定索引插入一个段字符串。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">var welcome = &quot;hello&quot;</div><div class="line">welcome.insert(&quot;!&quot;, at: welcome.endIndex)</div><div class="line">// welcome 变量现在等于 &quot;hello!&quot;</div><div class="line"> </div><div class="line">welcome.insert(contentsOf:&quot; there&quot;.characters, at: welcome.index(before: welcome.endIndex))</div><div class="line">// welcome 变量现在等于 &quot;hello there!</div></pre></td></tr></table></figure>
+<p>调用 remove(at:) 方法可以在一个字符串的指定索引删除一个字符，调用 removeSubrange(_:) 方法可以在一个字符串的指定索引删除一个子字符串。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">welcome.remove(at: welcome.index(before: welcome.endIndex))</div><div class="line">// welcome 现在等于 &quot;hello there&quot;</div><div class="line"> </div><div class="line">let range = welcome.index(welcome.endIndex, offsetBy: -6)..&lt;welcome.endIndex</div><div class="line">welcome.removeSubrange(range)</div><div class="line">// welcome 现在等于 &quot;hello“</div></pre></td></tr></table></figure>
+<h3 id="字符串的比较"><a href="#字符串的比较" class="headerlink" title="字符串的比较"></a>字符串的比较</h3><h4 id="字符串相等"><a href="#字符串相等" class="headerlink" title="字符串相等"></a>字符串相等</h4><p>判断两个字符串相等或者不等，可以直接使用== !=来判断</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">let quotation = &quot;We&apos;re a lot alike, you and I.&quot;</div><div class="line">let sameQuotation = &quot;We&apos;re a lot alike, you and I.&quot;</div><div class="line">if quotation == sameQuotation &#123;</div><div class="line">    print(&quot;These two strings are considered equal&quot;)</div><div class="line">&#125;</div><div class="line">// 打印输出 &quot;These two strings are considered equal”</div></pre></td></tr></table></figure>
+<h4 id="前缀后缀相等"><a href="#前缀后缀相等" class="headerlink" title="前缀后缀相等"></a>前缀后缀相等</h4><p>通过调用字符串的hasPrefix(_\:)/hasSuffix(_:)方法来检查字符串是否拥有特定前缀/后缀，两个方法均接收一个String类型的参数，并返回一个布尔值。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">let romeoAndJuliet = [</div><div class="line">    &quot;Act 1 Scene 1: Verona, A public place&quot;,</div><div class="line">    &quot;Act 1 Scene 2: Capulet&apos;s mansion&quot;,</div><div class="line">    &quot;Act 1 Scene 3: A room in Capulet&apos;s mansion&quot;,</div><div class="line">    &quot;Act 1 Scene 4: A street outside Capulet&apos;s mansion&quot;,</div><div class="line">    &quot;Act 1 Scene 5: The Great Hall in Capulet&apos;s mansion&quot;,</div><div class="line">    &quot;Act 2 Scene 1: Outside Capulet&apos;s mansion&quot;,</div><div class="line">    &quot;Act 2 Scene 2: Capulet&apos;s orchard&quot;,</div><div class="line">    &quot;Act 2 Scene 3: Outside Friar Lawrence&apos;s cell&quot;,</div><div class="line">    &quot;Act 2 Scene 4: A street in Verona&quot;,</div><div class="line">    &quot;Act 2 Scene 5: Capulet&apos;s mansion&quot;,</div><div class="line">    &quot;Act 2 Scene 6: Friar Lawrence&apos;s cell&quot;</div><div class="line">]</div></pre></td></tr></table></figure>
+<p>计算包含开头是”Act 1”的</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">var act1SceneCount = 0</div><div class="line">for scene in romeoAndJuliet &#123;</div><div class="line">    if scene.hasPrefix(&quot;Act 1 &quot;) &#123;</div><div class="line">        act1SceneCount += 1</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">print(&quot;There are \(act1SceneCount) scenes in Act 1&quot;)</div><div class="line">// 打印输出 &quot;There are 5 scenes in Act 1“</div></pre></td></tr></table></figure>
+<p>计算结尾是”Capulet’s mansion”</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">var mansionCount = 0</div><div class="line">for scene in romeoAndJuliet &#123;</div><div class="line">    if scene.hasSuffix(&quot;Capulet&apos;s mansion&quot;) &#123;</div><div class="line">        mansionCount += 1</div><div class="line">        &#125;</div><div class="line">print(&quot;\(mansionCount) mansion scenes”)</div><div class="line">// 打印输出 &quot;6 mansion scenes”</div></pre></td></tr></table></figure>
+<p>字符和字符串章节结束</p>
 
       
     </div>
@@ -430,7 +434,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/更轻量级的ViewController/" rel="tag">#更轻量级的ViewController</a>
+            <a href="/tags/Swift官方教程学习笔记/" rel="tag">#Swift官方教程学习笔记</a>
           
         </div>
       
@@ -439,17 +443,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/12/05/ViewControllers瘦身计划-一/" rel="next" title="ViewControllers瘦身计划(一)">
-                <i class="fa fa-chevron-left"></i> ViewControllers瘦身计划(一)
+              <a href="/2017/01/03/iOS-ping网络小工具/" rel="next" title="iOS ping网络小工具">
+                <i class="fa fa-chevron-left"></i> iOS ping网络小工具
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/12/14/iOS中的并发编程-一/" rel="prev" title="iOS中的并发编程">
-                iOS中的并发编程 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -475,8 +475,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/12/14/ViewControllers瘦身计划-二/"
-           data-title="ViewControllers瘦身计划(二)" data-url="http://ppsheep.com/2016/12/14/ViewControllers瘦身计划-二/">
+      <div class="ds-thread" data-thread-key="2017/01/09/Swift教程(三)—字符串和字符/"
+           data-title="Swift教程(三)—字符串和字符" data-url="http://ppsheep.com/2017/01/09/Swift教程(三)—字符串和字符/">
       </div>
     
   </div>
@@ -612,7 +612,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#UITableViewController的使用"><span class="nav-number">1.</span> <span class="nav-text">UITableViewController的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#UITableViewController的特性"><span class="nav-number">1.1.</span> <span class="nav-text">UITableViewController的特性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#UITableViewController的限制"><span class="nav-number">1.2.</span> <span class="nav-text">UITableViewController的限制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用-Child-View-Controllers"><span class="nav-number">1.3.</span> <span class="nav-text">使用 Child View Controllers</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在cell内部控制cell的状态"><span class="nav-number">2.</span> <span class="nav-text">在cell内部控制cell的状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#初始化空字符串"><span class="nav-number">1.</span> <span class="nav-text">初始化空字符串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字符串可变性"><span class="nav-number">2.</span> <span class="nav-text">字符串可变性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字符串是值类型"><span class="nav-number">3.</span> <span class="nav-text">字符串是值类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用字符"><span class="nav-number">4.</span> <span class="nav-text">使用字符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#连接字符串"><span class="nav-number">5.</span> <span class="nav-text">连接字符串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字符串插值"><span class="nav-number">6.</span> <span class="nav-text">字符串插值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#计算字符串字符数量"><span class="nav-number">7.</span> <span class="nav-text">计算字符串字符数量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#访问和修改字符串"><span class="nav-number">8.</span> <span class="nav-text">访问和修改字符串</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#字符串索引"><span class="nav-number">8.1.</span> <span class="nav-text">字符串索引</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#插入和删除"><span class="nav-number">8.2.</span> <span class="nav-text">插入和删除</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字符串的比较"><span class="nav-number">9.</span> <span class="nav-text">字符串的比较</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#字符串相等"><span class="nav-number">9.1.</span> <span class="nav-text">字符串相等</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#前缀后缀相等"><span class="nav-number">9.2.</span> <span class="nav-text">前缀后缀相等</span></a></li></ol></li></ol></div>
             
           </div>
         </section>
