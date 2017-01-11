@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://ppsheep.com/"/>
-  <updated>2017-01-09T09:57:02.000Z</updated>
+  <updated>2017-01-11T09:02:23.000Z</updated>
   <id>http://ppsheep.com/</id>
   
   <author>
@@ -14,6 +14,75 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Swift(三)-集合类型</title>
+    <link href="http://ppsheep.com/2017/01/10/Swift%E6%95%99%E7%A8%8B(%E4%B8%89)%E2%80%94%E9%9B%86%E5%90%88%E7%B1%BB%E5%9E%8B/"/>
+    <id>http://ppsheep.com/2017/01/10/Swift教程(三)—集合类型/</id>
+    <published>2017-01-10T06:13:43.000Z</published>
+    <updated>2017-01-11T09:02:23.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>在上一节，讲了关于字符串和字符的一些基础知识，看起来有点枯燥，在后面几章节的学习中，看起来也比较枯燥，但是这些都是基础知识，对于有过编程基础的同学来说，当然过一遍已经足够了，对于没有编程经验的同学来说，还是需要看一看，了解一下。</p>
+<p>在这一节中，我们将介绍关于集合的一些使用方法</p>
+<a id="more"></a>
+<h3 id="集合的可变性"><a href="#集合的可变性" class="headerlink" title="集合的可变性"></a>集合的可变性</h3><p>和OC中的NSArray不同，在Swift中还是通过变量和常量来控制集合的可变性，不仅是Array,Set和Dictionary也是一样，如果你希望集合的值不再被改变，那么就将他设置为常量，如果需要改变，当然就需要变量。</p>
+<p>如果不需要改变，还是尽量设置成常量，好的编程习惯</p>
+<h3 id="数组-Arrays"><a href="#数组-Arrays" class="headerlink" title="数组(Arrays)"></a>数组(Arrays)</h3><p>Swift是安全的语言，在Swift中使用集合类型，必须声明集合中的数据类型，和OC又不太一样，使用过Java或者其他的一些编译型语言的同学可能很容易理解，很多语言都有泛型这一说Array[T]</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">let string = [String]()</div><div class="line">// string数组</div></pre></td></tr></table></figure>
+<h4 id="创建带有默认值的数组"><a href="#创建带有默认值的数组" class="headerlink" title="创建带有默认值的数组"></a>创建带有默认值的数组</h4><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">let demo = Array(repeating: 1, count: 3)</div><div class="line">//这里创建出来的默认数组是[1,1,1]</div></pre></td></tr></table></figure>
+<h4 id="数组相加"><a href="#数组相加" class="headerlink" title="数组相加"></a>数组相加</h4><p>数组相加必须要两个数组的值的类型一直才能够进行加</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">let demo = Array(repeating: 1, count: 3)</div><div class="line">//[1,1,1]</div><div class="line">let demo1 = Array(repeating: 2, count: 5)</div><div class="line">//[2, 2, 2, 2, 2]</div><div class="line"></div><div class="line">let demo2 = demo + demo1</div><div class="line">//[1, 1, 1, 2, 2, 2, 2, 2]</div><div class="line"></div><div class="line">let demo2 = demo1 + demo</div><div class="line">//[2, 2, 2, 2, 2, 1, 1, 1]</div></pre></td></tr></table></figure>
+<p>看一下加的顺序不一样，出来的数组也不一样</p>
+<h4 id="字面量构造数组"><a href="#字面量构造数组" class="headerlink" title="字面量构造数组"></a>字面量构造数组</h4><p>就是用[]括起来就行</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">let array = [1,2,1,2]</div></pre></td></tr></table></figure>
+<h4 id="访问和修改数组"><a href="#访问和修改数组" class="headerlink" title="访问和修改数组"></a>访问和修改数组</h4><p>首先数组有两个属性，用的比较多count / isEmpty<br>分别计算数组大小和是否为空</p>
+<p>还有就是访问数组元素，可以直接使用下标法，这个我也不细讲很简单的</p>
+<p>还有数组的插入和删除</p>
+<p>insert(_:at:) / remove(at:)</p>
+<p>这两个方法也很简单，我也不细讲了</p>
+<h4 id="数组的遍历"><a href="#数组的遍历" class="headerlink" title="数组的遍历"></a>数组的遍历</h4><p>在OC中，我们就经常使用for-in来遍历数组，在这里也是一样的 语法稍微有点改变</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">let demo2 = [2, 2, 2, 2, 2, 1, 1, 1]</div><div class="line"></div><div class="line">for number in demo2 &#123;</div><div class="line">    print(number)</div><div class="line">&#125;</div><div class="line">//一个一个打印出</div></pre></td></tr></table></figure>
+<p>如果想要打印出每个数组元素的索引</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">let demo2 = [2, 2, 2, 2, 2, 1, 1, 1]</div><div class="line"></div><div class="line">for (index,value) in demo2.enumerated() &#123;</div><div class="line">    print(&quot;index = \(index)  value = \(value)&quot;)</div><div class="line">&#125;</div><div class="line">/*</div><div class="line">index = 0  value = 2</div><div class="line">index = 1  value = 2</div><div class="line">index = 2  value = 2</div><div class="line">index = 3  value = 2</div><div class="line">index = 4  value = 2</div><div class="line">index = 5  value = 1</div><div class="line">index = 6  value = 1</div><div class="line">index = 7  value = 1</div><div class="line">*/</div></pre></td></tr></table></figure>
+<h3 id="集合-Sets"><a href="#集合-Sets" class="headerlink" title="集合(Sets)"></a>集合(Sets)</h3><p>集合(Set)用来存储相同类型并且没有确定顺序的值。当集合元素顺序不重要时或者希望确保每个元素只出现一次时可以使用集合而不是数组。</p>
+<p>使用集合的最主要原因就是这个不能有重复数据</p>
+<h4 id="集合的哈希值"><a href="#集合的哈希值" class="headerlink" title="集合的哈希值"></a>集合的哈希值</h4><p>一个类型为了要存储在集合中，这个类型必须要是可以哈希的。一个哈希值是Int型，相等的两个对象，哈希值必须相等 a==b 等价于  a.hashValue = b.hashValue</p>
+<p>在swift中  String、Int 、Bool这些值都是可哈希的，如果我们在集合中要装我们自定义的一个类型，那么这个类型必须要符合 Swift 标准库中的Hashable协议，这个我们在讲到协议的时候会单独拎出来讲</p>
+<h4 id="集合类型语法"><a href="#集合类型语法" class="headerlink" title="集合类型语法"></a>集合类型语法</h4><p>集合类型被写作 Set<t>，没错，也是泛型的</t></p>
+<h4 id="字面量创建集合"><a href="#字面量创建集合" class="headerlink" title="字面量创建集合"></a>字面量创建集合</h4><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">let demo: Set&lt;String&gt; = [&quot;a&quot;,&quot;b&quot;]</div></pre></td></tr></table></figure>
+<p><strong>一个Set类型不能从数组字面量中被单独推断出来，因此Set类型必须显式声明，但是呢，我们可以这样来简化let demo: Set=[“a”,”b”]</strong>，这样编译器就能够推断出是一个String类型的集合</p>
+<h4 id="访问和修改集合"><a href="#访问和修改集合" class="headerlink" title="访问和修改集合"></a>访问和修改集合</h4><p>集合也有count \ isEmpty 两个属性，但是我们说过集合是没有顺序的，所以就没有下标这种概念了</p>
+<p>调用remove(_:)删除元素</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">var favoriteGenres: Set = [&quot;Rock&quot;, &quot;Classical&quot;, &quot;Hip hop&quot;]</div><div class="line"></div><div class="line">if let removedGenre = favoriteGenres.remove(&quot;Rock&quot;) &#123;</div><div class="line">    print(&quot;\(removedGenre)? I&apos;m over it.&quot;)</div><div class="line">&#125; else &#123;</div><div class="line">    print(&quot;I never much cared for that.&quot;)</div><div class="line">&#125;</div><div class="line">// 打印 &quot;Rock? I&apos;m over it.</div></pre></td></tr></table></figure>
+<h4 id="遍历集合"><a href="#遍历集合" class="headerlink" title="遍历集合"></a>遍历集合</h4><p>for-in</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">for genre in favoriteGenres &#123;</div><div class="line">    print(&quot;\(genre)&quot;)</div><div class="line">&#125;</div><div class="line">// Classical</div><div class="line">// Jazz</div><div class="line">// Hip hop</div></pre></td></tr></table></figure>
+<p>集合中有一个sorted()方法，可以再遍历的时候使用，将返回一个有序的结果，这个比较是操作符”&lt;”来进行比较的</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">for genre in favoriteGenres.sorted() &#123;</div><div class="line">    print(&quot;(genre)&quot;)</div><div class="line">&#125;</div><div class="line">// prints &quot;Classical&quot;</div><div class="line">// prints &quot;Hip hop&quot;</div><div class="line">// prints &quot;Jazz</div></pre></td></tr></table></figure>
+<h4 id="集合的操作"><a href="#集合的操作" class="headerlink" title="集合的操作"></a>集合的操作</h4><p><img src="http://o8bxt3lx0.bkt.clouddn.com/blog/2017-01-11-setVennDiagram_2x.png" alt=""></p>
+<p> 上面的图显示了集合中的几个方法的含义，这个我就不细讲，看图就能够明白</p>
+<h3 id="字典"><a href="#字典" class="headerlink" title="字典"></a>字典</h3><h4 id="字典的字面量声明"><a href="#字典的字面量声明" class="headerlink" title="字典的字面量声明"></a>字典的字面量声明</h4><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">let demo = [&quot;key1&quot;:&quot;value1&quot;,&quot;key2&quot;:&quot;value2&quot;]</div></pre></td></tr></table></figure>
+<h4 id="访问字典"><a href="#访问字典" class="headerlink" title="访问字典"></a>访问字典</h4><p>访问和修改字典都可以通过key操作来完成，这个我也不细讲了</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">demo[&quot;key1&quot;] = &quot;new value&quot;</div><div class="line">//这样字典中的value1就变成了new value</div></pre></td></tr></table></figure>
+<p>作为另一种下标方法，字典的updateValue(_:forKey:)方法可以设置或者更新特定键对应的值。就像上面所示的下标示例，updateValue(_:forKey:)方法在这个键不存在对应值的时候会设置新值或者在存在时更新已存在的值。和上面的下标方法不同的，updateValue(_:forKey:)这个方法返回更新值之前的原值。这样使得我们可以检查更新是否成功。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">if let oldValue = airports.updateValue(&quot;Dublin Airport&quot;, forKey: &quot;DUB&quot;) &#123;</div><div class="line">    print(&quot;The old value for DUB was (oldValue).&quot;)</div><div class="line">&#125;</div><div class="line">// 输出 &quot;The old value for DUB was Dublin.</div></pre></td></tr></table></figure>
+<h4 id="字典的遍历"><a href="#字典的遍历" class="headerlink" title="字典的遍历"></a>字典的遍历</h4><p>for-in</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">for (airportCode, airportName) in airports &#123;</div><div class="line">    print(&quot;(airportCode): (airportName)&quot;)</div><div class="line">&#125;</div><div class="line">//对所有遍历</div><div class="line"></div><div class="line">for airportCode in airports.keys &#123;</div><div class="line">    print(&quot;Airport code: (airportCode)&quot;)</div><div class="line">&#125;</div><div class="line">//对key遍历</div><div class="line">// Airport code: YYZ</div><div class="line">// Airport code: LHR</div><div class="line"> </div><div class="line">for airportName in airports.values &#123;</div><div class="line">    print(&quot;Airport name: (airportName)&quot;)</div><div class="line">&#125;</div><div class="line">//对value遍历</div><div class="line">// Airport name: Toronto Pearson</div><div class="line">// Airport name: London Heathrow</div></pre></td></tr></table></figure>
+<p>集合完结。。。。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在上一节，讲了关于字符串和字符的一些基础知识，看起来有点枯燥，在后面几章节的学习中，看起来也比较枯燥，但是这些都是基础知识，对于有过编程基础的同学来说，当然过一遍已经足够了，对于没有编程经验的同学来说，还是需要看一看，了解一下。&lt;/p&gt;
+&lt;p&gt;在这一节中，我们将介绍关于集合的一些使用方法&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Swift官方教程学习笔记" scheme="http://ppsheep.com/categories/Swift%E5%AE%98%E6%96%B9%E6%95%99%E7%A8%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+    
+      <category term="Swift官方教程学习笔记" scheme="http://ppsheep.com/tags/Swift%E5%AE%98%E6%96%B9%E6%95%99%E7%A8%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    
+  </entry>
   
   <entry>
     <title>Swift教程(二)—字符串和字符</title>
@@ -1422,52 +1491,6 @@
     
     
       <category term="iOS 编写高质量代码" scheme="http://ppsheep.com/tags/iOS-%E7%BC%96%E5%86%99%E9%AB%98%E8%B4%A8%E9%87%8F%E4%BB%A3%E7%A0%81/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>iOS 应用之间跳转传输数据以及跳回源程序</title>
-    <link href="http://ppsheep.com/2016/11/07/iOS-%E5%BA%94%E7%94%A8%E4%B9%8B%E9%97%B4%E8%B7%B3%E8%BD%AC%E4%BC%A0%E8%BE%93%E6%95%B0%E6%8D%AE%E4%BB%A5%E5%8F%8A%E8%B7%B3%E5%9B%9E%E6%BA%90%E7%A8%8B%E5%BA%8F/"/>
-    <id>http://ppsheep.com/2016/11/07/iOS-应用之间跳转传输数据以及跳回源程序/</id>
-    <published>2016-11-07T03:15:19.000Z</published>
-    <updated>2016-11-07T08:33:01.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>之前写了一篇关于APP之间跳转的文章，期间有同学说能否出一个类似于微信登录或者支付宝支付之类的，跳转到支付宝获得消息再调回源程序，并且带上信息。今天我们就再来聊聊，实现这样一种效果，没看过之前应用跳转的，请移步:<br>    <a href="http://ppsheep.com/2016/10/27/iOS应用之间的跳转解析/">http://ppsheep.com/2016/10/27/iOS应用之间的跳转解析/</a></p>
-<a id="more"></a>
-<p>之前我们说到APP之间的跳转，其实就是通过一个URL Schemes进行跳转，APP之间的传值，其实也是通过这个URL进行传值。</p>
-<p>再有我们想跳回原来程序，那么我们还需要知道源程序的URL Schemes，这样我们才能跳回到源程序，所以在传递参数的时候 我们还需要把源程序的URL Schemes传递过去。</p>
-<p>我们需要传递的参数：</p>
-<ul>
-<li>当前APP的 URL Schemes</li>
-<li>我们需要传递的实际参数</li>
-</ul>
-<p><strong>还有一个重要的事情，因为我们需要从APP2跳回APP1，所以我们还需要设置APP1的URL Schemes，怎么设置，我这里就不写出来了，具体可以看上一篇跳转解析</strong></p>
-<p>我们之前知道 打开另一个APP，是打开一个URL<br> APP2://类似于这种，那我们会想到一般我们http有一种方式携带参数 <a href="http://url?name=?&amp;age=?" target="_blank" rel="external">http://url?name=?&amp;age=?</a></p>
-<p> 我们APP之间的传递参数方式其实也是这样的方式</p>
- <figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">//获取APP2的URL Scheme 还需要带上当前App的APP1</div><div class="line">  NSString *URLScheme = @&quot;APP2://APP1&quot;;</div><div class="line">  </div><div class="line">  //我们参数需要穿name age</div><div class="line">  NSString *params = @&quot;name=yq&amp;age=23&quot;;</div><div class="line">  //接下来加上我们需要携带的参数</div><div class="line">  NSString *realURL = [NSString stringWithFormat:@&quot;%@?%@&quot;,URLScheme,params];</div><div class="line">  </div><div class="line">  NSURL *appURL = [NSURL URLWithString:realURL];</div><div class="line">  </div><div class="line">  //判断手机中是否安装了APP2</div><div class="line">  if ([[UIApplication sharedApplication] canOpenURL:appURL]) &#123;</div><div class="line">      //打开APP2ViewController2</div><div class="line">      [[UIApplication sharedApplication] openURL:appURL];</div><div class="line">  &#125;else&#123;</div><div class="line">      NSLog(@&quot;没有安装APP2&quot;);</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
-<p> 我们最终的appURL 是： </p>
- <figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">APP2://APP1?name=yq&amp;age=23</div></pre></td></tr></table></figure>
-<p> 我们在APP2中处理这个跳转的URL</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">-(BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation&#123;</div><div class="line">	if ([url.absoluteString containsString:@&quot;APP1&quot;])&#123;</div><div class="line">       NSLog(@&quot;%@&quot;,url);</div><div class="line">       </div><div class="line">       //拿到源程序的</div><div class="line">       NSString * urlschemes = [[url.absoluteString componentsSeparatedByString:@&quot;//&quot;][1] componentsSeparatedByString:@&quot;?&quot;][0];</div><div class="line">       </div><div class="line">       //拿到参数</div><div class="line">       NSRange range = [url.absoluteString rangeOfString:@&quot;?&quot;];</div><div class="line">       NSString *paramStr = [url.absoluteString substringFromIndex:range.location+1];//去除问号</div><div class="line">       NSArray *params = [paramStr componentsSeparatedByString:@&quot;&amp;&quot;];</div><div class="line">       NSLog(@&quot;%@&quot;,params);</div><div class="line">       </div><div class="line">       //跳回源程序</div><div class="line">       dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^&#123;</div><div class="line">           // 延时3s模拟处理后回调指定的 URL Schemes并传递结果</div><div class="line">           </div><div class="line">           if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@&quot;APP2://&quot;]]) &#123;</div><div class="line">               </div><div class="line">               NSLog(@&quot;跳转成功&quot;);</div><div class="line">               </div><div class="line">               [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@&quot;%@://back?name=back&amp;code=200&quot;,urlschemes]]];</div><div class="line">               </div><div class="line">           &#125;else&#123;</div><div class="line">               NSLog(@&quot;跳转失败&quot;);</div><div class="line">               NSLog(@&quot;未安装应用!&quot;);</div><div class="line">           &#125;</div><div class="line">       &#125;);</div><div class="line">   &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p> 在APP2中  我们拿到了APP1传递的参数 放在了params数组中，同样的 我们在APP1中再处理从APP2跳回来的信息</p>
- <figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">  /**</div><div class="line"> 跳转回来</div><div class="line"> */</div><div class="line">-(BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary&lt;UIApplicationOpenURLOptionsKey,id&gt; *)options&#123;</div><div class="line">    if ([url.absoluteString containsString:@&quot;back&quot;]) &#123;</div><div class="line">        //拿到参数</div><div class="line">        NSRange range = [url.absoluteString rangeOfString:@&quot;?&quot;];</div><div class="line">        NSString *paramStr = [url.absoluteString substringFromIndex:range.location+1];//去除问号</div><div class="line">        NSArray *params = [paramStr componentsSeparatedByString:@&quot;&amp;&quot;];</div><div class="line">        NSLog(@&quot;%@&quot;,params);</div><div class="line">    &#125;</div><div class="line">    return YES;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>这样我们也拿到了APP2跳回来的数据</p>
-<p>在iOS10中跳转的API有更新，具体的变化可以看API 我这里就不列出来了</p>
-<p>源代码放在：</p>
-<p><a href="https://github.com/yangqian111/blog/tree/master/APP-2" target="_blank" rel="external">https://github.com/yangqian111/blog/tree/master/APP-2</a></p>
-<p><a href="https://github.com/yangqian111/blog/tree/master/APP-1" target="_blank" rel="external">https://github.com/yangqian111/blog/tree/master/APP-1</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;之前写了一篇关于APP之间跳转的文章，期间有同学说能否出一个类似于微信登录或者支付宝支付之类的，跳转到支付宝获得消息再调回源程序，并且带上信息。今天我们就再来聊聊，实现这样一种效果，没看过之前应用跳转的，请移步:&lt;br&gt;    &lt;a href=&quot;http://ppsheep.com/2016/10/27/iOS应用之间的跳转解析/&quot;&gt;http://ppsheep.com/2016/10/27/iOS应用之间的跳转解析/&lt;/a&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="iOS进阶" scheme="http://ppsheep.com/categories/iOS%E8%BF%9B%E9%98%B6/"/>
-    
-    
-      <category term="iOS应用之间的跳转" scheme="http://ppsheep.com/tags/iOS%E5%BA%94%E7%94%A8%E4%B9%8B%E9%97%B4%E7%9A%84%E8%B7%B3%E8%BD%AC/"/>
     
   </entry>
   
