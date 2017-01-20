@@ -1,369 +1,244 @@
-<!doctype html>
 
-
-
-  
-
-
-<html class="theme-next mist use-motion">
+<!DOCTYPE html>
+<html lang="zh-cn">
+    
 <head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
-
-
-
-
-  
-  
-  
-  
-
-  
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="ppsheep">
+    <title>iOS-有效编写高质量Objective-C方法(四) - ppsheep</title>
+    <meta name="author" content="ppsheep">
     
     
-  
-
-  
-
-  
-
-  
-
-  
-
-  
     
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
     
-    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
-  
-
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
-
-<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="iOS 编写高质量代码," />
-
-
-
-
-
-  <link rel="alternate" href="/atom.xml" title="ppsheep" type="application/atom+xml" />
-
-
-
-
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
-
-
-
-
-
-
-<meta name="description" content="看到上一次发这个系列的文章，已经是一个月之前了，我的妈呀，这个时间过得挺快的，一下一个来月过去了，到现在才来更，真是对不起大家了，当时我记得是说重新来读一遍Effective Objective-C 确实呢，书有在读，就完成了第二章节，现在呢，我们继续。。。">
-<meta property="og:type" content="article">
+    <meta name="description" content="看到上一次发这个系列的文章，已经是一个月之前了，我的妈呀，这个时间过得挺快的，一下一个来月过去了，到现在才来更，真是对不起大家了，当时我记得是说重新来读一遍Effective Objective-C 确实呢，书有在读，就完成了第二章节，现在呢，我们继续。。。">
+<meta property="og:type" content="blog">
 <meta property="og:title" content="iOS-有效编写高质量Objective-C方法(四)">
 <meta property="og:url" content="http://ppsheep.com/2016/12/28/iOS-有效编写高质量Objective-C方法-四/index.html">
 <meta property="og:site_name" content="ppsheep">
 <meta property="og:description" content="看到上一次发这个系列的文章，已经是一个月之前了，我的妈呀，这个时间过得挺快的，一下一个来月过去了，到现在才来更，真是对不起大家了，当时我记得是说重新来读一遍Effective Objective-C 确实呢，书有在读，就完成了第二章节，现在呢，我们继续。。。">
 <meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/blog/2016-12-29-032256.jpg">
-<meta property="og:updated_time" content="2016-12-29T03:44:21.000Z">
+<meta property="og:updated_time" content="2017-01-20T07:51:19.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS-有效编写高质量Objective-C方法(四)">
 <meta name="twitter:description" content="看到上一次发这个系列的文章，已经是一个月之前了，我的妈呀，这个时间过得挺快的，一下一个来月过去了，到现在才来更，真是对不起大家了，当时我记得是说重新来读一遍Effective Objective-C 确实呢，书有在读，就完成了第二章节，现在呢，我们继续。。。">
 <meta name="twitter:image" content="http://o8bxt3lx0.bkt.clouddn.com/blog/2016-12-29-032256.jpg">
-
-
-
-<script type="text/javascript" id="hexo.configuration">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    scheme: 'Mist',
-    sidebar: {"position":"left","display":"always"},
-    fancybox: true,
-    motion: true,
-    duoshuo: {
-      userId: '0',
-      author: '博主'
-    }
-  };
-</script>
-
-
-
-
-  <link rel="canonical" href="http://ppsheep.com/2016/12/28/iOS-有效编写高质量Objective-C方法-四/"/>
-
-
-  <title> iOS-有效编写高质量Objective-C方法(四) | ppsheep </title>
+    
+    
+        
+    
+    
+        <meta property="og:image" content="http://ppsheep.com/assets/images/avatar_public.jpg"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-nuvue6sithwirecbhvw3dkaobiojqvtadsnhguwi7k04xklybw5djl1smadp.min.css">
+    <!--STYLES END-->
+    
+    
 </head>
 
-<body itemscope itemtype="//schema.org/WebPage" lang="zh-Hans">
-
-  
-
-
-
-  <script type="text/javascript">
-    var _hmt = _hmt || [];
-    (function() {
-      var hm = document.createElement("script");
-      hm.src = "//hm.baidu.com/hm.js?4fa2aea1f41359883e5d92b5cb8bccb8";
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(hm, s);
-    })();
-  </script>
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
 
 
-
-
-
-
-
-
-  
-  
     
-  
-
-  <div class="container one-collumn sidebar-position-left page-post-detail ">
-    <div class="headband"></div>
-
-    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
-      <div class="header-inner"><div class="site-meta ">
-  
-
-  <div class="custom-logo-site-title">
-    <a href="/"  class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
-      <span class="site-title">ppsheep</span>
-      <span class="logo-line-after"><i></i></span>
-    </a>
-  </div>
-  <p class="site-subtitle"></p>
-</div>
-
-<div class="site-nav-toggle">
-  <button>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-  </button>
-</div>
-
-<nav class="site-nav">
-  
-
-  
-    <ul id="menu" class="menu">
-      
         
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
             
-            首页
-          </a>
-        </li>
-      
         
-        <li class="menu-item menu-item-categories">
-          <a href="/categories" rel="section">
-            
-            分类
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-archives">
-          <a href="/archives" rel="section">
-            
-            归档
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-tags">
-          <a href="/tags" rel="section">
-            
-            标签
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-about">
-          <a href="/about" rel="section">
-            
-            关于我
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-commonweal">
-          <a href="/404.html" rel="section">
-            
-            公益404
-          </a>
-        </li>
-      
+    
 
-      
+<header id="header" data-behavior="3">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <h1 class="header-title">
+        <a class="header-title-link" href="/ ">ppsheep</a>
+    </h1>
+    
+        
+            <a  class="header-right-picture "
+                href="#about">
+        
+        
+            <img class="header-picture" src="/assets/images/avatar_public.jpg"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="3">
+    
+        <div class="sidebar-profile">
+            <a href="/#about">
+                    <img class="sidebar-profile-picture" src="/assets/images/avatar_public.jpg"/>
+            </a>
+            <span class="sidebar-profile-name">ppsheep</span>
+        </div>
+    
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/ "
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+                    <span class="sidebar-button-desc">首页</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-categories"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+                    <span class="sidebar-button-desc">分类</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-tags"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+                    <span class="sidebar-button-desc">标签</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-archives"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+                    <span class="sidebar-button-desc">归档</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link st-search-show-outputs"
+                         href="#search"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-search"></i>
+                    <span class="sidebar-button-desc">搜索</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="#about"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+                    <span class="sidebar-button-desc">关于</span>
+                </a>
+        </li>
+        
     </ul>
-  
-
-  
+    
+        <ul class="sidebar-buttons">
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/atom.xml"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+                    <span class="sidebar-button-desc">RSS</span>
+                </a>
+        </li>
+        
+    </ul>
+    
 </nav>
 
- </div>
-    </header>
-
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
             
-
-  <div id="posts" class="posts-expand">
-    
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                iOS-有效编写高质量Objective-C方法(四)
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-12-28T15:45:28+08:00" content="2016-12-28">
-              2016-12-28
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/iOS-编写高质量代码的方法/" itemprop="url" rel="index">
-                    <span itemprop="name">iOS 编写高质量代码的方法</span>
-                  </a>
-                </span>
-
+            <div id="main" data-behavior="3"
+                 class="
+                        hasCoverMetaIn
+                        ">
                 
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/12/28/iOS-有效编写高质量Objective-C方法-四/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/28/iOS-有效编写高质量Objective-C方法-四/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2016/12/28/iOS-有效编写高质量Objective-C方法-四/" class="leancloud_visitors" data-flag-title="iOS-有效编写高质量Objective-C方法(四)">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
+<article class="post" itemscope itemType="http://schema.org/BlogPosting">
     
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title" itemprop="headline">
+            iOS-有效编写高质量Objective-C方法(四)
+        </h1>
+    
+    <div class="post-meta">
+    <time itemprop="datePublished" datetime="2016-12-28T15:45:28+08:00">
+	
+		    12月 28, 2016
+    	
+    </time>
+    
+        <span>发布在 </span>
+        
+    <a class="category-link" href="/all-categories/iOS-编写高质量代码的方法/">iOS 编写高质量代码的方法</a>
 
 
-    <div class="post-body" itemprop="articleBody">
+    
+</div>
 
-      
-      
-
-      
-        <p>看到上一次发这个系列的文章，已经是一个月之前了，我的妈呀，这个时间过得挺快的，一下一个来月过去了，到现在才来更，真是对不起大家了，当时我记得是说重新来读一遍Effective Objective-C 确实呢，书有在读，就完成了第二章节，现在呢，我们继续。。。</p>
+</div>
+    
+    <div class="post-content markdown" itemprop="articleBody">
+        <div class="main-content-wrap">
+            <p>看到上一次发这个系列的文章，已经是一个月之前了，我的妈呀，这个时间过得挺快的，一下一个来月过去了，到现在才来更，真是对不起大家了，当时我记得是说重新来读一遍Effective Objective-C 确实呢，书有在读，就完成了第二章节，现在呢，我们继续。。。</p>
 <a id="more"></a>
 <h3 id="理解objc-msgSend的作用"><a href="#理解objc-msgSend的作用" class="headerlink" title="理解objc_msgSend的作用"></a>理解objc_msgSend的作用</h3><p>在对象上调用方法是Objective-C常用的功能。用Objc的术语来讲，叫做“传递消息”。消息有“名称(name)”或“选择子(selector)”，可以接受参数，而且可以有返回值。</p>
 <p>由于OC是C的超集，所以最好先理解C语言的函数调用方式。C语言使用“静态绑定”，也就是说，在编译期间，就能够知道所应该调用的函数。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">#include &lt;stdio.h&gt;</div><div class="line"></div><div class="line">void printHello()&#123;</div><div class="line">    printf(&quot;Hello world\n&quot;);</div><div class="line">&#125;</div><div class="line"></div><div class="line">void printGoodBye()&#123;</div><div class="line">    printf(&quot;Goodbye world\n&quot;);</div><div class="line">&#125;</div><div class="line"></div><div class="line">void doTheThing(int type)&#123;</div><div class="line">    if (type == 0) &#123;</div><div class="line">        printHello();</div><div class="line">    &#125;else&#123;</div><div class="line">        printGoodBye();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">#include &lt;stdio.h&gt;</div><div class="line"></div><div class="line">void printHello()&#123;</div><div class="line">    printf(&quot;Hello world\n&quot;);</div><div class="line">&#125;</div><div class="line"></div><div class="line">void printGoodBye()&#123;</div><div class="line">    printf(&quot;Goodbye world\n&quot;);</div><div class="line">&#125;</div><div class="line"></div><div class="line">void doTheThing(int type)&#123;</div><div class="line">    if (type == 0) &#123;</div><div class="line">        printHello();</div><div class="line">    &#125;else&#123;</div><div class="line">        printGoodBye();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>如果不考虑内联关系，那么编译器在编译代码的时候就已经知道了程序中有printHello和printGoodBye这两个函数了，如果我们将编写的方式改变一下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">void printHello()&#123;</div><div class="line">    printf(&quot;Hello world\n&quot;);</div><div class="line">&#125;</div><div class="line"></div><div class="line">void printGoodBye()&#123;</div><div class="line">    printf(&quot;Goodbye world\n&quot;);</div><div class="line">&#125;</div><div class="line"></div><div class="line">void doTheThing(int type)&#123;</div><div class="line">    void (*fnc)();</div><div class="line">    if (type == 0) &#123;</div><div class="line">        fnc = printHello;</div><div class="line">    &#125;else&#123;</div><div class="line">        fnc = printGoodBye;</div><div class="line">    &#125;</div><div class="line">    fnc();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">void printHello()&#123;</div><div class="line">    printf(&quot;Hello world\n&quot;);</div><div class="line">&#125;</div><div class="line"></div><div class="line">void printGoodBye()&#123;</div><div class="line">    printf(&quot;Goodbye world\n&quot;);</div><div class="line">&#125;</div><div class="line"></div><div class="line">void doTheThing(int type)&#123;</div><div class="line">    void (*fnc)();</div><div class="line">    if (type == 0) &#123;</div><div class="line">        fnc = printHello;</div><div class="line">    &#125;else&#123;</div><div class="line">        fnc = printGoodBye;</div><div class="line">    &#125;</div><div class="line">    fnc();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>这下，就必须要使用动态绑定了，因为需要调用的函数，在运行期间才能够知道。在objc中，要向对象传递消息，就必须要使用到动态绑定的机制来决定需要调用的方法。</p>
 <p>给对象传递消息，可以这样写</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">id returnValue = [someObject messageName:parameter];</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">id returnValue = [someObject messageName:parameter];</div></pre></td></tr></table></figure>
 <p>在上面代码中，someObject叫做接收者，messageName叫做选择子，选择子和参数合起来叫做消息。编译器在看到该消息后，将其转化成为一条标准的C语言函数调用，所调用的函数叫做objc_msgSend，其原型：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">void objc_msgSend(id self,SEL cmd,...)</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">void objc_msgSend(id self,SEL cmd,...)</div></pre></td></tr></table></figure>
 <p>这是一个参数可变的函数，其中第一个参数代表的是接收者，第二个代表的是选择子，第三个以及后面的代表的是参数，编译器会把上面的传递消息的例子改为：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">id returnValue = objc_msgSend(someObject,@selector(messageName:),</div><div class="line">									parameter);</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">id returnValue = objc_msgSend(someObject,@selector(messageName:),</div><div class="line">									parameter);</div></pre></td></tr></table></figure>
 <p>objc_msgSend函数会根据接收者和选择子来选择调用的方法，改函数会在接收者的类中寻找方法列表，如果能找到与选择子名称相符的方法，就跳至其，实现代码，如果找不到，那就继续沿着继承体系往上找，如果最终还是找不到方法，那么就会执行”消息转发“操作</p>
 <p>这样看来，好像我们调用一个方法需要很多步骤，所幸的是，objc_msgSend会将匹配结果缓存子啊一张快速映射表中，这样一来，每个类都会有一个缓存，这样虽然第一次执行起来会稍慢，但是后面就会很迅速了。</p>
 <h3 id="理解消息转发机制"><a href="#理解消息转发机制" class="headerlink" title="理解消息转发机制"></a>理解消息转发机制</h3><p>上面我们讲了消息传递机制，接下来我们继续讲另外一个重要的问题，就是对象在接收到无法解读的消息时，会发生什么？</p>
 <p>如果我们想让类理解某条消息，我们必须以程序代码的形式实现出对应的方法才行，但是在编译期间，向类发送了无法解读的方法并不会报错，因为在运行期间可以继续向类中添加方法，所以编译器在编译时还无法确定类中是否有某个方法的实现。当对象接收到无法解读的方法时，就会启动消息转发机制，我们可以经此告诉对象应该如何处置这条消息。</p>
 <p>我们之前在编码过程中肯定有遇到过下面这种错误：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">-[__NSCFNumber lowercaseString] : unrecognized selector sen to instance 0x87</div><div class="line">...</div><div class="line">...</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">-[__NSCFNumber lowercaseString] : unrecognized selector sen to instance 0x87</div><div class="line">...</div><div class="line">...</div></pre></td></tr></table></figure>
 <p>上面这一段消息是由NSObject的 “doesNotRecognizeSelector:” 方法跑出的，此异常表明：消息接收者的类型是 __NSCFNumber，而该接收者无法理解名为lowercaseString的选择子。因为NSNumver中本就没有这个方法。</p>
 <p>消息转发分为两大阶段：</p>
 <ul>
@@ -371,528 +246,260 @@
 <li>第二阶段 涉及到了完整的消息转发机制，如果运行期系统已经把第一阶段执行完了，那么接收者自己就无法再以动态新增方法来响应包含选择子的消息了。此时，运行期系统会请求接收者以其他手段来处理与消息相关的方法调用。这里又可分为两步：<br>  首先，请接收者看看有没有其他的对象能够处理这条消息，若有，运行期系统会把消息转给那个对象，于是消息转发过程结束，一切如常。若没有，备援的接收者则会启动完整的消息转发机制，运行期系统会把与消息相关的所有细节全部封装到NSInvocation对象中，再给接收者一次机会，令其处理。</li>
 </ul>
 <h5 id="动态方法解析"><a href="#动态方法解析" class="headerlink" title="动态方法解析"></a>动态方法解析</h5><p>在对象收到无法解析的消息后，首先会调用其所属类的下列方法</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">+ (Bool)resolveInstanceMethod:(SEL)selector</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">+ (Bool)resolveInstanceMethod:(SEL)selector</div></pre></td></tr></table></figure>
 <p>该方法的参数就是那个未知的选择子，返回的值表示该类是否能够新增一个方法来处理当前的选择子</p>
 <p>假设未实现的方法不是实例方法，而是类方法，那么运行期系统会调用另外一个方法 叫做 resolveClassMethod:</p>
 <p>使用动态方法解析的前提是：相关的代码已经写好了，只等运行的时候动态插入到类中即可。<br>这种方案常用来实现@dynamic属性，这个属性之前我们已经讲过，有疑问的同学翻看一下我前面的博客。</p>
 <p>比如说我们要访问CoreData框架中的NSManagerObjects对象的属性时，就可以这样做，因为这些属性所需要的存取方法在编译器就可以确定。</p>
 <p>我们模拟一下，使用resolveInstanceMethod方法，来实现@dynamic属性</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">id autoDictionaryGetter(id self, SEL _cmd);</div><div class="line">void autoDictionarySetter(id self, SEL _cmd, id value);</div><div class="line"></div><div class="line">+ (Bool)resolveInstanceMethod:(SEL)selector&#123;</div><div class="line">	NSString *selectorString = NSStringFromSelector(selector);</div><div class="line">	if(/* selector is from a @dynamic property */)&#123;//这里的意思是判断属性是声明成了@dynamic</div><div class="line">	if([selectorString hasPrefix:@&quot;set&quot;])&#123;</div><div class="line">		class_addMethod(self, </div><div class="line">						   selector, </div><div class="line">						   (IMP)autoDictionarySetter),</div><div class="line">						   &quot;v@:@&quot;);</div><div class="line">	&#125;else&#123;</div><div class="line">		class_addMethod(self, </div><div class="line">						   selector, </div><div class="line">						   (IMP) autoDictionaryGetter),</div><div class="line">						   &quot;@:@&quot;);</div><div class="line">	&#125;</div><div class="line">	return YES;</div><div class="line">	&#125;</div><div class="line">	return [super resolveInstanceMethod:selector];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">id autoDictionaryGetter(id self, SEL _cmd);</div><div class="line">void autoDictionarySetter(id self, SEL _cmd, id value);</div><div class="line"></div><div class="line">+ (Bool)resolveInstanceMethod:(SEL)selector&#123;</div><div class="line">	NSString *selectorString = NSStringFromSelector(selector);</div><div class="line">	if(/* selector is from a @dynamic property */)&#123;//这里的意思是判断属性是声明成了@dynamic</div><div class="line">	if([selectorString hasPrefix:@&quot;set&quot;])&#123;</div><div class="line">		class_addMethod(self, </div><div class="line">						   selector, </div><div class="line">						   (IMP)autoDictionarySetter),</div><div class="line">						   &quot;v@:@&quot;);</div><div class="line">	&#125;else&#123;</div><div class="line">		class_addMethod(self, </div><div class="line">						   selector, </div><div class="line">						   (IMP) autoDictionaryGetter),</div><div class="line">						   &quot;@:@&quot;);</div><div class="line">	&#125;</div><div class="line">	return YES;</div><div class="line">	&#125;</div><div class="line">	return [super resolveInstanceMethod:selector];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>这样，我们已经在代码中处理了 set方法和get方法</p>
 <h5 id="备援接收者"><a href="#备援接收者" class="headerlink" title="备援接收者"></a>备援接收者</h5><p>当前的接收者除了resolveInstanceMethod，还有第二次机会处理未知的选择子。在这一步中，运行系统会询问，能否将这一消息转发给其他的接收者来处理</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">- (id)forwardingTargetSelector:(SEL)selector;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">- (id)forwardingTargetSelector:(SEL)selector;</div></pre></td></tr></table></figure>
 <p>如果找到当前的备援者，则将其直接返回，如果找不到，则返回Nil</p>
 <p>为什么会存在备援者呢？在一个对象内部，可能还有其他一系列对象，该对象可经由此方法将能够处理某选择子的相关内部对象返回，这样的话，在外界看来，就像是自己处理的一样。</p>
 <h5 id="完整的消息转发"><a href="#完整的消息转发" class="headerlink" title="完整的消息转发"></a>完整的消息转发</h5><p>如果备援者还找不到，那么就需要执行完整的消息转发机制。首先创建NSInvocation对象，将尚未处理的消息相关的所有细节，全部封装。在触发NSInvocation对象时，”消息派发系统”将亲自将消息指派给目标对象</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">- (void)forwardInvocation:(NSInvocation *)invocation;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">- (void)forwardInvocation:(NSInvocation *)invocation;</div></pre></td></tr></table></figure>
 <p>这个方法很简单，只需要改变调用目标，是消息在新目标上调用，但是这样就和备援者差不多了，我们一般这样处理：<br>在触发消息之前，先以某种方式改变消息的内容，比如改参数或者改选择子</p>
 <p>实现此方法时，若发现某调用操作不应该由本类实现，那么就由其超类同名方法实现，直至NSObject</p>
 <h5 id="消息转发全过程"><a href="#消息转发全过程" class="headerlink" title="消息转发全过程"></a>消息转发全过程</h5><p><img src="http://o8bxt3lx0.bkt.clouddn.com/blog/2016-12-29-032256.jpg" alt=""></p>
 
-      
+            
+        </div>
     </div>
-
-    <div>
-      
+    <div id="post-footer" class="post-footer main-content-wrap">
         
-<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
-    <img id="wechat_subscriber_qcode" src="/uploads/avatar_public.jpg" alt="ppsheep wechat" style="width: 200px; max-width: 100%;"/>
-    <div>欢迎您扫一扫上面的微信公众号，我将同步发送博客内容！</div>
-</div>
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">标签</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/all-tags/iOS-编写高质量代码/">iOS 编写高质量代码</a>
 
-
-      
-    </div>
-
-    <div>
-      
+            </div>
         
-  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
-    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
-    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
-      <span>赏</span>
-    </button>
-    <div id="QR" style="display: none;">
-      
-        <div id="wechat" style="display: inline-block">
-          <img id="wechat_qr" src="http://o8bxt3lx0.bkt.clouddn.com/141478051735_.pic%E5%89%AF%E6%9C%AC.jpg" alt="ppsheep WeChat Pay"/>
-          <p>微信打赏</p>
-        </div>
-      
-      
-        <div id="alipay" style="display: inline-block">
-          <img id="alipay_qr" src="http://o8bxt3lx0.bkt.clouddn.com/131478051734_.pic%E5%89%AF%E6%9C%AC.jpg" alt="ppsheep Alipay"/>
-          <p>支付宝打赏</p>
-        </div>
-      
-    </div>
-  </div>
-
-
-      
-    </div>
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/iOS-编写高质量代码/" rel="tag">#iOS 编写高质量代码</a>
-          
-        </div>
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2016/12/28/swift谈一谈/" rel="next" title="Swift谈一谈">
-                <i class="fa fa-chevron-left"></i> Swift谈一谈
-              </a>
-            
-          </div>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/12/28/iOS-有效编写高质量Objective-C方法-五/" rel="prev" title="iOS-有效编写高质量Objective-C方法(五)">
-                iOS-有效编写高质量Objective-C方法(五) <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </article>
-
-
-
-    <div class="post-spread">
-      
-    </div>
-  </div>
-
-
-          </div>
-          
-
-
-          
-  <div class="comments" id="comments">
-    
-      <div class="ds-thread" data-thread-key="2016/12/28/iOS-有效编写高质量Objective-C方法-四/"
-           data-title="iOS-有效编写高质量Objective-C方法(四)" data-url="http://ppsheep.com/2016/12/28/iOS-有效编写高质量Objective-C方法-四/">
-      </div>
-    
-  </div>
-
-
-        </div>
-        
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
-
-  <aside id="sidebar" class="sidebar">
-    <div class="sidebar-inner">
-
-      
-
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
+        <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/12/28/iOS-有效编写高质量Objective-C方法-五/"  data-tooltip="iOS-有效编写高质量Objective-C方法(五)">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/12/28/swift谈一谈/" data-tooltip="Swift谈一谈">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
         </ul>
-      
-
-      <section class="site-overview sidebar-panel ">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="http://o8bxt3lx0.bkt.clouddn.com/avatar_public.jpg"
-               alt="ppsheep" />
-          <p class="site-author-name" itemprop="name">ppsheep</p>
-          <p class="site-description motion-element" itemprop="description">一个就职于网易的初级iOS开发者，目前正在修炼自己，博客建立不久，正在寻找更好的写作方式。。。。。。。 目前还在维护一个微信公众号，即我的头像二维码，博客的内容，我会同步到微信公众号，欢迎大家关注</p>
-        </div>
-        <nav class="site-state motion-element">
-          <div class="site-state-item site-state-posts">
-            <a href="/archives">
-              <span class="site-state-item-count">40</span>
-              <span class="site-state-item-name">日志</span>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
             </a>
-          </div>
-
-          
-            <div class="site-state-item site-state-categories">
-              <a href="/categories">
-                <span class="site-state-item-count">14</span>
-                <span class="site-state-item-name">分类</span>
-              </a>
-            </div>
-          
-
-          
-            <div class="site-state-item site-state-tags">
-              <a href="/tags">
-                <span class="site-state-item-count">25</span>
-                <span class="site-state-item-name">标签</span>
-              </a>
-            </div>
-          
-
-        </nav>
-
-        
-          <div class="feed-link motion-element">
-            <a href="/atom.xml" rel="alternate">
-              <i class="fa fa-rss"></i>
-              RSS
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://ppsheep.com/2016/12/28/iOS-有效编写高质量Objective-C方法-四/">
+                <i class="fa fa-google-plus"></i>
             </a>
-          </div>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://ppsheep.com/2016/12/28/iOS-有效编写高质量Objective-C方法-四/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://ppsheep.com/2016/12/28/iOS-有效编写高质量Objective-C方法-四/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
         
+            <li class="post-action">
+                <a class="post-action-btn btn btn--default" href="#ds-thread">
+                    <i class="fa fa-comment-o"></i>
+                </a>
+            </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
 
-        <div class="links-of-author motion-element">
-          
+
+        
             
-              <span class="links-of-author-item">
-                <a href="https://github.com/yangqian111" target="_blank" title="github">
-                  
-                    <i class="fa fa-fw fa-globe"></i>
-                  
-                  github
+                <div id="ds-thread" class="ds-thread" data-thread-key="2016/12/28/iOS-有效编写高质量Objective-C方法-四/"
+     data-title="iOS-有效编写高质量Objective-C方法(四)" data-url="http://ppsheep.com/2016/12/28/iOS-有效编写高质量Objective-C方法-四/">
+</div>
+
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2017 ppsheep. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="3">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/12/28/iOS-有效编写高质量Objective-C方法-五/"  data-tooltip="iOS-有效编写高质量Objective-C方法(五)">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
                 </a>
-              </span>
-            
-              <span class="links-of-author-item">
-                <a href="https://mp.weixin.qq.com/s?__biz=MzI2NTUwOTI1MA==&mid=100000031&idx=1&sn=06aa9c48ce44e5e3c8f749165d337d73&chksm=6a9d01f25dea88e44ebd78ca9a502f5466d4121397c3441580771b6944741d7a32a606486d0c&scene=18&key=4a874d92793fbeb0bca44c58c7f560332608ad6bee7c6d6c0b6798bd741f1e995f6d83a41ba8cdaa89d046d624fd569489e1c7947ef080b8069d7bd291cb171420098c464951bdeb48920b2fa99a33af&ascene=0&uin=MzI5ODUzOTE1&devicetype=iMac+MacBookPro12%2C1+OSX+OSX+10.12.2+build(16C67)&version=12010210&nettype=WIFI&fontScale=100&pass_ticket=qTNsRor5ktcrsYFdBDK8i9BcJRYTf8Poc1MYvl7626S1waZOJPR3NPfOroB14Shf" target="_blank" title="公众号">
-                  
-                    <i class="fa fa-fw fa-globe"></i>
-                  
-                  公众号
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/12/28/swift谈一谈/" data-tooltip="Swift谈一谈">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right"></i>
                 </a>
-              </span>
-            
-              <span class="links-of-author-item">
-                <a href="http://ppsheep.com/about/" target="_blank" title="联系我">
-                  
-                    <i class="fa fa-fw fa-globe"></i>
-                  
-                  联系我
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://ppsheep.com/2016/12/28/iOS-有效编写高质量Objective-C方法-四/">
+                <i class="fa fa-google-plus"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://ppsheep.com/2016/12/28/iOS-有效编写高质量Objective-C方法-四/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://ppsheep.com/2016/12/28/iOS-有效编写高质量Objective-C方法-四/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        
+            <li class="post-action">
+                <a class="post-action-btn btn btn--default" href="#ds-thread">
+                    <i class="fa fa-comment-o"></i>
                 </a>
-              </span>
+            </li>
+        
+        <li class="post-action">
             
-              <span class="links-of-author-item">
-                <a href="http://ppsheep.com/about/" target="_blank" title="博客评论不能及时回复，请微信联系">
-                  
-                    <i class="fa fa-fw fa-globe"></i>
-                  
-                  博客评论不能及时回复，请微信联系
-                </a>
-              </span>
+                <a class="post-action-btn btn btn--default" href="#">
             
-          
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="3">
+    <ul class="share-options">
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://ppsheep.com/2016/12/28/iOS-有效编写高质量Objective-C方法-四/">
+                <i class="fa fa-google-plus"></i><span class="">分享到 Google+</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://ppsheep.com/2016/12/28/iOS-有效编写高质量Objective-C方法-四/">
+                <i class="fa fa-facebook-official"></i><span>分享到 Facebook</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://ppsheep.com/2016/12/28/iOS-有效编写高质量Objective-C方法-四/">
+                <i class="fa fa-twitter"></i><span>分享到 Twitter</span>
+            </a>
+        </li>
+    </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+            
         </div>
-
-        
         
 
-        
-        
 
-      </section>
-
-      
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-            
-              
-            
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#理解objc-msgSend的作用"><span class="nav-number">1.</span> <span class="nav-text">理解objc_msgSend的作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#理解消息转发机制"><span class="nav-number">2.</span> <span class="nav-text">理解消息转发机制</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#动态方法解析"><span class="nav-number">2.0.1.</span> <span class="nav-text">动态方法解析</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#备援接收者"><span class="nav-number">2.0.2.</span> <span class="nav-text">备援接收者</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#完整的消息转发"><span class="nav-number">2.0.3.</span> <span class="nav-text">完整的消息转发</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#消息转发全过程"><span class="nav-number">2.0.4.</span> <span class="nav-text">消息转发全过程</span></a></li></ol></li></ol></li></ol></div>
-            
-          </div>
-        </section>
-      
-
-    </div>
-  </aside>
-
-
-        
-      </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright" >
-  
-  &copy;  2016 - 
-  <span itemprop="copyrightYear">2017</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">ppsheep</span>
-</div>
-
-<div class="powered-by">
-  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
-</div>
-
-<div class="theme-info">
-  主题 -
-  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Mist
-  </a>
-</div>
-
-        
-
-        
-      </div>
-    </footer>
-
-    <div class="back-to-top">
-      <i class="fa fa-arrow-up"></i>
-    </div>
-  </div>
-
-  
-
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
-</script>
-
-
-
-
-
-
-
-
-
-  
-
-
-
-  
-  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-
-  
-  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-
-  
-  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
-
-
-
-  
-  
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
-
-
-
-  
-
-  
     
-  
-
-  <script type="text/javascript">
-    var duoshuoQuery = {short_name:"yangqian111"};
-    (function() {
-      var ds = document.createElement('script');
-      ds.type = 'text/javascript';ds.async = true;
-      ds.id = 'duoshuo-script';
-      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-      ds.charset = 'UTF-8';
-      (document.getElementsByTagName('head')[0]
-      || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
-  </script>
-
-  
+        
     
-    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
-    <script src="/js/src/hook-duoshuo.js"></script>
-  
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-remove"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/avatar_public.jpg"/>
+        
+            <h4 id="about-card-name">ppsheep</h4>
+        
+            <h5 id="about-card-bio"><p>author.bio</p>
+</h5>
+        
+        
+            <h5 id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>author.job</p>
+
+            </h5>
+        
+        
+            <h5 id="about-card-location">
+                <i class="fa fa-map-marker"></i>
+                <br/>
+                HangZhou
+            </h5>
+        
+    </div>
+</div>
+
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+    </body>
+    <!--SCRIPTS-->
+<script src="/assets/js/script-i4qo6jx6jji9fg0dftpya6ivemizsbow4fhow76d8dwpm7m1wbvi378ssumx.min.js"></script>
+<!--SCRIPTS END-->
+
+    
+        <script type="text/javascript">
+            var duoshuoQuery = {short_name:'yangqian111'};
+            (function() {
+                var ds = document.createElement('script');
+                ds.type = 'text/javascript';ds.async = true;
+                ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+                ds.charset = 'UTF-8';
+                (document.getElementsByTagName('head')[0]
+                || document.getElementsByTagName('body')[0]).appendChild(ds);
+            })();
+        </script>
+    
 
 
 
-
-
-
-  
-  
-
-  
-
-  
-
-  
-  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
-  <script>AV.initialize("wVNXI1zodIQXjH2YGmNdcNTR-gzGzoHsz", "qglLYXNVHBDUayaqz0RYy6H4");</script>
-  <script>
-    function showTime(Counter) {
-      var query = new AV.Query(Counter);
-      var entries = [];
-      var $visitors = $(".leancloud_visitors");
-
-      $visitors.each(function () {
-        entries.push( $(this).attr("id").trim() );
-      });
-
-      query.containedIn('url', entries);
-      query.find()
-        .done(function (results) {
-          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
-
-          if (results.length === 0) {
-            $visitors.find(COUNT_CONTAINER_REF).text(0);
-            return;
-          }
-
-          for (var i = 0; i < results.length; i++) {
-            var item = results[i];
-            var url = item.get('url');
-            var time = item.get('time');
-            var element = document.getElementById(url);
-
-            $(element).find(COUNT_CONTAINER_REF).text(time);
-          }
-          for(var i = 0; i < entries.length; i++) {
-            var url = entries[i];
-            var element = document.getElementById(url);
-            var countSpan = $(element).find(COUNT_CONTAINER_REF);
-            if( countSpan.text() == '') {
-              countSpan.text(0);
-            }
-          }
-        })
-        .fail(function (object, error) {
-          console.log("Error: " + error.code + " " + error.message);
-        });
-    }
-
-    function addCount(Counter) {
-      var $visitors = $(".leancloud_visitors");
-      var url = $visitors.attr('id').trim();
-      var title = $visitors.attr('data-flag-title').trim();
-      var query = new AV.Query(Counter);
-
-      query.equalTo("url", url);
-      query.find({
-        success: function(results) {
-          if (results.length > 0) {
-            var counter = results[0];
-            counter.fetchWhenSave(true);
-            counter.increment("time");
-            counter.save(null, {
-              success: function(counter) {
-                var $element = $(document.getElementById(url));
-                $element.find('.leancloud-visitors-count').text(counter.get('time'));
-              },
-              error: function(counter, error) {
-                console.log('Failed to save Visitor num, with error message: ' + error.message);
-              }
-            });
-          } else {
-            var newcounter = new Counter();
-            /* Set ACL */
-            var acl = new AV.ACL();
-            acl.setPublicReadAccess(true);
-            acl.setPublicWriteAccess(true);
-            newcounter.setACL(acl);
-            /* End Set ACL */
-            newcounter.set("title", title);
-            newcounter.set("url", url);
-            newcounter.set("time", 1);
-            newcounter.save(null, {
-              success: function(newcounter) {
-                var $element = $(document.getElementById(url));
-                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
-              },
-              error: function(newcounter, error) {
-                console.log('Failed to create');
-              }
-            });
-          }
-        },
-        error: function(error) {
-          console.log('Error:' + error.code + " " + error.message);
-        }
-      });
-    }
-
-    $(function() {
-      var Counter = AV.Object.extend("Counter");
-      if ($('.leancloud_visitors').length == 1) {
-        addCount(Counter);
-      } else if ($('.post-title-link').length > 1) {
-        showTime(Counter);
-      }
-    });
-  </script>
-
-
-
-  
-<script>
-(function(){
-    var bp = document.createElement('script');
-    var curProtocol = window.location.protocol.split(':')[0];
-    if (curProtocol === 'https') {
-        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
-    }
-    else {
-        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-    }
-    var s = document.getElementsByTagName("script")[0];
-    s.parentNode.insertBefore(bp, s);
-})();
-</script>
-
-
-  
-
-
-</body>
 </html>

@@ -1,94 +1,21 @@
-<!doctype html>
 
-
-
-  
-
-
-<html class="theme-next mist use-motion">
+<!DOCTYPE html>
+<html lang="zh-cn">
+    
 <head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
-
-
-
-
-  
-  
-  
-  
-
-  
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="ppsheep">
+    <title>Swift(三)-集合类型 - ppsheep</title>
+    <meta name="author" content="ppsheep">
     
     
-  
-
-  
-
-  
-
-  
-
-  
-
-  
     
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
     
-    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
-  
-
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
-
-<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="Swift官方教程学习笔记," />
-
-
-
-
-
-  <link rel="alternate" href="/atom.xml" title="ppsheep" type="application/atom+xml" />
-
-
-
-
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
-
-
-
-
-
-
-<meta name="description" content="在上一节，讲了关于字符串和字符的一些基础知识，看起来有点枯燥，在后面几章节的学习中，看起来也比较枯燥，但是这些都是基础知识，对于有过编程基础的同学来说，当然过一遍已经足够了，对于没有编程经验的同学来说，还是需要看一看，了解一下。
+    <meta name="description" content="在上一节，讲了关于字符串和字符的一些基础知识，看起来有点枯燥，在后面几章节的学习中，看起来也比较枯燥，但是这些都是基础知识，对于有过编程基础的同学来说，当然过一遍已经足够了，对于没有编程经验的同学来说，还是需要看一看，了解一下。
 在这一节中，我们将介绍关于集合的一些使用方法">
-<meta property="og:type" content="article">
+<meta property="og:type" content="blog">
 <meta property="og:title" content="Swift(三)-集合类型">
 <meta property="og:url" content="http://ppsheep.com/2017/01/10/Swift教程(三)—集合类型/index.html">
 <meta property="og:site_name" content="ppsheep">
@@ -101,799 +28,483 @@
 <meta name="twitter:description" content="在上一节，讲了关于字符串和字符的一些基础知识，看起来有点枯燥，在后面几章节的学习中，看起来也比较枯燥，但是这些都是基础知识，对于有过编程基础的同学来说，当然过一遍已经足够了，对于没有编程经验的同学来说，还是需要看一看，了解一下。
 在这一节中，我们将介绍关于集合的一些使用方法">
 <meta name="twitter:image" content="http://o8bxt3lx0.bkt.clouddn.com/blog/2017-01-11-setVennDiagram_2x.png">
-
-
-
-<script type="text/javascript" id="hexo.configuration">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    scheme: 'Mist',
-    sidebar: {"position":"left","display":"always"},
-    fancybox: true,
-    motion: true,
-    duoshuo: {
-      userId: '0',
-      author: '博主'
-    }
-  };
-</script>
-
-
-
-
-  <link rel="canonical" href="http://ppsheep.com/2017/01/10/Swift教程(三)—集合类型/"/>
-
-
-  <title> Swift(三)-集合类型 | ppsheep </title>
+    
+    
+        
+    
+    
+        <meta property="og:image" content="http://ppsheep.com/assets/images/avatar_public.jpg"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-nuvue6sithwirecbhvw3dkaobiojqvtadsnhguwi7k04xklybw5djl1smadp.min.css">
+    <!--STYLES END-->
+    
+    
 </head>
 
-<body itemscope itemtype="//schema.org/WebPage" lang="zh-Hans">
-
-  
-
-
-
-  <script type="text/javascript">
-    var _hmt = _hmt || [];
-    (function() {
-      var hm = document.createElement("script");
-      hm.src = "//hm.baidu.com/hm.js?4fa2aea1f41359883e5d92b5cb8bccb8";
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(hm, s);
-    })();
-  </script>
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
 
 
-
-
-
-
-
-
-  
-  
     
-  
-
-  <div class="container one-collumn sidebar-position-left page-post-detail ">
-    <div class="headband"></div>
-
-    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
-      <div class="header-inner"><div class="site-meta ">
-  
-
-  <div class="custom-logo-site-title">
-    <a href="/"  class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
-      <span class="site-title">ppsheep</span>
-      <span class="logo-line-after"><i></i></span>
-    </a>
-  </div>
-  <p class="site-subtitle"></p>
-</div>
-
-<div class="site-nav-toggle">
-  <button>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-  </button>
-</div>
-
-<nav class="site-nav">
-  
-
-  
-    <ul id="menu" class="menu">
-      
         
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
             
-            首页
-          </a>
-        </li>
-      
         
-        <li class="menu-item menu-item-categories">
-          <a href="/categories" rel="section">
-            
-            分类
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-archives">
-          <a href="/archives" rel="section">
-            
-            归档
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-tags">
-          <a href="/tags" rel="section">
-            
-            标签
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-about">
-          <a href="/about" rel="section">
-            
-            关于我
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-commonweal">
-          <a href="/404.html" rel="section">
-            
-            公益404
-          </a>
-        </li>
-      
+    
 
-      
+<header id="header" data-behavior="3">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <h1 class="header-title">
+        <a class="header-title-link" href="/ ">ppsheep</a>
+    </h1>
+    
+        
+            <a  class="header-right-picture "
+                href="#about">
+        
+        
+            <img class="header-picture" src="/assets/images/avatar_public.jpg"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="3">
+    
+        <div class="sidebar-profile">
+            <a href="/#about">
+                    <img class="sidebar-profile-picture" src="/assets/images/avatar_public.jpg"/>
+            </a>
+            <span class="sidebar-profile-name">ppsheep</span>
+        </div>
+    
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/ "
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+                    <span class="sidebar-button-desc">首页</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-categories"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+                    <span class="sidebar-button-desc">分类</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-tags"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+                    <span class="sidebar-button-desc">标签</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-archives"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+                    <span class="sidebar-button-desc">归档</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link st-search-show-outputs"
+                         href="#search"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-search"></i>
+                    <span class="sidebar-button-desc">搜索</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="#about"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+                    <span class="sidebar-button-desc">关于</span>
+                </a>
+        </li>
+        
     </ul>
-  
-
-  
+    
+        <ul class="sidebar-buttons">
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/atom.xml"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+                    <span class="sidebar-button-desc">RSS</span>
+                </a>
+        </li>
+        
+    </ul>
+    
 </nav>
 
- </div>
-    </header>
-
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
             
-
-  <div id="posts" class="posts-expand">
-    
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                Swift(三)-集合类型
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-01-10T14:13:43+08:00" content="2017-01-10">
-              2017-01-10
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Swift官方教程学习笔记/" itemprop="url" rel="index">
-                    <span itemprop="name">Swift官方教程学习笔记</span>
-                  </a>
-                </span>
-
+            <div id="main" data-behavior="3"
+                 class="
+                        hasCoverMetaIn
+                        ">
                 
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2017/01/10/Swift教程(三)—集合类型/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/10/Swift教程(三)—集合类型/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2017/01/10/Swift教程(三)—集合类型/" class="leancloud_visitors" data-flag-title="Swift(三)-集合类型">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
+<article class="post" itemscope itemType="http://schema.org/BlogPosting">
     
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title" itemprop="headline">
+            Swift(三)-集合类型
+        </h1>
+    
+    <div class="post-meta">
+    <time itemprop="datePublished" datetime="2017-01-10T14:13:43+08:00">
+	
+		    1月 10, 2017
+    	
+    </time>
+    
+        <span>发布在 </span>
+        
+    <a class="category-link" href="/all-categories/Swift官方教程学习笔记/">Swift官方教程学习笔记</a>
 
 
-    <div class="post-body" itemprop="articleBody">
+    
+</div>
 
-      
-      
-
-      
-        <p>在上一节，讲了关于字符串和字符的一些基础知识，看起来有点枯燥，在后面几章节的学习中，看起来也比较枯燥，但是这些都是基础知识，对于有过编程基础的同学来说，当然过一遍已经足够了，对于没有编程经验的同学来说，还是需要看一看，了解一下。</p>
+</div>
+    
+    <div class="post-content markdown" itemprop="articleBody">
+        <div class="main-content-wrap">
+            <p>在上一节，讲了关于字符串和字符的一些基础知识，看起来有点枯燥，在后面几章节的学习中，看起来也比较枯燥，但是这些都是基础知识，对于有过编程基础的同学来说，当然过一遍已经足够了，对于没有编程经验的同学来说，还是需要看一看，了解一下。</p>
 <p>在这一节中，我们将介绍关于集合的一些使用方法</p>
 <a id="more"></a>
 <h3 id="集合的可变性"><a href="#集合的可变性" class="headerlink" title="集合的可变性"></a>集合的可变性</h3><p>和OC中的NSArray不同，在Swift中还是通过变量和常量来控制集合的可变性，不仅是Array,Set和Dictionary也是一样，如果你希望集合的值不再被改变，那么就将他设置为常量，如果需要改变，当然就需要变量。</p>
 <p>如果不需要改变，还是尽量设置成常量，好的编程习惯</p>
 <h3 id="数组-Arrays"><a href="#数组-Arrays" class="headerlink" title="数组(Arrays)"></a>数组(Arrays)</h3><p>Swift是安全的语言，在Swift中使用集合类型，必须声明集合中的数据类型，和OC又不太一样，使用过Java或者其他的一些编译型语言的同学可能很容易理解，很多语言都有泛型这一说Array[T]</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">let string = [String]()</div><div class="line">// string数组</div></pre></td></tr></table></figure>
-<h4 id="创建带有默认值的数组"><a href="#创建带有默认值的数组" class="headerlink" title="创建带有默认值的数组"></a>创建带有默认值的数组</h4><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">let demo = Array(repeating: 1, count: 3)</div><div class="line">//这里创建出来的默认数组是[1,1,1]</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">let string = [String]()</div><div class="line">// string数组</div></pre></td></tr></table></figure>
+<h4 id="创建带有默认值的数组"><a href="#创建带有默认值的数组" class="headerlink" title="创建带有默认值的数组"></a>创建带有默认值的数组</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">let demo = Array(repeating: 1, count: 3)</div><div class="line">//这里创建出来的默认数组是[1,1,1]</div></pre></td></tr></table></figure>
 <h4 id="数组相加"><a href="#数组相加" class="headerlink" title="数组相加"></a>数组相加</h4><p>数组相加必须要两个数组的值的类型一直才能够进行加</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">let demo = Array(repeating: 1, count: 3)</div><div class="line">//[1,1,1]</div><div class="line">let demo1 = Array(repeating: 2, count: 5)</div><div class="line">//[2, 2, 2, 2, 2]</div><div class="line"></div><div class="line">let demo2 = demo + demo1</div><div class="line">//[1, 1, 1, 2, 2, 2, 2, 2]</div><div class="line"></div><div class="line">let demo2 = demo1 + demo</div><div class="line">//[2, 2, 2, 2, 2, 1, 1, 1]</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">let demo = Array(repeating: 1, count: 3)</div><div class="line">//[1,1,1]</div><div class="line">let demo1 = Array(repeating: 2, count: 5)</div><div class="line">//[2, 2, 2, 2, 2]</div><div class="line"></div><div class="line">let demo2 = demo + demo1</div><div class="line">//[1, 1, 1, 2, 2, 2, 2, 2]</div><div class="line"></div><div class="line">let demo2 = demo1 + demo</div><div class="line">//[2, 2, 2, 2, 2, 1, 1, 1]</div></pre></td></tr></table></figure>
 <p>看一下加的顺序不一样，出来的数组也不一样</p>
 <h4 id="字面量构造数组"><a href="#字面量构造数组" class="headerlink" title="字面量构造数组"></a>字面量构造数组</h4><p>就是用[]括起来就行</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">let array = [1,2,1,2]</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">let array = [1,2,1,2]</div></pre></td></tr></table></figure>
 <h4 id="访问和修改数组"><a href="#访问和修改数组" class="headerlink" title="访问和修改数组"></a>访问和修改数组</h4><p>首先数组有两个属性，用的比较多count / isEmpty<br>分别计算数组大小和是否为空</p>
 <p>还有就是访问数组元素，可以直接使用下标法，这个我也不细讲很简单的</p>
 <p>还有数组的插入和删除</p>
 <p>insert(_:at:) / remove(at:)</p>
 <p>这两个方法也很简单，我也不细讲了</p>
 <h4 id="数组的遍历"><a href="#数组的遍历" class="headerlink" title="数组的遍历"></a>数组的遍历</h4><p>在OC中，我们就经常使用for-in来遍历数组，在这里也是一样的 语法稍微有点改变</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">let demo2 = [2, 2, 2, 2, 2, 1, 1, 1]</div><div class="line"></div><div class="line">for number in demo2 &#123;</div><div class="line">    print(number)</div><div class="line">&#125;</div><div class="line">//一个一个打印出</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">let demo2 = [2, 2, 2, 2, 2, 1, 1, 1]</div><div class="line"></div><div class="line">for number in demo2 &#123;</div><div class="line">    print(number)</div><div class="line">&#125;</div><div class="line">//一个一个打印出</div></pre></td></tr></table></figure>
 <p>如果想要打印出每个数组元素的索引</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">let demo2 = [2, 2, 2, 2, 2, 1, 1, 1]</div><div class="line"></div><div class="line">for (index,value) in demo2.enumerated() &#123;</div><div class="line">    print(&quot;index = \(index)  value = \(value)&quot;)</div><div class="line">&#125;</div><div class="line">/*</div><div class="line">index = 0  value = 2</div><div class="line">index = 1  value = 2</div><div class="line">index = 2  value = 2</div><div class="line">index = 3  value = 2</div><div class="line">index = 4  value = 2</div><div class="line">index = 5  value = 1</div><div class="line">index = 6  value = 1</div><div class="line">index = 7  value = 1</div><div class="line">*/</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">let demo2 = [2, 2, 2, 2, 2, 1, 1, 1]</div><div class="line"></div><div class="line">for (index,value) in demo2.enumerated() &#123;</div><div class="line">    print(&quot;index = \(index)  value = \(value)&quot;)</div><div class="line">&#125;</div><div class="line">/*</div><div class="line">index = 0  value = 2</div><div class="line">index = 1  value = 2</div><div class="line">index = 2  value = 2</div><div class="line">index = 3  value = 2</div><div class="line">index = 4  value = 2</div><div class="line">index = 5  value = 1</div><div class="line">index = 6  value = 1</div><div class="line">index = 7  value = 1</div><div class="line">*/</div></pre></td></tr></table></figure>
 <h3 id="集合-Sets"><a href="#集合-Sets" class="headerlink" title="集合(Sets)"></a>集合(Sets)</h3><p>集合(Set)用来存储相同类型并且没有确定顺序的值。当集合元素顺序不重要时或者希望确保每个元素只出现一次时可以使用集合而不是数组。</p>
 <p>使用集合的最主要原因就是这个不能有重复数据</p>
 <h4 id="集合的哈希值"><a href="#集合的哈希值" class="headerlink" title="集合的哈希值"></a>集合的哈希值</h4><p>一个类型为了要存储在集合中，这个类型必须要是可以哈希的。一个哈希值是Int型，相等的两个对象，哈希值必须相等 a==b 等价于  a.hashValue = b.hashValue</p>
 <p>在swift中  String、Int 、Bool这些值都是可哈希的，如果我们在集合中要装我们自定义的一个类型，那么这个类型必须要符合 Swift 标准库中的Hashable协议，这个我们在讲到协议的时候会单独拎出来讲</p>
 <h4 id="集合类型语法"><a href="#集合类型语法" class="headerlink" title="集合类型语法"></a>集合类型语法</h4><p>集合类型被写作 Set<t>，没错，也是泛型的</t></p>
-<h4 id="字面量创建集合"><a href="#字面量创建集合" class="headerlink" title="字面量创建集合"></a>字面量创建集合</h4><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">let demo: Set&lt;String&gt; = [&quot;a&quot;,&quot;b&quot;]</div></pre></td></tr></table></figure>
+<h4 id="字面量创建集合"><a href="#字面量创建集合" class="headerlink" title="字面量创建集合"></a>字面量创建集合</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">let demo: Set&lt;String&gt; = [&quot;a&quot;,&quot;b&quot;]</div></pre></td></tr></table></figure>
 <p><strong>一个Set类型不能从数组字面量中被单独推断出来，因此Set类型必须显式声明，但是呢，我们可以这样来简化let demo: Set=[“a”,”b”]</strong>，这样编译器就能够推断出是一个String类型的集合</p>
 <h4 id="访问和修改集合"><a href="#访问和修改集合" class="headerlink" title="访问和修改集合"></a>访问和修改集合</h4><p>集合也有count \ isEmpty 两个属性，但是我们说过集合是没有顺序的，所以就没有下标这种概念了</p>
 <p>调用remove(_:)删除元素</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">var favoriteGenres: Set = [&quot;Rock&quot;, &quot;Classical&quot;, &quot;Hip hop&quot;]</div><div class="line"></div><div class="line">if let removedGenre = favoriteGenres.remove(&quot;Rock&quot;) &#123;</div><div class="line">    print(&quot;\(removedGenre)? I&apos;m over it.&quot;)</div><div class="line">&#125; else &#123;</div><div class="line">    print(&quot;I never much cared for that.&quot;)</div><div class="line">&#125;</div><div class="line">// 打印 &quot;Rock? I&apos;m over it.</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">var favoriteGenres: Set = [&quot;Rock&quot;, &quot;Classical&quot;, &quot;Hip hop&quot;]</div><div class="line"></div><div class="line">if let removedGenre = favoriteGenres.remove(&quot;Rock&quot;) &#123;</div><div class="line">    print(&quot;\(removedGenre)? I&apos;m over it.&quot;)</div><div class="line">&#125; else &#123;</div><div class="line">    print(&quot;I never much cared for that.&quot;)</div><div class="line">&#125;</div><div class="line">// 打印 &quot;Rock? I&apos;m over it.</div></pre></td></tr></table></figure>
 <h4 id="遍历集合"><a href="#遍历集合" class="headerlink" title="遍历集合"></a>遍历集合</h4><p>for-in</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">for genre in favoriteGenres &#123;</div><div class="line">    print(&quot;\(genre)&quot;)</div><div class="line">&#125;</div><div class="line">// Classical</div><div class="line">// Jazz</div><div class="line">// Hip hop</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">for genre in favoriteGenres &#123;</div><div class="line">    print(&quot;\(genre)&quot;)</div><div class="line">&#125;</div><div class="line">// Classical</div><div class="line">// Jazz</div><div class="line">// Hip hop</div></pre></td></tr></table></figure>
 <p>集合中有一个sorted()方法，可以再遍历的时候使用，将返回一个有序的结果，这个比较是操作符”&lt;”来进行比较的</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">for genre in favoriteGenres.sorted() &#123;</div><div class="line">    print(&quot;(genre)&quot;)</div><div class="line">&#125;</div><div class="line">// prints &quot;Classical&quot;</div><div class="line">// prints &quot;Hip hop&quot;</div><div class="line">// prints &quot;Jazz</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">for genre in favoriteGenres.sorted() &#123;</div><div class="line">    print(&quot;(genre)&quot;)</div><div class="line">&#125;</div><div class="line">// prints &quot;Classical&quot;</div><div class="line">// prints &quot;Hip hop&quot;</div><div class="line">// prints &quot;Jazz</div></pre></td></tr></table></figure>
 <h4 id="集合的操作"><a href="#集合的操作" class="headerlink" title="集合的操作"></a>集合的操作</h4><p><img src="http://o8bxt3lx0.bkt.clouddn.com/blog/2017-01-11-setVennDiagram_2x.png" alt=""></p>
 <p> 上面的图显示了集合中的几个方法的含义，这个我就不细讲，看图就能够明白</p>
-<h3 id="字典"><a href="#字典" class="headerlink" title="字典"></a>字典</h3><h4 id="字典的字面量声明"><a href="#字典的字面量声明" class="headerlink" title="字典的字面量声明"></a>字典的字面量声明</h4><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">let demo = [&quot;key1&quot;:&quot;value1&quot;,&quot;key2&quot;:&quot;value2&quot;]</div></pre></td></tr></table></figure>
+<h3 id="字典"><a href="#字典" class="headerlink" title="字典"></a>字典</h3><h4 id="字典的字面量声明"><a href="#字典的字面量声明" class="headerlink" title="字典的字面量声明"></a>字典的字面量声明</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">let demo = [&quot;key1&quot;:&quot;value1&quot;,&quot;key2&quot;:&quot;value2&quot;]</div></pre></td></tr></table></figure>
 <h4 id="访问字典"><a href="#访问字典" class="headerlink" title="访问字典"></a>访问字典</h4><p>访问和修改字典都可以通过key操作来完成，这个我也不细讲了</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">demo[&quot;key1&quot;] = &quot;new value&quot;</div><div class="line">//这样字典中的value1就变成了new value</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">demo[&quot;key1&quot;] = &quot;new value&quot;</div><div class="line">//这样字典中的value1就变成了new value</div></pre></td></tr></table></figure>
 <p>作为另一种下标方法，字典的updateValue(_:forKey:)方法可以设置或者更新特定键对应的值。就像上面所示的下标示例，updateValue(_:forKey:)方法在这个键不存在对应值的时候会设置新值或者在存在时更新已存在的值。和上面的下标方法不同的，updateValue(_:forKey:)这个方法返回更新值之前的原值。这样使得我们可以检查更新是否成功。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">if let oldValue = airports.updateValue(&quot;Dublin Airport&quot;, forKey: &quot;DUB&quot;) &#123;</div><div class="line">    print(&quot;The old value for DUB was (oldValue).&quot;)</div><div class="line">&#125;</div><div class="line">// 输出 &quot;The old value for DUB was Dublin.</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">if let oldValue = airports.updateValue(&quot;Dublin Airport&quot;, forKey: &quot;DUB&quot;) &#123;</div><div class="line">    print(&quot;The old value for DUB was (oldValue).&quot;)</div><div class="line">&#125;</div><div class="line">// 输出 &quot;The old value for DUB was Dublin.</div></pre></td></tr></table></figure>
 <h4 id="字典的遍历"><a href="#字典的遍历" class="headerlink" title="字典的遍历"></a>字典的遍历</h4><p>for-in</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">for (airportCode, airportName) in airports &#123;</div><div class="line">    print(&quot;(airportCode): (airportName)&quot;)</div><div class="line">&#125;</div><div class="line">//对所有遍历</div><div class="line"></div><div class="line">for airportCode in airports.keys &#123;</div><div class="line">    print(&quot;Airport code: (airportCode)&quot;)</div><div class="line">&#125;</div><div class="line">//对key遍历</div><div class="line">// Airport code: YYZ</div><div class="line">// Airport code: LHR</div><div class="line"> </div><div class="line">for airportName in airports.values &#123;</div><div class="line">    print(&quot;Airport name: (airportName)&quot;)</div><div class="line">&#125;</div><div class="line">//对value遍历</div><div class="line">// Airport name: Toronto Pearson</div><div class="line">// Airport name: London Heathrow</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">for (airportCode, airportName) in airports &#123;</div><div class="line">    print(&quot;(airportCode): (airportName)&quot;)</div><div class="line">&#125;</div><div class="line">//对所有遍历</div><div class="line"></div><div class="line">for airportCode in airports.keys &#123;</div><div class="line">    print(&quot;Airport code: (airportCode)&quot;)</div><div class="line">&#125;</div><div class="line">//对key遍历</div><div class="line">// Airport code: YYZ</div><div class="line">// Airport code: LHR</div><div class="line"> </div><div class="line">for airportName in airports.values &#123;</div><div class="line">    print(&quot;Airport name: (airportName)&quot;)</div><div class="line">&#125;</div><div class="line">//对value遍历</div><div class="line">// Airport name: Toronto Pearson</div><div class="line">// Airport name: London Heathrow</div></pre></td></tr></table></figure>
 <p>集合完结。。。。</p>
 
-      
-    </div>
-
-    <div>
-      
-        
-<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
-    <img id="wechat_subscriber_qcode" src="/uploads/avatar_public.jpg" alt="ppsheep wechat" style="width: 200px; max-width: 100%;"/>
-    <div>欢迎您扫一扫上面的微信公众号，我将同步发送博客内容！</div>
-</div>
-
-
-      
-    </div>
-
-    <div>
-      
-        
-  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
-    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
-    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
-      <span>赏</span>
-    </button>
-    <div id="QR" style="display: none;">
-      
-        <div id="wechat" style="display: inline-block">
-          <img id="wechat_qr" src="http://o8bxt3lx0.bkt.clouddn.com/141478051735_.pic%E5%89%AF%E6%9C%AC.jpg" alt="ppsheep WeChat Pay"/>
-          <p>微信打赏</p>
-        </div>
-      
-      
-        <div id="alipay" style="display: inline-block">
-          <img id="alipay_qr" src="http://o8bxt3lx0.bkt.clouddn.com/131478051734_.pic%E5%89%AF%E6%9C%AC.jpg" alt="ppsheep Alipay"/>
-          <p>支付宝打赏</p>
-        </div>
-      
-    </div>
-  </div>
-
-
-      
-    </div>
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/Swift官方教程学习笔记/" rel="tag">#Swift官方教程学习笔记</a>
-          
-        </div>
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/01/09/Swift教程(二)—字符串和字符/" rel="next" title="Swift教程(二)—字符串和字符">
-                <i class="fa fa-chevron-left"></i> Swift教程(二)—字符串和字符
-              </a>
-            
-          </div>
-
-          <div class="post-nav-prev post-nav-item">
-            
-          </div>
         </div>
-      
-
-      
-      
-    </footer>
-  </article>
-
-
-
-    <div class="post-spread">
-      
     </div>
-  </div>
-
-
-          </div>
-          
-
-
-          
-  <div class="comments" id="comments">
-    
-      <div class="ds-thread" data-thread-key="2017/01/10/Swift教程(三)—集合类型/"
-           data-title="Swift(三)-集合类型" data-url="http://ppsheep.com/2017/01/10/Swift教程(三)—集合类型/">
-      </div>
-    
-  </div>
-
-
-        </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
         
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">标签</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/all-tags/Swift官方教程学习笔记/">Swift官方教程学习笔记</a>
 
-  <aside id="sidebar" class="sidebar">
-    <div class="sidebar-inner">
-
-      
-
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
+            </div>
+        
+        <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/01/11/Swift教程(四)—控制流/"  data-tooltip="Swift教程(四)—控制流">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/01/09/Swift教程(二)—字符串和字符/" data-tooltip="Swift教程(二)—字符串和字符">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
         </ul>
-      
-
-      <section class="site-overview sidebar-panel ">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="http://o8bxt3lx0.bkt.clouddn.com/avatar_public.jpg"
-               alt="ppsheep" />
-          <p class="site-author-name" itemprop="name">ppsheep</p>
-          <p class="site-description motion-element" itemprop="description">一个就职于网易的初级iOS开发者，目前正在修炼自己，博客建立不久，正在寻找更好的写作方式。。。。。。。 目前还在维护一个微信公众号，即我的头像二维码，博客的内容，我会同步到微信公众号，欢迎大家关注</p>
-        </div>
-        <nav class="site-state motion-element">
-          <div class="site-state-item site-state-posts">
-            <a href="/archives">
-              <span class="site-state-item-count">40</span>
-              <span class="site-state-item-name">日志</span>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
             </a>
-          </div>
-
-          
-            <div class="site-state-item site-state-categories">
-              <a href="/categories">
-                <span class="site-state-item-count">14</span>
-                <span class="site-state-item-name">分类</span>
-              </a>
-            </div>
-          
-
-          
-            <div class="site-state-item site-state-tags">
-              <a href="/tags">
-                <span class="site-state-item-count">25</span>
-                <span class="site-state-item-name">标签</span>
-              </a>
-            </div>
-          
-
-        </nav>
-
-        
-          <div class="feed-link motion-element">
-            <a href="/atom.xml" rel="alternate">
-              <i class="fa fa-rss"></i>
-              RSS
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://ppsheep.com/2017/01/10/Swift教程(三)—集合类型/">
+                <i class="fa fa-google-plus"></i>
             </a>
-          </div>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://ppsheep.com/2017/01/10/Swift教程(三)—集合类型/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://ppsheep.com/2017/01/10/Swift教程(三)—集合类型/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
         
+            <li class="post-action">
+                <a class="post-action-btn btn btn--default" href="#ds-thread">
+                    <i class="fa fa-comment-o"></i>
+                </a>
+            </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
 
-        <div class="links-of-author motion-element">
-          
+
+        
             
-              <span class="links-of-author-item">
-                <a href="https://github.com/yangqian111" target="_blank" title="github">
-                  
-                    <i class="fa fa-fw fa-globe"></i>
-                  
-                  github
+                <div id="ds-thread" class="ds-thread" data-thread-key="2017/01/10/Swift教程(三)—集合类型/"
+     data-title="Swift(三)-集合类型" data-url="http://ppsheep.com/2017/01/10/Swift教程(三)—集合类型/">
+</div>
+
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2017 ppsheep. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="3">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/01/11/Swift教程(四)—控制流/"  data-tooltip="Swift教程(四)—控制流">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
                 </a>
-              </span>
-            
-              <span class="links-of-author-item">
-                <a href="https://mp.weixin.qq.com/s?__biz=MzI2NTUwOTI1MA==&mid=100000031&idx=1&sn=06aa9c48ce44e5e3c8f749165d337d73&chksm=6a9d01f25dea88e44ebd78ca9a502f5466d4121397c3441580771b6944741d7a32a606486d0c&scene=18&key=4a874d92793fbeb0bca44c58c7f560332608ad6bee7c6d6c0b6798bd741f1e995f6d83a41ba8cdaa89d046d624fd569489e1c7947ef080b8069d7bd291cb171420098c464951bdeb48920b2fa99a33af&ascene=0&uin=MzI5ODUzOTE1&devicetype=iMac+MacBookPro12%2C1+OSX+OSX+10.12.2+build(16C67)&version=12010210&nettype=WIFI&fontScale=100&pass_ticket=qTNsRor5ktcrsYFdBDK8i9BcJRYTf8Poc1MYvl7626S1waZOJPR3NPfOroB14Shf" target="_blank" title="公众号">
-                  
-                    <i class="fa fa-fw fa-globe"></i>
-                  
-                  公众号
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/01/09/Swift教程(二)—字符串和字符/" data-tooltip="Swift教程(二)—字符串和字符">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right"></i>
                 </a>
-              </span>
-            
-              <span class="links-of-author-item">
-                <a href="http://ppsheep.com/about/" target="_blank" title="联系我">
-                  
-                    <i class="fa fa-fw fa-globe"></i>
-                  
-                  联系我
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://ppsheep.com/2017/01/10/Swift教程(三)—集合类型/">
+                <i class="fa fa-google-plus"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://ppsheep.com/2017/01/10/Swift教程(三)—集合类型/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://ppsheep.com/2017/01/10/Swift教程(三)—集合类型/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        
+            <li class="post-action">
+                <a class="post-action-btn btn btn--default" href="#ds-thread">
+                    <i class="fa fa-comment-o"></i>
                 </a>
-              </span>
+            </li>
+        
+        <li class="post-action">
             
-              <span class="links-of-author-item">
-                <a href="http://ppsheep.com/about/" target="_blank" title="博客评论不能及时回复，请微信联系">
-                  
-                    <i class="fa fa-fw fa-globe"></i>
-                  
-                  博客评论不能及时回复，请微信联系
-                </a>
-              </span>
+                <a class="post-action-btn btn btn--default" href="#">
             
-          
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="3">
+    <ul class="share-options">
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://ppsheep.com/2017/01/10/Swift教程(三)—集合类型/">
+                <i class="fa fa-google-plus"></i><span class="">分享到 Google+</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://ppsheep.com/2017/01/10/Swift教程(三)—集合类型/">
+                <i class="fa fa-facebook-official"></i><span>分享到 Facebook</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://ppsheep.com/2017/01/10/Swift教程(三)—集合类型/">
+                <i class="fa fa-twitter"></i><span>分享到 Twitter</span>
+            </a>
+        </li>
+    </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+            
         </div>
-
-        
         
 
-        
-        
 
-      </section>
-
-      
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-            
-              
-            
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#集合的可变性"><span class="nav-number">1.</span> <span class="nav-text">集合的可变性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数组-Arrays"><span class="nav-number">2.</span> <span class="nav-text">数组(Arrays)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#创建带有默认值的数组"><span class="nav-number">2.1.</span> <span class="nav-text">创建带有默认值的数组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数组相加"><span class="nav-number">2.2.</span> <span class="nav-text">数组相加</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#字面量构造数组"><span class="nav-number">2.3.</span> <span class="nav-text">字面量构造数组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#访问和修改数组"><span class="nav-number">2.4.</span> <span class="nav-text">访问和修改数组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数组的遍历"><span class="nav-number">2.5.</span> <span class="nav-text">数组的遍历</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#集合-Sets"><span class="nav-number">3.</span> <span class="nav-text">集合(Sets)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#集合的哈希值"><span class="nav-number">3.1.</span> <span class="nav-text">集合的哈希值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#集合类型语法"><span class="nav-number">3.2.</span> <span class="nav-text">集合类型语法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#字面量创建集合"><span class="nav-number">3.3.</span> <span class="nav-text">字面量创建集合</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#访问和修改集合"><span class="nav-number">3.4.</span> <span class="nav-text">访问和修改集合</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#遍历集合"><span class="nav-number">3.5.</span> <span class="nav-text">遍历集合</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#集合的操作"><span class="nav-number">3.6.</span> <span class="nav-text">集合的操作</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字典"><span class="nav-number">4.</span> <span class="nav-text">字典</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#字典的字面量声明"><span class="nav-number">4.1.</span> <span class="nav-text">字典的字面量声明</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#访问字典"><span class="nav-number">4.2.</span> <span class="nav-text">访问字典</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#字典的遍历"><span class="nav-number">4.3.</span> <span class="nav-text">字典的遍历</span></a></li></ol></li></ol></div>
-            
-          </div>
-        </section>
-      
-
-    </div>
-  </aside>
-
-
-        
-      </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright" >
-  
-  &copy;  2016 - 
-  <span itemprop="copyrightYear">2017</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">ppsheep</span>
-</div>
-
-<div class="powered-by">
-  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
-</div>
-
-<div class="theme-info">
-  主题 -
-  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Mist
-  </a>
-</div>
-
-        
-
-        
-      </div>
-    </footer>
-
-    <div class="back-to-top">
-      <i class="fa fa-arrow-up"></i>
-    </div>
-  </div>
-
-  
-
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
-</script>
-
-
-
-
-
-
-
-
-
-  
-
-
-
-  
-  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-
-  
-  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-
-  
-  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
-
-
-
-  
-  
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
-
-
-
-  
-
-  
     
-  
-
-  <script type="text/javascript">
-    var duoshuoQuery = {short_name:"yangqian111"};
-    (function() {
-      var ds = document.createElement('script');
-      ds.type = 'text/javascript';ds.async = true;
-      ds.id = 'duoshuo-script';
-      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-      ds.charset = 'UTF-8';
-      (document.getElementsByTagName('head')[0]
-      || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
-  </script>
-
-  
+        
     
-    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
-    <script src="/js/src/hook-duoshuo.js"></script>
-  
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-remove"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/avatar_public.jpg"/>
+        
+            <h4 id="about-card-name">ppsheep</h4>
+        
+            <h5 id="about-card-bio"><p>author.bio</p>
+</h5>
+        
+        
+            <h5 id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>author.job</p>
+
+            </h5>
+        
+        
+            <h5 id="about-card-location">
+                <i class="fa fa-map-marker"></i>
+                <br/>
+                HangZhou
+            </h5>
+        
+    </div>
+</div>
+
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+    </body>
+    <!--SCRIPTS-->
+<script src="/assets/js/script-i4qo6jx6jji9fg0dftpya6ivemizsbow4fhow76d8dwpm7m1wbvi378ssumx.min.js"></script>
+<!--SCRIPTS END-->
+
+    
+        <script type="text/javascript">
+            var duoshuoQuery = {short_name:'yangqian111'};
+            (function() {
+                var ds = document.createElement('script');
+                ds.type = 'text/javascript';ds.async = true;
+                ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+                ds.charset = 'UTF-8';
+                (document.getElementsByTagName('head')[0]
+                || document.getElementsByTagName('body')[0]).appendChild(ds);
+            })();
+        </script>
+    
 
 
 
-
-
-
-  
-  
-
-  
-
-  
-
-  
-  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
-  <script>AV.initialize("wVNXI1zodIQXjH2YGmNdcNTR-gzGzoHsz", "qglLYXNVHBDUayaqz0RYy6H4");</script>
-  <script>
-    function showTime(Counter) {
-      var query = new AV.Query(Counter);
-      var entries = [];
-      var $visitors = $(".leancloud_visitors");
-
-      $visitors.each(function () {
-        entries.push( $(this).attr("id").trim() );
-      });
-
-      query.containedIn('url', entries);
-      query.find()
-        .done(function (results) {
-          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
-
-          if (results.length === 0) {
-            $visitors.find(COUNT_CONTAINER_REF).text(0);
-            return;
-          }
-
-          for (var i = 0; i < results.length; i++) {
-            var item = results[i];
-            var url = item.get('url');
-            var time = item.get('time');
-            var element = document.getElementById(url);
-
-            $(element).find(COUNT_CONTAINER_REF).text(time);
-          }
-          for(var i = 0; i < entries.length; i++) {
-            var url = entries[i];
-            var element = document.getElementById(url);
-            var countSpan = $(element).find(COUNT_CONTAINER_REF);
-            if( countSpan.text() == '') {
-              countSpan.text(0);
-            }
-          }
-        })
-        .fail(function (object, error) {
-          console.log("Error: " + error.code + " " + error.message);
-        });
-    }
-
-    function addCount(Counter) {
-      var $visitors = $(".leancloud_visitors");
-      var url = $visitors.attr('id').trim();
-      var title = $visitors.attr('data-flag-title').trim();
-      var query = new AV.Query(Counter);
-
-      query.equalTo("url", url);
-      query.find({
-        success: function(results) {
-          if (results.length > 0) {
-            var counter = results[0];
-            counter.fetchWhenSave(true);
-            counter.increment("time");
-            counter.save(null, {
-              success: function(counter) {
-                var $element = $(document.getElementById(url));
-                $element.find('.leancloud-visitors-count').text(counter.get('time'));
-              },
-              error: function(counter, error) {
-                console.log('Failed to save Visitor num, with error message: ' + error.message);
-              }
-            });
-          } else {
-            var newcounter = new Counter();
-            /* Set ACL */
-            var acl = new AV.ACL();
-            acl.setPublicReadAccess(true);
-            acl.setPublicWriteAccess(true);
-            newcounter.setACL(acl);
-            /* End Set ACL */
-            newcounter.set("title", title);
-            newcounter.set("url", url);
-            newcounter.set("time", 1);
-            newcounter.save(null, {
-              success: function(newcounter) {
-                var $element = $(document.getElementById(url));
-                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
-              },
-              error: function(newcounter, error) {
-                console.log('Failed to create');
-              }
-            });
-          }
-        },
-        error: function(error) {
-          console.log('Error:' + error.code + " " + error.message);
-        }
-      });
-    }
-
-    $(function() {
-      var Counter = AV.Object.extend("Counter");
-      if ($('.leancloud_visitors').length == 1) {
-        addCount(Counter);
-      } else if ($('.post-title-link').length > 1) {
-        showTime(Counter);
-      }
-    });
-  </script>
-
-
-
-  
-<script>
-(function(){
-    var bp = document.createElement('script');
-    var curProtocol = window.location.protocol.split(':')[0];
-    if (curProtocol === 'https') {
-        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
-    }
-    else {
-        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-    }
-    var s = document.getElementsByTagName("script")[0];
-    s.parentNode.insertBefore(bp, s);
-})();
-</script>
-
-
-  
-
-
-</body>
 </html>

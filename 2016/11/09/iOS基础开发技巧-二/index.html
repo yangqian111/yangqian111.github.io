@@ -1,93 +1,20 @@
-<!doctype html>
 
-
-
-  
-
-
-<html class="theme-next mist use-motion">
+<!DOCTYPE html>
+<html lang="zh-cn">
+    
 <head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
-
-
-
-
-  
-  
-  
-  
-
-  
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="ppsheep">
+    <title>iOS基础开发技巧-二 - ppsheep</title>
+    <meta name="author" content="ppsheep">
     
     
-  
-
-  
-
-  
-
-  
-
-  
-
-  
     
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
     
-    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
-  
-
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
-
-<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="Hexo, NexT" />
-
-
-
-
-
-  <link rel="alternate" href="/atom.xml" title="ppsheep" type="application/atom+xml" />
-
-
-
-
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
-
-
-
-
-
-
-<meta name="description" content="这里主要讲一些我在日常开发中用到的一些小的技巧，其实也算不上技巧吧，就是省去一些不必要的代码，或者有的小问题困扰你很久说不行在这里你能找到答案">
-<meta property="og:type" content="article">
+    <meta name="description" content="这里主要讲一些我在日常开发中用到的一些小的技巧，其实也算不上技巧吧，就是省去一些不必要的代码，或者有的小问题困扰你很久说不行在这里你能找到答案">
+<meta property="og:type" content="blog">
 <meta property="og:title" content="iOS基础开发技巧-二">
 <meta property="og:url" content="http://ppsheep.com/2016/11/09/iOS基础开发技巧-二/index.html">
 <meta property="og:site_name" content="ppsheep">
@@ -96,758 +23,450 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS基础开发技巧-二">
 <meta name="twitter:description" content="这里主要讲一些我在日常开发中用到的一些小的技巧，其实也算不上技巧吧，就是省去一些不必要的代码，或者有的小问题困扰你很久说不行在这里你能找到答案">
-
-
-
-<script type="text/javascript" id="hexo.configuration">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    scheme: 'Mist',
-    sidebar: {"position":"left","display":"always"},
-    fancybox: true,
-    motion: true,
-    duoshuo: {
-      userId: '0',
-      author: '博主'
-    }
-  };
-</script>
-
-
-
-
-  <link rel="canonical" href="http://ppsheep.com/2016/11/09/iOS基础开发技巧-二/"/>
-
-
-  <title> iOS基础开发技巧-二 | ppsheep </title>
+    
+    
+        
+    
+    
+        <meta property="og:image" content="http://ppsheep.com/assets/images/avatar_public.jpg"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-nuvue6sithwirecbhvw3dkaobiojqvtadsnhguwi7k04xklybw5djl1smadp.min.css">
+    <!--STYLES END-->
+    
+    
 </head>
 
-<body itemscope itemtype="//schema.org/WebPage" lang="zh-Hans">
-
-  
-
-
-
-  <script type="text/javascript">
-    var _hmt = _hmt || [];
-    (function() {
-      var hm = document.createElement("script");
-      hm.src = "//hm.baidu.com/hm.js?4fa2aea1f41359883e5d92b5cb8bccb8";
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(hm, s);
-    })();
-  </script>
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
 
 
-
-
-
-
-
-
-  
-  
     
-  
-
-  <div class="container one-collumn sidebar-position-left page-post-detail ">
-    <div class="headband"></div>
-
-    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
-      <div class="header-inner"><div class="site-meta ">
-  
-
-  <div class="custom-logo-site-title">
-    <a href="/"  class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
-      <span class="site-title">ppsheep</span>
-      <span class="logo-line-after"><i></i></span>
-    </a>
-  </div>
-  <p class="site-subtitle"></p>
-</div>
-
-<div class="site-nav-toggle">
-  <button>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-  </button>
-</div>
-
-<nav class="site-nav">
-  
-
-  
-    <ul id="menu" class="menu">
-      
         
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
             
-            首页
-          </a>
-        </li>
-      
         
-        <li class="menu-item menu-item-categories">
-          <a href="/categories" rel="section">
-            
-            分类
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-archives">
-          <a href="/archives" rel="section">
-            
-            归档
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-tags">
-          <a href="/tags" rel="section">
-            
-            标签
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-about">
-          <a href="/about" rel="section">
-            
-            关于我
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-commonweal">
-          <a href="/404.html" rel="section">
-            
-            公益404
-          </a>
-        </li>
-      
+    
 
-      
+<header id="header" data-behavior="3">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <h1 class="header-title">
+        <a class="header-title-link" href="/ ">ppsheep</a>
+    </h1>
+    
+        
+            <a  class="header-right-picture "
+                href="#about">
+        
+        
+            <img class="header-picture" src="/assets/images/avatar_public.jpg"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="3">
+    
+        <div class="sidebar-profile">
+            <a href="/#about">
+                    <img class="sidebar-profile-picture" src="/assets/images/avatar_public.jpg"/>
+            </a>
+            <span class="sidebar-profile-name">ppsheep</span>
+        </div>
+    
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/ "
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+                    <span class="sidebar-button-desc">首页</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-categories"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+                    <span class="sidebar-button-desc">分类</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-tags"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+                    <span class="sidebar-button-desc">标签</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-archives"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+                    <span class="sidebar-button-desc">归档</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link st-search-show-outputs"
+                         href="#search"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-search"></i>
+                    <span class="sidebar-button-desc">搜索</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="#about"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+                    <span class="sidebar-button-desc">关于</span>
+                </a>
+        </li>
+        
     </ul>
-  
-
-  
+    
+        <ul class="sidebar-buttons">
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/atom.xml"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+                    <span class="sidebar-button-desc">RSS</span>
+                </a>
+        </li>
+        
+    </ul>
+    
 </nav>
 
- </div>
-    </header>
-
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
             
-
-  <div id="posts" class="posts-expand">
+            <div id="main" data-behavior="3"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post" itemscope itemType="http://schema.org/BlogPosting">
     
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
     
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                iOS基础开发技巧-二
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-11-09T16:51:35+08:00" content="2016-11-09">
-              2016-11-09
-            </time>
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2016/11/09/iOS基础开发技巧-二/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/09/iOS基础开发技巧-二/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2016/11/09/iOS基础开发技巧-二/" class="leancloud_visitors" data-flag-title="iOS基础开发技巧-二">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
+        <div class="post-header main-content-wrap text-left">
     
+        <h1 class="post-title" itemprop="headline">
+            iOS基础开发技巧-二
+        </h1>
+    
+    <div class="post-meta">
+    <time itemprop="datePublished" datetime="2016-11-09T16:51:35+08:00">
+	
+		    11月 09, 2016
+    	
+    </time>
+    
+</div>
 
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        <p>这里主要讲一些我在日常开发中用到的一些小的技巧，其实也算不上技巧吧，就是省去一些不必要的代码，或者有的小问题困扰你很久说不行在这里你能找到答案</p>
+</div>
+    
+    <div class="post-content markdown" itemprop="articleBody">
+        <div class="main-content-wrap">
+            <p>这里主要讲一些我在日常开发中用到的一些小的技巧，其实也算不上技巧吧，就是省去一些不必要的代码，或者有的小问题困扰你很久说不行在这里你能找到答案</p>
 <a id="more"></a>
-<h3 id="打印系统所有已注册的字体名称"><a href="#打印系统所有已注册的字体名称" class="headerlink" title="打印系统所有已注册的字体名称"></a>打印系统所有已注册的字体名称</h3><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">- (void)enumerateFonts&#123;</div><div class="line">    for(NSString *familyName in [UIFont familyNames])</div><div class="line">    &#123;</div><div class="line">        NSLog(@&quot;%@&quot;,familyName);</div><div class="line">        NSArray *fontNames = [UIFont fontNamesForFamilyName:familyName];</div><div class="line">        for(NSString *fontName in fontNames)</div><div class="line">        &#123;</div><div class="line">            NSLog(@&quot;\t|- %@&quot;,fontName);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="字符串反转"><a href="#字符串反转" class="headerlink" title="字符串反转"></a>字符串反转</h3><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">- (NSString*)reverseWordsInString:(NSString*)str</div><div class="line">&#123;</div><div class="line">    NSMutableString *reverString = [NSMutableString stringWithCapacity:str.length];</div><div class="line">    [str enumerateSubstringsInRange:NSMakeRange(0, str.length) options:NSStringEnumerationReverse | NSStringEnumerationByComposedCharacterSequences  usingBlock:^(NSString *substring, NSRange substringRange, NSRange enclosingRange, BOOL *stop) &#123;</div><div class="line">        [reverString appendString:substring];</div><div class="line">    &#125;];</div><div class="line">    return reverString;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="禁止锁屏"><a href="#禁止锁屏" class="headerlink" title="禁止锁屏"></a>禁止锁屏</h3><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">[UIApplication sharedApplication].idleTimerDisabled = YES;</div></pre></td></tr></table></figure>
-<h3 id="字符串按多个符号分割"><a href="#字符串按多个符号分割" class="headerlink" title="字符串按多个符号分割"></a>字符串按多个符号分割</h3><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">- (void)seprartStringWithCharters&#123;</div><div class="line">    NSString *str = @&quot;abc,dsd/123.789&quot;;</div><div class="line">    NSCharacterSet *set = [NSCharacterSet characterSetWithCharactersInString:@&quot;,/.&quot;];</div><div class="line">    NSLog(@&quot;%@&quot;,[str componentsSeparatedByCharactersInSet:set]);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="iOS跳转到App-Store下载应用评分"><a href="#iOS跳转到App-Store下载应用评分" class="headerlink" title="iOS跳转到App Store下载应用评分"></a>iOS跳转到App Store下载应用评分</h3><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">[[UIApplication sharedApplication] openURL:[NSURL URLWithString:@&quot;itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&amp;id=APPID&quot;]];</div></pre></td></tr></table></figure>
-<h3 id="判断当前ViewController是push还是present的方式显示的"><a href="#判断当前ViewController是push还是present的方式显示的" class="headerlink" title="判断当前ViewController是push还是present的方式显示的"></a>判断当前ViewController是push还是present的方式显示的</h3><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">NSArray *viewcontrollers=self.navigationController.viewControllers;</div><div class="line"></div><div class="line">if (viewcontrollers.count &gt; 1)</div><div class="line">&#123;</div><div class="line">    if ([viewcontrollers objectAtIndex:viewcontrollers.count - 1] == self)</div><div class="line">    &#123;</div><div class="line">        //push方式</div><div class="line">       [self.navigationController popViewControllerAnimated:YES];</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">else</div><div class="line">&#123;</div><div class="line">    //present方式</div><div class="line">    [self dismissViewControllerAnimated:YES completion:nil];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="获取实际使用的LaunchImage图片"><a href="#获取实际使用的LaunchImage图片" class="headerlink" title="获取实际使用的LaunchImage图片"></a>获取实际使用的LaunchImage图片</h3><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">- (NSString *)getLaunchImageName</div><div class="line">&#123;</div><div class="line">    CGSize viewSize = self.window.bounds.size;</div><div class="line">    // 竖屏    </div><div class="line">    NSString *viewOrientation = @&quot;Portrait&quot;;  </div><div class="line">    NSString *launchImageName = nil;    </div><div class="line">    NSArray* imagesDict = [[[NSBundle mainBundle] infoDictionary] valueForKey:@&quot;UILaunchImages&quot;];</div><div class="line">    for (NSDictionary* dict in imagesDict)</div><div class="line">    &#123;</div><div class="line">        CGSize imageSize = CGSizeFromString(dict[@&quot;UILaunchImageSize&quot;]);</div><div class="line">        if (CGSizeEqualToSize(imageSize, viewSize) &amp;&amp; [viewOrientation isEqualToString:dict[@&quot;UILaunchImageOrientation&quot;]])</div><div class="line">        &#123;</div><div class="line">            launchImageName = dict[@&quot;UILaunchImageName&quot;];        </div><div class="line">        &#125;    </div><div class="line">    &#125;    </div><div class="line">    return launchImageName;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="iOS在当前屏幕获取第一响应"><a href="#iOS在当前屏幕获取第一响应" class="headerlink" title="iOS在当前屏幕获取第一响应"></a>iOS在当前屏幕获取第一响应</h3><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">UIWindow * keyWindow = [[UIApplication sharedApplication] keyWindow];</div><div class="line">UIView * firstResponder = [keyWindow performSelector:@selector(firstResponder)];</div></pre></td></tr></table></figure>
-<h3 id="判断对象是否遵循了某协议"><a href="#判断对象是否遵循了某协议" class="headerlink" title="判断对象是否遵循了某协议"></a>判断对象是否遵循了某协议</h3><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">if ([self.selectedController conformsToProtocol:@protocol(RefreshPtotocol)])</div><div class="line">&#123;</div><div class="line">     [self.selectedController performSelector:@selector(onTriggerRefresh)];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="判断view是不是指定视图的子视图"><a href="#判断view是不是指定视图的子视图" class="headerlink" title="判断view是不是指定视图的子视图"></a>判断view是不是指定视图的子视图</h3><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">BOOL isView = [textView isDescendantOfView:self.view];</div></pre></td></tr></table></figure>
-<h3 id="NSArray-快速求总和-最大值-最小值-和-平均值"><a href="#NSArray-快速求总和-最大值-最小值-和-平均值" class="headerlink" title="NSArray 快速求总和 最大值 最小值 和 平均值"></a>NSArray 快速求总和 最大值 最小值 和 平均值</h3><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">NSArray *array = [NSArray arrayWithObjects:@&quot;2.0&quot;, @&quot;2.3&quot;, @&quot;3.0&quot;, @&quot;4.0&quot;, @&quot;10&quot;, nil];</div><div class="line">CGFloat sum = [[array valueForKeyPath:@&quot;@sum.floatValue&quot;] floatValue];</div><div class="line">CGFloat avg = [[array valueForKeyPath:@&quot;@avg.floatValue&quot;] floatValue];</div><div class="line">CGFloat max =[[array valueForKeyPath:@&quot;@max.floatValue&quot;] floatValue];</div><div class="line">CGFloat min =[[array valueForKeyPath:@&quot;@min.floatValue&quot;] floatValue];</div><div class="line">NSLog(@&quot;%f\n%f\n%f\n%f&quot;,sum,avg,max,min);</div></pre></td></tr></table></figure>
-<h3 id="修改UITextField中Placeholder的文字颜色"><a href="#修改UITextField中Placeholder的文字颜色" class="headerlink" title="修改UITextField中Placeholder的文字颜色"></a>修改UITextField中Placeholder的文字颜色</h3><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">[textField setValue:[UIColor redColor] forKeyPath:@&quot;_placeholderLabel.textColor&quot;];</div></pre></td></tr></table></figure>
-<h3 id="关于NSDateFormatter的格式"><a href="#关于NSDateFormatter的格式" class="headerlink" title="关于NSDateFormatter的格式"></a>关于NSDateFormatter的格式</h3><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">G: 公元时代，例如AD公元</div><div class="line">yy: 年的后2位</div><div class="line">yyyy: 完整年</div><div class="line">MM: 月，显示为1-12</div><div class="line">MMM: 月，显示为英文月份简写,如 Jan</div><div class="line">MMMM: 月，显示为英文月份全称，如 Janualy</div><div class="line">dd: 日，2位数表示，如02</div><div class="line">d: 日，1-2位显示，如 2</div><div class="line">EEE: 简写星期几，如Sun</div><div class="line">EEEE: 全写星期几，如Sunday</div><div class="line">aa: 上下午，AM/PM</div><div class="line">H: 时，24小时制，0-23</div><div class="line">K：时，12小时制，0-11</div><div class="line">m: 分，1-2位</div><div class="line">mm: 分，2位</div><div class="line">s: 秒，1-2位</div><div class="line">ss: 秒，2位</div><div class="line">S: 毫秒</div></pre></td></tr></table></figure>
-<h3 id="阿拉伯数字转中文格式"><a href="#阿拉伯数字转中文格式" class="headerlink" title="阿拉伯数字转中文格式"></a>阿拉伯数字转中文格式</h3><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">+(NSString *)translation:(NSString *)arebic</div><div class="line">&#123;  </div><div class="line">    NSString *str = arebic;</div><div class="line">    NSArray *arabic_numerals = @[@&quot;1&quot;,@&quot;2&quot;,@&quot;3&quot;,@&quot;4&quot;,@&quot;5&quot;,@&quot;6&quot;,@&quot;7&quot;,@&quot;8&quot;,@&quot;9&quot;,@&quot;0&quot;];</div><div class="line">    NSArray *chinese_numerals = @[@&quot;一&quot;,@&quot;二&quot;,@&quot;三&quot;,@&quot;四&quot;,@&quot;五&quot;,@&quot;六&quot;,@&quot;七&quot;,@&quot;八&quot;,@&quot;九&quot;,@&quot;零&quot;];</div><div class="line">    NSArray *digits = @[@&quot;个&quot;,@&quot;十&quot;,@&quot;百&quot;,@&quot;千&quot;,@&quot;万&quot;,@&quot;十&quot;,@&quot;百&quot;,@&quot;千&quot;,@&quot;亿&quot;,@&quot;十&quot;,@&quot;百&quot;,@&quot;千&quot;,@&quot;兆&quot;];</div><div class="line">    NSDictionary *dictionary = [NSDictionary dictionaryWithObjects:chinese_numerals forKeys:arabic_numerals];</div><div class="line"></div><div class="line">    NSMutableArray *sums = [NSMutableArray array];</div><div class="line">    for (int i = 0; i &lt; str.length; i ++) &#123;</div><div class="line">        NSString *substr = [str substringWithRange:NSMakeRange(i, 1)];</div><div class="line">        NSString *a = [dictionary objectForKey:substr];</div><div class="line">        NSString *b = digits[str.length -i-1];</div><div class="line">        NSString *sum = [a stringByAppendingString:b];</div><div class="line">        if ([a isEqualToString:chinese_numerals[9]])</div><div class="line">        &#123;</div><div class="line">            if([b isEqualToString:digits[4]] || [b isEqualToString:digits[8]])</div><div class="line">            &#123;</div><div class="line">                sum = b;</div><div class="line">                if ([[sums lastObject] isEqualToString:chinese_numerals[9]])</div><div class="line">                &#123;</div><div class="line">                    [sums removeLastObject];</div><div class="line">                &#125;</div><div class="line">            &#125;else</div><div class="line">            &#123;</div><div class="line">                sum = chinese_numerals[9];</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            if ([[sums lastObject] isEqualToString:sum])</div><div class="line">            &#123;</div><div class="line">                continue;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        [sums addObject:sum];</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    NSString *sumStr = [sums componentsJoinedByString:@&quot;&quot;];</div><div class="line">    NSString *chinese = [sumStr substringToIndex:sumStr.length-1];</div><div class="line">    NSLog(@&quot;%@&quot;,str);</div><div class="line">    NSLog(@&quot;%@&quot;,chinese);</div><div class="line">    return chinese;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="Base64编码与NSString对象或NSData对象的转换"><a href="#Base64编码与NSString对象或NSData对象的转换" class="headerlink" title="Base64编码与NSString对象或NSData对象的转换"></a>Base64编码与NSString对象或NSData对象的转换</h3><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line"></div><div class="line">NSData *nsdata = [@&quot;iOS Developer Tips encoded in Base64&quot;</div><div class="line">  dataUsingEncoding:NSUTF8StringEncoding];</div><div class="line"></div><div class="line"></div><div class="line">NSString *base64Encoded = [nsdata base64EncodedStringWithOptions:0];</div><div class="line"></div><div class="line"></div><div class="line">NSLog(@&quot;Encoded: %@&quot;, base64Encoded);</div><div class="line"></div><div class="line">//另外一种方法</div><div class="line"></div><div class="line"></div><div class="line">NSData *nsdataFromBase64String = [[NSData alloc]</div><div class="line">  initWithBase64EncodedString:base64Encoded options:0];</div><div class="line"></div><div class="line"></div><div class="line">NSString *base64Decoded = [[NSString alloc]</div><div class="line">  initWithData:nsdataFromBase64String encoding:NSUTF8StringEncoding];</div><div class="line">NSLog(@&quot;Decoded: %@&quot;, base64Decoded);</div></pre></td></tr></table></figure>
-<h3 id="取消UICollectionView的隐式动画"><a href="#取消UICollectionView的隐式动画" class="headerlink" title="取消UICollectionView的隐式动画"></a>取消UICollectionView的隐式动画</h3><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">//方法一</div><div class="line">[UIView performWithoutAnimation:^&#123;</div><div class="line">    [collectionView reloadItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:index inSection:0]]];</div><div class="line">&#125;];</div><div class="line"></div><div class="line">//方法二</div><div class="line">[UIView animateWithDuration:0 animations:^&#123;</div><div class="line">    [collectionView performBatchUpdates:^&#123;</div><div class="line">        [collectionView reloadItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:index inSection:0]]];</div><div class="line">    &#125; completion:nil];</div><div class="line">&#125;];</div><div class="line"></div><div class="line">//方法三</div><div class="line">[UIView setAnimationsEnabled:NO];</div><div class="line">[self.trackPanel performBatchUpdates:^&#123;</div><div class="line">    [collectionView reloadItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:index inSection:0]]];</div><div class="line">&#125; completion:^(BOOL finished) &#123;</div><div class="line">    [UIView setAnimationsEnabled:YES];</div><div class="line">&#125;];</div></pre></td></tr></table></figure>
-<h3 id="查看某个UIImage占用内存大小"><a href="#查看某个UIImage占用内存大小" class="headerlink" title="查看某个UIImage占用内存大小"></a>查看某个UIImage占用内存大小</h3><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">UIImage *image = [UIImage imageNamed:@&quot;image&quot;];</div><div class="line">NSUInteger size  = CGImageGetHeight(image.CGImage) * CGImageGetBytesPerRow(image.CGImage);</div></pre></td></tr></table></figure>
-<h3 id="UIView设置部分圆角"><a href="#UIView设置部分圆角" class="headerlink" title="UIView设置部分圆角"></a>UIView设置部分圆角</h3><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">CGRect rect = view.bounds;</div><div class="line">CGSize radio = CGSizeMake(30, 30);//圆角尺寸</div><div class="line">UIRectCorner corner = UIRectCornerTopLeft|UIRectCornerTopRight;//这只圆角位置</div><div class="line">UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:rect byRoundingCorners:corner cornerRadii:radio];</div><div class="line">CAShapeLayer *masklayer = [[CAShapeLayer alloc]init];//创建shapelayer</div><div class="line">masklayer.frame = view.bounds;</div><div class="line">masklayer.path = path.CGPath;//设置路径</div><div class="line">view.layer.mask = masklayer;</div></pre></td></tr></table></figure>
-<h3 id="去掉导航栏的back标题"><a href="#去掉导航栏的back标题" class="headerlink" title="去掉导航栏的back标题"></a>去掉导航栏的back标题</h3><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">[[UIBarButtonItemappearance]setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -60)forBarMetrics:UIBarMetricsDefault];</div></pre></td></tr></table></figure>
-<h3 id="dispatch-group的使用"><a href="#dispatch-group的使用" class="headerlink" title="dispatch_group的使用"></a>dispatch_group的使用</h3><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">dispatch_group_t dispatchGroup = dispatch_group_create();</div><div class="line">    dispatch_group_enter(dispatchGroup);</div><div class="line">    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^&#123;</div><div class="line">        NSLog(@&quot;第一个请求完成&quot;);</div><div class="line">        dispatch_group_leave(dispatchGroup);</div><div class="line">    &#125;);</div><div class="line"></div><div class="line">    dispatch_group_enter(dispatchGroup);</div><div class="line"></div><div class="line">    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(10 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^&#123;</div><div class="line">        NSLog(@&quot;第二个请求完成&quot;);</div><div class="line">        dispatch_group_leave(dispatchGroup);</div><div class="line">    &#125;);</div><div class="line"></div><div class="line">    dispatch_group_notify(dispatchGroup, dispatch_get_main_queue(), ^()&#123;</div><div class="line">        NSLog(@&quot;请求完成&quot;);</div><div class="line">    &#125;);</div></pre></td></tr></table></figure>
-<h3 id="获取私有属性和成员变量-记得引入runtime"><a href="#获取私有属性和成员变量-记得引入runtime" class="headerlink" title="获取私有属性和成员变量 记得引入runtime"></a>获取私有属性和成员变量 记得引入runtime</h3><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">//获取私有属性 比如设置UIDatePicker的字体颜色</div><div class="line">- (void)setTextColor</div><div class="line">&#123;</div><div class="line">    //获取所有的属性，去查看有没有对应的属性</div><div class="line">    unsigned int count = 0;</div><div class="line">    objc_property_t *propertys = class_copyPropertyList([UIDatePicker class], &amp;count);</div><div class="line">    for(int i = 0;i &lt; count;i ++)</div><div class="line">    &#123;</div><div class="line">        //获得每一个属性</div><div class="line">        objc_property_t property = propertys[i];</div><div class="line">        //获得属性对应的nsstring</div><div class="line">        NSString *propertyName = [NSString stringWithCString:property_getName(property) encoding:NSUTF8StringEncoding];</div><div class="line">        //输出打印看对应的属性</div><div class="line">        NSLog(@&quot;propertyname = %@&quot;,propertyName);</div><div class="line">        if ([propertyName isEqualToString:@&quot;textColor&quot;])</div><div class="line">        &#123;</div><div class="line">            [datePicker setValue:[UIColor whiteColor] forKey:propertyName];</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">//获得成员变量 比如修改UIAlertAction的按钮字体颜色</div><div class="line">    unsigned int count = 0;</div><div class="line">    Ivar *ivars = class_copyIvarList([UIAlertAction class], &amp;count);</div><div class="line">    for(int i =0;i &lt; count;i ++)</div><div class="line">    &#123;</div><div class="line">        Ivar ivar = ivars[i];</div><div class="line">        NSString *ivarName = [NSString stringWithCString:ivar_getName(ivar) encoding:NSUTF8StringEncoding];</div><div class="line">        NSLog(@&quot;uialertion.ivarName = %@&quot;,ivarName);</div><div class="line">        if ([ivarName isEqualToString:@&quot;_titleTextColor&quot;])</div><div class="line">        &#123;</div><div class="line">            [alertOk setValue:[UIColor blueColor] forKey:@&quot;titleTextColor&quot;];</div><div class="line">            [alertCancel setValue:[UIColor purpleColor] forKey:@&quot;titleTextColor&quot;];</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
-<h3 id="iOS中数字的格式化"><a href="#iOS中数字的格式化" class="headerlink" title="iOS中数字的格式化"></a>iOS中数字的格式化</h3><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">//通过NSNumberFormatter，同样可以设置NSNumber输出的格式。例如如下代码：</div><div class="line">NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];</div><div class="line">formatter.numberStyle = NSNumberFormatterDecimalStyle;</div><div class="line">NSString *string = [formatter stringFromNumber:[NSNumber numberWithInt:123456789]];</div><div class="line">NSLog(@&quot;Formatted number string:%@&quot;,string);</div><div class="line">//输出结果为：[1223:403] Formatted number string:123,456,789</div><div class="line"></div><div class="line">//其中NSNumberFormatter类有个属性numberStyle，它是一个枚举型，设置不同的值可以输出不同的数字格式。该枚举包括：</div><div class="line">typedef NS_ENUM(NSUInteger, NSNumberFormatterStyle) &#123;</div><div class="line">    NSNumberFormatterNoStyle = kCFNumberFormatterNoStyle,</div><div class="line">    NSNumberFormatterDecimalStyle = kCFNumberFormatterDecimalStyle,</div><div class="line">    NSNumberFormatterCurrencyStyle = kCFNumberFormatterCurrencyStyle,</div><div class="line">    NSNumberFormatterPercentStyle = kCFNumberFormatterPercentStyle,</div><div class="line">    NSNumberFormatterScientificStyle = kCFNumberFormatterScientificStyle,</div><div class="line">    NSNumberFormatterSpellOutStyle = kCFNumberFormatterSpellOutStyle</div><div class="line">&#125;;</div><div class="line">//各个枚举对应输出数字格式的效果如下：其中第三项和最后一项的输出会根据系统设置的语言区域的不同而不同。</div><div class="line">[1243:403] Formatted number string:123456789</div><div class="line">[1243:403] Formatted number string:123,456,789</div><div class="line">[1243:403] Formatted number string:￥123,456,789.00</div><div class="line">[1243:403] Formatted number string:-539,222,988%</div><div class="line">[1243:403] Formatted number string:1.23456789E8</div><div class="line">[1243:403] Formatted number string:一亿二千三百四十五万六千七百八十九</div></pre></td></tr></table></figure>
+<h3 id="打印系统所有已注册的字体名称"><a href="#打印系统所有已注册的字体名称" class="headerlink" title="打印系统所有已注册的字体名称"></a>打印系统所有已注册的字体名称</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">- (void)enumerateFonts&#123;</div><div class="line">    for(NSString *familyName in [UIFont familyNames])</div><div class="line">    &#123;</div><div class="line">        NSLog(@&quot;%@&quot;,familyName);</div><div class="line">        NSArray *fontNames = [UIFont fontNamesForFamilyName:familyName];</div><div class="line">        for(NSString *fontName in fontNames)</div><div class="line">        &#123;</div><div class="line">            NSLog(@&quot;\t|- %@&quot;,fontName);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="字符串反转"><a href="#字符串反转" class="headerlink" title="字符串反转"></a>字符串反转</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">- (NSString*)reverseWordsInString:(NSString*)str</div><div class="line">&#123;</div><div class="line">    NSMutableString *reverString = [NSMutableString stringWithCapacity:str.length];</div><div class="line">    [str enumerateSubstringsInRange:NSMakeRange(0, str.length) options:NSStringEnumerationReverse | NSStringEnumerationByComposedCharacterSequences  usingBlock:^(NSString *substring, NSRange substringRange, NSRange enclosingRange, BOOL *stop) &#123;</div><div class="line">        [reverString appendString:substring];</div><div class="line">    &#125;];</div><div class="line">    return reverString;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="禁止锁屏"><a href="#禁止锁屏" class="headerlink" title="禁止锁屏"></a>禁止锁屏</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[UIApplication sharedApplication].idleTimerDisabled = YES;</div></pre></td></tr></table></figure>
+<h3 id="字符串按多个符号分割"><a href="#字符串按多个符号分割" class="headerlink" title="字符串按多个符号分割"></a>字符串按多个符号分割</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">- (void)seprartStringWithCharters&#123;</div><div class="line">    NSString *str = @&quot;abc,dsd/123.789&quot;;</div><div class="line">    NSCharacterSet *set = [NSCharacterSet characterSetWithCharactersInString:@&quot;,/.&quot;];</div><div class="line">    NSLog(@&quot;%@&quot;,[str componentsSeparatedByCharactersInSet:set]);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="iOS跳转到App-Store下载应用评分"><a href="#iOS跳转到App-Store下载应用评分" class="headerlink" title="iOS跳转到App Store下载应用评分"></a>iOS跳转到App Store下载应用评分</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[[UIApplication sharedApplication] openURL:[NSURL URLWithString:@&quot;itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&amp;id=APPID&quot;]];</div></pre></td></tr></table></figure>
+<h3 id="判断当前ViewController是push还是present的方式显示的"><a href="#判断当前ViewController是push还是present的方式显示的" class="headerlink" title="判断当前ViewController是push还是present的方式显示的"></a>判断当前ViewController是push还是present的方式显示的</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">NSArray *viewcontrollers=self.navigationController.viewControllers;</div><div class="line"></div><div class="line">if (viewcontrollers.count &gt; 1)</div><div class="line">&#123;</div><div class="line">    if ([viewcontrollers objectAtIndex:viewcontrollers.count - 1] == self)</div><div class="line">    &#123;</div><div class="line">        //push方式</div><div class="line">       [self.navigationController popViewControllerAnimated:YES];</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">else</div><div class="line">&#123;</div><div class="line">    //present方式</div><div class="line">    [self dismissViewControllerAnimated:YES completion:nil];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="获取实际使用的LaunchImage图片"><a href="#获取实际使用的LaunchImage图片" class="headerlink" title="获取实际使用的LaunchImage图片"></a>获取实际使用的LaunchImage图片</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">- (NSString *)getLaunchImageName</div><div class="line">&#123;</div><div class="line">    CGSize viewSize = self.window.bounds.size;</div><div class="line">    // 竖屏    </div><div class="line">    NSString *viewOrientation = @&quot;Portrait&quot;;  </div><div class="line">    NSString *launchImageName = nil;    </div><div class="line">    NSArray* imagesDict = [[[NSBundle mainBundle] infoDictionary] valueForKey:@&quot;UILaunchImages&quot;];</div><div class="line">    for (NSDictionary* dict in imagesDict)</div><div class="line">    &#123;</div><div class="line">        CGSize imageSize = CGSizeFromString(dict[@&quot;UILaunchImageSize&quot;]);</div><div class="line">        if (CGSizeEqualToSize(imageSize, viewSize) &amp;&amp; [viewOrientation isEqualToString:dict[@&quot;UILaunchImageOrientation&quot;]])</div><div class="line">        &#123;</div><div class="line">            launchImageName = dict[@&quot;UILaunchImageName&quot;];        </div><div class="line">        &#125;    </div><div class="line">    &#125;    </div><div class="line">    return launchImageName;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="iOS在当前屏幕获取第一响应"><a href="#iOS在当前屏幕获取第一响应" class="headerlink" title="iOS在当前屏幕获取第一响应"></a>iOS在当前屏幕获取第一响应</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">UIWindow * keyWindow = [[UIApplication sharedApplication] keyWindow];</div><div class="line">UIView * firstResponder = [keyWindow performSelector:@selector(firstResponder)];</div></pre></td></tr></table></figure>
+<h3 id="判断对象是否遵循了某协议"><a href="#判断对象是否遵循了某协议" class="headerlink" title="判断对象是否遵循了某协议"></a>判断对象是否遵循了某协议</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">if ([self.selectedController conformsToProtocol:@protocol(RefreshPtotocol)])</div><div class="line">&#123;</div><div class="line">     [self.selectedController performSelector:@selector(onTriggerRefresh)];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="判断view是不是指定视图的子视图"><a href="#判断view是不是指定视图的子视图" class="headerlink" title="判断view是不是指定视图的子视图"></a>判断view是不是指定视图的子视图</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">BOOL isView = [textView isDescendantOfView:self.view];</div></pre></td></tr></table></figure>
+<h3 id="NSArray-快速求总和-最大值-最小值-和-平均值"><a href="#NSArray-快速求总和-最大值-最小值-和-平均值" class="headerlink" title="NSArray 快速求总和 最大值 最小值 和 平均值"></a>NSArray 快速求总和 最大值 最小值 和 平均值</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">NSArray *array = [NSArray arrayWithObjects:@&quot;2.0&quot;, @&quot;2.3&quot;, @&quot;3.0&quot;, @&quot;4.0&quot;, @&quot;10&quot;, nil];</div><div class="line">CGFloat sum = [[array valueForKeyPath:@&quot;@sum.floatValue&quot;] floatValue];</div><div class="line">CGFloat avg = [[array valueForKeyPath:@&quot;@avg.floatValue&quot;] floatValue];</div><div class="line">CGFloat max =[[array valueForKeyPath:@&quot;@max.floatValue&quot;] floatValue];</div><div class="line">CGFloat min =[[array valueForKeyPath:@&quot;@min.floatValue&quot;] floatValue];</div><div class="line">NSLog(@&quot;%f\n%f\n%f\n%f&quot;,sum,avg,max,min);</div></pre></td></tr></table></figure>
+<h3 id="修改UITextField中Placeholder的文字颜色"><a href="#修改UITextField中Placeholder的文字颜色" class="headerlink" title="修改UITextField中Placeholder的文字颜色"></a>修改UITextField中Placeholder的文字颜色</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[textField setValue:[UIColor redColor] forKeyPath:@&quot;_placeholderLabel.textColor&quot;];</div></pre></td></tr></table></figure>
+<h3 id="关于NSDateFormatter的格式"><a href="#关于NSDateFormatter的格式" class="headerlink" title="关于NSDateFormatter的格式"></a>关于NSDateFormatter的格式</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">G: 公元时代，例如AD公元</div><div class="line">yy: 年的后2位</div><div class="line">yyyy: 完整年</div><div class="line">MM: 月，显示为1-12</div><div class="line">MMM: 月，显示为英文月份简写,如 Jan</div><div class="line">MMMM: 月，显示为英文月份全称，如 Janualy</div><div class="line">dd: 日，2位数表示，如02</div><div class="line">d: 日，1-2位显示，如 2</div><div class="line">EEE: 简写星期几，如Sun</div><div class="line">EEEE: 全写星期几，如Sunday</div><div class="line">aa: 上下午，AM/PM</div><div class="line">H: 时，24小时制，0-23</div><div class="line">K：时，12小时制，0-11</div><div class="line">m: 分，1-2位</div><div class="line">mm: 分，2位</div><div class="line">s: 秒，1-2位</div><div class="line">ss: 秒，2位</div><div class="line">S: 毫秒</div></pre></td></tr></table></figure>
+<h3 id="阿拉伯数字转中文格式"><a href="#阿拉伯数字转中文格式" class="headerlink" title="阿拉伯数字转中文格式"></a>阿拉伯数字转中文格式</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line">+(NSString *)translation:(NSString *)arebic</div><div class="line">&#123;  </div><div class="line">    NSString *str = arebic;</div><div class="line">    NSArray *arabic_numerals = @[@&quot;1&quot;,@&quot;2&quot;,@&quot;3&quot;,@&quot;4&quot;,@&quot;5&quot;,@&quot;6&quot;,@&quot;7&quot;,@&quot;8&quot;,@&quot;9&quot;,@&quot;0&quot;];</div><div class="line">    NSArray *chinese_numerals = @[@&quot;一&quot;,@&quot;二&quot;,@&quot;三&quot;,@&quot;四&quot;,@&quot;五&quot;,@&quot;六&quot;,@&quot;七&quot;,@&quot;八&quot;,@&quot;九&quot;,@&quot;零&quot;];</div><div class="line">    NSArray *digits = @[@&quot;个&quot;,@&quot;十&quot;,@&quot;百&quot;,@&quot;千&quot;,@&quot;万&quot;,@&quot;十&quot;,@&quot;百&quot;,@&quot;千&quot;,@&quot;亿&quot;,@&quot;十&quot;,@&quot;百&quot;,@&quot;千&quot;,@&quot;兆&quot;];</div><div class="line">    NSDictionary *dictionary = [NSDictionary dictionaryWithObjects:chinese_numerals forKeys:arabic_numerals];</div><div class="line"></div><div class="line">    NSMutableArray *sums = [NSMutableArray array];</div><div class="line">    for (int i = 0; i &lt; str.length; i ++) &#123;</div><div class="line">        NSString *substr = [str substringWithRange:NSMakeRange(i, 1)];</div><div class="line">        NSString *a = [dictionary objectForKey:substr];</div><div class="line">        NSString *b = digits[str.length -i-1];</div><div class="line">        NSString *sum = [a stringByAppendingString:b];</div><div class="line">        if ([a isEqualToString:chinese_numerals[9]])</div><div class="line">        &#123;</div><div class="line">            if([b isEqualToString:digits[4]] || [b isEqualToString:digits[8]])</div><div class="line">            &#123;</div><div class="line">                sum = b;</div><div class="line">                if ([[sums lastObject] isEqualToString:chinese_numerals[9]])</div><div class="line">                &#123;</div><div class="line">                    [sums removeLastObject];</div><div class="line">                &#125;</div><div class="line">            &#125;else</div><div class="line">            &#123;</div><div class="line">                sum = chinese_numerals[9];</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            if ([[sums lastObject] isEqualToString:sum])</div><div class="line">            &#123;</div><div class="line">                continue;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        [sums addObject:sum];</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    NSString *sumStr = [sums componentsJoinedByString:@&quot;&quot;];</div><div class="line">    NSString *chinese = [sumStr substringToIndex:sumStr.length-1];</div><div class="line">    NSLog(@&quot;%@&quot;,str);</div><div class="line">    NSLog(@&quot;%@&quot;,chinese);</div><div class="line">    return chinese;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Base64编码与NSString对象或NSData对象的转换"><a href="#Base64编码与NSString对象或NSData对象的转换" class="headerlink" title="Base64编码与NSString对象或NSData对象的转换"></a>Base64编码与NSString对象或NSData对象的转换</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">NSData *nsdata = [@&quot;iOS Developer Tips encoded in Base64&quot;</div><div class="line">  dataUsingEncoding:NSUTF8StringEncoding];</div><div class="line"></div><div class="line"></div><div class="line">NSString *base64Encoded = [nsdata base64EncodedStringWithOptions:0];</div><div class="line"></div><div class="line"></div><div class="line">NSLog(@&quot;Encoded: %@&quot;, base64Encoded);</div><div class="line"></div><div class="line">//另外一种方法</div><div class="line"></div><div class="line"></div><div class="line">NSData *nsdataFromBase64String = [[NSData alloc]</div><div class="line">  initWithBase64EncodedString:base64Encoded options:0];</div><div class="line"></div><div class="line"></div><div class="line">NSString *base64Decoded = [[NSString alloc]</div><div class="line">  initWithData:nsdataFromBase64String encoding:NSUTF8StringEncoding];</div><div class="line">NSLog(@&quot;Decoded: %@&quot;, base64Decoded);</div></pre></td></tr></table></figure>
+<h3 id="取消UICollectionView的隐式动画"><a href="#取消UICollectionView的隐式动画" class="headerlink" title="取消UICollectionView的隐式动画"></a>取消UICollectionView的隐式动画</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">//方法一</div><div class="line">[UIView performWithoutAnimation:^&#123;</div><div class="line">    [collectionView reloadItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:index inSection:0]]];</div><div class="line">&#125;];</div><div class="line"></div><div class="line">//方法二</div><div class="line">[UIView animateWithDuration:0 animations:^&#123;</div><div class="line">    [collectionView performBatchUpdates:^&#123;</div><div class="line">        [collectionView reloadItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:index inSection:0]]];</div><div class="line">    &#125; completion:nil];</div><div class="line">&#125;];</div><div class="line"></div><div class="line">//方法三</div><div class="line">[UIView setAnimationsEnabled:NO];</div><div class="line">[self.trackPanel performBatchUpdates:^&#123;</div><div class="line">    [collectionView reloadItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:index inSection:0]]];</div><div class="line">&#125; completion:^(BOOL finished) &#123;</div><div class="line">    [UIView setAnimationsEnabled:YES];</div><div class="line">&#125;];</div></pre></td></tr></table></figure>
+<h3 id="查看某个UIImage占用内存大小"><a href="#查看某个UIImage占用内存大小" class="headerlink" title="查看某个UIImage占用内存大小"></a>查看某个UIImage占用内存大小</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">UIImage *image = [UIImage imageNamed:@&quot;image&quot;];</div><div class="line">NSUInteger size  = CGImageGetHeight(image.CGImage) * CGImageGetBytesPerRow(image.CGImage);</div></pre></td></tr></table></figure>
+<h3 id="UIView设置部分圆角"><a href="#UIView设置部分圆角" class="headerlink" title="UIView设置部分圆角"></a>UIView设置部分圆角</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">CGRect rect = view.bounds;</div><div class="line">CGSize radio = CGSizeMake(30, 30);//圆角尺寸</div><div class="line">UIRectCorner corner = UIRectCornerTopLeft|UIRectCornerTopRight;//这只圆角位置</div><div class="line">UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:rect byRoundingCorners:corner cornerRadii:radio];</div><div class="line">CAShapeLayer *masklayer = [[CAShapeLayer alloc]init];//创建shapelayer</div><div class="line">masklayer.frame = view.bounds;</div><div class="line">masklayer.path = path.CGPath;//设置路径</div><div class="line">view.layer.mask = masklayer;</div></pre></td></tr></table></figure>
+<h3 id="去掉导航栏的back标题"><a href="#去掉导航栏的back标题" class="headerlink" title="去掉导航栏的back标题"></a>去掉导航栏的back标题</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[[UIBarButtonItemappearance]setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -60)forBarMetrics:UIBarMetricsDefault];</div></pre></td></tr></table></figure>
+<h3 id="dispatch-group的使用"><a href="#dispatch-group的使用" class="headerlink" title="dispatch_group的使用"></a>dispatch_group的使用</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">dispatch_group_t dispatchGroup = dispatch_group_create();</div><div class="line">    dispatch_group_enter(dispatchGroup);</div><div class="line">    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^&#123;</div><div class="line">        NSLog(@&quot;第一个请求完成&quot;);</div><div class="line">        dispatch_group_leave(dispatchGroup);</div><div class="line">    &#125;);</div><div class="line"></div><div class="line">    dispatch_group_enter(dispatchGroup);</div><div class="line"></div><div class="line">    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(10 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^&#123;</div><div class="line">        NSLog(@&quot;第二个请求完成&quot;);</div><div class="line">        dispatch_group_leave(dispatchGroup);</div><div class="line">    &#125;);</div><div class="line"></div><div class="line">    dispatch_group_notify(dispatchGroup, dispatch_get_main_queue(), ^()&#123;</div><div class="line">        NSLog(@&quot;请求完成&quot;);</div><div class="line">    &#125;);</div></pre></td></tr></table></figure>
+<h3 id="获取私有属性和成员变量-记得引入runtime"><a href="#获取私有属性和成员变量-记得引入runtime" class="headerlink" title="获取私有属性和成员变量 记得引入runtime"></a>获取私有属性和成员变量 记得引入runtime</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">//获取私有属性 比如设置UIDatePicker的字体颜色</div><div class="line">- (void)setTextColor</div><div class="line">&#123;</div><div class="line">    //获取所有的属性，去查看有没有对应的属性</div><div class="line">    unsigned int count = 0;</div><div class="line">    objc_property_t *propertys = class_copyPropertyList([UIDatePicker class], &amp;count);</div><div class="line">    for(int i = 0;i &lt; count;i ++)</div><div class="line">    &#123;</div><div class="line">        //获得每一个属性</div><div class="line">        objc_property_t property = propertys[i];</div><div class="line">        //获得属性对应的nsstring</div><div class="line">        NSString *propertyName = [NSString stringWithCString:property_getName(property) encoding:NSUTF8StringEncoding];</div><div class="line">        //输出打印看对应的属性</div><div class="line">        NSLog(@&quot;propertyname = %@&quot;,propertyName);</div><div class="line">        if ([propertyName isEqualToString:@&quot;textColor&quot;])</div><div class="line">        &#123;</div><div class="line">            [datePicker setValue:[UIColor whiteColor] forKey:propertyName];</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">//获得成员变量 比如修改UIAlertAction的按钮字体颜色</div><div class="line">    unsigned int count = 0;</div><div class="line">    Ivar *ivars = class_copyIvarList([UIAlertAction class], &amp;count);</div><div class="line">    for(int i =0;i &lt; count;i ++)</div><div class="line">    &#123;</div><div class="line">        Ivar ivar = ivars[i];</div><div class="line">        NSString *ivarName = [NSString stringWithCString:ivar_getName(ivar) encoding:NSUTF8StringEncoding];</div><div class="line">        NSLog(@&quot;uialertion.ivarName = %@&quot;,ivarName);</div><div class="line">        if ([ivarName isEqualToString:@&quot;_titleTextColor&quot;])</div><div class="line">        &#123;</div><div class="line">            [alertOk setValue:[UIColor blueColor] forKey:@&quot;titleTextColor&quot;];</div><div class="line">            [alertCancel setValue:[UIColor purpleColor] forKey:@&quot;titleTextColor&quot;];</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<h3 id="iOS中数字的格式化"><a href="#iOS中数字的格式化" class="headerlink" title="iOS中数字的格式化"></a>iOS中数字的格式化</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">//通过NSNumberFormatter，同样可以设置NSNumber输出的格式。例如如下代码：</div><div class="line">NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];</div><div class="line">formatter.numberStyle = NSNumberFormatterDecimalStyle;</div><div class="line">NSString *string = [formatter stringFromNumber:[NSNumber numberWithInt:123456789]];</div><div class="line">NSLog(@&quot;Formatted number string:%@&quot;,string);</div><div class="line">//输出结果为：[1223:403] Formatted number string:123,456,789</div><div class="line"></div><div class="line">//其中NSNumberFormatter类有个属性numberStyle，它是一个枚举型，设置不同的值可以输出不同的数字格式。该枚举包括：</div><div class="line">typedef NS_ENUM(NSUInteger, NSNumberFormatterStyle) &#123;</div><div class="line">    NSNumberFormatterNoStyle = kCFNumberFormatterNoStyle,</div><div class="line">    NSNumberFormatterDecimalStyle = kCFNumberFormatterDecimalStyle,</div><div class="line">    NSNumberFormatterCurrencyStyle = kCFNumberFormatterCurrencyStyle,</div><div class="line">    NSNumberFormatterPercentStyle = kCFNumberFormatterPercentStyle,</div><div class="line">    NSNumberFormatterScientificStyle = kCFNumberFormatterScientificStyle,</div><div class="line">    NSNumberFormatterSpellOutStyle = kCFNumberFormatterSpellOutStyle</div><div class="line">&#125;;</div><div class="line">//各个枚举对应输出数字格式的效果如下：其中第三项和最后一项的输出会根据系统设置的语言区域的不同而不同。</div><div class="line">[1243:403] Formatted number string:123456789</div><div class="line">[1243:403] Formatted number string:123,456,789</div><div class="line">[1243:403] Formatted number string:￥123,456,789.00</div><div class="line">[1243:403] Formatted number string:-539,222,988%</div><div class="line">[1243:403] Formatted number string:1.23456789E8</div><div class="line">[1243:403] Formatted number string:一亿二千三百四十五万六千七百八十九</div></pre></td></tr></table></figure>
 <h3 id="获取WebView所有的图片地址"><a href="#获取WebView所有的图片地址" class="headerlink" title="获取WebView所有的图片地址"></a>获取WebView所有的图片地址</h3><p>在网页加载完成时，通过js获取图片和添加点击的识别方式</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">//UIWebView</div><div class="line">- (void)webViewDidFinishLoad:(UIWebView *)webView</div><div class="line">&#123;</div><div class="line">    //这里是js，主要目的实现对url的获取</div><div class="line">    static  NSString * const jsGetImages =</div><div class="line">    @&quot;function getImages()&#123;\</div><div class="line">    var objs = document.getElementsByTagName(\&quot;img\&quot;);\</div><div class="line">    var imgScr = &apos;&apos;;\</div><div class="line">    for(var i=0;i&lt;objs.length;i++)&#123;\</div><div class="line">    imgScr = imgScr + objs[i].src + &apos;+&apos;;\</div><div class="line">    &#125;;\</div><div class="line">    return imgScr;\</div><div class="line">    &#125;;&quot;;</div><div class="line"></div><div class="line">    [webView stringByEvaluatingJavaScriptFromString:jsGetImages];//注入js方法</div><div class="line">    NSString *urlResult = [webView stringByEvaluatingJavaScriptFromString:@&quot;getImages()&quot;];</div><div class="line">    NSArray *urlArray = [NSMutableArray arrayWithArray:[urlResult componentsSeparatedByString:@&quot;+&quot;]];</div><div class="line">    //urlResurlt 就是获取到得所有图片的url的拼接；mUrlArray就是所有Url的数组</div><div class="line">&#125;</div><div class="line"></div><div class="line">//WKWebView</div><div class="line">- (void)webView:(WKWebView *)webView didFinishNavigation:(null_unspecified WKNavigation *)navigation</div><div class="line">&#123;</div><div class="line">    static  NSString * const jsGetImages =</div><div class="line">    @&quot;function getImages()&#123;\</div><div class="line">    var objs = document.getElementsByTagName(\&quot;img\&quot;);\</div><div class="line">    var imgScr = &apos;&apos;;\</div><div class="line">    for(var i=0;i&lt;objs.length;i++)&#123;\</div><div class="line">    imgScr = imgScr + objs[i].src + &apos;+&apos;;\</div><div class="line">    &#125;;\</div><div class="line">    return imgScr;\</div><div class="line">    &#125;;&quot;;</div><div class="line"></div><div class="line">    [webView evaluateJavaScript:jsGetImages completionHandler:nil];</div><div class="line">    [webView evaluateJavaScript:@&quot;getImages()&quot; completionHandler:^(id _Nullable result, NSError * _Nullable error) &#123;</div><div class="line">        NSLog(@&quot;%@&quot;,result);</div><div class="line">    &#125;];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="获取到webview的高度"><a href="#获取到webview的高度" class="headerlink" title="获取到webview的高度"></a>获取到webview的高度</h3><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">CGFloat height = [[self.webView stringByEvaluatingJavaScriptFromString:@&quot;document.body.offsetHeight&quot;] floatValue];</div></pre></td></tr></table></figure>
-      
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line">//UIWebView</div><div class="line">- (void)webViewDidFinishLoad:(UIWebView *)webView</div><div class="line">&#123;</div><div class="line">    //这里是js，主要目的实现对url的获取</div><div class="line">    static  NSString * const jsGetImages =</div><div class="line">    @&quot;function getImages()&#123;\</div><div class="line">    var objs = document.getElementsByTagName(\&quot;img\&quot;);\</div><div class="line">    var imgScr = &apos;&apos;;\</div><div class="line">    for(var i=0;i&lt;objs.length;i++)&#123;\</div><div class="line">    imgScr = imgScr + objs[i].src + &apos;+&apos;;\</div><div class="line">    &#125;;\</div><div class="line">    return imgScr;\</div><div class="line">    &#125;;&quot;;</div><div class="line"></div><div class="line">    [webView stringByEvaluatingJavaScriptFromString:jsGetImages];//注入js方法</div><div class="line">    NSString *urlResult = [webView stringByEvaluatingJavaScriptFromString:@&quot;getImages()&quot;];</div><div class="line">    NSArray *urlArray = [NSMutableArray arrayWithArray:[urlResult componentsSeparatedByString:@&quot;+&quot;]];</div><div class="line">    //urlResurlt 就是获取到得所有图片的url的拼接；mUrlArray就是所有Url的数组</div><div class="line">&#125;</div><div class="line"></div><div class="line">//WKWebView</div><div class="line">- (void)webView:(WKWebView *)webView didFinishNavigation:(null_unspecified WKNavigation *)navigation</div><div class="line">&#123;</div><div class="line">    static  NSString * const jsGetImages =</div><div class="line">    @&quot;function getImages()&#123;\</div><div class="line">    var objs = document.getElementsByTagName(\&quot;img\&quot;);\</div><div class="line">    var imgScr = &apos;&apos;;\</div><div class="line">    for(var i=0;i&lt;objs.length;i++)&#123;\</div><div class="line">    imgScr = imgScr + objs[i].src + &apos;+&apos;;\</div><div class="line">    &#125;;\</div><div class="line">    return imgScr;\</div><div class="line">    &#125;;&quot;;</div><div class="line"></div><div class="line">    [webView evaluateJavaScript:jsGetImages completionHandler:nil];</div><div class="line">    [webView evaluateJavaScript:@&quot;getImages()&quot; completionHandler:^(id _Nullable result, NSError * _Nullable error) &#123;</div><div class="line">        NSLog(@&quot;%@&quot;,result);</div><div class="line">    &#125;];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="获取到webview的高度"><a href="#获取到webview的高度" class="headerlink" title="获取到webview的高度"></a>获取到webview的高度</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">CGFloat height = [[self.webView stringByEvaluatingJavaScriptFromString:@&quot;document.body.offsetHeight&quot;] floatValue];</div></pre></td></tr></table></figure>
+            
+        </div>
     </div>
-
-    <div>
-      
+    <div id="post-footer" class="post-footer main-content-wrap">
         
-<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
-    <img id="wechat_subscriber_qcode" src="/uploads/avatar_public.jpg" alt="ppsheep wechat" style="width: 200px; max-width: 100%;"/>
-    <div>欢迎您扫一扫上面的微信公众号，我将同步发送博客内容！</div>
-</div>
-
-
-      
-    </div>
-
-    <div>
-      
-        
-  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
-    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
-    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
-      <span>赏</span>
-    </button>
-    <div id="QR" style="display: none;">
-      
-        <div id="wechat" style="display: inline-block">
-          <img id="wechat_qr" src="http://o8bxt3lx0.bkt.clouddn.com/141478051735_.pic%E5%89%AF%E6%9C%AC.jpg" alt="ppsheep WeChat Pay"/>
-          <p>微信打赏</p>
-        </div>
-      
-      
-        <div id="alipay" style="display: inline-block">
-          <img id="alipay_qr" src="http://o8bxt3lx0.bkt.clouddn.com/131478051734_.pic%E5%89%AF%E6%9C%AC.jpg" alt="ppsheep Alipay"/>
-          <p>支付宝打赏</p>
-        </div>
-      
-    </div>
-  </div>
-
-
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2016/11/08/iOS-有效编写高质量Objective-C方法-三/" rel="next" title="iOS-有效编写高质量Objective-C方法-三">
-                <i class="fa fa-chevron-left"></i> iOS-有效编写高质量Objective-C方法-三
-              </a>
-            
-          </div>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/11/16/iOS CALayer基础介绍-动画基础之一/" rel="prev" title="iOS CALayer基础介绍-动画基础之一">
-                iOS CALayer基础介绍-动画基础之一 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </article>
-
-
-
-    <div class="post-spread">
-      
-    </div>
-  </div>
-
-
-          </div>
-          
-
-
-          
-  <div class="comments" id="comments">
-    
-      <div class="ds-thread" data-thread-key="2016/11/09/iOS基础开发技巧-二/"
-           data-title="iOS基础开发技巧-二" data-url="http://ppsheep.com/2016/11/09/iOS基础开发技巧-二/">
-      </div>
-    
-  </div>
-
-
-        </div>
-        
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
-
-  <aside id="sidebar" class="sidebar">
-    <div class="sidebar-inner">
-
-      
-
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
+        <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/11/16/iOS CALayer基础介绍-动画基础之一/"  data-tooltip="iOS CALayer基础介绍-动画基础之一">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/11/08/iOS-有效编写高质量Objective-C方法-三/" data-tooltip="iOS-有效编写高质量Objective-C方法-三">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
         </ul>
-      
-
-      <section class="site-overview sidebar-panel ">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="http://o8bxt3lx0.bkt.clouddn.com/avatar_public.jpg"
-               alt="ppsheep" />
-          <p class="site-author-name" itemprop="name">ppsheep</p>
-          <p class="site-description motion-element" itemprop="description">一个就职于网易的初级iOS开发者，目前正在修炼自己，博客建立不久，正在寻找更好的写作方式。。。。。。。 目前还在维护一个微信公众号，即我的头像二维码，博客的内容，我会同步到微信公众号，欢迎大家关注</p>
-        </div>
-        <nav class="site-state motion-element">
-          <div class="site-state-item site-state-posts">
-            <a href="/archives">
-              <span class="site-state-item-count">40</span>
-              <span class="site-state-item-name">日志</span>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
             </a>
-          </div>
-
-          
-            <div class="site-state-item site-state-categories">
-              <a href="/categories">
-                <span class="site-state-item-count">14</span>
-                <span class="site-state-item-name">分类</span>
-              </a>
-            </div>
-          
-
-          
-            <div class="site-state-item site-state-tags">
-              <a href="/tags">
-                <span class="site-state-item-count">25</span>
-                <span class="site-state-item-name">标签</span>
-              </a>
-            </div>
-          
-
-        </nav>
-
-        
-          <div class="feed-link motion-element">
-            <a href="/atom.xml" rel="alternate">
-              <i class="fa fa-rss"></i>
-              RSS
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://ppsheep.com/2016/11/09/iOS基础开发技巧-二/">
+                <i class="fa fa-google-plus"></i>
             </a>
-          </div>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://ppsheep.com/2016/11/09/iOS基础开发技巧-二/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://ppsheep.com/2016/11/09/iOS基础开发技巧-二/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
         
+            <li class="post-action">
+                <a class="post-action-btn btn btn--default" href="#ds-thread">
+                    <i class="fa fa-comment-o"></i>
+                </a>
+            </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
 
-        <div class="links-of-author motion-element">
-          
+
+        
             
-              <span class="links-of-author-item">
-                <a href="https://github.com/yangqian111" target="_blank" title="github">
-                  
-                    <i class="fa fa-fw fa-globe"></i>
-                  
-                  github
+                <div id="ds-thread" class="ds-thread" data-thread-key="2016/11/09/iOS基础开发技巧-二/"
+     data-title="iOS基础开发技巧-二" data-url="http://ppsheep.com/2016/11/09/iOS基础开发技巧-二/">
+</div>
+
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2017 ppsheep. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="3">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/11/16/iOS CALayer基础介绍-动画基础之一/"  data-tooltip="iOS CALayer基础介绍-动画基础之一">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
                 </a>
-              </span>
-            
-              <span class="links-of-author-item">
-                <a href="https://mp.weixin.qq.com/s?__biz=MzI2NTUwOTI1MA==&mid=100000031&idx=1&sn=06aa9c48ce44e5e3c8f749165d337d73&chksm=6a9d01f25dea88e44ebd78ca9a502f5466d4121397c3441580771b6944741d7a32a606486d0c&scene=18&key=4a874d92793fbeb0bca44c58c7f560332608ad6bee7c6d6c0b6798bd741f1e995f6d83a41ba8cdaa89d046d624fd569489e1c7947ef080b8069d7bd291cb171420098c464951bdeb48920b2fa99a33af&ascene=0&uin=MzI5ODUzOTE1&devicetype=iMac+MacBookPro12%2C1+OSX+OSX+10.12.2+build(16C67)&version=12010210&nettype=WIFI&fontScale=100&pass_ticket=qTNsRor5ktcrsYFdBDK8i9BcJRYTf8Poc1MYvl7626S1waZOJPR3NPfOroB14Shf" target="_blank" title="公众号">
-                  
-                    <i class="fa fa-fw fa-globe"></i>
-                  
-                  公众号
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/11/08/iOS-有效编写高质量Objective-C方法-三/" data-tooltip="iOS-有效编写高质量Objective-C方法-三">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right"></i>
                 </a>
-              </span>
-            
-              <span class="links-of-author-item">
-                <a href="http://ppsheep.com/about/" target="_blank" title="联系我">
-                  
-                    <i class="fa fa-fw fa-globe"></i>
-                  
-                  联系我
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://ppsheep.com/2016/11/09/iOS基础开发技巧-二/">
+                <i class="fa fa-google-plus"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://ppsheep.com/2016/11/09/iOS基础开发技巧-二/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://ppsheep.com/2016/11/09/iOS基础开发技巧-二/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        
+            <li class="post-action">
+                <a class="post-action-btn btn btn--default" href="#ds-thread">
+                    <i class="fa fa-comment-o"></i>
                 </a>
-              </span>
+            </li>
+        
+        <li class="post-action">
             
-              <span class="links-of-author-item">
-                <a href="http://ppsheep.com/about/" target="_blank" title="博客评论不能及时回复，请微信联系">
-                  
-                    <i class="fa fa-fw fa-globe"></i>
-                  
-                  博客评论不能及时回复，请微信联系
-                </a>
-              </span>
+                <a class="post-action-btn btn btn--default" href="#">
             
-          
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="3">
+    <ul class="share-options">
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://ppsheep.com/2016/11/09/iOS基础开发技巧-二/">
+                <i class="fa fa-google-plus"></i><span class="">分享到 Google+</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://ppsheep.com/2016/11/09/iOS基础开发技巧-二/">
+                <i class="fa fa-facebook-official"></i><span>分享到 Facebook</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://ppsheep.com/2016/11/09/iOS基础开发技巧-二/">
+                <i class="fa fa-twitter"></i><span>分享到 Twitter</span>
+            </a>
+        </li>
+    </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+            
         </div>
-
-        
         
 
-        
-        
 
-      </section>
-
-      
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-            
-              
-            
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#打印系统所有已注册的字体名称"><span class="nav-number">1.</span> <span class="nav-text">打印系统所有已注册的字体名称</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字符串反转"><span class="nav-number">2.</span> <span class="nav-text">字符串反转</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#禁止锁屏"><span class="nav-number">3.</span> <span class="nav-text">禁止锁屏</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字符串按多个符号分割"><span class="nav-number">4.</span> <span class="nav-text">字符串按多个符号分割</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#iOS跳转到App-Store下载应用评分"><span class="nav-number">5.</span> <span class="nav-text">iOS跳转到App Store下载应用评分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#判断当前ViewController是push还是present的方式显示的"><span class="nav-number">6.</span> <span class="nav-text">判断当前ViewController是push还是present的方式显示的</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#获取实际使用的LaunchImage图片"><span class="nav-number">7.</span> <span class="nav-text">获取实际使用的LaunchImage图片</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#iOS在当前屏幕获取第一响应"><span class="nav-number">8.</span> <span class="nav-text">iOS在当前屏幕获取第一响应</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#判断对象是否遵循了某协议"><span class="nav-number">9.</span> <span class="nav-text">判断对象是否遵循了某协议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#判断view是不是指定视图的子视图"><span class="nav-number">10.</span> <span class="nav-text">判断view是不是指定视图的子视图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NSArray-快速求总和-最大值-最小值-和-平均值"><span class="nav-number">11.</span> <span class="nav-text">NSArray 快速求总和 最大值 最小值 和 平均值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改UITextField中Placeholder的文字颜色"><span class="nav-number">12.</span> <span class="nav-text">修改UITextField中Placeholder的文字颜色</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关于NSDateFormatter的格式"><span class="nav-number">13.</span> <span class="nav-text">关于NSDateFormatter的格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#阿拉伯数字转中文格式"><span class="nav-number">14.</span> <span class="nav-text">阿拉伯数字转中文格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Base64编码与NSString对象或NSData对象的转换"><span class="nav-number">15.</span> <span class="nav-text">Base64编码与NSString对象或NSData对象的转换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#取消UICollectionView的隐式动画"><span class="nav-number">16.</span> <span class="nav-text">取消UICollectionView的隐式动画</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看某个UIImage占用内存大小"><span class="nav-number">17.</span> <span class="nav-text">查看某个UIImage占用内存大小</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UIView设置部分圆角"><span class="nav-number">18.</span> <span class="nav-text">UIView设置部分圆角</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#去掉导航栏的back标题"><span class="nav-number">19.</span> <span class="nav-text">去掉导航栏的back标题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dispatch-group的使用"><span class="nav-number">20.</span> <span class="nav-text">dispatch_group的使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#获取私有属性和成员变量-记得引入runtime"><span class="nav-number">21.</span> <span class="nav-text">获取私有属性和成员变量 记得引入runtime</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#iOS中数字的格式化"><span class="nav-number">22.</span> <span class="nav-text">iOS中数字的格式化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#获取WebView所有的图片地址"><span class="nav-number">23.</span> <span class="nav-text">获取WebView所有的图片地址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#获取到webview的高度"><span class="nav-number">24.</span> <span class="nav-text">获取到webview的高度</span></a></li></ol></div>
-            
-          </div>
-        </section>
-      
-
-    </div>
-  </aside>
-
-
-        
-      </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright" >
-  
-  &copy;  2016 - 
-  <span itemprop="copyrightYear">2017</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">ppsheep</span>
-</div>
-
-<div class="powered-by">
-  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
-</div>
-
-<div class="theme-info">
-  主题 -
-  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Mist
-  </a>
-</div>
-
-        
-
-        
-      </div>
-    </footer>
-
-    <div class="back-to-top">
-      <i class="fa fa-arrow-up"></i>
-    </div>
-  </div>
-
-  
-
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
-</script>
-
-
-
-
-
-
-
-
-
-  
-
-
-
-  
-  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-
-  
-  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-
-  
-  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
-
-
-
-  
-  
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
-
-
-
-  
-
-  
     
-  
-
-  <script type="text/javascript">
-    var duoshuoQuery = {short_name:"yangqian111"};
-    (function() {
-      var ds = document.createElement('script');
-      ds.type = 'text/javascript';ds.async = true;
-      ds.id = 'duoshuo-script';
-      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-      ds.charset = 'UTF-8';
-      (document.getElementsByTagName('head')[0]
-      || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
-  </script>
-
-  
+        
     
-    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
-    <script src="/js/src/hook-duoshuo.js"></script>
-  
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-remove"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/avatar_public.jpg"/>
+        
+            <h4 id="about-card-name">ppsheep</h4>
+        
+            <h5 id="about-card-bio"><p>author.bio</p>
+</h5>
+        
+        
+            <h5 id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>author.job</p>
+
+            </h5>
+        
+        
+            <h5 id="about-card-location">
+                <i class="fa fa-map-marker"></i>
+                <br/>
+                HangZhou
+            </h5>
+        
+    </div>
+</div>
+
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+    </body>
+    <!--SCRIPTS-->
+<script src="/assets/js/script-i4qo6jx6jji9fg0dftpya6ivemizsbow4fhow76d8dwpm7m1wbvi378ssumx.min.js"></script>
+<!--SCRIPTS END-->
+
+    
+        <script type="text/javascript">
+            var duoshuoQuery = {short_name:'yangqian111'};
+            (function() {
+                var ds = document.createElement('script');
+                ds.type = 'text/javascript';ds.async = true;
+                ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+                ds.charset = 'UTF-8';
+                (document.getElementsByTagName('head')[0]
+                || document.getElementsByTagName('body')[0]).appendChild(ds);
+            })();
+        </script>
+    
 
 
 
-
-
-
-  
-  
-
-  
-
-  
-
-  
-  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
-  <script>AV.initialize("wVNXI1zodIQXjH2YGmNdcNTR-gzGzoHsz", "qglLYXNVHBDUayaqz0RYy6H4");</script>
-  <script>
-    function showTime(Counter) {
-      var query = new AV.Query(Counter);
-      var entries = [];
-      var $visitors = $(".leancloud_visitors");
-
-      $visitors.each(function () {
-        entries.push( $(this).attr("id").trim() );
-      });
-
-      query.containedIn('url', entries);
-      query.find()
-        .done(function (results) {
-          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
-
-          if (results.length === 0) {
-            $visitors.find(COUNT_CONTAINER_REF).text(0);
-            return;
-          }
-
-          for (var i = 0; i < results.length; i++) {
-            var item = results[i];
-            var url = item.get('url');
-            var time = item.get('time');
-            var element = document.getElementById(url);
-
-            $(element).find(COUNT_CONTAINER_REF).text(time);
-          }
-          for(var i = 0; i < entries.length; i++) {
-            var url = entries[i];
-            var element = document.getElementById(url);
-            var countSpan = $(element).find(COUNT_CONTAINER_REF);
-            if( countSpan.text() == '') {
-              countSpan.text(0);
-            }
-          }
-        })
-        .fail(function (object, error) {
-          console.log("Error: " + error.code + " " + error.message);
-        });
-    }
-
-    function addCount(Counter) {
-      var $visitors = $(".leancloud_visitors");
-      var url = $visitors.attr('id').trim();
-      var title = $visitors.attr('data-flag-title').trim();
-      var query = new AV.Query(Counter);
-
-      query.equalTo("url", url);
-      query.find({
-        success: function(results) {
-          if (results.length > 0) {
-            var counter = results[0];
-            counter.fetchWhenSave(true);
-            counter.increment("time");
-            counter.save(null, {
-              success: function(counter) {
-                var $element = $(document.getElementById(url));
-                $element.find('.leancloud-visitors-count').text(counter.get('time'));
-              },
-              error: function(counter, error) {
-                console.log('Failed to save Visitor num, with error message: ' + error.message);
-              }
-            });
-          } else {
-            var newcounter = new Counter();
-            /* Set ACL */
-            var acl = new AV.ACL();
-            acl.setPublicReadAccess(true);
-            acl.setPublicWriteAccess(true);
-            newcounter.setACL(acl);
-            /* End Set ACL */
-            newcounter.set("title", title);
-            newcounter.set("url", url);
-            newcounter.set("time", 1);
-            newcounter.save(null, {
-              success: function(newcounter) {
-                var $element = $(document.getElementById(url));
-                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
-              },
-              error: function(newcounter, error) {
-                console.log('Failed to create');
-              }
-            });
-          }
-        },
-        error: function(error) {
-          console.log('Error:' + error.code + " " + error.message);
-        }
-      });
-    }
-
-    $(function() {
-      var Counter = AV.Object.extend("Counter");
-      if ($('.leancloud_visitors').length == 1) {
-        addCount(Counter);
-      } else if ($('.post-title-link').length > 1) {
-        showTime(Counter);
-      }
-    });
-  </script>
-
-
-
-  
-<script>
-(function(){
-    var bp = document.createElement('script');
-    var curProtocol = window.location.protocol.split(':')[0];
-    if (curProtocol === 'https') {
-        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
-    }
-    else {
-        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-    }
-    var s = document.getElementsByTagName("script")[0];
-    s.parentNode.insertBefore(bp, s);
-})();
-</script>
-
-
-  
-
-
-</body>
 </html>

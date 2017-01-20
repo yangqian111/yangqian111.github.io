@@ -1,0 +1,418 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="ppsheep">
+    <title>分类: iOS基础 网络组件 - ppsheep</title>
+    <meta name="author" content="ppsheep">
+    
+    
+    
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+    
+    <meta name="description" content="一个就职于网易的初级iOS开发者，目前正在修炼自己，博客建立不久，正在寻找更好的写作方式。。。。。。。 目前还在维护一个微信公众号，即我的头像二维码，博客的内容，我会同步到微信公众号，欢迎大家关注">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="ppsheep">
+<meta property="og:url" content="http://ppsheep.com/all-categories/iOS基础-网络组件/index.html">
+<meta property="og:site_name" content="ppsheep">
+<meta property="og:description" content="一个就职于网易的初级iOS开发者，目前正在修炼自己，博客建立不久，正在寻找更好的写作方式。。。。。。。 目前还在维护一个微信公众号，即我的头像二维码，博客的内容，我会同步到微信公众号，欢迎大家关注">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ppsheep">
+<meta name="twitter:description" content="一个就职于网易的初级iOS开发者，目前正在修炼自己，博客建立不久，正在寻找更好的写作方式。。。。。。。 目前还在维护一个微信公众号，即我的头像二维码，博客的内容，我会同步到微信公众号，欢迎大家关注">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="http://ppsheep.com/assets/images/avatar_public.jpg"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-nuvue6sithwirecbhvw3dkaobiojqvtadsnhguwi7k04xklybw5djl1smadp.min.css">
+    <!--STYLES END-->
+    
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="1">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <h1 class="header-title">
+        <a class="header-title-link" href="/ ">ppsheep</a>
+    </h1>
+    
+        
+            <a  class="header-right-picture "
+                href="#about">
+        
+        
+            <img class="header-picture" src="/assets/images/avatar_public.jpg"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="1">
+    
+        <div class="sidebar-profile">
+            <a href="/#about">
+                    <img class="sidebar-profile-picture" src="/assets/images/avatar_public.jpg"/>
+            </a>
+            <span class="sidebar-profile-name">ppsheep</span>
+        </div>
+    
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/ "
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+                    <span class="sidebar-button-desc">首页</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-categories"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+                    <span class="sidebar-button-desc">分类</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-tags"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+                    <span class="sidebar-button-desc">标签</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-archives"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+                    <span class="sidebar-button-desc">归档</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link st-search-show-outputs"
+                         href="#search"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-search"></i>
+                    <span class="sidebar-button-desc">搜索</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="#about"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+                    <span class="sidebar-button-desc">关于</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/atom.xml"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+                    <span class="sidebar-button-desc">RSS</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+</nav>
+
+            
+            <div id="main" data-behavior="1"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+    
+
+<section class="postShorten-group main-content-wrap">
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-right" itemscope itemType="http://schema.org/BlogPosting">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title" itemprop="headline">
+                    
+                        <a class="link-unstyled" href="/2017/01/03/iOS-ping网络小工具/">
+                            iOS ping网络小工具
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time itemprop="datePublished" datetime="2017-01-03T13:30:44+08:00">
+	
+		    1月 03, 2017
+    	
+    </time>
+    
+        <span>发布在 </span>
+        
+    <a class="category-link" href="/all-categories/iOS基础-网络组件/">iOS基础 网络组件</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-excerpt" itemprop="articleBody">
+                    <p>Ping工具经常在游戏中见到，计算网络的延迟，Apple官方有一个SimplePing的demo，用于对网络进行检测，就跟我们电脑端的ping效果相同，在一些情况下，我们可以用来进行网络速度的检测，这里将官方给出的demo进行封装，并且在SimplePing的基础上进行了一些改动，将我们需要用到的一些其他的数据取出来，便于我们的使用，源码我会放在文章末尾。</p>
+                    
+                        <a href="/2017/01/03/iOS-ping网络小工具/" class="postShorten-excerpt_link link">
+                            阅读全文
+                        </a>
+                        
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title" itemprop="headline">
+                    
+                        <a class="link-unstyled" href="/2016/12/16/iOS获取当前设备的信息-网络相关/">
+                            iOS获取当前设备的信息-网络相关
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time itemprop="datePublished" datetime="2016-12-16T14:57:18+08:00">
+	
+		    12月 16, 2016
+    	
+    </time>
+    
+        <span>发布在 </span>
+        
+    <a class="category-link" href="/all-categories/iOS基础-网络组件/">iOS基础 网络组件</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content" itemprop="articleBody">
+                    <p><strong>欢迎大家关注我的公众号，我会定期分享一些我在项目中遇到问题的解决办法和一些iOS实用的技巧，现阶段主要是整理出一些基础的知识记录下来</strong></p>
+<div align="middle"><br>    <image src="http://ac-mhke0kuv.clouddn.com/830a4ead8294ceff5160.jpg"></image><br></div>
+
+<p>文章也会同步更新到我的博客：<br><a href="http://ppsheep.com">http://ppsheep.com</a></p>
+<h3 id="获取当前设备的IP地址"><a href="#获取当前设备的IP地址" class="headerlink" title="获取当前设备的IP地址"></a>获取当前设备的IP地址</h3><p>对于公网的IP当然，在我们本地设备上是不能够获取到的，至少我没有找到方法获取到出口IP地址，但是局域网的IP还是能够获取到的，这里ipv4和ipv6 都能够获取出来</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line">+ (NSString *)deviceIPAdress</div><div class="line">&#123;</div><div class="line">    NSString *address = @&quot;&quot;;</div><div class="line">    struct ifaddrs *interfaces = NULL;</div><div class="line">    struct ifaddrs *temp_addr = NULL;</div><div class="line">    int success = 0;</div><div class="line">    </div><div class="line">    success = getifaddrs(&amp;interfaces);</div><div class="line">    </div><div class="line">    if (success == 0) &#123;  // 0 表示获取成功</div><div class="line">        </div><div class="line">        temp_addr = interfaces;</div><div class="line">        while (temp_addr != NULL) &#123;</div><div class="line">            </div><div class="line">            if ([[NSString stringWithUTF8String:temp_addr-&gt;ifa_name] isEqualToString:@&quot;en0&quot;] || [[NSString stringWithUTF8String:temp_addr-&gt;ifa_name] isEqualToString:@&quot;pdp_ip0&quot;])</div><div class="line">                &#123;</div><div class="line">                //如果是IPV4地址，直接转化</div><div class="line">                if (temp_addr-&gt;ifa_addr-&gt;sa_family == AF_INET)&#123;</div><div class="line">                    </div><div class="line">                    // Get NSString from C String</div><div class="line">                    address = [self formatIPV4Address:((struct sockaddr_in *)temp_addr-&gt;ifa_addr)-&gt;sin_addr];</div><div class="line">                &#125;</div><div class="line">                </div><div class="line">                //如果是IPV6地址</div><div class="line">                else if (temp_addr-&gt;ifa_addr-&gt;sa_family == AF_INET6)&#123;</div><div class="line">                    address = [self formatIPV6Address:((struct sockaddr_in6 *)temp_addr-&gt;ifa_addr)-&gt;sin6_addr];</div><div class="line">                    if (address &amp;&amp; ![address isEqualToString:@&quot;&quot;] &amp;&amp; ![address.uppercaseString hasPrefix:@&quot;FE80&quot;]) break;</div><div class="line">                &#125;</div><div class="line">                &#125;</div><div class="line">            </div><div class="line">            temp_addr = temp_addr-&gt;ifa_next;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    freeifaddrs(interfaces);</div><div class="line">    </div><div class="line">    //以FE80开始的地址是单播地址</div><div class="line">    if (address &amp;&amp; ![address isEqualToString:@&quot;&quot;] &amp;&amp; ![address.uppercaseString hasPrefix:@&quot;FE80&quot;]) &#123;</div><div class="line">        return address;</div><div class="line">    &#125; else &#123;</div><div class="line">        return @&quot;127.0.0.1&quot;;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="获取当前设备网关地址"><a href="#获取当前设备网关地址" class="headerlink" title="获取当前设备网关地址"></a>获取当前设备网关地址</h3><p>网关地址，通俗点  就是路由器的地址，也是相对于局域网 这里需要区分一下ipv4和ipv6，两种获取网关地址的方法是不一样</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div></pre></td><td class="code"><pre><div class="line">//ipv4网关地址</div><div class="line">+ (NSString *)getGatewayIPV4Address</div><div class="line">&#123;</div><div class="line">    </div><div class="line">    NSString *address = nil;</div><div class="line">    </div><div class="line">    /* net.route.0.inet.flags.gateway */</div><div class="line">    int mib[] = &#123;CTL_NET, PF_ROUTE, 0, AF_INET, NET_RT_FLAGS, RTF_GATEWAY&#125;;</div><div class="line">    </div><div class="line">    size_t l;</div><div class="line">    char *buf, *p;</div><div class="line">    struct rt_msghdr *rt;</div><div class="line">    struct sockaddr *sa;</div><div class="line">    struct sockaddr *sa_tab[RTAX_MAX];</div><div class="line">    int i;</div><div class="line">    </div><div class="line">    if (sysctl(mib, sizeof(mib) / sizeof(int), 0, &amp;l, 0, 0) &lt; 0) &#123;</div><div class="line">        address = @&quot;192.168.0.1&quot;;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    if (l &gt; 0) &#123;</div><div class="line">        buf = malloc(l);</div><div class="line">        if (sysctl(mib, sizeof(mib) / sizeof(int), buf, &amp;l, 0, 0) &lt; 0) &#123;</div><div class="line">            address = @&quot;192.168.0.1&quot;;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        for (p = buf; p &lt; buf + l; p += rt-&gt;rtm_msglen) &#123;</div><div class="line">            rt = (struct rt_msghdr *)p;</div><div class="line">            sa = (struct sockaddr *)(rt + 1);</div><div class="line">            for (i = 0; i &lt; RTAX_MAX; i++) &#123;</div><div class="line">                if (rt-&gt;rtm_addrs &amp; (1 &lt;&lt; i)) &#123;</div><div class="line">                    sa_tab[i] = sa;</div><div class="line">                    sa = (struct sockaddr *)((char *)sa + ROUNDUP(sa-&gt;sa_len));</div><div class="line">                &#125; else &#123;</div><div class="line">                    sa_tab[i] = NULL;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            </div><div class="line">            if (((rt-&gt;rtm_addrs &amp; (RTA_DST | RTA_GATEWAY)) == (RTA_DST | RTA_GATEWAY)) &amp;&amp;</div><div class="line">                sa_tab[RTAX_DST]-&gt;sa_family == AF_INET &amp;&amp;</div><div class="line">                sa_tab[RTAX_GATEWAY]-&gt;sa_family == AF_INET) &#123;</div><div class="line">                unsigned char octet[4] = &#123;0, 0, 0, 0&#125;;</div><div class="line">                int i;</div><div class="line">                for (i = 0; i &lt; 4; i++) &#123;</div><div class="line">                    octet[i] = (((struct sockaddr_in *)(sa_tab[RTAX_GATEWAY]))-&gt;sin_addr.s_addr &gt;&gt;</div><div class="line">                                (i * 8)) &amp;</div><div class="line">                    0xFF;</div><div class="line">                &#125;</div><div class="line">                if (((struct sockaddr_in *)sa_tab[RTAX_DST])-&gt;sin_addr.s_addr == 0) &#123;</div><div class="line">                    in_addr_t addr =</div><div class="line">                    ((struct sockaddr_in *)(sa_tab[RTAX_GATEWAY]))-&gt;sin_addr.s_addr;</div><div class="line">                    address = [self formatIPV4Address:*((struct in_addr *)&amp;addr)];</div><div class="line">                    //                    NSLog(@&quot;IPV4address%@&quot;, address);</div><div class="line">                    break;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        free(buf);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    return address;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line">//ipv6网关地址</div><div class="line">+ (NSString *)getGatewayIPV6Address</div><div class="line">&#123;</div><div class="line">    </div><div class="line">    NSString *address = nil;</div><div class="line">    </div><div class="line">    /* net.route.0.inet.flags.gateway */</div><div class="line">    int mib[] = &#123;CTL_NET, PF_ROUTE, 0, AF_INET6, NET_RT_FLAGS, RTF_GATEWAY&#125;;</div><div class="line">    </div><div class="line">    size_t l;</div><div class="line">    char *buf, *p;</div><div class="line">    struct rt_msghdr *rt;</div><div class="line">    struct sockaddr_in6 *sa;</div><div class="line">    struct sockaddr_in6 *sa_tab[RTAX_MAX];</div><div class="line">    int i;</div><div class="line">    </div><div class="line">    if (sysctl(mib, sizeof(mib) / sizeof(int), 0, &amp;l, 0, 0) &lt; 0) &#123;</div><div class="line">        address = @&quot;192.168.0.1&quot;;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    if (l &gt; 0) &#123;</div><div class="line">        buf = malloc(l);</div><div class="line">        if (sysctl(mib, sizeof(mib) / sizeof(int), buf, &amp;l, 0, 0) &lt; 0) &#123;</div><div class="line">            address = @&quot;192.168.0.1&quot;;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        for (p = buf; p &lt; buf + l; p += rt-&gt;rtm_msglen) &#123;</div><div class="line">            rt = (struct rt_msghdr *)p;</div><div class="line">            sa = (struct sockaddr_in6 *)(rt + 1);</div><div class="line">            for (i = 0; i &lt; RTAX_MAX; i++) &#123;</div><div class="line">                if (rt-&gt;rtm_addrs &amp; (1 &lt;&lt; i)) &#123;</div><div class="line">                    sa_tab[i] = sa;</div><div class="line">                    sa = (struct sockaddr_in6 *)((char *)sa + sa-&gt;sin6_len);</div><div class="line">                &#125; else &#123;</div><div class="line">                    sa_tab[i] = NULL;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            </div><div class="line">            if( ((rt-&gt;rtm_addrs &amp; (RTA_DST|RTA_GATEWAY)) == (RTA_DST|RTA_GATEWAY))</div><div class="line">               &amp;&amp; sa_tab[RTAX_DST]-&gt;sin6_family == AF_INET6</div><div class="line">               &amp;&amp; sa_tab[RTAX_GATEWAY]-&gt;sin6_family == AF_INET6)</div><div class="line">                &#123;</div><div class="line">                address = [self formatIPV6Address:((struct sockaddr_in6 *)(sa_tab[RTAX_GATEWAY]))-&gt;sin6_addr];</div><div class="line">                //                NSLog(@&quot;IPV6address%@&quot;, address);</div><div class="line">                break;</div><div class="line">                &#125;</div><div class="line">        &#125;</div><div class="line">        free(buf);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    return address;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>我们在获取的时候判断一下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">/*!</div><div class="line"> * 获取当前设备网关地址</div><div class="line"> */</div><div class="line">+ (NSString *)getGatewayIPAddress&#123;</div><div class="line">    NSString *address = nil;</div><div class="line">    </div><div class="line">    NSString *gatewayIPV4 = [self getGatewayIPV4Address];</div><div class="line">    NSString *gatewayIPV6 = [self getGatewayIPV6Address];</div><div class="line">    </div><div class="line">    if (gatewayIPV6 != nil) &#123;</div><div class="line">        address = gatewayIPV6;</div><div class="line">    &#125; else &#123;</div><div class="line">        address = gatewayIPV4;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    return address;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="通过域名拿到域名对应的IP地址-CDN"><a href="#通过域名拿到域名对应的IP地址-CDN" class="headerlink" title="通过域名拿到域名对应的IP地址(CDN)"></a>通过域名拿到域名对应的IP地址(CDN)</h3><p>通过域名拿到的IP地址，一般来说，如果买了CDN的话，拿到的Ip都会是多个IP</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">/*!</div><div class="line"> * 通过hostname获取ip列表 DNS解析地址</div><div class="line"> */</div><div class="line">+ (NSArray *)getDNSsWithDormain:(NSString *)hostName&#123;</div><div class="line">    NSMutableArray *result = [[NSMutableArray alloc] init];</div><div class="line">    NSArray *IPDNSs = [self getDNSWithHostName:hostName];</div><div class="line">    if (IPDNSs &amp;&amp; IPDNSs.count &gt; 0) &#123;</div><div class="line">        [result addObjectsFromArray:IPDNSs];</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    return [NSArray arrayWithArray:result];</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">+ (NSArray *)getDNSWithHostName:(NSString *)hostName</div><div class="line">&#123;</div><div class="line">    const char *hostN = [hostName UTF8String];</div><div class="line">    Boolean result = false;</div><div class="line">    Boolean bResolved = false;</div><div class="line">    CFHostRef hostRef;</div><div class="line">    CFArrayRef addresses = NULL;</div><div class="line">    </div><div class="line">    CFStringRef hostNameRef = CFStringCreateWithCString(kCFAllocatorDefault, hostN, kCFStringEncodingASCII);</div><div class="line">    </div><div class="line">    hostRef = CFHostCreateWithName(kCFAllocatorDefault, hostNameRef);</div><div class="line">    if (hostRef) &#123;</div><div class="line">        result = CFHostStartInfoResolution(hostRef, kCFHostAddresses, NULL);</div><div class="line">        if (result == true) &#123;</div><div class="line">            addresses = CFHostGetAddressing(hostRef, &amp;result);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    bResolved = result;</div><div class="line">    NSMutableArray *ipAddresses = [NSMutableArray array];</div><div class="line">    if(bResolved)</div><div class="line">        &#123;</div><div class="line">        struct sockaddr_in* remoteAddr;</div><div class="line">        </div><div class="line">        for(int i = 0; i &lt; CFArrayGetCount(addresses); i++)</div><div class="line">            &#123;</div><div class="line">            CFDataRef saData = (CFDataRef)CFArrayGetValueAtIndex(addresses, i);</div><div class="line">            remoteAddr = (struct sockaddr_in*)CFDataGetBytePtr(saData);</div><div class="line">            </div><div class="line">            if(remoteAddr != NULL)</div><div class="line">                &#123;</div><div class="line">                //获取IP地址</div><div class="line">                const char *strIP41 = inet_ntoa(remoteAddr-&gt;sin_addr);</div><div class="line">                NSString *strDNS =[NSString stringWithCString:strIP41 encoding:NSASCIIStringEncoding];</div><div class="line">                [ipAddresses addObject:strDNS];</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    CFRelease(hostNameRef);</div><div class="line">    if (hostRef) &#123;</div><div class="line">        CFRelease(hostRef);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    return [NSArray arrayWithArray:ipAddresses];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="获取当前的网络状况"><a href="#获取当前的网络状况" class="headerlink" title="获取当前的网络状况"></a>获取当前的网络状况</h3><p>如果是WIFI环境，直接返回wifi  如果是蜂窝网络环境，那么还可以区分到底是那个运营商，还可以区分是使用的什么网络，4G 3G 2G等  运营商暂时区分了国内的三大运营商，如果还需要区分国外的，可以维基百科上查对应的code</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">+(NSString *)currentNetInfo&#123;</div><div class="line">    </div><div class="line">    NSString *returnName = nil;</div><div class="line">    </div><div class="line">    PPSNetWorkType type = [PPSGetAppEnvironment getNetworkTypeFromStatusBar];</div><div class="line">    if (type == PPSNetWorkTypeWiFi) &#123;</div><div class="line">        returnName = @&quot;WIFI&quot;;</div><div class="line">        return returnName;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    NSString *carrierName = nil;</div><div class="line">    CTTelephonyNetworkInfo *netInfo = [[CTTelephonyNetworkInfo alloc] init];</div><div class="line">    CTCarrier *carrier = [netInfo subscriberCellularProvider];</div><div class="line">    if (carrier != NULL) &#123;</div><div class="line">        NSArray *chinaMobileMics = @[@&quot;0&quot;,@&quot;2&quot;,@&quot;7&quot;];//移动code</div><div class="line">        NSArray *chinaTelecomMics = @[@&quot;3&quot;,@&quot;5&quot;,@&quot;11&quot;];//电信code</div><div class="line">        NSArray *chinaUnicomMics = @[@&quot;1&quot;,@&quot;6&quot;];//联通code</div><div class="line">        NSString *mobileNetworkCode = [carrier mobileNetworkCode];</div><div class="line">        if ([chinaMobileMics containsObject:mobileNetworkCode]) &#123;</div><div class="line">            carrierName = @&quot;chinamobile&quot;;</div><div class="line">        &#125;else if ([chinaTelecomMics containsObject:mobileNetworkCode])&#123;</div><div class="line">            carrierName = @&quot;chinatelecom&quot;;</div><div class="line">        &#125;else if ([chinaUnicomMics containsObject:mobileNetworkCode])&#123;</div><div class="line">            carrierName = @&quot;chinaunicom&quot;;</div><div class="line">        &#125;else&#123;</div><div class="line">            carrierName = @&quot;unknown&quot;;</div><div class="line">        &#125;</div><div class="line">    &#125; else &#123;</div><div class="line">        carrierName = @&quot;unknown&quot;;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    switch (type) &#123;</div><div class="line">        case PPSNetWorkType2G:</div><div class="line">            returnName = [NSString stringWithFormat:@&quot;%@_%@&quot;,carrierName,@&quot;2G&quot;];</div><div class="line">            break;</div><div class="line">        case PPSNetWorkType3G:</div><div class="line">            returnName = [NSString stringWithFormat:@&quot;%@_%@&quot;,carrierName,@&quot;3G&quot;];</div><div class="line">            break;</div><div class="line">        case PPSNetWorkType4G:</div><div class="line">            returnName = [NSString stringWithFormat:@&quot;%@_%@&quot;,carrierName,@&quot;4G&quot;];</div><div class="line">            break;</div><div class="line">        case PPSNetWorkType5G:</div><div class="line">            returnName = [NSString stringWithFormat:@&quot;%@_%@&quot;,carrierName,@&quot;5G&quot;];</div><div class="line">            break;</div><div class="line">        case PPSNetWorkTypeNone:</div><div class="line">            returnName = [NSString stringWithFormat:@&quot;%@_%@&quot;,carrierName,@&quot;unknown&quot;];</div><div class="line">            break;</div><div class="line">        default:</div><div class="line">            returnName = [NSString stringWithFormat:@&quot;%@_%@&quot;,carrierName,@&quot;unknown&quot;];</div><div class="line">            break;</div><div class="line">    &#125;</div><div class="line">    return returnName;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="获取当前的设备信息"><a href="#获取当前的设备信息" class="headerlink" title="获取当前的设备信息"></a>获取当前的设备信息</h3><p>获取当前设备的信息，是iPhone 4 5 6 7还是 等等  还有系统的版本号  手机、平板<br>之类的都能够去区分出来</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">/**</div><div class="line"> 获取设备的类型</div><div class="line"> </div><div class="line"> @return 设备类型</div><div class="line"> */</div><div class="line">+ (NSString *)deviceInfo &#123;</div><div class="line">    struct utsname systemInfo;</div><div class="line">    </div><div class="line">    uname(&amp;systemInfo);</div><div class="line">    </div><div class="line">    NSString* code = [NSString stringWithCString:systemInfo.machine</div><div class="line">                                        encoding:NSUTF8StringEncoding];</div><div class="line">    </div><div class="line">    static NSDictionary* deviceNamesByCode = nil;</div><div class="line">    </div><div class="line">    if (!deviceNamesByCode) &#123;</div><div class="line">        </div><div class="line">        deviceNamesByCode = @&#123;@&quot;i386&quot;      :@&quot;Simulator&quot;,</div><div class="line">                              @&quot;x86_64&quot;    :@&quot;Simulator&quot;,</div><div class="line">                              @&quot;iPod1,1&quot;   :@&quot;iPod Touch&quot;,        // (Original)</div><div class="line">                              @&quot;iPod2,1&quot;   :@&quot;iPod Touch&quot;,        // (Second Generation)</div><div class="line">                              @&quot;iPod3,1&quot;   :@&quot;iPod Touch&quot;,        // (Third Generation)</div><div class="line">                              @&quot;iPod4,1&quot;   :@&quot;iPod Touch&quot;,        // (Fourth Generation)</div><div class="line">                              @&quot;iPod7,1&quot;   :@&quot;iPod Touch&quot;,        // (6th Generation)</div><div class="line">                              @&quot;iPhone1,1&quot; :@&quot;iPhone&quot;,            // (Original)</div><div class="line">                              @&quot;iPhone1,2&quot; :@&quot;iPhone&quot;,            // (3G)</div><div class="line">                              @&quot;iPhone2,1&quot; :@&quot;iPhone&quot;,            // (3GS)</div><div class="line">                              @&quot;iPad1,1&quot;   :@&quot;iPad&quot;,              // (Original)</div><div class="line">                              @&quot;iPad2,1&quot;   :@&quot;iPad 2&quot;,            //</div><div class="line">                              @&quot;iPad3,1&quot;   :@&quot;iPad&quot;,              // (3rd Generation)</div><div class="line">                              @&quot;iPhone3,1&quot; :@&quot;iPhone 4&quot;,          // (GSM)</div><div class="line">                              @&quot;iPhone3,3&quot; :@&quot;iPhone 4&quot;,          // (CDMA/Verizon/Sprint)</div><div class="line">                              @&quot;iPhone4,1&quot; :@&quot;iPhone 4S&quot;,         //</div><div class="line">                              @&quot;iPhone5,1&quot; :@&quot;iPhone 5&quot;,          // (model A1428, AT&amp;T/Canada)</div><div class="line">                              @&quot;iPhone5,2&quot; :@&quot;iPhone 5&quot;,          // (model A1429, everything else)</div><div class="line">                              @&quot;iPad3,4&quot;   :@&quot;iPad&quot;,              // (4th Generation)</div><div class="line">                              @&quot;iPad2,5&quot;   :@&quot;iPad Mini&quot;,         // (Original)</div><div class="line">                              @&quot;iPhone5,3&quot; :@&quot;iPhone 5c&quot;,         // (model A1456, A1532 | GSM)</div><div class="line">                              @&quot;iPhone5,4&quot; :@&quot;iPhone 5c&quot;,         // (model A1507, A1516, A1526 (China), A1529 | Global)</div><div class="line">                              @&quot;iPhone6,1&quot; :@&quot;iPhone 5s&quot;,         // (model A1433, A1533 | GSM)</div><div class="line">                              @&quot;iPhone6,2&quot; :@&quot;iPhone 5s&quot;,         // (model A1457, A1518, A1528 (China), A1530 | Global)</div><div class="line">                              @&quot;iPhone7,1&quot; :@&quot;iPhone 6 Plus&quot;,     //</div><div class="line">                              @&quot;iPhone7,2&quot; :@&quot;iPhone 6&quot;,          //</div><div class="line">                              @&quot;iPhone8,1&quot; :@&quot;iPhone 6S&quot;,         //</div><div class="line">                              @&quot;iPhone8,2&quot; :@&quot;iPhone 6S Plus&quot;,    //</div><div class="line">                              @&quot;iPhone8,4&quot; :@&quot;iPhone SE&quot;,         //</div><div class="line">                              @&quot;iPhone9,1&quot; :@&quot;iPhone 7&quot;,          //</div><div class="line">                              @&quot;iPhone9,3&quot; :@&quot;iPhone 7&quot;,          //</div><div class="line">                              @&quot;iPhone9,2&quot; :@&quot;iPhone 7 Plus&quot;,     //</div><div class="line">                              @&quot;iPhone9,4&quot; :@&quot;iPhone 7 Plus&quot;,     //</div><div class="line">                              </div><div class="line">                              @&quot;iPad4,1&quot;   :@&quot;iPad Air&quot;,          // 5th Generation iPad (iPad Air) - Wifi</div><div class="line">                              @&quot;iPad4,2&quot;   :@&quot;iPad Air&quot;,          // 5th Generation iPad (iPad Air) - Cellular</div><div class="line">                              @&quot;iPad4,4&quot;   :@&quot;iPad Mini&quot;,         // (2nd Generation iPad Mini - Wifi)</div><div class="line">                              @&quot;iPad4,5&quot;   :@&quot;iPad Mini&quot;,         // (2nd Generation iPad Mini - Cellular)</div><div class="line">                              @&quot;iPad4,7&quot;   :@&quot;iPad Mini&quot;,         // (3rd Generation iPad Mini - Wifi (model A1599))</div><div class="line">                              @&quot;iPad6,7&quot;   :@&quot;iPad Pro (12.9\&quot;)&quot;, // iPad Pro 12.9 inches - (model A1584)</div><div class="line">                              @&quot;iPad6,8&quot;   :@&quot;iPad Pro (12.9\&quot;)&quot;, // iPad Pro 12.9 inches - (model A1652)</div><div class="line">                              @&quot;iPad6,3&quot;   :@&quot;iPad Pro (9.7\&quot;)&quot;,  // iPad Pro 9.7 inches - (model A1673)</div><div class="line">                              @&quot;iPad6,4&quot;   :@&quot;iPad Pro (9.7\&quot;)&quot;   // iPad Pro 9.7 inches - (models A1674 and A1675)</div><div class="line">                              &#125;;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    NSString* deviceName = [deviceNamesByCode objectForKey:code];</div><div class="line">    </div><div class="line">    if (!deviceName) &#123;</div><div class="line">        // Not found on database. At least guess main device type from string contents:</div><div class="line">        </div><div class="line">        if ([code rangeOfString:@&quot;iPod&quot;].location != NSNotFound) &#123;</div><div class="line">            deviceName = @&quot;iPod Touch&quot;;</div><div class="line">        &#125;</div><div class="line">        else if([code rangeOfString:@&quot;iPad&quot;].location != NSNotFound) &#123;</div><div class="line">            deviceName = @&quot;iPad&quot;;</div><div class="line">        &#125;</div><div class="line">        else if([code rangeOfString:@&quot;iPhone&quot;].location != NSNotFound)&#123;</div><div class="line">            deviceName = @&quot;iPhone&quot;;</div><div class="line">        &#125;</div><div class="line">        else &#123;</div><div class="line">            deviceName = @&quot;Unknown&quot;;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    UIDevice *device = [UIDevice currentDevice];</div><div class="line">    NSString *systemVersion = [device systemVersion];</div><div class="line">    </div><div class="line">    return [NSString stringWithFormat:@&quot;iOS#%@#%@&quot;,deviceName,systemVersion];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>获取的信息：</p>
+<p><img src="http://o8bxt3lx0.bkt.clouddn.com/blog/2016-12-16-081639.jpg" alt=""></p>
+<p>原项目地址：</p>
+<p><a href="https://github.com/yangqian111/blog/tree/master/iOS获取当前设备的信息-网络相关" target="_blank" rel="external">https://github.com/yangqian111/blog/tree/master/iOS获取当前设备的信息-网络相关</a></p>
+
+                    
+                        
+                    
+                    
+                        <p>
+                            <a href="/2016/12/16/iOS获取当前设备的信息-网络相关/#post-footer" class="postShorten-excerpt_link link">
+                                注释和共享
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-right" itemscope itemType="http://schema.org/BlogPosting">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title" itemprop="headline">
+                    
+                        <a class="link-unstyled" href="/2016/10/26/iOS网络监测区分2、3、4G/">
+                            iOS网络监测区分2、3、4G
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time itemprop="datePublished" datetime="2016-10-26T19:07:14+08:00">
+	
+		    10月 26, 2016
+    	
+    </time>
+    
+        <span>发布在 </span>
+        
+    <a class="category-link" href="/all-categories/iOS基础-网络组件/">iOS基础 网络组件</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-excerpt" itemprop="articleBody">
+                    <p>如果有在使用AFNetworking朋友知道，在AF里只能区分当前网络是WiFi网络还是蜂窝网络在3G、4G出现以后，我们就有一个新需求，需要区分2G、3G、4G网络了，虽然同为蜂窝网络但是速度可是千差万别，有时我们会感觉到4G比WiFi还快，当然流量也是跑的相当肉痛</p>
+<p>下面我们就来讲一讲怎么区分2G 3G 4G网络<br>
+                    
+                        <a href="/2016/10/26/iOS网络监测区分2、3、4G/" class="postShorten-excerpt_link link">
+                            阅读全文
+                        </a>
+                        
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    <div class="pagination-bar">
+    <ul class="pagination">
+        
+        
+        <li class="pagination-number">第 1 页 共 1 页</li>
+    </ul>
+</div>
+
+</section>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2017 ppsheep. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-remove"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/avatar_public.jpg"/>
+        
+            <h4 id="about-card-name">ppsheep</h4>
+        
+            <h5 id="about-card-bio"><p>author.bio</p>
+</h5>
+        
+        
+            <h5 id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>author.job</p>
+
+            </h5>
+        
+        
+            <h5 id="about-card-location">
+                <i class="fa fa-map-marker"></i>
+                <br/>
+                HangZhou
+            </h5>
+        
+    </div>
+</div>
+
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+    </body>
+    <!--SCRIPTS-->
+<script src="/assets/js/script-i4qo6jx6jji9fg0dftpya6ivemizsbow4fhow76d8dwpm7m1wbvi378ssumx.min.js"></script>
+<!--SCRIPTS END-->
+
+
+
+</html>

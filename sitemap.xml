@@ -2,6 +2,48 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://ppsheep.com/all-tags/index.html</loc>
+    
+    <lastmod>2017-01-20T08:19:44.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ppsheep.com/all-categories/index.html</loc>
+    
+    <lastmod>2017-01-20T08:19:37.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ppsheep.com/all-archives/index.html</loc>
+    
+    <lastmod>2017-01-20T08:19:26.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ppsheep.com/2017/01/20/test/</loc>
+    
+    <lastmod>2017-01-20T08:10:53.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ppsheep.com/2016/12/28/iOS-%E6%9C%89%E6%95%88%E7%BC%96%E5%86%99%E9%AB%98%E8%B4%A8%E9%87%8FObjective-C%E6%96%B9%E6%B3%95-%E5%9B%9B/</loc>
+    
+    <lastmod>2017-01-20T07:51:19.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ppsheep.com/2017/01/11/Swift%E6%95%99%E7%A8%8B(%E5%9B%9B)%E2%80%94%E6%8E%A7%E5%88%B6%E6%B5%81/</loc>
+    
+    <lastmod>2017-01-11T09:05:05.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://ppsheep.com/2017/01/10/Swift%E6%95%99%E7%A8%8B(%E4%B8%89)%E2%80%94%E9%9B%86%E5%90%88%E7%B1%BB%E5%9E%8B/</loc>
     
     <lastmod>2017-01-11T09:02:23.000Z</lastmod>
@@ -44,23 +86,9 @@
   </url>
   
   <url>
-    <loc>http://ppsheep.com/guestbook/index.html</loc>
-    
-    <lastmod>2017-01-03T02:50:21.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://ppsheep.com/2016/12/14/iOS%E4%B8%AD%E7%9A%84%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B-%E4%B8%80/</loc>
     
     <lastmod>2016-12-29T09:33:45.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://ppsheep.com/2016/12/28/iOS-%E6%9C%89%E6%95%88%E7%BC%96%E5%86%99%E9%AB%98%E8%B4%A8%E9%87%8FObjective-C%E6%96%B9%E6%B3%95-%E5%9B%9B/</loc>
-    
-    <lastmod>2016-12-29T03:44:21.000Z</lastmod>
     
   </url>
   
@@ -289,30 +317,9 @@
   </url>
   
   <url>
-    <loc>http://ppsheep.com/about/index.html</loc>
-    
-    <lastmod>2016-11-03T10:59:18.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://ppsheep.com/2016/10/19/%E6%9D%82%E8%B0%88/</loc>
     
     <lastmod>2016-10-19T07:23:21.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://ppsheep.com/tags/index.html</loc>
-    
-    <lastmod>2016-10-17T08:08:15.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://ppsheep.com/categories/index.html</loc>
-    
-    <lastmod>2016-10-17T08:07:24.000Z</lastmod>
     
   </url>
   

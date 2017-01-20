@@ -1,93 +1,20 @@
-<!doctype html>
 
-
-
-  
-
-
-<html class="theme-next mist use-motion">
+<!DOCTYPE html>
+<html lang="zh-cn">
+    
 <head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
-
-
-
-
-  
-  
-  
-  
-
-  
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="ppsheep">
+    <title>Swift教程(二)—字符串和字符 - ppsheep</title>
+    <meta name="author" content="ppsheep">
     
     
-  
-
-  
-
-  
-
-  
-
-  
-
-  
     
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
     
-    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
-  
-
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
-
-<link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="Swift官方教程学习笔记," />
-
-
-
-
-
-  <link rel="alternate" href="/atom.xml" title="ppsheep" type="application/atom+xml" />
-
-
-
-
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.2" />
-
-
-
-
-
-
-<meta name="description" content="这个章节，我们讲Swift中的字符串和字符，需要说明的是在Swift中String和OC中的NSString进行了无缝衔接，这就意味着，String类型的字符串可以直接调用NSString中暴露出来的方法，不需要进行类型转换。">
-<meta property="og:type" content="article">
+    <meta name="description" content="这个章节，我们讲Swift中的字符串和字符，需要说明的是在Swift中String和OC中的NSString进行了无缝衔接，这就意味着，String类型的字符串可以直接调用NSString中暴露出来的方法，不需要进行类型转换。">
+<meta property="og:type" content="blog">
 <meta property="og:title" content="Swift教程(二)—字符串和字符">
 <meta property="og:url" content="http://ppsheep.com/2017/01/09/Swift教程(二)—字符串和字符/index.html">
 <meta property="og:site_name" content="ppsheep">
@@ -96,801 +23,481 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Swift教程(二)—字符串和字符">
 <meta name="twitter:description" content="这个章节，我们讲Swift中的字符串和字符，需要说明的是在Swift中String和OC中的NSString进行了无缝衔接，这就意味着，String类型的字符串可以直接调用NSString中暴露出来的方法，不需要进行类型转换。">
-
-
-
-<script type="text/javascript" id="hexo.configuration">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    scheme: 'Mist',
-    sidebar: {"position":"left","display":"always"},
-    fancybox: true,
-    motion: true,
-    duoshuo: {
-      userId: '0',
-      author: '博主'
-    }
-  };
-</script>
-
-
-
-
-  <link rel="canonical" href="http://ppsheep.com/2017/01/09/Swift教程(二)—字符串和字符/"/>
-
-
-  <title> Swift教程(二)—字符串和字符 | ppsheep </title>
+    
+    
+        
+    
+    
+        <meta property="og:image" content="http://ppsheep.com/assets/images/avatar_public.jpg"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-nuvue6sithwirecbhvw3dkaobiojqvtadsnhguwi7k04xklybw5djl1smadp.min.css">
+    <!--STYLES END-->
+    
+    
 </head>
 
-<body itemscope itemtype="//schema.org/WebPage" lang="zh-Hans">
-
-  
-
-
-
-  <script type="text/javascript">
-    var _hmt = _hmt || [];
-    (function() {
-      var hm = document.createElement("script");
-      hm.src = "//hm.baidu.com/hm.js?4fa2aea1f41359883e5d92b5cb8bccb8";
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(hm, s);
-    })();
-  </script>
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
 
 
-
-
-
-
-
-
-  
-  
     
-  
-
-  <div class="container one-collumn sidebar-position-left page-post-detail ">
-    <div class="headband"></div>
-
-    <header id="header" class="header" itemscope itemtype="//schema.org/WPHeader">
-      <div class="header-inner"><div class="site-meta ">
-  
-
-  <div class="custom-logo-site-title">
-    <a href="/"  class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
-      <span class="site-title">ppsheep</span>
-      <span class="logo-line-after"><i></i></span>
-    </a>
-  </div>
-  <p class="site-subtitle"></p>
-</div>
-
-<div class="site-nav-toggle">
-  <button>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-    <span class="btn-bar"></span>
-  </button>
-</div>
-
-<nav class="site-nav">
-  
-
-  
-    <ul id="menu" class="menu">
-      
         
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
             
-            首页
-          </a>
-        </li>
-      
         
-        <li class="menu-item menu-item-categories">
-          <a href="/categories" rel="section">
-            
-            分类
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-archives">
-          <a href="/archives" rel="section">
-            
-            归档
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-tags">
-          <a href="/tags" rel="section">
-            
-            标签
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-about">
-          <a href="/about" rel="section">
-            
-            关于我
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-commonweal">
-          <a href="/404.html" rel="section">
-            
-            公益404
-          </a>
-        </li>
-      
+    
 
-      
+<header id="header" data-behavior="3">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <h1 class="header-title">
+        <a class="header-title-link" href="/ ">ppsheep</a>
+    </h1>
+    
+        
+            <a  class="header-right-picture "
+                href="#about">
+        
+        
+            <img class="header-picture" src="/assets/images/avatar_public.jpg"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="3">
+    
+        <div class="sidebar-profile">
+            <a href="/#about">
+                    <img class="sidebar-profile-picture" src="/assets/images/avatar_public.jpg"/>
+            </a>
+            <span class="sidebar-profile-name">ppsheep</span>
+        </div>
+    
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/ "
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+                    <span class="sidebar-button-desc">首页</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-categories"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+                    <span class="sidebar-button-desc">分类</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-tags"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+                    <span class="sidebar-button-desc">标签</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-archives"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+                    <span class="sidebar-button-desc">归档</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link st-search-show-outputs"
+                         href="#search"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-search"></i>
+                    <span class="sidebar-button-desc">搜索</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="#about"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+                    <span class="sidebar-button-desc">关于</span>
+                </a>
+        </li>
+        
     </ul>
-  
-
-  
+    
+        <ul class="sidebar-buttons">
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/atom.xml"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+                    <span class="sidebar-button-desc">RSS</span>
+                </a>
+        </li>
+        
+    </ul>
+    
 </nav>
 
- </div>
-    </header>
-
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
             
-
-  <div id="posts" class="posts-expand">
-    
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="//schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                Swift教程(二)—字符串和字符
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-01-09T16:15:22+08:00" content="2017-01-09">
-              2017-01-09
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Swift官方教程学习笔记/" itemprop="url" rel="index">
-                    <span itemprop="name">Swift官方教程学习笔记</span>
-                  </a>
-                </span>
-
+            <div id="main" data-behavior="3"
+                 class="
+                        hasCoverMetaIn
+                        ">
                 
-                
-
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                &nbsp; | &nbsp;
-                <a href="/2017/01/09/Swift教程(二)—字符串和字符/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/09/Swift教程(二)—字符串和字符/" itemprop="commentsCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-
-          
-          
-             <span id="/2017/01/09/Swift教程(二)—字符串和字符/" class="leancloud_visitors" data-flag-title="Swift教程(二)—字符串和字符">
-               &nbsp; | &nbsp;
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               <span class="post-meta-item-text">阅读次数 </span>
-               <span class="leancloud-visitors-count"></span>
-              </span>
-          
-
-          
-        </div>
-      </header>
+<article class="post" itemscope itemType="http://schema.org/BlogPosting">
     
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title" itemprop="headline">
+            Swift教程(二)—字符串和字符
+        </h1>
+    
+    <div class="post-meta">
+    <time itemprop="datePublished" datetime="2017-01-09T16:15:22+08:00">
+	
+		    1月 09, 2017
+    	
+    </time>
+    
+        <span>发布在 </span>
+        
+    <a class="category-link" href="/all-categories/Swift官方教程学习笔记/">Swift官方教程学习笔记</a>
 
 
-    <div class="post-body" itemprop="articleBody">
+    
+</div>
 
-      
-      
-
-      
-        <p>这个章节，我们讲Swift中的字符串和字符，需要说明的是在Swift中String和OC中的NSString进行了无缝衔接，这就意味着，String类型的字符串可以直接调用NSString中暴露出来的方法，不需要进行类型转换。</p>
+</div>
+    
+    <div class="post-content markdown" itemprop="articleBody">
+        <div class="main-content-wrap">
+            <p>这个章节，我们讲Swift中的字符串和字符，需要说明的是在Swift中String和OC中的NSString进行了无缝衔接，这就意味着，String类型的字符串可以直接调用NSString中暴露出来的方法，不需要进行类型转换。</p>
 <a id="more"></a>
 <h3 id="初始化空字符串"><a href="#初始化空字符串" class="headerlink" title="初始化空字符串"></a>初始化空字符串</h3><p>创建一个字符串，可以使用字面量初始化，也可以使用初始化方法：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">var emptyString = &quot;&quot;               // 空字符串字面量</div><div class="line">var anotherEmptyString = String()  // 初始化方法</div><div class="line">// 两个字符串均为空并等价。</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">var emptyString = &quot;&quot;               // 空字符串字面量</div><div class="line">var anotherEmptyString = String()  // 初始化方法</div><div class="line">// 两个字符串均为空并等价。</div></pre></td></tr></table></figure>
 <p>要检测是否为空，可以使用isEmpty:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">if emptyString.isEmpty &#123;</div><div class="line">    print(&quot;Nothing to see here&quot;)</div><div class="line">&#125;</div><div class="line">// 打印输出：&quot;Nothing to see here</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">if emptyString.isEmpty &#123;</div><div class="line">    print(&quot;Nothing to see here&quot;)</div><div class="line">&#125;</div><div class="line">// 打印输出：&quot;Nothing to see here</div></pre></td></tr></table></figure>
 <h3 id="字符串可变性"><a href="#字符串可变性" class="headerlink" title="字符串可变性"></a>字符串可变性</h3><p>在Swift中，字符串和OC中的不同，如果需要改变字符串，只需要将字符串定义为变量就行，如果要保证字符串不可改变，那么可以直接将字符串定义为let常量，这样字符串就不可改变</p>
 <h3 id="字符串是值类型"><a href="#字符串是值类型" class="headerlink" title="字符串是值类型"></a>字符串是值类型</h3><p>我们之前说过，在Swift中，值类型的数据传递，都是通过拷贝的方式，String也是值类型的数据，在传递过程中，是使用的拷贝形式传递。</p>
 <h3 id="使用字符"><a href="#使用字符" class="headerlink" title="使用字符"></a>使用字符</h3><p>可以使用for-in方法来遍历字符串中的字符：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">for character in &quot;Dog!🐶&quot;.characters &#123;</div><div class="line">    print(character)</div><div class="line">&#125;</div><div class="line">// D</div><div class="line">// o</div><div class="line">// g</div><div class="line">// !</div><div class="line">// 🐶</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">for character in &quot;Dog!🐶&quot;.characters &#123;</div><div class="line">    print(character)</div><div class="line">&#125;</div><div class="line">// D</div><div class="line">// o</div><div class="line">// g</div><div class="line">// !</div><div class="line">// 🐶</div></pre></td></tr></table></figure>
 <p>通过Character类型，我们可以创建一个单独的字符常量或者变量</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">let exclamationMark: Character = &quot;!&quot;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">let exclamationMark: Character = &quot;!&quot;</div></pre></td></tr></table></figure>
 <p>字符串还可以通过一个字符数组来初始化</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">let catCharacters: [Character] = [&quot;C&quot;, &quot;a&quot;, &quot;t&quot;, &quot;!&quot;, &quot;🐱&quot;]</div><div class="line">let catString = String(catCharacters)</div><div class="line">print(catString)</div><div class="line">// 打印输出：&quot;Cat!🐱</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">let catCharacters: [Character] = [&quot;C&quot;, &quot;a&quot;, &quot;t&quot;, &quot;!&quot;, &quot;🐱&quot;]</div><div class="line">let catString = String(catCharacters)</div><div class="line">print(catString)</div><div class="line">// 打印输出：&quot;Cat!🐱</div></pre></td></tr></table></figure>
 <h3 id="连接字符串"><a href="#连接字符串" class="headerlink" title="连接字符串"></a>连接字符串</h3><p>连接字符串可以直接使用+进行字符串的连接</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">let string1 = &quot;hello&quot;</div><div class="line">let string2 = &quot; there&quot;</div><div class="line">var welcome = string1 + string2</div><div class="line">// welcome 现在等于 &quot;hello there</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">let string1 = &quot;hello&quot;</div><div class="line">let string2 = &quot; there&quot;</div><div class="line">var welcome = string1 + string2</div><div class="line">// welcome 现在等于 &quot;hello there</div></pre></td></tr></table></figure>
 <p>+=对于字符串也是管用的</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">var instruction = &quot;look over&quot;</div><div class="line">instruction += string2</div><div class="line">// instruction 现在等于 &quot;look over there&quot;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">var instruction = &quot;look over&quot;</div><div class="line">instruction += string2</div><div class="line">// instruction 现在等于 &quot;look over there&quot;</div></pre></td></tr></table></figure>
 <p>另外还有appen()方法</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">let exclamationMark: Character = &quot;!&quot;</div><div class="line">welcome.append(exclamationMark)</div><div class="line">// welcome 现在等于 &quot;hello there!”</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">let exclamationMark: Character = &quot;!&quot;</div><div class="line">welcome.append(exclamationMark)</div><div class="line">// welcome 现在等于 &quot;hello there!”</div></pre></td></tr></table></figure>
 <h3 id="字符串插值"><a href="#字符串插值" class="headerlink" title="字符串插值"></a>字符串插值</h3><p>在Swift中，我们可以直接将int float类型的值直接插入到string中，不需要先进行类型转换，再进行插入</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">let multiplier = 3</div><div class="line">let message = &quot;\(multiplier) times 2.5 is \(Double(multiplier) * 2.5)&quot;</div><div class="line">// message 是 &quot;3 times 2.5 is 7.5”</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">let multiplier = 3</div><div class="line">let message = &quot;\(multiplier) times 2.5 is \(Double(multiplier) * 2.5)&quot;</div><div class="line">// message 是 &quot;3 times 2.5 is 7.5”</div></pre></td></tr></table></figure>
 <h3 id="计算字符串字符数量"><a href="#计算字符串字符数量" class="headerlink" title="计算字符串字符数量"></a>计算字符串字符数量</h3><p>使用count方法  string.characters.count</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">let unusualMenagerie = &quot;Koala 🐨, Snail 🐌, Penguin 🐧, Dromedary 🐪&quot;</div><div class="line">print(&quot;unusualMenagerie has \(unusualMenagerie.characters.count) characters&quot;)</div><div class="line">// 打印输出 &quot;unusualMenagerie has 40 characters”</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">let unusualMenagerie = &quot;Koala 🐨, Snail 🐌, Penguin 🐧, Dromedary 🐪&quot;</div><div class="line">print(&quot;unusualMenagerie has \(unusualMenagerie.characters.count) characters&quot;)</div><div class="line">// 打印输出 &quot;unusualMenagerie has 40 characters”</div></pre></td></tr></table></figure>
 <h3 id="访问和修改字符串"><a href="#访问和修改字符串" class="headerlink" title="访问和修改字符串"></a>访问和修改字符串</h3><h4 id="字符串索引"><a href="#字符串索引" class="headerlink" title="字符串索引"></a>字符串索引</h4><p>每一个String值都有一个关联的索引(index)类型，String.Index，它对应着字符串中的每一个Character的位置。</p>
 <p>我们知道不同的字符占用的内存空间不同，所以，我们不能使用integer来做索引</p>
 <p>使用startIndex可以获取字符串的首个索引，使用endIndex可以获取字符串的最后一个位置的索引</p>
 <p>通过调用 String 的 index(before:) 或 index(after:) 方法，可以立即得到前面或后面的一个索引。您还可以通过调用 index(_:offsetBy:) 方法来获取对应偏移量的索引，这种方式可以避免多次调用 index(before:) 或 index(after:) 方法。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">let greeting = &quot;Guten Tag!&quot;</div><div class="line">greeting[greeting.startIndex]</div><div class="line">// G</div><div class="line">greeting[greeting.index(before: greeting.endIndex)]</div><div class="line">// !</div><div class="line">greeting[greeting.index(after: greeting.startIndex)]</div><div class="line">// u</div><div class="line"></div><div class="line">let index = greeting.index(greeting.startIndex, offsetBy: 7)</div><div class="line">greeting[index]</div><div class="line">// a</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">let greeting = &quot;Guten Tag!&quot;</div><div class="line">greeting[greeting.startIndex]</div><div class="line">// G</div><div class="line">greeting[greeting.index(before: greeting.endIndex)]</div><div class="line">// !</div><div class="line">greeting[greeting.index(after: greeting.startIndex)]</div><div class="line">// u</div><div class="line"></div><div class="line">let index = greeting.index(greeting.startIndex, offsetBy: 7)</div><div class="line">greeting[index]</div><div class="line">// a</div></pre></td></tr></table></figure>
 <p>使用characters的indices属性，会创建一个包含全部索引的范围，我们可以用这个来遍历字符串中的每一个字符</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">for index in greeting.characters.indices &#123;</div><div class="line">   print(&quot;\(greeting[index]) &quot;, terminator: &quot;&quot;)</div><div class="line">&#125;</div><div class="line">// 打印输出 &quot;G u t e n   T a g !</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">for index in greeting.characters.indices &#123;</div><div class="line">   print(&quot;\(greeting[index]) &quot;, terminator: &quot;&quot;)</div><div class="line">&#125;</div><div class="line">// 打印输出 &quot;G u t e n   T a g !</div></pre></td></tr></table></figure>
 <h4 id="插入和删除"><a href="#插入和删除" class="headerlink" title="插入和删除"></a>插入和删除</h4><p>调用 insert(_:at:) 方法可以在一个字符串的指定索引插入一个字符，调用 insert(contentsOf:at:) 方法可以在一个字符串的指定索引插入一个段字符串。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">var welcome = &quot;hello&quot;</div><div class="line">welcome.insert(&quot;!&quot;, at: welcome.endIndex)</div><div class="line">// welcome 变量现在等于 &quot;hello!&quot;</div><div class="line"> </div><div class="line">welcome.insert(contentsOf:&quot; there&quot;.characters, at: welcome.index(before: welcome.endIndex))</div><div class="line">// welcome 变量现在等于 &quot;hello there!</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">var welcome = &quot;hello&quot;</div><div class="line">welcome.insert(&quot;!&quot;, at: welcome.endIndex)</div><div class="line">// welcome 变量现在等于 &quot;hello!&quot;</div><div class="line"> </div><div class="line">welcome.insert(contentsOf:&quot; there&quot;.characters, at: welcome.index(before: welcome.endIndex))</div><div class="line">// welcome 变量现在等于 &quot;hello there!</div></pre></td></tr></table></figure>
 <p>调用 remove(at:) 方法可以在一个字符串的指定索引删除一个字符，调用 removeSubrange(_:) 方法可以在一个字符串的指定索引删除一个子字符串。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">welcome.remove(at: welcome.index(before: welcome.endIndex))</div><div class="line">// welcome 现在等于 &quot;hello there&quot;</div><div class="line"> </div><div class="line">let range = welcome.index(welcome.endIndex, offsetBy: -6)..&lt;welcome.endIndex</div><div class="line">welcome.removeSubrange(range)</div><div class="line">// welcome 现在等于 &quot;hello“</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">welcome.remove(at: welcome.index(before: welcome.endIndex))</div><div class="line">// welcome 现在等于 &quot;hello there&quot;</div><div class="line"> </div><div class="line">let range = welcome.index(welcome.endIndex, offsetBy: -6)..&lt;welcome.endIndex</div><div class="line">welcome.removeSubrange(range)</div><div class="line">// welcome 现在等于 &quot;hello“</div></pre></td></tr></table></figure>
 <h3 id="字符串的比较"><a href="#字符串的比较" class="headerlink" title="字符串的比较"></a>字符串的比较</h3><h4 id="字符串相等"><a href="#字符串相等" class="headerlink" title="字符串相等"></a>字符串相等</h4><p>判断两个字符串相等或者不等，可以直接使用== !=来判断</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">let quotation = &quot;We&apos;re a lot alike, you and I.&quot;</div><div class="line">let sameQuotation = &quot;We&apos;re a lot alike, you and I.&quot;</div><div class="line">if quotation == sameQuotation &#123;</div><div class="line">    print(&quot;These two strings are considered equal&quot;)</div><div class="line">&#125;</div><div class="line">// 打印输出 &quot;These two strings are considered equal”</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">let quotation = &quot;We&apos;re a lot alike, you and I.&quot;</div><div class="line">let sameQuotation = &quot;We&apos;re a lot alike, you and I.&quot;</div><div class="line">if quotation == sameQuotation &#123;</div><div class="line">    print(&quot;These two strings are considered equal&quot;)</div><div class="line">&#125;</div><div class="line">// 打印输出 &quot;These two strings are considered equal”</div></pre></td></tr></table></figure>
 <h4 id="前缀后缀相等"><a href="#前缀后缀相等" class="headerlink" title="前缀后缀相等"></a>前缀后缀相等</h4><p>通过调用字符串的hasPrefix(_\:)/hasSuffix(_:)方法来检查字符串是否拥有特定前缀/后缀，两个方法均接收一个String类型的参数，并返回一个布尔值。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">let romeoAndJuliet = [</div><div class="line">    &quot;Act 1 Scene 1: Verona, A public place&quot;,</div><div class="line">    &quot;Act 1 Scene 2: Capulet&apos;s mansion&quot;,</div><div class="line">    &quot;Act 1 Scene 3: A room in Capulet&apos;s mansion&quot;,</div><div class="line">    &quot;Act 1 Scene 4: A street outside Capulet&apos;s mansion&quot;,</div><div class="line">    &quot;Act 1 Scene 5: The Great Hall in Capulet&apos;s mansion&quot;,</div><div class="line">    &quot;Act 2 Scene 1: Outside Capulet&apos;s mansion&quot;,</div><div class="line">    &quot;Act 2 Scene 2: Capulet&apos;s orchard&quot;,</div><div class="line">    &quot;Act 2 Scene 3: Outside Friar Lawrence&apos;s cell&quot;,</div><div class="line">    &quot;Act 2 Scene 4: A street in Verona&quot;,</div><div class="line">    &quot;Act 2 Scene 5: Capulet&apos;s mansion&quot;,</div><div class="line">    &quot;Act 2 Scene 6: Friar Lawrence&apos;s cell&quot;</div><div class="line">]</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">let romeoAndJuliet = [</div><div class="line">    &quot;Act 1 Scene 1: Verona, A public place&quot;,</div><div class="line">    &quot;Act 1 Scene 2: Capulet&apos;s mansion&quot;,</div><div class="line">    &quot;Act 1 Scene 3: A room in Capulet&apos;s mansion&quot;,</div><div class="line">    &quot;Act 1 Scene 4: A street outside Capulet&apos;s mansion&quot;,</div><div class="line">    &quot;Act 1 Scene 5: The Great Hall in Capulet&apos;s mansion&quot;,</div><div class="line">    &quot;Act 2 Scene 1: Outside Capulet&apos;s mansion&quot;,</div><div class="line">    &quot;Act 2 Scene 2: Capulet&apos;s orchard&quot;,</div><div class="line">    &quot;Act 2 Scene 3: Outside Friar Lawrence&apos;s cell&quot;,</div><div class="line">    &quot;Act 2 Scene 4: A street in Verona&quot;,</div><div class="line">    &quot;Act 2 Scene 5: Capulet&apos;s mansion&quot;,</div><div class="line">    &quot;Act 2 Scene 6: Friar Lawrence&apos;s cell&quot;</div><div class="line">]</div></pre></td></tr></table></figure>
 <p>计算包含开头是”Act 1”的</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">var act1SceneCount = 0</div><div class="line">for scene in romeoAndJuliet &#123;</div><div class="line">    if scene.hasPrefix(&quot;Act 1 &quot;) &#123;</div><div class="line">        act1SceneCount += 1</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">print(&quot;There are \(act1SceneCount) scenes in Act 1&quot;)</div><div class="line">// 打印输出 &quot;There are 5 scenes in Act 1“</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">var act1SceneCount = 0</div><div class="line">for scene in romeoAndJuliet &#123;</div><div class="line">    if scene.hasPrefix(&quot;Act 1 &quot;) &#123;</div><div class="line">        act1SceneCount += 1</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">print(&quot;There are \(act1SceneCount) scenes in Act 1&quot;)</div><div class="line">// 打印输出 &quot;There are 5 scenes in Act 1“</div></pre></td></tr></table></figure>
 <p>计算结尾是”Capulet’s mansion”</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">var mansionCount = 0</div><div class="line">for scene in romeoAndJuliet &#123;</div><div class="line">    if scene.hasSuffix(&quot;Capulet&apos;s mansion&quot;) &#123;</div><div class="line">        mansionCount += 1</div><div class="line">        &#125;</div><div class="line">print(&quot;\(mansionCount) mansion scenes”)</div><div class="line">// 打印输出 &quot;6 mansion scenes”</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">var mansionCount = 0</div><div class="line">for scene in romeoAndJuliet &#123;</div><div class="line">    if scene.hasSuffix(&quot;Capulet&apos;s mansion&quot;) &#123;</div><div class="line">        mansionCount += 1</div><div class="line">        &#125;</div><div class="line">print(&quot;\(mansionCount) mansion scenes”)</div><div class="line">// 打印输出 &quot;6 mansion scenes”</div></pre></td></tr></table></figure>
 <p>字符和字符串章节结束</p>
 
-      
+            
+        </div>
     </div>
-
-    <div>
-      
+    <div id="post-footer" class="post-footer main-content-wrap">
         
-<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
-    <img id="wechat_subscriber_qcode" src="/uploads/avatar_public.jpg" alt="ppsheep wechat" style="width: 200px; max-width: 100%;"/>
-    <div>欢迎您扫一扫上面的微信公众号，我将同步发送博客内容！</div>
-</div>
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">标签</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/all-tags/Swift官方教程学习笔记/">Swift官方教程学习笔记</a>
 
-
-      
-    </div>
-
-    <div>
-      
+            </div>
         
-  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
-    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
-    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
-      <span>赏</span>
-    </button>
-    <div id="QR" style="display: none;">
-      
-        <div id="wechat" style="display: inline-block">
-          <img id="wechat_qr" src="http://o8bxt3lx0.bkt.clouddn.com/141478051735_.pic%E5%89%AF%E6%9C%AC.jpg" alt="ppsheep WeChat Pay"/>
-          <p>微信打赏</p>
-        </div>
-      
-      
-        <div id="alipay" style="display: inline-block">
-          <img id="alipay_qr" src="http://o8bxt3lx0.bkt.clouddn.com/131478051734_.pic%E5%89%AF%E6%9C%AC.jpg" alt="ppsheep Alipay"/>
-          <p>支付宝打赏</p>
-        </div>
-      
-    </div>
-  </div>
-
-
-      
-    </div>
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/Swift官方教程学习笔记/" rel="tag">#Swift官方教程学习笔记</a>
-          
-        </div>
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2017/01/03/iOS-ping网络小工具/" rel="next" title="iOS ping网络小工具">
-                <i class="fa fa-chevron-left"></i> iOS ping网络小工具
-              </a>
-            
-          </div>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/01/10/Swift教程(三)—集合类型/" rel="prev" title="Swift(三)-集合类型">
-                Swift(三)-集合类型 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </article>
-
-
-
-    <div class="post-spread">
-      
-    </div>
-  </div>
-
-
-          </div>
-          
-
-
-          
-  <div class="comments" id="comments">
-    
-      <div class="ds-thread" data-thread-key="2017/01/09/Swift教程(二)—字符串和字符/"
-           data-title="Swift教程(二)—字符串和字符" data-url="http://ppsheep.com/2017/01/09/Swift教程(二)—字符串和字符/">
-      </div>
-    
-  </div>
-
-
-        </div>
-        
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
-
-  <aside id="sidebar" class="sidebar">
-    <div class="sidebar-inner">
-
-      
-
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
+        <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/01/10/Swift教程(三)—集合类型/"  data-tooltip="Swift(三)-集合类型">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/01/03/iOS-ping网络小工具/" data-tooltip="iOS ping网络小工具">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
         </ul>
-      
-
-      <section class="site-overview sidebar-panel ">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="http://o8bxt3lx0.bkt.clouddn.com/avatar_public.jpg"
-               alt="ppsheep" />
-          <p class="site-author-name" itemprop="name">ppsheep</p>
-          <p class="site-description motion-element" itemprop="description">一个就职于网易的初级iOS开发者，目前正在修炼自己，博客建立不久，正在寻找更好的写作方式。。。。。。。 目前还在维护一个微信公众号，即我的头像二维码，博客的内容，我会同步到微信公众号，欢迎大家关注</p>
-        </div>
-        <nav class="site-state motion-element">
-          <div class="site-state-item site-state-posts">
-            <a href="/archives">
-              <span class="site-state-item-count">40</span>
-              <span class="site-state-item-name">日志</span>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
             </a>
-          </div>
-
-          
-            <div class="site-state-item site-state-categories">
-              <a href="/categories">
-                <span class="site-state-item-count">14</span>
-                <span class="site-state-item-name">分类</span>
-              </a>
-            </div>
-          
-
-          
-            <div class="site-state-item site-state-tags">
-              <a href="/tags">
-                <span class="site-state-item-count">25</span>
-                <span class="site-state-item-name">标签</span>
-              </a>
-            </div>
-          
-
-        </nav>
-
-        
-          <div class="feed-link motion-element">
-            <a href="/atom.xml" rel="alternate">
-              <i class="fa fa-rss"></i>
-              RSS
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://ppsheep.com/2017/01/09/Swift教程(二)—字符串和字符/">
+                <i class="fa fa-google-plus"></i>
             </a>
-          </div>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://ppsheep.com/2017/01/09/Swift教程(二)—字符串和字符/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://ppsheep.com/2017/01/09/Swift教程(二)—字符串和字符/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
         
+            <li class="post-action">
+                <a class="post-action-btn btn btn--default" href="#ds-thread">
+                    <i class="fa fa-comment-o"></i>
+                </a>
+            </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
 
-        <div class="links-of-author motion-element">
-          
+
+        
             
-              <span class="links-of-author-item">
-                <a href="https://github.com/yangqian111" target="_blank" title="github">
-                  
-                    <i class="fa fa-fw fa-globe"></i>
-                  
-                  github
+                <div id="ds-thread" class="ds-thread" data-thread-key="2017/01/09/Swift教程(二)—字符串和字符/"
+     data-title="Swift教程(二)—字符串和字符" data-url="http://ppsheep.com/2017/01/09/Swift教程(二)—字符串和字符/">
+</div>
+
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2017 ppsheep. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="3">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/01/10/Swift教程(三)—集合类型/"  data-tooltip="Swift(三)-集合类型">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
                 </a>
-              </span>
-            
-              <span class="links-of-author-item">
-                <a href="https://mp.weixin.qq.com/s?__biz=MzI2NTUwOTI1MA==&mid=100000031&idx=1&sn=06aa9c48ce44e5e3c8f749165d337d73&chksm=6a9d01f25dea88e44ebd78ca9a502f5466d4121397c3441580771b6944741d7a32a606486d0c&scene=18&key=4a874d92793fbeb0bca44c58c7f560332608ad6bee7c6d6c0b6798bd741f1e995f6d83a41ba8cdaa89d046d624fd569489e1c7947ef080b8069d7bd291cb171420098c464951bdeb48920b2fa99a33af&ascene=0&uin=MzI5ODUzOTE1&devicetype=iMac+MacBookPro12%2C1+OSX+OSX+10.12.2+build(16C67)&version=12010210&nettype=WIFI&fontScale=100&pass_ticket=qTNsRor5ktcrsYFdBDK8i9BcJRYTf8Poc1MYvl7626S1waZOJPR3NPfOroB14Shf" target="_blank" title="公众号">
-                  
-                    <i class="fa fa-fw fa-globe"></i>
-                  
-                  公众号
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/01/03/iOS-ping网络小工具/" data-tooltip="iOS ping网络小工具">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right"></i>
                 </a>
-              </span>
-            
-              <span class="links-of-author-item">
-                <a href="http://ppsheep.com/about/" target="_blank" title="联系我">
-                  
-                    <i class="fa fa-fw fa-globe"></i>
-                  
-                  联系我
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://ppsheep.com/2017/01/09/Swift教程(二)—字符串和字符/">
+                <i class="fa fa-google-plus"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://ppsheep.com/2017/01/09/Swift教程(二)—字符串和字符/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://ppsheep.com/2017/01/09/Swift教程(二)—字符串和字符/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        
+            <li class="post-action">
+                <a class="post-action-btn btn btn--default" href="#ds-thread">
+                    <i class="fa fa-comment-o"></i>
                 </a>
-              </span>
+            </li>
+        
+        <li class="post-action">
             
-              <span class="links-of-author-item">
-                <a href="http://ppsheep.com/about/" target="_blank" title="博客评论不能及时回复，请微信联系">
-                  
-                    <i class="fa fa-fw fa-globe"></i>
-                  
-                  博客评论不能及时回复，请微信联系
-                </a>
-              </span>
+                <a class="post-action-btn btn btn--default" href="#">
             
-          
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="3">
+    <ul class="share-options">
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://ppsheep.com/2017/01/09/Swift教程(二)—字符串和字符/">
+                <i class="fa fa-google-plus"></i><span class="">分享到 Google+</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://ppsheep.com/2017/01/09/Swift教程(二)—字符串和字符/">
+                <i class="fa fa-facebook-official"></i><span>分享到 Facebook</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://ppsheep.com/2017/01/09/Swift教程(二)—字符串和字符/">
+                <i class="fa fa-twitter"></i><span>分享到 Twitter</span>
+            </a>
+        </li>
+    </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+            
         </div>
-
-        
         
 
-        
-        
 
-      </section>
-
-      
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-            
-              
-            
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#初始化空字符串"><span class="nav-number">1.</span> <span class="nav-text">初始化空字符串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字符串可变性"><span class="nav-number">2.</span> <span class="nav-text">字符串可变性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字符串是值类型"><span class="nav-number">3.</span> <span class="nav-text">字符串是值类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用字符"><span class="nav-number">4.</span> <span class="nav-text">使用字符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#连接字符串"><span class="nav-number">5.</span> <span class="nav-text">连接字符串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字符串插值"><span class="nav-number">6.</span> <span class="nav-text">字符串插值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#计算字符串字符数量"><span class="nav-number">7.</span> <span class="nav-text">计算字符串字符数量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#访问和修改字符串"><span class="nav-number">8.</span> <span class="nav-text">访问和修改字符串</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#字符串索引"><span class="nav-number">8.1.</span> <span class="nav-text">字符串索引</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#插入和删除"><span class="nav-number">8.2.</span> <span class="nav-text">插入和删除</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字符串的比较"><span class="nav-number">9.</span> <span class="nav-text">字符串的比较</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#字符串相等"><span class="nav-number">9.1.</span> <span class="nav-text">字符串相等</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#前缀后缀相等"><span class="nav-number">9.2.</span> <span class="nav-text">前缀后缀相等</span></a></li></ol></li></ol></div>
-            
-          </div>
-        </section>
-      
-
-    </div>
-  </aside>
-
-
-        
-      </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright" >
-  
-  &copy;  2016 - 
-  <span itemprop="copyrightYear">2017</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">ppsheep</span>
-</div>
-
-<div class="powered-by">
-  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
-</div>
-
-<div class="theme-info">
-  主题 -
-  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Mist
-  </a>
-</div>
-
-        
-
-        
-      </div>
-    </footer>
-
-    <div class="back-to-top">
-      <i class="fa fa-arrow-up"></i>
-    </div>
-  </div>
-
-  
-
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
-</script>
-
-
-
-
-
-
-
-
-
-  
-
-
-
-  
-  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-
-  
-  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-
-  
-  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-  
-  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.0.2"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.0.2"></script>
-
-
-
-  
-  
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.2"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.0.2"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.2"></script>
-
-
-
-  
-
-  
     
-  
-
-  <script type="text/javascript">
-    var duoshuoQuery = {short_name:"yangqian111"};
-    (function() {
-      var ds = document.createElement('script');
-      ds.type = 'text/javascript';ds.async = true;
-      ds.id = 'duoshuo-script';
-      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-      ds.charset = 'UTF-8';
-      (document.getElementsByTagName('head')[0]
-      || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
-  </script>
-
-  
+        
     
-    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
-    <script src="/js/src/hook-duoshuo.js"></script>
-  
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-remove"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/avatar_public.jpg"/>
+        
+            <h4 id="about-card-name">ppsheep</h4>
+        
+            <h5 id="about-card-bio"><p>author.bio</p>
+</h5>
+        
+        
+            <h5 id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>author.job</p>
+
+            </h5>
+        
+        
+            <h5 id="about-card-location">
+                <i class="fa fa-map-marker"></i>
+                <br/>
+                HangZhou
+            </h5>
+        
+    </div>
+</div>
+
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+    </body>
+    <!--SCRIPTS-->
+<script src="/assets/js/script-i4qo6jx6jji9fg0dftpya6ivemizsbow4fhow76d8dwpm7m1wbvi378ssumx.min.js"></script>
+<!--SCRIPTS END-->
+
+    
+        <script type="text/javascript">
+            var duoshuoQuery = {short_name:'yangqian111'};
+            (function() {
+                var ds = document.createElement('script');
+                ds.type = 'text/javascript';ds.async = true;
+                ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+                ds.charset = 'UTF-8';
+                (document.getElementsByTagName('head')[0]
+                || document.getElementsByTagName('body')[0]).appendChild(ds);
+            })();
+        </script>
+    
 
 
 
-
-
-
-  
-  
-
-  
-
-  
-
-  
-  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
-  <script>AV.initialize("wVNXI1zodIQXjH2YGmNdcNTR-gzGzoHsz", "qglLYXNVHBDUayaqz0RYy6H4");</script>
-  <script>
-    function showTime(Counter) {
-      var query = new AV.Query(Counter);
-      var entries = [];
-      var $visitors = $(".leancloud_visitors");
-
-      $visitors.each(function () {
-        entries.push( $(this).attr("id").trim() );
-      });
-
-      query.containedIn('url', entries);
-      query.find()
-        .done(function (results) {
-          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
-
-          if (results.length === 0) {
-            $visitors.find(COUNT_CONTAINER_REF).text(0);
-            return;
-          }
-
-          for (var i = 0; i < results.length; i++) {
-            var item = results[i];
-            var url = item.get('url');
-            var time = item.get('time');
-            var element = document.getElementById(url);
-
-            $(element).find(COUNT_CONTAINER_REF).text(time);
-          }
-          for(var i = 0; i < entries.length; i++) {
-            var url = entries[i];
-            var element = document.getElementById(url);
-            var countSpan = $(element).find(COUNT_CONTAINER_REF);
-            if( countSpan.text() == '') {
-              countSpan.text(0);
-            }
-          }
-        })
-        .fail(function (object, error) {
-          console.log("Error: " + error.code + " " + error.message);
-        });
-    }
-
-    function addCount(Counter) {
-      var $visitors = $(".leancloud_visitors");
-      var url = $visitors.attr('id').trim();
-      var title = $visitors.attr('data-flag-title').trim();
-      var query = new AV.Query(Counter);
-
-      query.equalTo("url", url);
-      query.find({
-        success: function(results) {
-          if (results.length > 0) {
-            var counter = results[0];
-            counter.fetchWhenSave(true);
-            counter.increment("time");
-            counter.save(null, {
-              success: function(counter) {
-                var $element = $(document.getElementById(url));
-                $element.find('.leancloud-visitors-count').text(counter.get('time'));
-              },
-              error: function(counter, error) {
-                console.log('Failed to save Visitor num, with error message: ' + error.message);
-              }
-            });
-          } else {
-            var newcounter = new Counter();
-            /* Set ACL */
-            var acl = new AV.ACL();
-            acl.setPublicReadAccess(true);
-            acl.setPublicWriteAccess(true);
-            newcounter.setACL(acl);
-            /* End Set ACL */
-            newcounter.set("title", title);
-            newcounter.set("url", url);
-            newcounter.set("time", 1);
-            newcounter.save(null, {
-              success: function(newcounter) {
-                var $element = $(document.getElementById(url));
-                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
-              },
-              error: function(newcounter, error) {
-                console.log('Failed to create');
-              }
-            });
-          }
-        },
-        error: function(error) {
-          console.log('Error:' + error.code + " " + error.message);
-        }
-      });
-    }
-
-    $(function() {
-      var Counter = AV.Object.extend("Counter");
-      if ($('.leancloud_visitors').length == 1) {
-        addCount(Counter);
-      } else if ($('.post-title-link').length > 1) {
-        showTime(Counter);
-      }
-    });
-  </script>
-
-
-
-  
-<script>
-(function(){
-    var bp = document.createElement('script');
-    var curProtocol = window.location.protocol.split(':')[0];
-    if (curProtocol === 'https') {
-        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
-    }
-    else {
-        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-    }
-    var s = document.getElementsByTagName("script")[0];
-    s.parentNode.insertBefore(bp, s);
-})();
-</script>
-
-
-  
-
-
-</body>
 </html>
