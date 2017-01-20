@@ -408,7 +408,7 @@
     </article>
     
     
-    <article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
+    <article class="postShorten postShorten--thumbnailimg-right" itemscope itemType="http://schema.org/BlogPosting">
         <div class="postShorten-wrap">
             
             <div class="postShorten-header">
@@ -436,58 +436,13 @@
 
             </div>
             
-                <div class="postShorten-content" itemprop="articleBody">
-                    <p><strong>欢迎大家关注我的公众号，我会定期分享一些我在项目中遇到问题的解决办法和一些iOS实用的技巧，现阶段主要是整理出一些基础的知识记录下来</strong></p>
-<div align="middle"><br>    <image src="http://ac-mhke0kuv.clouddn.com/830a4ead8294ceff5160.jpg"></image><br></div>
-
-<p>文章也会同步更新到我的博客：<br><a href="http://ppsheep.com">http://ppsheep.com</a></p>
-<h3 id="OS-X和iOS中的并发编程"><a href="#OS-X和iOS中的并发编程" class="headerlink" title="OS X和iOS中的并发编程"></a>OS X和iOS中的并发编程</h3><p>在OS X和iOS中，Apple都为我们提供了相同的并发编程API。pthread 、 NSThread 、GCD 、NSOperationQueue。</p>
-<h4 id="pthread"><a href="#pthread" class="headerlink" title="pthread"></a>pthread</h4><p>pthread是比较底层的并发API，这个用起来并不是那么容易，而且在我们日常的编码过程中，我们也应该抛弃掉这种效率极低的并发编程方式。这里就不对这种并发做过多详细的介绍。</p>
-<h4 id="NSThread"><a href="#NSThread" class="headerlink" title="NSThread"></a>NSThread</h4><p>NSThread这个我们听起来就很熟悉了，实际上，这是Apple对pthread的一个封装，封装成了Objectivc-C的接口API，在cocoa环境中，我们能够轻易使用NSThread来进行并发编程。</p>
-<p>例如我们现在有这样一个场景，需要计算100万个数字中的最大数和最小数，首先我们可以定义一个NSThread的子类，专门来进行这个运算。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">@interface FindMinMaxThread : NSThread</div><div class="line">@property (nonatomic) NSUInteger min;</div><div class="line">@property (nonatomic) NSUInteger max;</div><div class="line">- (instancetype)initWithNumbers:(NSArray *)numbers;</div><div class="line">@end</div><div class="line"></div><div class="line">@implementation FindMinMaxThread &#123;</div><div class="line">    NSArray *_numbers;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (instancetype)initWithNumbers:(NSArray *)numbers</div><div class="line">&#123;</div><div class="line">    self = [super init];</div><div class="line">    if (self) &#123;</div><div class="line">        _numbers = numbers;</div><div class="line">    &#125;</div><div class="line">    return self;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)main</div><div class="line">&#123;</div><div class="line">    NSUInteger min;</div><div class="line">    NSUInteger max;</div><div class="line">    // 进行相关数据的处理</div><div class="line">    self.min = min;</div><div class="line">    self.max = max;</div><div class="line">&#125;</div><div class="line">@end</div></pre></td></tr></table></figure>
-<p>要想启动一个新的线程，需要创建一个线程对象，然后调用它的 start 方法：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">NSMutableSet *threads = [NSMutableSet set];</div><div class="line">NSUInteger numberCount = self.numbers.count;</div><div class="line">NSUInteger threadCount = 4;</div><div class="line">for (NSUInteger i = 0; i &lt; threadCount; i++) &#123;</div><div class="line">    NSUInteger offset = (count / threadCount) * i;</div><div class="line">    NSUInteger count = MIN(numberCount - offset, numberCount / threadCount);</div><div class="line">    NSRange range = NSMakeRange(offset, count);</div><div class="line">    NSArray *subset = [self.numbers subarrayWithRange:range];</div><div class="line">    FindMinMaxThread *thread = [[FindMinMaxThread alloc] initWithNumbers:subset];</div><div class="line">    [threads addObject:thread];</div><div class="line">    [thread start];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>虽然，看起来这个多线程实现起来比较简单，但是呢，在实际的编码中，我们并不会采用这种方式来进行，并发编程。</p>
-<p>这种方式，其实是我们自己来操作线程，进行并发编程，这样就涉及到一个问题，例如，我们在使用到AFNetworking 进行网络访问的时候，本身AF中已经对网络访问进行了异步的线程处理，如果我们在调用AF的时候，再次进行并发线程处理，那么我们使用NSThread这种方式进行并发编程的时候，就回造成线程的指数级增长，因为我们操作的都是单个的线程。开了这么多的线程，当然会造成内存和CPU的高度浪费，而且会造成其他的一些不必要的bug。</p>
-<p>那正确的并发编程 的姿势 是什么，当然是  GCD 和 operation queue ——基于队列的并发编程。这两种方式，通过管理一个被大家协同使用的线程池，来解决上面的问题。</p>
-<h4 id="Grand-Central-Dispatch-GCD"><a href="#Grand-Central-Dispatch-GCD" class="headerlink" title="Grand Central Dispatch(GCD)"></a>Grand Central Dispatch(GCD)</h4><p>通过 GCD，开发者不用再直接跟线程打交道了，只需要向队列中添加代码块即可，GCD 在后端管理着一个线程池。GCD 不仅决定着你的代码块将在哪个线程被执行，它还根据可用的系统资源对这些线程进行管理。这样可以将开发者从线程管理的工作中解放出来，通过集中的管理线程，来缓解大量线程被创建的问题。</p>
-<p>GCD 带来的另一个重要改变是，作为开发者可以将工作考虑为一个队列，而不是一堆线程，这种并行的抽象模型更容易掌握和使用。</p>
-<p>GCD 公开有 5 个不同的队列：运行在主线程中的 main queue，3 个不同优先级的后台队列，以及一个优先级更低的后台队列（用于 I/O）。 另外，开发者可以创建自定义队列：串行或者并行队列。自定义队列非常强大，在自定义队列中被调度的所有 block 最终都将被放入到系统的全局队列中和线程池中。</p>
-<p><img src="http://o8bxt3lx0.bkt.clouddn.com/blog/2016-12-14-gcd-queues.png" alt=""></p>
-<p>使用不同优先级的若干个队列乍听起来非常直接，不过，我们强烈建议，在绝大多数情况下使用默认的优先级队列就可以了。如果执行的任务需要访问一些共享的资源，那么在不同优先级的队列中调度这些任务很快就会造成不可预期的行为。这样可能会引起程序的完全挂起，因为低优先级的任务阻塞了高优先级任务，使它不能被执行。</p>
-<p><strong>稍后我们将详细介绍GCD的使用</strong></p>
-<h4 id="Operation-Queues"><a href="#Operation-Queues" class="headerlink" title="Operation Queues"></a>Operation Queues</h4><p>操作队列是Apple在GCD之上，实现了一些更方便的功能，更高级的AP，这些功能对于开发者来讲通常来说，是最安全的最好的选择。</p>
-<p>NSOperationQueue 有两种不同类型的队列：主队列和自定义队列。主队列运行在主线程之上，而自定义队列在后台执行。在两种类型中，这些队列所处理的任务都使用 NSOperation 的子类来表述。</p>
-<p>你可以通过重写 main 或者 start 方法 来定义自己的 operations 。前一种方法非常简单，开发者不需要管理一些状态属性（例如 isExecuting 和 isFinished），当 main 方法返回的时候，这个 operation 就结束了。这种方式使用起来非常简单，但是灵活性相对重写 start 来说要少一些。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">@implementation YourOperation</div><div class="line">    - (void)main</div><div class="line">    &#123;</div><div class="line">        // 进行处理 ...</div><div class="line">    &#125;</div><div class="line">@end</div></pre></td></tr></table></figure>
-<p>如果你希望拥有更多的控制权，以及在一个操作中可以执行异步任务，那么就重写 start 方法：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">@implementation YourOperation</div><div class="line">    - (void)start</div><div class="line">    &#123;</div><div class="line">        self.isExecuting = YES;</div><div class="line">        self.isFinished = NO;</div><div class="line">        // 开始处理，在结束时应该调用 finished ...</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    - (void)finished</div><div class="line">    &#123;</div><div class="line">        self.isExecuting = NO;</div><div class="line">        self.isFinished = YES;</div><div class="line">    &#125;</div><div class="line">@end</div></pre></td></tr></table></figure>
-<p>注意：这种情况下，你必须手动管理操作的状态。 为了让操作队列能够捕获到操作的改变，需要将状态的属性以配合 KVO 的方式进行实现。如果你不使用它们默认的 setter 来进行设置的话，你就需要在合适的时候发送合适的 KVO 消息。</p>
-<p>为了能使用操作队列所提供的取消功能，你需要在长时间操作中时不时地检查 isCancelled 属性：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">- (void)main</div><div class="line">&#123;</div><div class="line">    while (notDone &amp;&amp; !self.isCancelled) &#123;</div><div class="line">        // 进行处理</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>当你定义好 operation 类之后，就可以很容易的将一个 operation 添加到队列中：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">NSOperationQueue *queue = [[NSOperationQueue alloc] init];</div><div class="line">YourOperation *operation = [[YourOperation alloc] init];</div><div class="line">[queue  addOperation:operation];</div></pre></td></tr></table></figure>
-<p>另外，你也可以将 block 添加到操作队列中。这有时候会非常的方便，比如你希望在主队列中调度一个一次性任务：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[[NSOperationQueue mainQueue] addOperationWithBlock:^&#123;</div><div class="line">    // 代码...</div><div class="line">&#125;];</div></pre></td></tr></table></figure>
-<p>虽然通过这种的方式在队列中添加操作会非常方便，但是定义你自己的 NSOperation 子类会在调试时很有帮助。如果你重写 operation 的description 方法，就可以很容易的标示出在某个队列中当前被调度的所有操作 。</p>
-<p>除了提供基本的调度操作或 block 外，操作队列还提供了在 GCD 中不太容易处理好的特性的功能。例如，你可以通过 maxConcurrentOperationCount 属性来控制一个特定队列中可以有多少个操作参与并发执行。将其设置为 1 的话，你将得到一个串行队列，这在以隔离为目的的时候会很有用。</p>
-<p>另外还有一个方便的功能就是根据队列中 operation 的优先级对其进行排序，这不同于 GCD 的队列优先级，它只影响当前队列中所有被调度的 operation 的执行先后。如果你需要进一步在除了 5 个标准的优先级以外对 operation 的执行顺序进行控制的话，还可以在 operation 之间指定依赖关系，如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[intermediateOperation addDependency:operation1];</div><div class="line">[intermediateOperation addDependency:operation2];</div><div class="line">[finishedOperation addDependency:intermediateOperation];</div></pre></td></tr></table></figure>
-<p>这些简单的代码可以确保 operation1 和 operation2 在 intermediateOperation 之前执行，当然，也会在 finishOperation 之前被执行。对于需要明确的执行顺序时，操作依赖是非常强大的一个机制。它可以让你创建一些操作组，并确保这些操作组在依赖它们的操作被执行之前执行，或者在并发队列中以串行的方式执行操作。</p>
-<p>从本质上来看，操作队列的性能比 GCD 要低那么一点，不过，大多数情况下这点负面影响可以忽略不计，操作队列是并发编程的首选工具。</p>
-<p>参考：</p>
-<p><a href="https://www.objccn.io/issue-2-1/" target="_blank" rel="external">https://www.objccn.io/issue-2-1/</a></p>
-
+                <div class="postShorten-excerpt" itemprop="articleBody">
+                    <p>并发编程，这个我们听起来再熟悉不过了，我们在代码编写过程中也经常会做这样一些操作，但是我发现，在实际的编写过程中，很多实用并发编程的方式，其实是错误使用的，当然这也包括我自己，对一些并发编程也是糊里糊涂，今天的工作中涉及到了许多的并发方面的问题，专门抽时间去学习了一下，现在记录下来。</p>
                     
+                        <a href="/2016/12/14/iOS中的并发编程-一/" class="postShorten-excerpt_link link">
+                            阅读全文
+                        </a>
                         
-                    
-                    
-                        <p>
-                            <a href="/2016/12/14/iOS中的并发编程-一/#post-footer" class="postShorten-excerpt_link link">
-                                注释和共享
-                            </a>
-                        </p>
                     
                 </div>
             

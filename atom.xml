@@ -173,7 +173,7 @@
     <link href="http://ppsheep.com/2017/01/03/iOS-ping%E7%BD%91%E7%BB%9C%E5%B0%8F%E5%B7%A5%E5%85%B7/"/>
     <id>http://ppsheep.com/2017/01/03/iOS-ping网络小工具/</id>
     <published>2017-01-03T05:30:44.000Z</published>
-    <updated>2017-01-09T07:47:14.000Z</updated>
+    <updated>2017-01-20T09:35:59.000Z</updated>
     
     <content type="html"><![CDATA[<p>Ping工具经常在游戏中见到，计算网络的延迟，Apple官方有一个SimplePing的demo，用于对网络进行检测，就跟我们电脑端的ping效果相同，在一些情况下，我们可以用来进行网络速度的检测，这里将官方给出的demo进行封装，并且在SimplePing的基础上进行了一些改动，将我们需要用到的一些其他的数据取出来，便于我们的使用，源码我会放在文章末尾。</p>
 <a id="more"></a>
@@ -202,6 +202,10 @@
 <p>后面如果还有时间，会接着完善</p>
 <p>源码放在：</p>
 <p><a href="https://github.com/yangqian111/PPSSimplePing" target="_blank" rel="external">https://github.com/yangqian111/PPSSimplePing</a></p>
+<p><strong>欢迎大家关注我的公众号，我会定期分享一些我在项目中遇到问题的解决办法和一些iOS实用的技巧，现阶段主要是整理出一些基础的知识记录下来</strong></p>
+<div align="middle"><br>    <image src="http://ac-mhke0kuv.clouddn.com/830a4ead8294ceff5160.jpg"></image><br></div>
+
+<p>文章也会同步更新到我的博客：<br><a href="http://ppsheep.com">http://ppsheep.com</a></p>
 ]]></content>
     
     <summary type="html">
@@ -606,12 +610,10 @@
     <link href="http://ppsheep.com/2016/12/14/iOS%E4%B8%AD%E7%9A%84%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B-%E4%B8%80/"/>
     <id>http://ppsheep.com/2016/12/14/iOS中的并发编程-一/</id>
     <published>2016-12-14T07:09:03.000Z</published>
-    <updated>2016-12-29T09:33:45.000Z</updated>
+    <updated>2017-01-20T09:36:42.000Z</updated>
     
-    <content type="html"><![CDATA[<p><strong>欢迎大家关注我的公众号，我会定期分享一些我在项目中遇到问题的解决办法和一些iOS实用的技巧，现阶段主要是整理出一些基础的知识记录下来</strong></p>
-<div align="middle"><br>    <image src="http://ac-mhke0kuv.clouddn.com/830a4ead8294ceff5160.jpg"></image><br></div>
-
-<p>文章也会同步更新到我的博客：<br><a href="http://ppsheep.com">http://ppsheep.com</a></p>
+    <content type="html"><![CDATA[<p>并发编程，这个我们听起来再熟悉不过了，我们在代码编写过程中也经常会做这样一些操作，但是我发现，在实际的编写过程中，很多实用并发编程的方式，其实是错误使用的，当然这也包括我自己，对一些并发编程也是糊里糊涂，今天的工作中涉及到了许多的并发方面的问题，专门抽时间去学习了一下，现在记录下来。</p>
+<a id="more"></a>
 <h3 id="OS-X和iOS中的并发编程"><a href="#OS-X和iOS中的并发编程" class="headerlink" title="OS X和iOS中的并发编程"></a>OS X和iOS中的并发编程</h3><p>在OS X和iOS中，Apple都为我们提供了相同的并发编程API。pthread 、 NSThread 、GCD 、NSOperationQueue。</p>
 <h4 id="pthread"><a href="#pthread" class="headerlink" title="pthread"></a>pthread</h4><p>pthread是比较底层的并发API，这个用起来并不是那么容易，而且在我们日常的编码过程中，我们也应该抛弃掉这种效率极低的并发编程方式。这里就不对这种并发做过多详细的介绍。</p>
 <h4 id="NSThread"><a href="#NSThread" class="headerlink" title="NSThread"></a>NSThread</h4><p>NSThread这个我们听起来就很熟悉了，实际上，这是Apple对pthread的一个封装，封装成了Objectivc-C的接口API，在cocoa环境中，我们能够轻易使用NSThread来进行并发编程。</p>
@@ -649,11 +651,15 @@
 <p>从本质上来看，操作队列的性能比 GCD 要低那么一点，不过，大多数情况下这点负面影响可以忽略不计，操作队列是并发编程的首选工具。</p>
 <p>参考：</p>
 <p><a href="https://www.objccn.io/issue-2-1/" target="_blank" rel="external">https://www.objccn.io/issue-2-1/</a></p>
+<p><strong>欢迎大家关注我的公众号，我会定期分享一些我在项目中遇到问题的解决办法和一些iOS实用的技巧，现阶段主要是整理出一些基础的知识记录下来</strong></p>
+<div align="middle"><br>    <image src="http://ac-mhke0kuv.clouddn.com/830a4ead8294ceff5160.jpg"></image><br></div>
+
+<p>文章也会同步更新到我的博客：<br><a href="http://ppsheep.com">http://ppsheep.com</a></p>
 ]]></content>
     
     <summary type="html">
     
-      并发编程，这个我们听起来再熟悉不过了，我们在代码编写过程中也经常会做这样一些操作，但是我发现，在实际的编写过程中，很多实用并发编程的方式，其实是错误使用的，当然这也包括我自己，对一些并发编程也是糊里糊涂，今天的工作中涉及到了许多的并发方面的问题，专门抽时间去学习了一下，现在记录下来。
+      &lt;p&gt;并发编程，这个我们听起来再熟悉不过了，我们在代码编写过程中也经常会做这样一些操作，但是我发现，在实际的编写过程中，很多实用并发编程的方式，其实是错误使用的，当然这也包括我自己，对一些并发编程也是糊里糊涂，今天的工作中涉及到了许多的并发方面的问题，专门抽时间去学习了一下，现在记录下来。&lt;/p&gt;
     
     </summary>
     
