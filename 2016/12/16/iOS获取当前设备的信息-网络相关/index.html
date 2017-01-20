@@ -20,7 +20,7 @@
 <meta property="og:site_name" content="ppsheep">
 <meta property="og:description" content="最近在搞网络相关的SDK，将自己在项目中能够开放出来的，记录下来，其中很多用到了C，相当于一个工具。后期还会选择开放一些ping网络的工具，找链路节点的工具，最近就在搞这个。">
 <meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/blog/2016-12-16-081639.jpg">
-<meta property="og:updated_time" content="2017-01-03T05:34:02.000Z">
+<meta property="og:updated_time" content="2017-01-20T09:32:47.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS获取当前设备的信息-网络相关">
 <meta name="twitter:description" content="最近在搞网络相关的SDK，将自己在项目中能够开放出来的，记录下来，其中很多用到了C，相当于一个工具。后期还会选择开放一些ping网络的工具，找链路节点的工具，最近就在搞这个。">
@@ -219,10 +219,8 @@
     
     <div class="post-content markdown" itemprop="articleBody">
         <div class="main-content-wrap">
-            <p><strong>欢迎大家关注我的公众号，我会定期分享一些我在项目中遇到问题的解决办法和一些iOS实用的技巧，现阶段主要是整理出一些基础的知识记录下来</strong></p>
-<div align="middle"><br>    <image src="http://ac-mhke0kuv.clouddn.com/830a4ead8294ceff5160.jpg"></image><br></div>
-
-<p>文章也会同步更新到我的博客：<br><a href="http://ppsheep.com">http://ppsheep.com</a></p>
+            <p>最近在搞网络相关的SDK，将自己在项目中能够开放出来的，记录下来，其中很多用到了C，相当于一个工具。后期还会选择开放一些ping网络的工具，找链路节点的工具，最近就在搞这个。</p>
+<a id="more"></a>
 <h3 id="获取当前设备的IP地址"><a href="#获取当前设备的IP地址" class="headerlink" title="获取当前设备的IP地址"></a>获取当前设备的IP地址</h3><p>对于公网的IP当然，在我们本地设备上是不能够获取到的，至少我没有找到方法获取到出口IP地址，但是局域网的IP还是能够获取到的，这里ipv4和ipv6 都能够获取出来</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line">+ (NSString *)deviceIPAdress</div><div class="line">&#123;</div><div class="line">    NSString *address = @&quot;&quot;;</div><div class="line">    struct ifaddrs *interfaces = NULL;</div><div class="line">    struct ifaddrs *temp_addr = NULL;</div><div class="line">    int success = 0;</div><div class="line">    </div><div class="line">    success = getifaddrs(&amp;interfaces);</div><div class="line">    </div><div class="line">    if (success == 0) &#123;  // 0 表示获取成功</div><div class="line">        </div><div class="line">        temp_addr = interfaces;</div><div class="line">        while (temp_addr != NULL) &#123;</div><div class="line">            </div><div class="line">            if ([[NSString stringWithUTF8String:temp_addr-&gt;ifa_name] isEqualToString:@&quot;en0&quot;] || [[NSString stringWithUTF8String:temp_addr-&gt;ifa_name] isEqualToString:@&quot;pdp_ip0&quot;])</div><div class="line">                &#123;</div><div class="line">                //如果是IPV4地址，直接转化</div><div class="line">                if (temp_addr-&gt;ifa_addr-&gt;sa_family == AF_INET)&#123;</div><div class="line">                    </div><div class="line">                    // Get NSString from C String</div><div class="line">                    address = [self formatIPV4Address:((struct sockaddr_in *)temp_addr-&gt;ifa_addr)-&gt;sin_addr];</div><div class="line">                &#125;</div><div class="line">                </div><div class="line">                //如果是IPV6地址</div><div class="line">                else if (temp_addr-&gt;ifa_addr-&gt;sa_family == AF_INET6)&#123;</div><div class="line">                    address = [self formatIPV6Address:((struct sockaddr_in6 *)temp_addr-&gt;ifa_addr)-&gt;sin6_addr];</div><div class="line">                    if (address &amp;&amp; ![address isEqualToString:@&quot;&quot;] &amp;&amp; ![address.uppercaseString hasPrefix:@&quot;FE80&quot;]) break;</div><div class="line">                &#125;</div><div class="line">                &#125;</div><div class="line">            </div><div class="line">            temp_addr = temp_addr-&gt;ifa_next;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    freeifaddrs(interfaces);</div><div class="line">    </div><div class="line">    //以FE80开始的地址是单播地址</div><div class="line">    if (address &amp;&amp; ![address isEqualToString:@&quot;&quot;] &amp;&amp; ![address.uppercaseString hasPrefix:@&quot;FE80&quot;]) &#123;</div><div class="line">        return address;</div><div class="line">    &#125; else &#123;</div><div class="line">        return @&quot;127.0.0.1&quot;;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h3 id="获取当前设备网关地址"><a href="#获取当前设备网关地址" class="headerlink" title="获取当前设备网关地址"></a>获取当前设备网关地址</h3><p>网关地址，通俗点  就是路由器的地址，也是相对于局域网 这里需要区分一下ipv4和ipv6，两种获取网关地址的方法是不一样</p>
@@ -240,6 +238,10 @@
 <p><img src="http://o8bxt3lx0.bkt.clouddn.com/blog/2016-12-16-081639.jpg" alt=""></p>
 <p>原项目地址：</p>
 <p><a href="https://github.com/yangqian111/blog/tree/master/iOS获取当前设备的信息-网络相关" target="_blank" rel="external">https://github.com/yangqian111/blog/tree/master/iOS获取当前设备的信息-网络相关</a></p>
+<p><strong>欢迎大家关注我的公众号，我会定期分享一些我在项目中遇到问题的解决办法和一些iOS实用的技巧，现阶段主要是整理出一些基础的知识记录下来</strong></p>
+<div align="middle"><br>    <image src="http://ac-mhke0kuv.clouddn.com/830a4ead8294ceff5160.jpg"></image><br></div>
+
+<p>文章也会同步更新到我的博客：<br><a href="http://ppsheep.com">http://ppsheep.com</a></p>
 
             
         </div>
