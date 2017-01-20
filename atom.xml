@@ -1100,12 +1100,10 @@
     <link href="http://ppsheep.com/2016/11/17/iOS-sqlite%E7%AE%80%E5%8D%95%E5%B0%81%E8%A3%85%E4%BD%BF%E7%94%A8/"/>
     <id>http://ppsheep.com/2016/11/17/iOS-sqlite简单封装使用/</id>
     <published>2016-11-17T08:38:49.000Z</published>
-    <updated>2016-11-17T09:04:28.000Z</updated>
+    <updated>2017-01-20T09:48:18.000Z</updated>
     
-    <content type="html"><![CDATA[<p><strong>欢迎大家关注我的公众号，我会定期分享一些我在项目中遇到问题的解决办法和一些iOS实用的技巧，现阶段主要是整理出一些基础的知识记录下来</strong></p>
-<div align="middle"><br>    <image src="http://ac-mhke0kuv.clouddn.com/830a4ead8294ceff5160.jpg"></image><br></div>
-
-<p>文章也会同步更新到我的博客：<br><a href="http://ppsheep.com">http://ppsheep.com</a></p>
+    <content type="html"><![CDATA[<p>sqlite几乎在每个APP编码都会涉及到，它是一种轻量级的数据库，在手机端使用起来极其方便，因为SQLite原生的接口都是使用C写的，不是特别友好，所有有一个强大库就出现了FMDB，今天我们基于FMDB来进行二次封装</p>
+<a id="more"></a>
 <h3 id="项目结构"><a href="#项目结构" class="headerlink" title="项目结构"></a>项目结构</h3><p>首先来看一下我的项目结构</p>
 <p><img src="http://ww2.sinaimg.cn/large/006tNc79jw1f9v75zwsfkj307d0gv0tu.jpg" alt=""></p>
 <h3 id="封装思路"><a href="#封装思路" class="headerlink" title="封装思路"></a>封装思路</h3><p>数据层的基本封装思路是：</p>
@@ -1140,11 +1138,15 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">- (void)initUsers&#123;</div><div class="line">    NSMutableArray *arr = [NSMutableArray array];</div><div class="line">    for (int i=0; i&lt;10; i++) &#123;</div><div class="line">        PPSUser *user = [[PPSUser alloc] init];</div><div class="line">        user.userId = [NSString stringWithFormat:@&quot;%ld_userId&quot;,(long)i];</div><div class="line">        user.name = [NSString stringWithFormat:@&quot;%ld_userName&quot;,(long)i];</div><div class="line">        user.email = [NSString stringWithFormat:@&quot;%ld_email&quot;,(long)i];</div><div class="line">        user.phoneNum = [NSString stringWithFormat:@&quot;%ld_phoneNum&quot;,(long)i];</div><div class="line">        [arr addObject:user];</div><div class="line">    &#125;</div><div class="line">    [self.store addUser:arr];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>我就不再贴代码出来了，项目工程，我放在了</p>
 <p><a href="https://github.com/yangqian111/blog/tree/master/iOS%20sqlite使用" target="_blank" rel="external">https://github.com/yangqian111/blog/tree/master/iOS%20sqlite使用</a></p>
+<p><strong>欢迎大家关注我的公众号，我会定期分享一些我在项目中遇到问题的解决办法和一些iOS实用的技巧，现阶段主要是整理出一些基础的知识记录下来</strong></p>
+<div align="middle"><br>    <image src="http://ac-mhke0kuv.clouddn.com/830a4ead8294ceff5160.jpg"></image><br></div>
+
+<p>文章也会同步更新到我的博客：<br><a href="http://ppsheep.com">http://ppsheep.com</a></p>
 ]]></content>
     
     <summary type="html">
     
-      sqlite几乎在每个APP编码都会涉及到，它是一种轻量级的数据库，在手机端使用起来极其方便，因为SQLite原生的接口都是使用C写的，不是特别友好，所有有一个强大库就出现了FMDB，今天我们基于FMDB来进行二次封装
+      &lt;p&gt;sqlite几乎在每个APP编码都会涉及到，它是一种轻量级的数据库，在手机端使用起来极其方便，因为SQLite原生的接口都是使用C写的，不是特别友好，所有有一个强大库就出现了FMDB，今天我们基于FMDB来进行二次封装&lt;/p&gt;
     
     </summary>
     
@@ -1160,12 +1162,10 @@
     <link href="http://ppsheep.com/2016/11/17/iOS%E6%AF%8F%E4%B8%AAViewController%E4%B8%80%E4%B8%AANavigationBar/"/>
     <id>http://ppsheep.com/2016/11/17/iOS每个ViewController一个NavigationBar/</id>
     <published>2016-11-17T05:03:38.000Z</published>
-    <updated>2016-11-17T06:23:09.000Z</updated>
+    <updated>2017-01-20T09:50:51.000Z</updated>
     
-    <content type="html"><![CDATA[<p><strong>欢迎大家关注我的公众号，我会定期分享一些我在项目中遇到问题的解决办法和一些iOS实用的技巧，现阶段主要是整理出一些基础的知识记录下来</strong></p>
-<div align="middle"><br>    <image src="http://ac-mhke0kuv.clouddn.com/830a4ead8294ceff5160.jpg"></image><br></div>
-
-<p>文章也会同步更新到我的博客：<br><a href="http://ppsheep.com">http://ppsheep.com</a></p>
+    <content type="html"><![CDATA[<p>在日常开发中，我们经常会碰到一些关于导航栏的问题，例如视觉设计，经常性的改变NavigationBar的风格，虽然我们能够在viewwillApper中来进行处理，但是总是太麻烦，而且需要写很多多余的代码，今天就来讲讲这种效果，其实已经有很多APP都是使用这种效果</p>
+<a id="more"></a>
 <p>我们先来看看已经有的一些APP使用的这种效果</p>
 <p>这是天猫APP的效果，注意观察他的导航栏</p>
 <p><img src="http://i.imgur.com/Hz7Ixkj.gif" alt=""></p>
@@ -1207,11 +1207,15 @@
 <p>如果你的APP在导航栏有多种样式的话，你完全可以使用这种方法，使用起来很方便</p>
 <p>感谢:<br>    rickyTan开源<br>    <a href="https://github.com/rickytan/RTRootNavigationController" target="_blank" rel="external">https://github.com/rickytan/RTRootNavigationController</a></p>
 <p>项目的源码我放在了：<br>    <a href="https://github.com/yangqian111/blog/tree/master/iOS每个VC单独的一个导航栏" target="_blank" rel="external">https://github.com/yangqian111/blog/tree/master/iOS每个VC单独的一个导航栏</a></p>
+<p><strong>欢迎大家关注我的公众号，我会定期分享一些我在项目中遇到问题的解决办法和一些iOS实用的技巧，现阶段主要是整理出一些基础的知识记录下来</strong></p>
+<div align="middle"><br>    <image src="http://ac-mhke0kuv.clouddn.com/830a4ead8294ceff5160.jpg"></image><br></div>
+
+<p>文章也会同步更新到我的博客：<br><a href="http://ppsheep.com">http://ppsheep.com</a></p>
 ]]></content>
     
     <summary type="html">
     
-      在日常开发中，我们经常会碰到一些关于导航栏的问题，例如视觉设计，经常性的改变NavigationBar的风格，虽然我们能够在viewwillApper中来进行处理，但是总是太麻烦，而且需要写很多多余的代码，今天就来讲讲这种效果，其实已经有很多APP都是使用这种效果
+      &lt;p&gt;在日常开发中，我们经常会碰到一些关于导航栏的问题，例如视觉设计，经常性的改变NavigationBar的风格，虽然我们能够在viewwillApper中来进行处理，但是总是太麻烦，而且需要写很多多余的代码，今天就来讲讲这种效果，其实已经有很多APP都是使用这种效果&lt;/p&gt;
     
     </summary>
     
@@ -1223,12 +1227,10 @@
     <link href="http://ppsheep.com/2016/11/16/iOS%20CALayer%E5%9F%BA%E7%A1%80%E4%BB%8B%E7%BB%8D-%E5%8A%A8%E7%94%BB%E5%9F%BA%E7%A1%80%E4%B9%8B%E4%B8%80/"/>
     <id>http://ppsheep.com/2016/11/16/iOS CALayer基础介绍-动画基础之一/</id>
     <published>2016-11-16T10:40:46.000Z</published>
-    <updated>2016-11-19T07:48:21.000Z</updated>
+    <updated>2017-01-20T09:44:23.000Z</updated>
     
-    <content type="html"><![CDATA[<p><strong>欢迎大家关注我的公众号，我会定期分享一些我在项目中遇到问题的解决办法和一些iOS实用的技巧，现阶段主要是整理出一些基础的知识记录下来</strong></p>
-<div align="middle"><br>    <image src="http://ac-mhke0kuv.clouddn.com/830a4ead8294ceff5160.jpg"></image><br></div>
-
-<p>文章也会同步更新到我的博客：<br><a href="http://ppsheep.com">http://ppsheep.com</a></p>
+    <content type="html"><![CDATA[<p>在上一篇文章中我们讲了CALayer和UIView之间的相似的树级关系，和他们之间的管理关系，并且介绍了CALayer的一些属性，在这片文章中，将继续介绍一些CALayer的属性，虽然这看起来很简单，但是后面等到我们做动画的时候，这些属性都是极其重要的。</p>
+<a id="more"></a>
 <h3 id="动画的由来"><a href="#动画的由来" class="headerlink" title="动画的由来"></a>动画的由来</h3><p>在iOS中所有的视图都是从UIView的基类派生而来，UIView可以处理触摸事件，可以支持基于Core Graphics绘图，也能够做一些简单的动画，比如旋转、缩放或者其他一些滑动渐变的动画。但是实际上，这是苹果为我们封装了一层，真正实现动画的其实是一个叫做图层的玩意儿(CALayer)，UIView所做的一切动画，都是苹果从CALayer封装而来。</p>
 <h3 id="CALayer"><a href="#CALayer" class="headerlink" title="CALayer"></a>CALayer</h3><p>CALayer类在概念上和UIView类似，也可以像View一样添加一些子layer(图片，文本等等)，也能够像View一样，管理子图层的位置大小等等，并且，CALayer有一些非常重要的属性和方法，iOS中的动画就是通过这些来做动画和变换，CALayer和UIView最大的不同就是CALayer不处理用户的交互。</p>
 <h3 id="UIView和CALayer的关系"><a href="#UIView和CALayer的关系" class="headerlink" title="UIView和CALayer的关系"></a>UIView和CALayer的关系</h3><p>每一个UIView都有一个CALayer实例属性，UIView的职责就是创建并创建这个图层，以确保在子视图被创建时，子图层也能够被创建，子视图被添加和移除的时候，子图层也能够做相对的添加移除操作。 他们的关系是一一对应的。</p>
@@ -1330,11 +1332,15 @@
 <blockquote>
 <p>到这里，基本上就将CALayer中我们可能会经常使用到的一些重要属性讲解了一下</p>
 </blockquote>
+<p><strong>欢迎大家关注我的公众号，我会定期分享一些我在项目中遇到问题的解决办法和一些iOS实用的技巧，现阶段主要是整理出一些基础的知识记录下来</strong></p>
+<div align="middle"><br>    <image src="http://ac-mhke0kuv.clouddn.com/830a4ead8294ceff5160.jpg"></image><br></div>
+
+<p>文章也会同步更新到我的博客：<br><a href="http://ppsheep.com">http://ppsheep.com</a></p>
 ]]></content>
     
     <summary type="html">
     
-      在上一篇文章中我们讲了CALayer和UIView之间的相似的树级关系，和他们之间的管理关系，并且介绍了CALayer的一些属性，在这片文章中，将继续介绍一些CALayer的属性，虽然这看起来很简单，但是后面等到我们做动画的时候，这些属性都是极其重要的。
+      &lt;p&gt;在上一篇文章中我们讲了CALayer和UIView之间的相似的树级关系，和他们之间的管理关系，并且介绍了CALayer的一些属性，在这片文章中，将继续介绍一些CALayer的属性，虽然这看起来很简单，但是后面等到我们做动画的时候，这些属性都是极其重要的。&lt;/p&gt;
     
     </summary>
     

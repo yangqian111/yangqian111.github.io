@@ -162,6 +162,24 @@
     
         <ul class="sidebar-buttons">
         
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="https://github.com/yangqian111" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+                    <span class="sidebar-button-desc">GitHub</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="mailto:787688073@qq.com" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-envelope-o"></i>
+                    <span class="sidebar-button-desc">邮箱</span>
+                </a>
+        </li>
+        
     </ul>
     
         <ul class="sidebar-buttons">
@@ -321,7 +339,7 @@
     </article>
     
     
-    <article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
+    <article class="postShorten postShorten--thumbnailimg-right" itemscope itemType="http://schema.org/BlogPosting">
         <div class="postShorten-wrap">
             
             <div class="postShorten-header">
@@ -349,122 +367,13 @@
 
             </div>
             
-                <div class="postShorten-content" itemprop="articleBody">
-                    <p><strong>欢迎大家关注我的公众号，我会定期分享一些我在项目中遇到问题的解决办法和一些iOS实用的技巧，现阶段主要是整理出一些基础的知识记录下来</strong></p>
-<div align="middle"><br>    <image src="http://ac-mhke0kuv.clouddn.com/830a4ead8294ceff5160.jpg"></image><br></div>
-
-<p>文章也会同步更新到我的博客：<br><a href="http://ppsheep.com">http://ppsheep.com</a></p>
-<h3 id="动画的由来"><a href="#动画的由来" class="headerlink" title="动画的由来"></a>动画的由来</h3><p>在iOS中所有的视图都是从UIView的基类派生而来，UIView可以处理触摸事件，可以支持基于Core Graphics绘图，也能够做一些简单的动画，比如旋转、缩放或者其他一些滑动渐变的动画。但是实际上，这是苹果为我们封装了一层，真正实现动画的其实是一个叫做图层的玩意儿(CALayer)，UIView所做的一切动画，都是苹果从CALayer封装而来。</p>
-<h3 id="CALayer"><a href="#CALayer" class="headerlink" title="CALayer"></a>CALayer</h3><p>CALayer类在概念上和UIView类似，也可以像View一样添加一些子layer(图片，文本等等)，也能够像View一样，管理子图层的位置大小等等，并且，CALayer有一些非常重要的属性和方法，iOS中的动画就是通过这些来做动画和变换，CALayer和UIView最大的不同就是CALayer不处理用户的交互。</p>
-<h3 id="UIView和CALayer的关系"><a href="#UIView和CALayer的关系" class="headerlink" title="UIView和CALayer的关系"></a>UIView和CALayer的关系</h3><p>每一个UIView都有一个CALayer实例属性，UIView的职责就是创建并创建这个图层，以确保在子视图被创建时，子图层也能够被创建，子视图被添加和移除的时候，子图层也能够做相对的添加移除操作。 他们的关系是一一对应的。</p>
-<p><img src="http://i.imgur.com/2tvoYIJ.jpg" alt=""></p>
-<p>实际上，我们在屏幕上看到的视图或者动画，其实都是图层。UIView只是苹果为我们封装的高级API</p>
-<p>这个就有个历史原因了，主要呢 是要在Mac上也使用CALayer，但是iOS设备的触摸和Mac的鼠标点击又不一样，在Mac上，高级API就叫做NSView了，更多了，就不在这里讲了。</p>
-<h3 id="哪里能用到CALayer"><a href="#哪里能用到CALayer" class="headerlink" title="哪里能用到CALayer"></a>哪里能用到CALayer</h3><p>一般的，我们在处理一些简单的动画时，都用不到CALayer，既然苹果为我们封装好了，干嘛不用呢？但是如果需要再处理一些高级的动画，那UIView可能就不能满足我们的需求了。</p>
-<p>没有暴露出来的CALayer功能：</p>
-<ul>
-<li>阴影，圆角，带颜色的边框</li>
-<li>3D变换</li>
-<li>非矩形范围</li>
-<li>透明遮罩</li>
-<li>多级非线性动画</li>
-</ul>
-<h3 id="使用图层"><a href="#使用图层" class="headerlink" title="使用图层"></a>使用图层</h3><p>我们先来感受一下图层</p>
-<p>新建一个工程</p>
-<p>在view中添加一个view</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">UIView *layerView = [[UIView alloc] initWithFrame:CGRectMake(10, 10, 200, 200)];</div><div class="line">layerView.backgroundColor = [UIColor redColor];</div><div class="line">layerView.center = self.view.center;</div><div class="line">[self.view addSubview:layerView];</div></pre></td></tr></table></figure>
-<p><img src="http://i.imgur.com/zEKwKE7.jpg" alt=""></p>
-<p>然后我们想要在这个小红方框的中间添加上一个蓝色的小方框。当然，我们肯定知道这很简单，直接加上一个子view就行了，但是这样做的，就失去了我们学习CALayer的意义。</p>
-<p>我的想法是这样，既然layer像view一样，那我们是否可以在layerView的layer上加上一个蓝色方框样式的layer 我们的做法是这样</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">CALayer *blueLayer = [CALayer layer];</div><div class="line">blueLayer.frame = CGRectMake(50, 50, 100, 100);</div><div class="line">blueLayer.backgroundColor = [UIColor blueColor].CGColor;</div><div class="line">[layerView.layer addSublayer:blueLayer];</div></pre></td></tr></table></figure>
-<p><img src="http://i.imgur.com/TrH8GPi.jpg" alt=""></p>
-<p>效果就出来了 我们来看看3D图</p>
-<p><img src="http://i.imgur.com/z6Tv4S7.jpg" alt=""></p>
-<p>我们可以看到，这样的效果，我们只能看到一个图层，一个view 并没有向layerView上添加子view</p>
-<p>当然这里我们只是做一个layer的介绍，并不是说你之后添加视图这样添加，这样肯定是错误的，我们之前讲过，layer不能处理用户的交互，这个很重要。</p>
-<p>但是在什么情况下，我们需要这样来使用CALayer呢？</p>
-<ul>
-<li>开发同时可以在macOS上运行的跨平台应用</li>
-<li>使用多种CALayer，并不想创建额外的UIView去封装他们(这个后面会讲到)</li>
-<li>做一些对性能要求较高的工作，但是遇到这种情况，我们很多时候都直接使用OpenGL绘图了</li>
-</ul>
-<p>总的来说呢，处理视图肯定比处理图层简单多了</p>
-<p>我们这里创建这一个例子，只是为了来介绍，图层的树状结构，和视图的一一关联关系。</p>
-<h3 id="寄宿图"><a href="#寄宿图" class="headerlink" title="寄宿图"></a>寄宿图</h3><p>寄宿图是什么意思呢?其实呢，就是图层中包含图</p>
-<h4 id="contents属性"><a href="#contents属性" class="headerlink" title="contents属性"></a>contents属性</h4><p>在CALayer中有一个属性，叫做contents，这个属性的类型被定义为id，看上去好像这个属性能够接收任意类型的值，如果给contents赋予了任意一个类型的值，你的APP也能够编译成功，但是得到的图层确实一个空白的图层，事实上，这个contents在iOS下，是需要一个CGImage的值。</p>
-<p>那为什么这个又要写作一个id类型呢，这个又是一个历史原因了 ，明显的这个是因为macOS的原因，因为在macOS下，这个是接收NSImage类型。</p>
-<p>在UIImage中 有一个CGImage属性，他返回的是一个CGImageRef(指向CGImage的指针)，如果你直接把这个赋给contents，那是会编译出错的。CGImageRef是一个Core Foundation对象，并不是一个cocoa对象，但是我们可以通过bridged来进行转换，我们来向刚刚创建的layerView的图层赋予一张图片</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">UIImage *image = [UIImage imageNamed:@&quot;plane&quot;];</div><div class="line">layerView.layer.contents = (__bridge id _Nullable)(image.CGImage);</div></pre></td></tr></table></figure>
-<p><img src="http://i.imgur.com/TbHbXhg.jpg" alt=""></p>
-<p>这样我们就避开了UIImageView，直接向UIView的图层设置一张图片</p>
-<h4 id="contentsGravity属性"><a href="#contentsGravity属性" class="headerlink" title="contentsGravity属性"></a>contentsGravity属性</h4><p>但是我们看到中间的图片明显被拉伸了，我们想要展示他原有的效果，怎么做呢？</p>
-<p>在我们使用UIImageView时，我们处理这种拉伸，一般是使用UIimageView的一个属性</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">imageView.contentModel = UIViewContentModeScaleAspectFit;</div></pre></td></tr></table></figure>
-<p>在CALayer中有一个和contentMode相似的属性，叫做contentsGravity，不同的是他是一个NSString类型。</p>
-<p>contentsGravity值的类型包含：</p>
-<ul>
-<li>kCAGravityCenter</li>
-<li>kCAGravityTop</li>
-<li>kCAGravityBottom</li>
-<li>kCAGravityLeft</li>
-<li>kCAGravityRight</li>
-<li>kCAGravityTopLeft</li>
-<li>kCAGravityTopRight</li>
-<li>kCAGravityBottomLeft</li>
-<li>kCAGravityBottomRight</li>
-<li>kCAGravityResize</li>
-<li>kCAGravityResizeAspect</li>
-<li>kCAGravityResizeAspectFill</li>
-</ul>
-<p>这其中的类型与contentMode都有一一对应关系的，其中kCAGravityResizeAspect相当于视图中contentMode类型的UIViewContentModeScaleAspectFit</p>
-<p>当我们将layerView的contentsGravity设置成kCAGravityResizeAspect</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">layerView.layer.contentsGravity = kCAGravityResizeAspect;</div></pre></td></tr></table></figure>
-<p><img src="http://i.imgur.com/cTH6idP.jpg" alt=""></p>
-<p>效果就不一样了</p>
-<h4 id="contentsScale属性-主要针对Mac"><a href="#contentsScale属性-主要针对Mac" class="headerlink" title="contentsScale属性(主要针对Mac)"></a>contentsScale属性(主要针对Mac)</h4><p>contentsScale定义了寄宿图的像素尺寸和视图大小的比例，默认情况下是一个值为1.0的浮点数。那么我们一般怎么使用这个属性呢？</p>
-<p>这个属性其实是为了支持高分辨率屏幕机制而出现的，他用来判断在绘制图层的时候，应该为寄宿图创建创建的空间大小和需要显示图片的拉伸度。</p>
-<p>简单来说，如果我们将contentsScale设置为1.0 那么寄宿图创建出来的图片将会以每个点一个像素来绘制图片，如果设置为2，那么将会以每个点2个像素来绘制图片。这个就是我们熟知的retina屏幕。</p>
-<p>在我们之前使用contentsGravity = kCAGravityResizeAspect这个属性时，默认是将图片等比例拉伸至适应图层大小，但是，如果我们将contentsGravity设置成kCAGravityCenter，我们看一下，效果会是什么样？</p>
-<p><img src="http://i.imgur.com/e9qmb5i.jpg" alt=""></p>
-<p>整个图片直接放大，将原图层盖住，这是因为kCAGravityCenter属性值，默认是不会对图片进行拉伸，所以将图片的原始大小展示了出来，这时候，我们的contentsScale就起到了作用 </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">layerView.layer.contentsScale = image.scale;</div></pre></td></tr></table></figure>
-<p><img src="http://i.imgur.com/RyHbQXJ.jpg" alt=""></p>
-<p>这时，我们看到，现在使用了正确的图片来进行绘制</p>
-<p><strong>注意，当我们使用代码来设置寄宿图时，我们一定要手动设置contentsScale</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">layerView.layer.contentsScale = [UIScreen mainScreen].scale;</div></pre></td></tr></table></figure>
-<p>这样，我们的图片在retina设备上，才会显示正常。</p>
-<h4 id="maskToBounds属性"><a href="#maskToBounds属性" class="headerlink" title="maskToBounds属性"></a>maskToBounds属性</h4><p>不知大家有没有注意到，在上面的图中，我们的图片已经超过了图层的边界，默认情况下，在UIView中，也会绘制超过边界的内容或者子视图。</p>
-<p>在UIView中，控制是否超出边界的属性是clipsToBounds，在CALayer中，控制的属性是masksToBounds，将他设置成yes</p>
-<p><img src="http://i.imgur.com/7Uh0sZd.jpg" alt=""></p>
-<h4 id="contentsRect属性"><a href="#contentsRect属性" class="headerlink" title="contentsRect属性"></a>contentsRect属性</h4><p>contentRect属性，允许我们在图层中显示寄宿图的部分区域，这涉及到图片的显示和图片是如何拉伸的，所以比contentsGravity灵活得多，这里也会多讲一下。</p>
-<p>虽然这个属性有带一个rect的样式，这样很容易让我们想到bounds和frame，但是这个属性和他们的使用方法确是不一样的。他使用的是单位坐标，单位坐标指定在0到1之间，是一个相对值，是相对于寄宿图的位置和大小。</p>
-<p>默认的contentsRect是{0，0，1，1} 这样就表示寄宿图的全部区域。如果我们指定一个区域，那么寄宿图就会被显示一部分区域</p>
-<p><img src="https://farm6.staticflickr.com/5726/25392255929_3569dda784_o.jpg" alt=""></p>
-<p>可以看到现在寄宿图是全部显示的，这时候我们来设置一下layer的contentsRect属性</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">layerView.layer.contentsRect = CGRectMake(0.5, 0.5, 0.5, 0.5);</div></pre></td></tr></table></figure>
-<p>这时候，图层就会这样显示</p>
-<p><img src="https://farm6.staticflickr.com/5583/30726952920_0a80ddf4ee_o.jpg" alt=""></p>
-<p>明显我们可以看到 这是显示的图片的右下角区域 这样显示也是我们给定的{0.5，0.5，0.5，0.5}决定的 从图片的中点位置开始，显示半宽半高</p>
-<p>那么我们在做APP时，什么地方经常使用到这个属性呢？</p>
-<p>我们经常在图片拼合的时候用到这个属性，这个图片拼合概念在游戏开发中经常碰到。<br>说简单点，就是将多张图片打包成一张图片，然后一次性载入这一帐图片，这样带来的好处就是能够在内存使用上，屏幕渲染上节省很多性能。</p>
-<p>例子：这种使用方法，我们常见的APP中，很多美颜的相机使用了layer添加一些效果图片到当前的显示视图上，比如添加一个什么笑脸啊，相框啊之类的。</p>
-<h4 id="contentsCenter属性"><a href="#contentsCenter属性" class="headerlink" title="contentsCenter属性"></a>contentsCenter属性</h4><p>咋一看，我们会以为这个和寄宿图的位置相关，其实不是的，这个属性主要是用来控制图片的拉伸，其实他是一个CGRect，他定义了<strong>一个固定的边框和一个在图层上可以拉伸的区域，改变contentsCenter的值，并不会影响寄宿图的显示，除非这个图层的大小改变了，我们才能看得到结果</strong></p>
-<p>contentsCenter默认的大小是{0，0，1，1}，这就意味着，如果图层的大小改变了，那么整个寄宿图都会被均匀拉伸，如果我们改变contentsCenter这个属性，定义一个拉伸的区域，那么我们就能看到效果了</p>
-<p><img src="http://o8bxt3lx0.bkt.clouddn.com/blog/2016-11-16-006tNbRwjw1f9u68sxw6ij31kw23uqt1.jpg" alt=""></p>
-<p><strong>注意</strong><br>这里我画了一张图，整个一个方框表示的是一个图层，如果我们将图层的contentsCenter设置为{0.25，0.25，0.25，0.25}那么，其实这个rect形成的一个方框就是中间的I区域，相当于整个图层的正中心，宽高各一半的位置  如果我们现在改变了图层的大小的话，我们定义了这样一个拉伸区域{0.25，0.25，0.25，0.25}，表示的就是在横向拉伸中H区域和D区域会被拉伸，在纵向拉伸中，B区域和F区域会被拉伸，而中间的I区域则是横向纵向均会被拉伸，而其中的A、C、E、G则不会被拉伸，可能这里需要着重理解一下</p>
-<blockquote>
-<p>到这里，基本上就将CALayer中我们可能会经常使用到的一些重要属性讲解了一下</p>
-</blockquote>
-
+                <div class="postShorten-excerpt" itemprop="articleBody">
+                    <p>在上一篇文章中我们讲了CALayer和UIView之间的相似的树级关系，和他们之间的管理关系，并且介绍了CALayer的一些属性，在这片文章中，将继续介绍一些CALayer的属性，虽然这看起来很简单，但是后面等到我们做动画的时候，这些属性都是极其重要的。</p>
                     
+                        <a href="/2016/11/16/iOS CALayer基础介绍-动画基础之一/" class="postShorten-excerpt_link link">
+                            阅读全文
+                        </a>
                         
-                    
-                    
-                        <p>
-                            <a href="/2016/11/16/iOS CALayer基础介绍-动画基础之一/#post-footer" class="postShorten-excerpt_link link">
-                                注释和共享
-                            </a>
-                        </p>
                     
                 </div>
             
@@ -510,14 +419,14 @@
         
             <h4 id="about-card-name">ppsheep</h4>
         
-            <h5 id="about-card-bio"><p>author.bio</p>
+            <h5 id="about-card-bio"><p>一个就职于网易的初级iOS开发者，目前正在修炼自己，博客建立不久，正在寻找更好的写作方式。。。。。。。 目前还在维护一个微信公众号Sheep_iOS，文章末尾一般会有公众号二维码，博客的内容，我会同步到微信公众号，欢迎大家关注</p>
 </h5>
         
         
             <h5 id="about-card-job">
                 <i class="fa fa-briefcase"></i>
                 <br/>
-                <p>author.job</p>
+                <p>iOS开发者</p>
 
             </h5>
         
@@ -525,7 +434,7 @@
             <h5 id="about-card-location">
                 <i class="fa fa-map-marker"></i>
                 <br/>
-                HangZhou
+                杭州
             </h5>
         
     </div>

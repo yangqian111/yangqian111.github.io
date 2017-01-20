@@ -22,7 +22,7 @@
 <meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/Snip20161102_4.png">
 <meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/Snip20161102_5.png">
 <meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/Snip20161102_6.png">
-<meta property="og:updated_time" content="2016-11-05T05:50:37.000Z">
+<meta property="og:updated_time" content="2017-01-20T09:44:51.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS 微信聊天消息的图片气泡实现">
 <meta name="twitter:description" content="在IM应用当中，我们的聊天页面再熟悉不过了，在聊天页面中每条消息都有一个背景气泡，但是在微信中呢，图片的背景气泡却没有，而是图片本身成为了一个气泡的样式，我们来看看微信的样式是怎么样的，今天就来实现这样一种样式：">
@@ -167,6 +167,24 @@
     
         <ul class="sidebar-buttons">
         
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="https://github.com/yangqian111" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+                    <span class="sidebar-button-desc">GitHub</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="mailto:787688073@qq.com" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-envelope-o"></i>
+                    <span class="sidebar-button-desc">邮箱</span>
+                </a>
+        </li>
+        
     </ul>
     
         <ul class="sidebar-buttons">
@@ -209,6 +227,12 @@
     	
     </time>
     
+        <span>发布在 </span>
+        
+    <a class="category-link" href="/all-categories/IM/">IM</a>
+
+
+    
 </div>
 
 </div>
@@ -231,11 +255,22 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">CGRect frame = CGRectMake(100, 100, 100, 150);</div><div class="line">    </div><div class="line">UIImageView *image = [[UIImageView alloc] initWithFrame:frame];</div><div class="line">    </div><div class="line">CAShapeLayer *layer = [CAShapeLayer layer];</div><div class="line">    </div><div class="line">layer.frame = image.bounds;</div><div class="line">layer.contents = (id)[UIImage imageNamed:@&quot;chat_box_blue&quot;].CGImage;</div><div class="line">layer.contentsCenter = CGRectMake(0.5, 0.5, 0.1, 0.1);</div><div class="line">layer.contentsScale = [UIScreen mainScreen].scale;</div><div class="line">    </div><div class="line">image.layer.mask = layer;</div><div class="line">image.layer.frame = image.frame;</div><div class="line">image.image = [UIImage imageNamed:@&quot;image&quot;];</div><div class="line">[self.view addSubview:image];</div></pre></td></tr></table></figure>
 <p>看一下效果</p>
 <p><img src="http://o8bxt3lx0.bkt.clouddn.com/Snip20161102_6.png" alt=""></p>
+<p><strong>欢迎大家关注我的公众号，我会定期分享一些我在项目中遇到问题的解决办法和一些iOS实用的技巧，现阶段主要是整理出一些基础的知识记录下来</strong></p>
+<div align="middle"><br>    <image src="http://ac-mhke0kuv.clouddn.com/830a4ead8294ceff5160.jpg"></image><br></div>
+
+<p>文章也会同步更新到我的博客：<br><a href="http://ppsheep.com">http://ppsheep.com</a></p>
 
             
         </div>
     </div>
     <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">标签</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/all-tags/IM/">IM</a>
+
+            </div>
         
         <div class="post-actions-wrap">
     <nav>
@@ -419,14 +454,14 @@
         
             <h4 id="about-card-name">ppsheep</h4>
         
-            <h5 id="about-card-bio"><p>author.bio</p>
+            <h5 id="about-card-bio"><p>一个就职于网易的初级iOS开发者，目前正在修炼自己，博客建立不久，正在寻找更好的写作方式。。。。。。。 目前还在维护一个微信公众号Sheep_iOS，文章末尾一般会有公众号二维码，博客的内容，我会同步到微信公众号，欢迎大家关注</p>
 </h5>
         
         
             <h5 id="about-card-job">
                 <i class="fa fa-briefcase"></i>
                 <br/>
-                <p>author.job</p>
+                <p>iOS开发者</p>
 
             </h5>
         
@@ -434,7 +469,7 @@
             <h5 id="about-card-location">
                 <i class="fa fa-map-marker"></i>
                 <br/>
-                HangZhou
+                杭州
             </h5>
         
     </div>
