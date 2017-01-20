@@ -19,7 +19,7 @@
 <meta property="og:url" content="http://ppsheep.com/2016/12/05/ViewControllers瘦身计划-一/index.html">
 <meta property="og:site_name" content="ppsheep">
 <meta property="og:description" content="View controllers 通常是 iOS 项目中最大的文件，并且它们包含了许多不必要的代码。所以 View controllers 中的代码几乎总是复用率最低的。接下来我将结合一些我自己看到的东西和平时在使用的方法，来节省ViewController中的代码量。">
-<meta property="og:updated_time" content="2016-12-06T01:58:42.000Z">
+<meta property="og:updated_time" content="2017-01-20T09:40:08.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ViewControllers瘦身计划(一)">
 <meta name="twitter:description" content="View controllers 通常是 iOS 项目中最大的文件，并且它们包含了许多不必要的代码。所以 View controllers 中的代码几乎总是复用率最低的。接下来我将结合一些我自己看到的东西和平时在使用的方法，来节省ViewController中的代码量。">
@@ -217,10 +217,8 @@
     
     <div class="post-content markdown" itemprop="articleBody">
         <div class="main-content-wrap">
-            <p><strong>欢迎大家关注我的公众号，我会定期分享一些我在项目中遇到问题的解决办法和一些iOS实用的技巧，现阶段主要是整理出一些基础的知识记录下来</strong></p>
-<div align="middle"><br>    <image src="http://ac-mhke0kuv.clouddn.com/830a4ead8294ceff5160.jpg"></image><br></div>
-
-<p>文章也会同步更新到我的博客：<br><a href="http://ppsheep.com">http://ppsheep.com</a></p>
+            <p>View controllers 通常是 iOS 项目中最大的文件，并且它们包含了许多不必要的代码。所以 View controllers 中的代码几乎总是复用率最低的。接下来我将结合一些我自己看到的东西和平时在使用的方法，来节省ViewController中的代码量。</p>
+<a id="more"></a>
 <h3 id="把-Data-Source-和其他-Protocols-分离出来"><a href="#把-Data-Source-和其他-Protocols-分离出来" class="headerlink" title="把 Data Source 和其他 Protocols 分离出来"></a>把 Data Source 和其他 Protocols 分离出来</h3><p>我们在平时的编码中，最经常使用到的一个控件就是UITableView了，那我们每次需要使用到tableview的时候，都需要写一些重复的代码，比如</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">#pragma mark - tableview datasource</div><div class="line"></div><div class="line">#pragma mark - tableview datasource</div><div class="line"></div><div class="line">- (PPSFriend *)friendAtIndexPath:(NSIndexPath *)indexPath&#123;</div><div class="line">    return self.friends[indexPath.row];</div><div class="line">&#125;</div><div class="line"></div><div class="line">-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section&#123;</div><div class="line">    return self.friends.count;</div><div class="line">&#125;</div><div class="line"></div><div class="line">-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath&#123;</div><div class="line">    PPSFriendCell *cell = [tableView dequeueReusableCellWithIdentifier:@&quot;friendCell&quot; forIndexPath:indexPath];</div><div class="line">    PPSFriend *friend = [self friendAtIndexPath:indexPath];</div><div class="line">    cell.textLabel.text = friend.name;</div><div class="line">    return cell;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>像上面一些代码，我们每天都在写，每次用到UITableView都需要重写这些毫无技术可言的代码，那我们试想一下能否写一个封装类，将这些重复的方法全部封起来，多次使用呢？答案当然是，可以的。</p>
@@ -249,6 +247,10 @@
 <h3 id="把View移到View层"><a href="#把View移到View层" class="headerlink" title="把View移到View层"></a>把View移到View层</h3><p>不应该在 view controller 中构建复杂的 view 层次结构。你可以使用 Interface Builder 或者把 views 封装到一个 UIView 子类当中。例如，如果你要创建一个选择日期的控件，把它放到一个名为 DatePickerView 的类中会比把所有的事情都在 view controller 中做好好得多。再一次，这样增加了可复用性并保持了简单。</p>
 <p>简单来说，就是将一个viewcontroller中复杂的view构造，放到一个单独的view类中，然在viewcontroller中，只需要构建一个这个类就行。</p>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>我们已经看到一些用来创建更小巧的 view controllers 的技术。我们并不是想把这些技术应用到每一个可能的角落，只是我们有一个目标：写可维护的代码。知道这些模式后，我们就更有可能把那些笨重的 view controllers 变得更整洁。</p>
+<p><strong>欢迎大家关注我的公众号，我会定期分享一些我在项目中遇到问题的解决办法和一些iOS实用的技巧，现阶段主要是整理出一些基础的知识记录下来</strong></p>
+<div align="middle"><br>    <image src="http://ac-mhke0kuv.clouddn.com/830a4ead8294ceff5160.jpg"></image><br></div>
+
+<p>文章也会同步更新到我的博客：<br><a href="http://ppsheep.com">http://ppsheep.com</a></p>
 
             
         </div>

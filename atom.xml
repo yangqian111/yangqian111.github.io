@@ -675,12 +675,10 @@
     <link href="http://ppsheep.com/2016/12/14/ViewControllers%E7%98%A6%E8%BA%AB%E8%AE%A1%E5%88%92-%E4%BA%8C/"/>
     <id>http://ppsheep.com/2016/12/14/ViewControllers瘦身计划-二/</id>
     <published>2016-12-14T02:24:25.000Z</published>
-    <updated>2016-12-14T03:58:34.000Z</updated>
+    <updated>2017-01-20T09:39:16.000Z</updated>
     
-    <content type="html"><![CDATA[<p><strong>欢迎大家关注我的公众号，我会定期分享一些我在项目中遇到问题的解决办法和一些iOS实用的技巧，现阶段主要是整理出一些基础的知识记录下来</strong></p>
-<div align="middle"><br>    <image src="http://ac-mhke0kuv.clouddn.com/830a4ead8294ceff5160.jpg"></image><br></div>
-
-<p>文章也会同步更新到我的博客：<br><a href="http://ppsheep.com">http://ppsheep.com</a></p>
+    <content type="html"><![CDATA[<p>在上一篇文章中  我们讲了通过整合tableview的代理，来达到代码复用，减少控制器代码量的效果，今天我们接着来讲另外的一些方法来减轻控制器代码量，整合封装，提高代码的可读性。</p>
+<a id="more"></a>
 <h3 id="UITableViewController的使用"><a href="#UITableViewController的使用" class="headerlink" title="UITableViewController的使用"></a>UITableViewController的使用</h3><p>TableView在iOS应用程序中是非常通用的组件，Apple为我们提供了tableview专属的view controller类UITableViewController。Table view controller实现了一些非常有用的特性，来避免一遍又一遍的写那些死板的代码！</p>
 <p>但是，我们经常会遇到这样一个问题，table view controller 只限于管理一个全屏展示的table view。大多数情况下，我们想达到的效果就是这样，但是如果不是呢，我们就只能使用通常的控制器，其实还有其他的方法来达到使用table view controller 的目的。</p>
 <h4 id="UITableViewController的特性"><a href="#UITableViewController的特性" class="headerlink" title="UITableViewController的特性"></a>UITableViewController的特性</h4><p>Table view controllers 会在第一次显示 table view 的时候帮你加载其数据。另外，它还会帮你切换 table view 的编辑模式、响应键盘通知、以及一些小任务，比如闪现侧边的滑动提示条和清除选中时的背景色。为了让这些特性生效，当你在子类中覆写类似 viewWillAppear: 或者 viewDidAppear: 等事件方法时，需要调用 super 版本。</p>
@@ -715,11 +713,15 @@
 <p>这不仅减少了 table view controllers 那样的大小和复杂性，而且还把业务逻辑和 view 的逻辑放到了更合适的地方。Controller 层的里里外外的实现细节都被封装成了简单的 API，最终，它变得更加容易理解，也更利于团队协作。</p>
 <p>参考:</p>
 <p><a href="https://www.objccn.io/issue-1-2/" target="_blank" rel="external">https://www.objccn.io/issue-1-2/</a></p>
+<p><strong>欢迎大家关注我的公众号，我会定期分享一些我在项目中遇到问题的解决办法和一些iOS实用的技巧，现阶段主要是整理出一些基础的知识记录下来</strong></p>
+<div align="middle"><br>    <image src="http://ac-mhke0kuv.clouddn.com/830a4ead8294ceff5160.jpg"></image><br></div>
+
+<p>文章也会同步更新到我的博客：<br><a href="http://ppsheep.com">http://ppsheep.com</a></p>
 ]]></content>
     
     <summary type="html">
     
-      在上一篇文章中  我们讲了通过整合tableview的代理，来达到代码复用，减少控制器代码量的效果，今天我们接着来讲另外的一些方法来减轻控制器代码量，整合封装，提高代码的可读性。
+      &lt;p&gt;在上一篇文章中  我们讲了通过整合tableview的代理，来达到代码复用，减少控制器代码量的效果，今天我们接着来讲另外的一些方法来减轻控制器代码量，整合封装，提高代码的可读性。&lt;/p&gt;
     
     </summary>
     
@@ -735,12 +737,10 @@
     <link href="http://ppsheep.com/2016/12/05/ViewControllers%E7%98%A6%E8%BA%AB%E8%AE%A1%E5%88%92-%E4%B8%80/"/>
     <id>http://ppsheep.com/2016/12/05/ViewControllers瘦身计划-一/</id>
     <published>2016-12-05T14:29:37.000Z</published>
-    <updated>2016-12-06T01:58:42.000Z</updated>
+    <updated>2017-01-20T09:40:08.000Z</updated>
     
-    <content type="html"><![CDATA[<p><strong>欢迎大家关注我的公众号，我会定期分享一些我在项目中遇到问题的解决办法和一些iOS实用的技巧，现阶段主要是整理出一些基础的知识记录下来</strong></p>
-<div align="middle"><br>    <image src="http://ac-mhke0kuv.clouddn.com/830a4ead8294ceff5160.jpg"></image><br></div>
-
-<p>文章也会同步更新到我的博客：<br><a href="http://ppsheep.com">http://ppsheep.com</a></p>
+    <content type="html"><![CDATA[<p>View controllers 通常是 iOS 项目中最大的文件，并且它们包含了许多不必要的代码。所以 View controllers 中的代码几乎总是复用率最低的。接下来我将结合一些我自己看到的东西和平时在使用的方法，来节省ViewController中的代码量。</p>
+<a id="more"></a>
 <h3 id="把-Data-Source-和其他-Protocols-分离出来"><a href="#把-Data-Source-和其他-Protocols-分离出来" class="headerlink" title="把 Data Source 和其他 Protocols 分离出来"></a>把 Data Source 和其他 Protocols 分离出来</h3><p>我们在平时的编码中，最经常使用到的一个控件就是UITableView了，那我们每次需要使用到tableview的时候，都需要写一些重复的代码，比如</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">#pragma mark - tableview datasource</div><div class="line"></div><div class="line">#pragma mark - tableview datasource</div><div class="line"></div><div class="line">- (PPSFriend *)friendAtIndexPath:(NSIndexPath *)indexPath&#123;</div><div class="line">    return self.friends[indexPath.row];</div><div class="line">&#125;</div><div class="line"></div><div class="line">-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section&#123;</div><div class="line">    return self.friends.count;</div><div class="line">&#125;</div><div class="line"></div><div class="line">-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath&#123;</div><div class="line">    PPSFriendCell *cell = [tableView dequeueReusableCellWithIdentifier:@&quot;friendCell&quot; forIndexPath:indexPath];</div><div class="line">    PPSFriend *friend = [self friendAtIndexPath:indexPath];</div><div class="line">    cell.textLabel.text = friend.name;</div><div class="line">    return cell;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>像上面一些代码，我们每天都在写，每次用到UITableView都需要重写这些毫无技术可言的代码，那我们试想一下能否写一个封装类，将这些重复的方法全部封起来，多次使用呢？答案当然是，可以的。</p>
@@ -769,11 +769,15 @@
 <h3 id="把View移到View层"><a href="#把View移到View层" class="headerlink" title="把View移到View层"></a>把View移到View层</h3><p>不应该在 view controller 中构建复杂的 view 层次结构。你可以使用 Interface Builder 或者把 views 封装到一个 UIView 子类当中。例如，如果你要创建一个选择日期的控件，把它放到一个名为 DatePickerView 的类中会比把所有的事情都在 view controller 中做好好得多。再一次，这样增加了可复用性并保持了简单。</p>
 <p>简单来说，就是将一个viewcontroller中复杂的view构造，放到一个单独的view类中，然在viewcontroller中，只需要构建一个这个类就行。</p>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>我们已经看到一些用来创建更小巧的 view controllers 的技术。我们并不是想把这些技术应用到每一个可能的角落，只是我们有一个目标：写可维护的代码。知道这些模式后，我们就更有可能把那些笨重的 view controllers 变得更整洁。</p>
+<p><strong>欢迎大家关注我的公众号，我会定期分享一些我在项目中遇到问题的解决办法和一些iOS实用的技巧，现阶段主要是整理出一些基础的知识记录下来</strong></p>
+<div align="middle"><br>    <image src="http://ac-mhke0kuv.clouddn.com/830a4ead8294ceff5160.jpg"></image><br></div>
+
+<p>文章也会同步更新到我的博客：<br><a href="http://ppsheep.com">http://ppsheep.com</a></p>
 ]]></content>
     
     <summary type="html">
     
-      View controllers 通常是 iOS 项目中最大的文件，并且它们包含了许多不必要的代码。所以 View controllers 中的代码几乎总是复用率最低的。接下来我将结合一些我自己看到的东西和平时在使用的方法，来节省ViewController中的代码量。
+      &lt;p&gt;View controllers 通常是 iOS 项目中最大的文件，并且它们包含了许多不必要的代码。所以 View controllers 中的代码几乎总是复用率最低的。接下来我将结合一些我自己看到的东西和平时在使用的方法，来节省ViewController中的代码量。&lt;/p&gt;
     
     </summary>
     
