@@ -1,0 +1,531 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="ppsheep">
+    <title>iOS动画实践三(UIView的动画你真的会用吗？) - ppsheep</title>
+    <meta name="author" content="ppsheep">
+    
+    
+    
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+    
+    <meta name="description" content="在这一节中，我们继续讲解UIView中的一些动画的使用，之前已经讲过了基础的用法，和spring动画的用法，在这一节中，我们将要介绍Transitions，也是一个我们经常使用到的动画">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="iOS动画实践三(UIView的动画你真的会用吗？)">
+<meta property="og:url" content="http://ppsheep.com/2017/01/24/iOS动画实践三-UIView的动画你真的会用吗/index.html">
+<meta property="og:site_name" content="ppsheep">
+<meta property="og:description" content="在这一节中，我们继续讲解UIView中的一些动画的使用，之前已经讲过了基础的用法，和spring动画的用法，在这一节中，我们将要介绍Transitions，也是一个我们经常使用到的动画">
+<meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/blog/2017-01-24-2.gif">
+<meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/blog/2017-01-24-3.gif">
+<meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/blog/2017-01-24-4.gif">
+<meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/blog/2017-01-24-5.gif">
+<meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/blog/2017-01-24-6.gif">
+<meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/blog/2017-01-24-7.gif">
+<meta property="og:updated_time" content="2017-01-24T06:16:51.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS动画实践三(UIView的动画你真的会用吗？)">
+<meta name="twitter:description" content="在这一节中，我们继续讲解UIView中的一些动画的使用，之前已经讲过了基础的用法，和spring动画的用法，在这一节中，我们将要介绍Transitions，也是一个我们经常使用到的动画">
+<meta name="twitter:image" content="http://o8bxt3lx0.bkt.clouddn.com/blog/2017-01-24-2.gif">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/7931417.jpeg"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-nuvue6sithwirecbhvw3dkaobiojqvtadsnhguwi7k04xklybw5djl1smadp.min.css">
+    <!--STYLES END-->
+    
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="3">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <h1 class="header-title">
+        <a class="header-title-link" href="/ ">ppsheep</a>
+    </h1>
+    
+        
+            <a  class="header-right-picture "
+                href="#about">
+        
+        
+            <img class="header-picture" src="http://o8bxt3lx0.bkt.clouddn.com/7931417.jpeg"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="3">
+    
+        <div class="sidebar-profile">
+            <a href="/#about">
+                    <img class="sidebar-profile-picture" src="http://o8bxt3lx0.bkt.clouddn.com/7931417.jpeg"/>
+            </a>
+            <span class="sidebar-profile-name">ppsheep</span>
+        </div>
+    
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/ "
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+                    <span class="sidebar-button-desc">首页</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-categories"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+                    <span class="sidebar-button-desc">分类</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-tags"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+                    <span class="sidebar-button-desc">标签</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-archives"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+                    <span class="sidebar-button-desc">归档</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link st-search-show-outputs"
+                         href="#search"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-search"></i>
+                    <span class="sidebar-button-desc">搜索</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="#about"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+                    <span class="sidebar-button-desc">关于</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="https://github.com/yangqian111" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+                    <span class="sidebar-button-desc">GitHub</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="mailto:787688073@qq.com" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-envelope-o"></i>
+                    <span class="sidebar-button-desc">邮箱</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/atom.xml"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+                    <span class="sidebar-button-desc">RSS</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+</nav>
+
+            
+            <div id="main" data-behavior="3"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post" itemscope itemType="http://schema.org/BlogPosting">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title" itemprop="headline">
+            iOS动画实践三(UIView的动画你真的会用吗？)
+        </h1>
+    
+    <div class="post-meta">
+    <time itemprop="datePublished" datetime="2017-01-24T10:31:53+08:00">
+	
+		    1月 24, 2017
+    	
+    </time>
+    
+        <span>发布在 </span>
+        
+    <a class="category-link" href="/all-categories/iOS动画/">iOS动画</a>
+
+
+    
+</div>
+
+</div>
+    
+    <div class="post-content markdown" itemprop="articleBody">
+        <div class="main-content-wrap">
+            <p>在这一节中，我们继续讲解UIView中的一些动画的使用，之前已经讲过了基础的用法，和spring动画的用法，在这一节中，我们将要介绍Transitions，也是一个我们经常使用到的动画</p>
+<a id="more"></a>
+<p>首先我们把上次的工程打开，没看上一篇文章的同学，请移步</p>
+<p><a href="http://ppsheep.com/2017/01/22/iOS动画实践二-UIView的动画你真的会用吗/">http://ppsheep.com/2017/01/22/iOS动画实践二-UIView的动画你真的会用吗/</a></p>
+<h3 id="加入、移除、隐藏-view的动画"><a href="#加入、移除、隐藏-view的动画" class="headerlink" title="加入、移除、隐藏 view的动画"></a>加入、移除、隐藏 view的动画</h3><p>我们知道Transitions的意思是一个过渡动画、转变动画，但是具体什么效果，我们还是不知道，接下来，我们先来看看这个动画是一个什么要样的效果？</p>
+<p>首先我们创建一个animationContainerView，这个就是做动画的view，为什么叫做ContainerView，因为我们还要在这个view中放上其他的一些控件一起来做动画</p>
+<p>我们将其他的控件先隐藏掉，加入动画的view看看，是什么效果</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">animationContainerView = <span class="type">UIView</span>(frame: view.bounds)</div><div class="line">animationContainerView?.frame = view.bounds</div><div class="line">view.addSubview(animationContainerView!)</div></pre></td></tr></table></figure>
+<p>然后再viewDidAppear方法中，做一个transition动画</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> newView = <span class="type">UIImageView</span>(image: <span class="type">UIImage</span>(named: <span class="string">"banner"</span>))</div><div class="line">newView.center  = animationContainerView!.center</div><div class="line"><span class="type">UIView</span>.transition(with: animationContainerView!, duration: <span class="number">0.83</span>, options: [.curveEaseOut,.transitionFlipFromTop], animations: &#123;</div><div class="line">    <span class="keyword">self</span>.animationContainerView?.addSubview(newView)</div><div class="line">&#125;, completion: <span class="literal">nil</span>)</div></pre></td></tr></table></figure>
+<p>好我们来看看效果</p>
+<p><img src="http://o8bxt3lx0.bkt.clouddn.com/blog/2017-01-24-2.gif" alt=""></p>
+<p>我故意将动画放的很慢，这样效果就能够更明显，这里这个option有很多种效果，我就不全部展示了，这里我提两个比较不一样的</p>
+<h4 id="transitionCrossDissolve"><a href="#transitionCrossDissolve" class="headerlink" title="transitionCrossDissolve"></a>transitionCrossDissolve</h4><p>这是一个渐渐显示的一个效果</p>
+<p>将option参数换掉就行，还是直接看效果</p>
+<p><img src="http://o8bxt3lx0.bkt.clouddn.com/blog/2017-01-24-3.gif" alt=""></p>
+<p>可能模拟器的动画效果不是那么明显，大家可以自己手动实验一下</p>
+<h4 id="transitionCurlUp-这个是整个一个view的一个效果"><a href="#transitionCurlUp-这个是整个一个view的一个效果" class="headerlink" title="transitionCurlUp 这个是整个一个view的一个效果"></a>transitionCurlUp 这个是整个一个view的一个效果</h4><p><img src="http://o8bxt3lx0.bkt.clouddn.com/blog/2017-01-24-4.gif" alt=""></p>
+<p>上面我都是使用的addsubview来做动画，要做移除view的动画，或者隐藏的动画，直接变换方法就行，具体的操作，我就不做了</p>
+<h4 id="翻转效果"><a href="#翻转效果" class="headerlink" title="翻转效果"></a>翻转效果</h4><p>我们新创建一个VC-AnotherViewController</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="type">UIView</span>.transition(from: view, to: anotherVc.view , duration: <span class="number">1.0</span>, options: [.curveEaseInOut,.transitionFlipFromLeft]) &#123; (<span class="literal">true</span>) <span class="keyword">in</span></div><div class="line">    </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这一行代码就可以实现翻转效果</p>
+<p><img src="http://o8bxt3lx0.bkt.clouddn.com/blog/2017-01-24-5.gif" alt=""></p>
+<p>这种效果也是我们常见的</p>
+<h3 id="登录动画"><a href="#登录动画" class="headerlink" title="登录动画"></a>登录动画</h3><p>接下来我们在我们之前做的登录页面上，加上一些Transitions的动画</p>
+<p>说一下我想要实现的效果，当我们点击登录按钮的时候，有一个动画出现，显示当前的登录进度，就是这么一个简单的实现</p>
+<p>一步一步来，首先，在点击按钮的时候，让label出现</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//首先将lable加入到view中</span></div><div class="line">    <span class="comment">//动画的view</span></div><div class="line">    <span class="keyword">let</span> status = <span class="type">UIImageView</span>(image: <span class="type">UIImage</span>(named: <span class="string">"banner"</span>))</div><div class="line">    <span class="keyword">let</span> label = <span class="type">UILabel</span>()</div><div class="line">    <span class="keyword">let</span> message = [<span class="string">"连接中..."</span>,<span class="string">"授权中..."</span>,<span class="string">"发送认证消息..."</span>,<span class="string">"认证失败..."</span>]</div><div class="line">    <span class="keyword">var</span> statusPosition = <span class="type">CGPoint</span>.zero</div></pre></td></tr></table></figure>
+<p>在页面加载时将status隐藏起来</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//首先将label隐藏</span></div><div class="line">status.isHidden = <span class="literal">true</span></div><div class="line">status.center = loginBtn.center</div><div class="line">view.addSubview(status)</div><div class="line"></div><div class="line">label.frame = <span class="type">CGRect</span>(x: <span class="number">0</span>, y: <span class="number">0</span>, width: status.frame.size.width, height: status.frame.size.height)</div><div class="line">label.textAlignment = .center</div><div class="line">label.font = <span class="type">UIFont</span>(name: <span class="string">"HelveticaNeue"</span>, size: <span class="number">18</span>)</div><div class="line">label.textColor = <span class="type">UIColor</span>.blue</div><div class="line">status.addSubview(label)</div><div class="line"></div><div class="line">statusPosition = status.center</div></pre></td></tr></table></figure>
+<p>然后我们在点击的时候，调用方法 showMeesage</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">showMessage</span><span class="params">(index: Int)</span></span> &#123;</div><div class="line">    label.text = message[index]</div><div class="line">    <span class="type">UIView</span>.transition(with: status, duration: <span class="number">0.5</span>, options: [.curveEaseIn,.transitionFlipFromBottom], animations: &#123; </div><div class="line">        <span class="keyword">self</span>.status.isHidden = <span class="literal">false</span></div><div class="line">    &#125;) &#123; (<span class="literal">true</span>) <span class="keyword">in</span></div><div class="line">        </div><div class="line">    &#125;</div><div class="line">    </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>还是看一下效果</p>
+<p><img src="http://o8bxt3lx0.bkt.clouddn.com/blog/2017-01-24-6.gif" alt=""></p>
+<h4 id="加上动效"><a href="#加上动效" class="headerlink" title="加上动效"></a>加上动效</h4><p>现在连接的状态是出现了，但是这样它就不动了，我们想要这个状态不断更新，为了实现这样的操作，我们定义一个函数，这个函数是这样的，传入一个重复操作的间隔时间，再传入需要操作的方法，即一个闭包</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// A delay function</span></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">delay</span><span class="params">(seconds: Double, completion:@escaping <span class="params">()</span></span></span>-&gt;()) &#123;</div><div class="line">  <span class="keyword">let</span> popTime = <span class="type">DispatchTime</span>.now() + <span class="type">Double</span>(<span class="type">Int64</span>( <span class="type">Double</span>(<span class="type">NSEC_PER_SEC</span>) * seconds )) / <span class="type">Double</span>(<span class="type">NSEC_PER_SEC</span>)</div><div class="line">  </div><div class="line">  <span class="type">DispatchQueue</span>.main.asyncAfter(deadline: popTime) &#123;</div><div class="line">    completion()</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上面这个方法的意思是，每几秒钟执行一次completion，因为我们需要更新UI，所以这个completion必须要在主线程中执行</p>
+<p>另外我们还需要一个移除状态的方法</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">removeMessage</span><span class="params">(index: Int)</span></span> &#123;</div><div class="line">    <span class="type">UIView</span>.animate(withDuration: <span class="number">0.5</span>, delay: <span class="number">0.0</span>, options: [], animations: &#123; </div><div class="line">        <span class="keyword">self</span>.status.center.x += <span class="keyword">self</span>.view.bounds.size.width</div><div class="line">    &#125;) &#123; <span class="number">_</span> <span class="keyword">in</span></div><div class="line">        <span class="keyword">self</span>.status.isHidden = <span class="literal">true</span></div><div class="line">        <span class="keyword">self</span>.status.center = <span class="keyword">self</span>.statusPosition</div><div class="line">        </div><div class="line">        <span class="keyword">self</span> .showMessage(index: index+<span class="number">1</span>)</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">showMessage</span><span class="params">(index: Int)</span></span> &#123;</div><div class="line">    label.text = message[index]</div><div class="line">    <span class="type">UIView</span>.transition(with: status, duration: <span class="number">0.5</span>, options: [.curveEaseIn,.transitionFlipFromBottom], animations: &#123; </div><div class="line">        <span class="keyword">self</span>.status.isHidden = <span class="literal">false</span></div><div class="line">    &#125;) &#123; <span class="number">_</span> <span class="keyword">in</span></div><div class="line">        </div><div class="line">        delay(seconds: <span class="number">2</span>, completion: &#123; </div><div class="line">            <span class="keyword">if</span> index &lt; <span class="keyword">self</span>.message.<span class="built_in">count</span>-<span class="number">1</span> &#123;<span class="comment">//到了最后一条消息</span></div><div class="line">                <span class="keyword">self</span>.removeMessage(index: index)</div><div class="line">            &#125;<span class="keyword">else</span>&#123;</div><div class="line">                </div><div class="line">            &#125;</div><div class="line">        &#125;)</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>看一下效果</p>
+<p><img src="http://o8bxt3lx0.bkt.clouddn.com/blog/2017-01-24-7.gif" alt=""></p>
+<p>好今天就讲到这里，马上要放假咯，收拾收拾，回家过年</p>
+<p><strong>欢迎大家关注我的公众号，我会定期分享一些我在项目中遇到问题的解决办法和一些iOS实用的技巧，现阶段主要是整理出一些基础的知识记录下来</strong></p>
+<div align="middle"><br>    <image src="http://ac-mhke0kuv.clouddn.com/830a4ead8294ceff5160.jpg"></image><br></div>
+
+<p>文章也会同步更新到我的博客：<br><a href="http://ppsheep.com">http://ppsheep.com</a></p>
+
+            
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">标签</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/all-tags/iOS动画/">iOS动画</a>
+
+            </div>
+        
+        <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--disabled">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/01/22/iOS动画实践二-UIView的动画你真的会用吗/" data-tooltip="iOS动画实践二(UIView的动画你真的会用吗？)">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://ppsheep.com/2017/01/24/iOS动画实践三-UIView的动画你真的会用吗/">
+                <i class="fa fa-google-plus"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://ppsheep.com/2017/01/24/iOS动画实践三-UIView的动画你真的会用吗/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://ppsheep.com/2017/01/24/iOS动画实践三-UIView的动画你真的会用吗/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        
+            <li class="post-action">
+                <a class="post-action-btn btn btn--default" href="#ds-thread">
+                    <i class="fa fa-comment-o"></i>
+                </a>
+            </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+            
+                <div id="ds-thread" class="ds-thread" data-thread-key="2017/01/24/iOS动画实践三-UIView的动画你真的会用吗/"
+     data-title="iOS动画实践三(UIView的动画你真的会用吗？)" data-url="http://ppsheep.com/2017/01/24/iOS动画实践三-UIView的动画你真的会用吗/">
+</div>
+
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2017 ppsheep. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="3">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--disabled">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/01/22/iOS动画实践二-UIView的动画你真的会用吗/" data-tooltip="iOS动画实践二(UIView的动画你真的会用吗？)">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://ppsheep.com/2017/01/24/iOS动画实践三-UIView的动画你真的会用吗/">
+                <i class="fa fa-google-plus"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://ppsheep.com/2017/01/24/iOS动画实践三-UIView的动画你真的会用吗/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://ppsheep.com/2017/01/24/iOS动画实践三-UIView的动画你真的会用吗/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        
+            <li class="post-action">
+                <a class="post-action-btn btn btn--default" href="#ds-thread">
+                    <i class="fa fa-comment-o"></i>
+                </a>
+            </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="3">
+    <ul class="share-options">
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://ppsheep.com/2017/01/24/iOS动画实践三-UIView的动画你真的会用吗/">
+                <i class="fa fa-google-plus"></i><span class="">分享到 Google+</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://ppsheep.com/2017/01/24/iOS动画实践三-UIView的动画你真的会用吗/">
+                <i class="fa fa-facebook-official"></i><span>分享到 Facebook</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://ppsheep.com/2017/01/24/iOS动画实践三-UIView的动画你真的会用吗/">
+                <i class="fa fa-twitter"></i><span>分享到 Twitter</span>
+            </a>
+        </li>
+    </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-remove"></i>
+        </div>
+        
+            <img id="about-card-picture" src="http://o8bxt3lx0.bkt.clouddn.com/7931417.jpeg"/>
+        
+            <h4 id="about-card-name">ppsheep</h4>
+        
+            <h5 id="about-card-bio"><p>一个就职于网易的初级iOS开发者，目前正在修炼自己，博客建立不久，正在寻找更好的写作方式。。。。。。。 目前还在维护一个微信公众号Sheep_iOS，文章末尾一般会有公众号二维码，博客的内容，我会同步到微信公众号，欢迎大家关注</p>
+</h5>
+        
+        
+            <h5 id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>iOS开发者</p>
+
+            </h5>
+        
+        
+            <h5 id="about-card-location">
+                <i class="fa fa-map-marker"></i>
+                <br/>
+                杭州
+            </h5>
+        
+    </div>
+</div>
+
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+    </body>
+    <!--SCRIPTS-->
+<script src="/assets/js/script-i4qo6jx6jji9fg0dftpya6ivemizsbow4fhow76d8dwpm7m1wbvi378ssumx.min.js"></script>
+<!--SCRIPTS END-->
+
+    
+        <script type="text/javascript">
+            var duoshuoQuery = {short_name:'yangqian111'};
+            (function() {
+                var ds = document.createElement('script');
+                ds.type = 'text/javascript';ds.async = true;
+                ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+                ds.charset = 'UTF-8';
+                (document.getElementsByTagName('head')[0]
+                || document.getElementsByTagName('body')[0]).appendChild(ds);
+            })();
+        </script>
+    
+
+
+
+</html>
