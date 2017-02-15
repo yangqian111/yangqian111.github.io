@@ -217,49 +217,6 @@
             <div class="postShorten-header">
                 <h1 class="postShorten-title" itemprop="headline">
                     
-                        <a class="link-unstyled" href="/2016/12/28/Swift教程(一)—基础部分、基本运算符/">
-                            Swift教程(一)—基础部分、基本运算符
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time itemprop="datePublished" datetime="2016-12-28T19:13:10+08:00">
-	
-		    12月 28, 2016
-    	
-    </time>
-    
-        <span>发布在 </span>
-        
-    <a class="category-link" href="/all-categories/Swift官方教程学习笔记/">Swift官方教程学习笔记</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-excerpt" itemprop="articleBody">
-                    <p>Swift  该来的还是要来的，Swift使用范围越来越广，你不用，大家都会用，然后呢。。。你又落后了。。</p>
-                    
-                        <a href="/2016/12/28/Swift教程(一)—基础部分、基本运算符/" class="postShorten-excerpt_link link">
-                            阅读全文
-                        </a>
-                        
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-right" itemscope itemType="http://schema.org/BlogPosting">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title" itemprop="headline">
-                    
                         <a class="link-unstyled" href="/2016/12/28/iOS-有效编写高质量Objective-C方法-五/">
                             iOS-有效编写高质量Objective-C方法(五)
                         </a>
@@ -721,6 +678,108 @@
                     
                         <p>
                             <a href="/2016/11/28/KVC和KVO-二/#post-footer" class="postShorten-excerpt_link link">
+                                注释和共享
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title" itemprop="headline">
+                    
+                        <a class="link-unstyled" href="/2016/11/19/KVC和KVO(一)/">
+                            KVC和KVO(一)
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time itemprop="datePublished" datetime="2016-11-19T16:08:32+08:00">
+	
+		    11月 19, 2016
+    	
+    </time>
+    
+        <span>发布在 </span>
+        
+    <a class="category-link" href="/all-categories/KVC和KVO/">KVC和KVO</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content" itemprop="articleBody">
+                    <p><strong>欢迎大家关注我的公众号，我会定期分享一些我在项目中遇到问题的解决办法和一些iOS实用的技巧，现阶段主要是整理出一些基础的知识记录下来</strong></p>
+<div align="middle"><br>    <image src="http://ac-mhke0kuv.clouddn.com/830a4ead8294ceff5160.jpg"></image><br></div>
+
+<p>文章也会同步更新到我的博客：<br><a href="http://ppsheep.com">http://ppsheep.com</a></p>
+<h3 id="观察model对象的变化"><a href="#观察model对象的变化" class="headerlink" title="观察model对象的变化"></a>观察model对象的变化</h3><p>在 Cocoa 的模型-视图-控制器 (Model-view-controller)架构里，控制器负责让视图和模型同步。这一共有两步：当 model 对象改变的时候，视图应该随之改变以反映模型的变化；当用户和控制器交互的时候，模型也应该做出相应的改变。</p>
+<p>KVO 能帮助我们让视图和模型保持同步。控制器可以观察视图依赖的属性变化。</p>
+<p>让我们看一个例子：我们的模型类 LabColor 代表一种 Lab色彩空间里的颜色。和 RGB 不同，这种色彩空间有三个元素 L, a, b。我们要做一个用来改变这些值的滑块和一个显示颜色的方块区域。</p>
+<p>我们的模型类有以下三个用来代表颜色的属性：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">@property (nonatomic) double lComponent;</div><div class="line">@property (nonatomic) double aComponent;</div><div class="line">@property (nonatomic) double bComponent;</div></pre></td></tr></table></figure>
+<h3 id="依赖的属性"><a href="#依赖的属性" class="headerlink" title="依赖的属性"></a>依赖的属性</h3><p>我们需要从这个类创建一个 UIColor 对象来显示出颜色。我们添加三个额外的属性，分别对应 R, G, B：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">@property (nonatomic, readonly) double redComponent;</div><div class="line">@property (nonatomic, readonly) double greenComponent;</div><div class="line">@property (nonatomic, readonly) double blueComponent;</div><div class="line"></div><div class="line">@property (nonatomic, strong, readonly) UIColor *color;</div></pre></td></tr></table></figure>
+<p>有了这些以后，我们就可以创建这个类的接口了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">@interface LabColor : NSObject</div><div class="line"></div><div class="line">@property (nonatomic) double lComponent;</div><div class="line">@property (nonatomic) double aComponent;</div><div class="line">@property (nonatomic) double bComponent;</div><div class="line"></div><div class="line">@property (nonatomic, readonly) double redComponent;</div><div class="line">@property (nonatomic, readonly) double greenComponent;</div><div class="line">@property (nonatomic, readonly) double blueComponent;</div><div class="line"></div><div class="line">@property (nonatomic, strong, readonly) UIColor *color;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
+<p>维基百科提供了转换 RGB 到 Lab 色彩空间的算法。写成方法之后如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">- (double)greenComponent;</div><div class="line">&#123;</div><div class="line">    return D65TristimulusValues[1] * inverseF(1./116. * (self.lComponent + 16) + 1./500. * self.aComponent);</div><div class="line">&#125;</div><div class="line"></div><div class="line">[...]</div><div class="line"></div><div class="line">- (UIColor *)color</div><div class="line">&#123;</div><div class="line">    return [UIColor colorWithRed:self.redComponent * 0.01 green:self.greenComponent * 0.01 blue:self.blueComponent * 0.01 alpha:1.];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这些代码没什么令人激动的地方。有趣的是 greenComponent 属性依赖于 lComponent 和 aComponent。不论何时设置 lComponent 的值，我们需要让 RGB 三个 component 中与其相关的成员以及 color 属性都要得到通知以保持一致。这一点这在 KVO 中很重要。</p>
+<p>Foundation 框架提供的表示属性依赖的机制如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">+ (NSSet *)keyPathsForValuesAffectingValueForKey:(NSString *)key</div></pre></td></tr></table></figure>
+<p>更详细的如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">+ (NSSet *)keyPathsForValuesAffecting&lt;键名&gt;</div></pre></td></tr></table></figure>
+<p>在我们的例子中如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">+ (NSSet *)keyPathsForValuesAffectingRedComponent</div><div class="line">&#123;</div><div class="line">    return [NSSet setWithObject:@&quot;lComponent&quot;];</div><div class="line">&#125;</div><div class="line"></div><div class="line">+ (NSSet *)keyPathsForValuesAffectingGreenComponent</div><div class="line">&#123;</div><div class="line">    return [NSSet setWithObjects:@&quot;lComponent&quot;, @&quot;aComponent&quot;, nil];</div><div class="line">&#125;</div><div class="line"></div><div class="line">+ (NSSet *)keyPathsForValuesAffectingBlueComponent</div><div class="line">&#123;</div><div class="line">    return [NSSet setWithObjects:@&quot;lComponent&quot;, @&quot;bComponent&quot;, nil];</div><div class="line">&#125;</div><div class="line"></div><div class="line">+ (NSSet *)keyPathsForValuesAffectingColor</div><div class="line">&#123;</div><div class="line">    return [NSSet setWithObjects:@&quot;redComponent&quot;, @&quot;greenComponent&quot;, @&quot;blueComponent&quot;, nil];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>注意</strong></p>
+<p>这里解释一下，可能有一些朋友对这里的对象依赖关系不是特别清楚。我们拿出一个来解释</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">+ (NSSet *)keyPathsForValuesAffectingGreenComponent</div><div class="line">&#123;</div><div class="line">    return [NSSet setWithObjects:@&quot;lComponent&quot;, @&quot;aComponent&quot;, nil];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>重要</strong></p>
+<p>在这个方法中，它代表的意思是当lComponent属性，或者aComponent属性改变时，需要通知到greenComponent，就相当于，lComponent或者aComponent中的任何一个作出改变时，可以认为greenComponent也发生了改变，如果这时，有一个监听对象，在监听greenComponent，那么当我们改变lComponent或aComponent，这个监听会被触发</p>
+<p>至于这个方法怎么得来的，在peoperty中定义了该属性，你只要敲keyPath就会自动提示出来，有哪些可以设置依赖了</p>
+<p>在我们的color中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">+ (NSSet *)keyPathsForValuesAffectingColor</div><div class="line">&#123;</div><div class="line">    return [NSSet setWithObjects:@&quot;redComponent&quot;, @&quot;greenComponent&quot;, @&quot;blueComponent&quot;, nil];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>color是依赖于redComponent、greenComponent和blueComponent，这样 我们就能知道，改变lComponent、aComponent、bComponent任何一个，都会触发color的监听</p>
+<p>现在我们完整的表达了属性之间的依赖关系。请注意，我们可以把这些属性链接起来。打个比方，如果我们写一个子类去 override redComponent 方法，这些依赖关系仍然能正常工作。</p>
+<h3 id="观察变化"><a href="#观察变化" class="headerlink" title="观察变化"></a>观察变化</h3><p>现在让我们目光转向控制器。 UIViewController 的子类拥有 LabColor model 对象作为其属性。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">@interface ViewController ()</div><div class="line"></div><div class="line">@property (nonatomic, strong) LabColor *labColor;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
+<p>我们把视图控制器注册为观察者来接收 KVO 的通知，这可以用以下 NSObject 的方法来实现：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">- (void)addObserver:(NSObject *)anObserver</div><div class="line">         forKeyPath:(NSString *)keyPath</div><div class="line">            options:(NSKeyValueObservingOptions)options</div><div class="line">            context:(void *)context</div></pre></td></tr></table></figure>
+<p>这会让以下方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">- (void)observeValueForKeyPath:(NSString *)keyPath</div><div class="line">                      ofObject:(id)object</div><div class="line">                        change:(NSDictionary *)change</div><div class="line">                       context:(void *)context</div></pre></td></tr></table></figure>
+<p>在当 keyPath 的值改变的时候在观察者 anObserver 上面被调用。这个 API 看起来有一点吓人。更糟糕的是，我们还得记得调用以下的方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">- (void)removeObserver:(NSObject *)anObserver</div><div class="line">            forKeyPath:(NSString *)keyPath</div></pre></td></tr></table></figure>
+<p>来移除观察者，否则我们我们的 app 会因为某些奇怪的原因崩溃。</p>
+<p>对于大多数的应用来说，KVO 可以通过辅助类用一种更简单优雅的方式实现。我们在视图控制器添加以下的观察记号（Observation token）属性：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">@property (nonatomic, strong) id colorObserveToken;</div></pre></td></tr></table></figure>
+<p>当 labColor 在视图控制器中被设置时，我们只要 override labColor 的 setter 方法就行了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">- (void)setLabColor:(LabColor *)labColor</div><div class="line">&#123;</div><div class="line">    _labColor = labColor;</div><div class="line">    self.colorObserveToken = [KeyValueObserver observeObject:labColor</div><div class="line">                                                     keyPath:@&quot;color&quot;</div><div class="line">                                                      target:self</div><div class="line">                                                    selector:@selector(colorDidChange:)</div><div class="line">                                                     options:NSKeyValueObservingOptionInitial];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)colorDidChange:(NSDictionary *)change;</div><div class="line">&#123;</div><div class="line">    self.colorView.backgroundColor = self.labColor.color;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>我们封装一个KeyValueObserver辅助类</p>
+<p>KeyValueObserver 辅助类 封装了 -addObserver:forKeyPath:options:context:，-observeValueForKeyPath:ofObject:change:context:和-removeObserverForKeyPath: 的调用，让视图控制器远离杂乱的代码。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">// 其中__attribute__((warn_unused_result))这个的意思是，当调用这个方法时，必须要检查返回值，或者使用返回值，不然编译器直接报警告</div><div class="line"></div><div class="line">+ (NSObject *)observeObject:(id)object keyPath:(NSString*)keyPath target:(id)target selector:(SEL)selector __attribute__((warn_unused_result));</div><div class="line"></div><div class="line"></div><div class="line">+ (NSObject *)observeObject:(id)object keyPath:(NSString*)keyPath target:(id)target selector:(SEL)selector options:(NSKeyValueObservingOptions)options __attribute__((warn_unused_result));</div></pre></td></tr></table></figure>
+<h3 id="整合到一起"><a href="#整合到一起" class="headerlink" title="整合到一起"></a>整合到一起</h3><p>视图控制器需要对 L，a，b 的滑块控制做出反应：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">- (void)updateLComponent:(UISlider *)sender;</div><div class="line">&#123;</div><div class="line">    self.labColor.lComponent = sender.value;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)updateAComponent:(UISlider *)sender;</div><div class="line">&#123;</div><div class="line">    self.labColor.aComponent = sender.value;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)updateBComponent:(UISlider *)sender;</div><div class="line">&#123;</div><div class="line">    self.labColor.bComponent = sender.value;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>我们来看一下效果</p>
+<p><img src="http://o8bxt3lx0.bkt.clouddn.com/blog/2016-11-21-KVC%26KVO-%E4%B8%80-.gif" alt=""></p>
+<p>源工程:</p>
+<p><a href="https://github.com/yangqian111/blog/tree/master/iOS%20KVC和KVO(一" target="_blank" rel="external">https://github.com/yangqian111/blog/tree/master/iOS%20KVC和KVO(一</a>)</p>
+<p>参考:<br>    <a href="https://www.objccn.io/issue-7-3/" target="_blank" rel="external">https://www.objccn.io/issue-7-3/</a></p>
+
+                    
+                        
+                    
+                    
+                        <p>
+                            <a href="/2016/11/19/KVC和KVO(一)/#post-footer" class="postShorten-excerpt_link link">
                                 注释和共享
                             </a>
                         </p>

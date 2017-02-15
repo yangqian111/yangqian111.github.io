@@ -197,141 +197,6 @@
   </entry>
   
   <entry>
-    <title>Swift(三)-集合类型</title>
-    <link href="http://ppsheep.com/2017/01/10/Swift%E6%95%99%E7%A8%8B(%E4%B8%89)%E2%80%94%E9%9B%86%E5%90%88%E7%B1%BB%E5%9E%8B/"/>
-    <id>http://ppsheep.com/2017/01/10/Swift教程(三)—集合类型/</id>
-    <published>2017-01-10T06:13:43.000Z</published>
-    <updated>2017-01-11T09:02:23.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>在上一节，讲了关于字符串和字符的一些基础知识，看起来有点枯燥，在后面几章节的学习中，看起来也比较枯燥，但是这些都是基础知识，对于有过编程基础的同学来说，当然过一遍已经足够了，对于没有编程经验的同学来说，还是需要看一看，了解一下。</p>
-<p>在这一节中，我们将介绍关于集合的一些使用方法</p>
-<a id="more"></a>
-<h3 id="集合的可变性"><a href="#集合的可变性" class="headerlink" title="集合的可变性"></a>集合的可变性</h3><p>和OC中的NSArray不同，在Swift中还是通过变量和常量来控制集合的可变性，不仅是Array,Set和Dictionary也是一样，如果你希望集合的值不再被改变，那么就将他设置为常量，如果需要改变，当然就需要变量。</p>
-<p>如果不需要改变，还是尽量设置成常量，好的编程习惯</p>
-<h3 id="数组-Arrays"><a href="#数组-Arrays" class="headerlink" title="数组(Arrays)"></a>数组(Arrays)</h3><p>Swift是安全的语言，在Swift中使用集合类型，必须声明集合中的数据类型，和OC又不太一样，使用过Java或者其他的一些编译型语言的同学可能很容易理解，很多语言都有泛型这一说Array[T]</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">let string = [String]()</div><div class="line">// string数组</div></pre></td></tr></table></figure>
-<h4 id="创建带有默认值的数组"><a href="#创建带有默认值的数组" class="headerlink" title="创建带有默认值的数组"></a>创建带有默认值的数组</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">let demo = Array(repeating: 1, count: 3)</div><div class="line">//这里创建出来的默认数组是[1,1,1]</div></pre></td></tr></table></figure>
-<h4 id="数组相加"><a href="#数组相加" class="headerlink" title="数组相加"></a>数组相加</h4><p>数组相加必须要两个数组的值的类型一直才能够进行加</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">let demo = Array(repeating: 1, count: 3)</div><div class="line">//[1,1,1]</div><div class="line">let demo1 = Array(repeating: 2, count: 5)</div><div class="line">//[2, 2, 2, 2, 2]</div><div class="line"></div><div class="line">let demo2 = demo + demo1</div><div class="line">//[1, 1, 1, 2, 2, 2, 2, 2]</div><div class="line"></div><div class="line">let demo2 = demo1 + demo</div><div class="line">//[2, 2, 2, 2, 2, 1, 1, 1]</div></pre></td></tr></table></figure>
-<p>看一下加的顺序不一样，出来的数组也不一样</p>
-<h4 id="字面量构造数组"><a href="#字面量构造数组" class="headerlink" title="字面量构造数组"></a>字面量构造数组</h4><p>就是用[]括起来就行</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">let array = [1,2,1,2]</div></pre></td></tr></table></figure>
-<h4 id="访问和修改数组"><a href="#访问和修改数组" class="headerlink" title="访问和修改数组"></a>访问和修改数组</h4><p>首先数组有两个属性，用的比较多count / isEmpty<br>分别计算数组大小和是否为空</p>
-<p>还有就是访问数组元素，可以直接使用下标法，这个我也不细讲很简单的</p>
-<p>还有数组的插入和删除</p>
-<p>insert(_:at:) / remove(at:)</p>
-<p>这两个方法也很简单，我也不细讲了</p>
-<h4 id="数组的遍历"><a href="#数组的遍历" class="headerlink" title="数组的遍历"></a>数组的遍历</h4><p>在OC中，我们就经常使用for-in来遍历数组，在这里也是一样的 语法稍微有点改变</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">let demo2 = [2, 2, 2, 2, 2, 1, 1, 1]</div><div class="line"></div><div class="line">for number in demo2 &#123;</div><div class="line">    print(number)</div><div class="line">&#125;</div><div class="line">//一个一个打印出</div></pre></td></tr></table></figure>
-<p>如果想要打印出每个数组元素的索引</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">let demo2 = [2, 2, 2, 2, 2, 1, 1, 1]</div><div class="line"></div><div class="line">for (index,value) in demo2.enumerated() &#123;</div><div class="line">    print(&quot;index = \(index)  value = \(value)&quot;)</div><div class="line">&#125;</div><div class="line">/*</div><div class="line">index = 0  value = 2</div><div class="line">index = 1  value = 2</div><div class="line">index = 2  value = 2</div><div class="line">index = 3  value = 2</div><div class="line">index = 4  value = 2</div><div class="line">index = 5  value = 1</div><div class="line">index = 6  value = 1</div><div class="line">index = 7  value = 1</div><div class="line">*/</div></pre></td></tr></table></figure>
-<h3 id="集合-Sets"><a href="#集合-Sets" class="headerlink" title="集合(Sets)"></a>集合(Sets)</h3><p>集合(Set)用来存储相同类型并且没有确定顺序的值。当集合元素顺序不重要时或者希望确保每个元素只出现一次时可以使用集合而不是数组。</p>
-<p>使用集合的最主要原因就是这个不能有重复数据</p>
-<h4 id="集合的哈希值"><a href="#集合的哈希值" class="headerlink" title="集合的哈希值"></a>集合的哈希值</h4><p>一个类型为了要存储在集合中，这个类型必须要是可以哈希的。一个哈希值是Int型，相等的两个对象，哈希值必须相等 a==b 等价于  a.hashValue = b.hashValue</p>
-<p>在swift中  String、Int 、Bool这些值都是可哈希的，如果我们在集合中要装我们自定义的一个类型，那么这个类型必须要符合 Swift 标准库中的Hashable协议，这个我们在讲到协议的时候会单独拎出来讲</p>
-<h4 id="集合类型语法"><a href="#集合类型语法" class="headerlink" title="集合类型语法"></a>集合类型语法</h4><p>集合类型被写作 Set<t>，没错，也是泛型的</t></p>
-<h4 id="字面量创建集合"><a href="#字面量创建集合" class="headerlink" title="字面量创建集合"></a>字面量创建集合</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">let demo: Set&lt;String&gt; = [&quot;a&quot;,&quot;b&quot;]</div></pre></td></tr></table></figure>
-<p><strong>一个Set类型不能从数组字面量中被单独推断出来，因此Set类型必须显式声明，但是呢，我们可以这样来简化let demo: Set=[“a”,”b”]</strong>，这样编译器就能够推断出是一个String类型的集合</p>
-<h4 id="访问和修改集合"><a href="#访问和修改集合" class="headerlink" title="访问和修改集合"></a>访问和修改集合</h4><p>集合也有count \ isEmpty 两个属性，但是我们说过集合是没有顺序的，所以就没有下标这种概念了</p>
-<p>调用remove(_:)删除元素</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">var favoriteGenres: Set = [&quot;Rock&quot;, &quot;Classical&quot;, &quot;Hip hop&quot;]</div><div class="line"></div><div class="line">if let removedGenre = favoriteGenres.remove(&quot;Rock&quot;) &#123;</div><div class="line">    print(&quot;\(removedGenre)? I&apos;m over it.&quot;)</div><div class="line">&#125; else &#123;</div><div class="line">    print(&quot;I never much cared for that.&quot;)</div><div class="line">&#125;</div><div class="line">// 打印 &quot;Rock? I&apos;m over it.</div></pre></td></tr></table></figure>
-<h4 id="遍历集合"><a href="#遍历集合" class="headerlink" title="遍历集合"></a>遍历集合</h4><p>for-in</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">for genre in favoriteGenres &#123;</div><div class="line">    print(&quot;\(genre)&quot;)</div><div class="line">&#125;</div><div class="line">// Classical</div><div class="line">// Jazz</div><div class="line">// Hip hop</div></pre></td></tr></table></figure>
-<p>集合中有一个sorted()方法，可以再遍历的时候使用，将返回一个有序的结果，这个比较是操作符”&lt;”来进行比较的</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">for genre in favoriteGenres.sorted() &#123;</div><div class="line">    print(&quot;(genre)&quot;)</div><div class="line">&#125;</div><div class="line">// prints &quot;Classical&quot;</div><div class="line">// prints &quot;Hip hop&quot;</div><div class="line">// prints &quot;Jazz</div></pre></td></tr></table></figure>
-<h4 id="集合的操作"><a href="#集合的操作" class="headerlink" title="集合的操作"></a>集合的操作</h4><p><img src="http://o8bxt3lx0.bkt.clouddn.com/blog/2017-01-11-setVennDiagram_2x.png" alt=""></p>
-<p> 上面的图显示了集合中的几个方法的含义，这个我就不细讲，看图就能够明白</p>
-<h3 id="字典"><a href="#字典" class="headerlink" title="字典"></a>字典</h3><h4 id="字典的字面量声明"><a href="#字典的字面量声明" class="headerlink" title="字典的字面量声明"></a>字典的字面量声明</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">let demo = [&quot;key1&quot;:&quot;value1&quot;,&quot;key2&quot;:&quot;value2&quot;]</div></pre></td></tr></table></figure>
-<h4 id="访问字典"><a href="#访问字典" class="headerlink" title="访问字典"></a>访问字典</h4><p>访问和修改字典都可以通过key操作来完成，这个我也不细讲了</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">demo[&quot;key1&quot;] = &quot;new value&quot;</div><div class="line">//这样字典中的value1就变成了new value</div></pre></td></tr></table></figure>
-<p>作为另一种下标方法，字典的updateValue(_:forKey:)方法可以设置或者更新特定键对应的值。就像上面所示的下标示例，updateValue(_:forKey:)方法在这个键不存在对应值的时候会设置新值或者在存在时更新已存在的值。和上面的下标方法不同的，updateValue(_:forKey:)这个方法返回更新值之前的原值。这样使得我们可以检查更新是否成功。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">if let oldValue = airports.updateValue(&quot;Dublin Airport&quot;, forKey: &quot;DUB&quot;) &#123;</div><div class="line">    print(&quot;The old value for DUB was (oldValue).&quot;)</div><div class="line">&#125;</div><div class="line">// 输出 &quot;The old value for DUB was Dublin.</div></pre></td></tr></table></figure>
-<h4 id="字典的遍历"><a href="#字典的遍历" class="headerlink" title="字典的遍历"></a>字典的遍历</h4><p>for-in</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">for (airportCode, airportName) in airports &#123;</div><div class="line">    print(&quot;(airportCode): (airportName)&quot;)</div><div class="line">&#125;</div><div class="line">//对所有遍历</div><div class="line"></div><div class="line">for airportCode in airports.keys &#123;</div><div class="line">    print(&quot;Airport code: (airportCode)&quot;)</div><div class="line">&#125;</div><div class="line">//对key遍历</div><div class="line">// Airport code: YYZ</div><div class="line">// Airport code: LHR</div><div class="line"> </div><div class="line">for airportName in airports.values &#123;</div><div class="line">    print(&quot;Airport name: (airportName)&quot;)</div><div class="line">&#125;</div><div class="line">//对value遍历</div><div class="line">// Airport name: Toronto Pearson</div><div class="line">// Airport name: London Heathrow</div></pre></td></tr></table></figure>
-<p>集合完结。。。。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;在上一节，讲了关于字符串和字符的一些基础知识，看起来有点枯燥，在后面几章节的学习中，看起来也比较枯燥，但是这些都是基础知识，对于有过编程基础的同学来说，当然过一遍已经足够了，对于没有编程经验的同学来说，还是需要看一看，了解一下。&lt;/p&gt;
-&lt;p&gt;在这一节中，我们将介绍关于集合的一些使用方法&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="Swift官方教程学习笔记" scheme="http://ppsheep.com/all-categories/Swift%E5%AE%98%E6%96%B9%E6%95%99%E7%A8%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-    
-      <category term="Swift官方教程学习笔记" scheme="http://ppsheep.com/all-tags/Swift%E5%AE%98%E6%96%B9%E6%95%99%E7%A8%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Swift教程(二)—字符串和字符</title>
-    <link href="http://ppsheep.com/2017/01/09/Swift%E6%95%99%E7%A8%8B(%E4%BA%8C)%E2%80%94%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%92%8C%E5%AD%97%E7%AC%A6/"/>
-    <id>http://ppsheep.com/2017/01/09/Swift教程(二)—字符串和字符/</id>
-    <published>2017-01-09T08:15:22.000Z</published>
-    <updated>2017-01-09T09:57:02.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>这个章节，我们讲Swift中的字符串和字符，需要说明的是在Swift中String和OC中的NSString进行了无缝衔接，这就意味着，String类型的字符串可以直接调用NSString中暴露出来的方法，不需要进行类型转换。</p>
-<a id="more"></a>
-<h3 id="初始化空字符串"><a href="#初始化空字符串" class="headerlink" title="初始化空字符串"></a>初始化空字符串</h3><p>创建一个字符串，可以使用字面量初始化，也可以使用初始化方法：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">var emptyString = &quot;&quot;               // 空字符串字面量</div><div class="line">var anotherEmptyString = String()  // 初始化方法</div><div class="line">// 两个字符串均为空并等价。</div></pre></td></tr></table></figure>
-<p>要检测是否为空，可以使用isEmpty:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">if emptyString.isEmpty &#123;</div><div class="line">    print(&quot;Nothing to see here&quot;)</div><div class="line">&#125;</div><div class="line">// 打印输出：&quot;Nothing to see here</div></pre></td></tr></table></figure>
-<h3 id="字符串可变性"><a href="#字符串可变性" class="headerlink" title="字符串可变性"></a>字符串可变性</h3><p>在Swift中，字符串和OC中的不同，如果需要改变字符串，只需要将字符串定义为变量就行，如果要保证字符串不可改变，那么可以直接将字符串定义为let常量，这样字符串就不可改变</p>
-<h3 id="字符串是值类型"><a href="#字符串是值类型" class="headerlink" title="字符串是值类型"></a>字符串是值类型</h3><p>我们之前说过，在Swift中，值类型的数据传递，都是通过拷贝的方式，String也是值类型的数据，在传递过程中，是使用的拷贝形式传递。</p>
-<h3 id="使用字符"><a href="#使用字符" class="headerlink" title="使用字符"></a>使用字符</h3><p>可以使用for-in方法来遍历字符串中的字符：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">for character in &quot;Dog!🐶&quot;.characters &#123;</div><div class="line">    print(character)</div><div class="line">&#125;</div><div class="line">// D</div><div class="line">// o</div><div class="line">// g</div><div class="line">// !</div><div class="line">// 🐶</div></pre></td></tr></table></figure>
-<p>通过Character类型，我们可以创建一个单独的字符常量或者变量</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">let exclamationMark: Character = &quot;!&quot;</div></pre></td></tr></table></figure>
-<p>字符串还可以通过一个字符数组来初始化</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">let catCharacters: [Character] = [&quot;C&quot;, &quot;a&quot;, &quot;t&quot;, &quot;!&quot;, &quot;🐱&quot;]</div><div class="line">let catString = String(catCharacters)</div><div class="line">print(catString)</div><div class="line">// 打印输出：&quot;Cat!🐱</div></pre></td></tr></table></figure>
-<h3 id="连接字符串"><a href="#连接字符串" class="headerlink" title="连接字符串"></a>连接字符串</h3><p>连接字符串可以直接使用+进行字符串的连接</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">let string1 = &quot;hello&quot;</div><div class="line">let string2 = &quot; there&quot;</div><div class="line">var welcome = string1 + string2</div><div class="line">// welcome 现在等于 &quot;hello there</div></pre></td></tr></table></figure>
-<p>+=对于字符串也是管用的</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">var instruction = &quot;look over&quot;</div><div class="line">instruction += string2</div><div class="line">// instruction 现在等于 &quot;look over there&quot;</div></pre></td></tr></table></figure>
-<p>另外还有appen()方法</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">let exclamationMark: Character = &quot;!&quot;</div><div class="line">welcome.append(exclamationMark)</div><div class="line">// welcome 现在等于 &quot;hello there!”</div></pre></td></tr></table></figure>
-<h3 id="字符串插值"><a href="#字符串插值" class="headerlink" title="字符串插值"></a>字符串插值</h3><p>在Swift中，我们可以直接将int float类型的值直接插入到string中，不需要先进行类型转换，再进行插入</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">let multiplier = 3</div><div class="line">let message = &quot;\(multiplier) times 2.5 is \(Double(multiplier) * 2.5)&quot;</div><div class="line">// message 是 &quot;3 times 2.5 is 7.5”</div></pre></td></tr></table></figure>
-<h3 id="计算字符串字符数量"><a href="#计算字符串字符数量" class="headerlink" title="计算字符串字符数量"></a>计算字符串字符数量</h3><p>使用count方法  string.characters.count</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">let unusualMenagerie = &quot;Koala 🐨, Snail 🐌, Penguin 🐧, Dromedary 🐪&quot;</div><div class="line">print(&quot;unusualMenagerie has \(unusualMenagerie.characters.count) characters&quot;)</div><div class="line">// 打印输出 &quot;unusualMenagerie has 40 characters”</div></pre></td></tr></table></figure>
-<h3 id="访问和修改字符串"><a href="#访问和修改字符串" class="headerlink" title="访问和修改字符串"></a>访问和修改字符串</h3><h4 id="字符串索引"><a href="#字符串索引" class="headerlink" title="字符串索引"></a>字符串索引</h4><p>每一个String值都有一个关联的索引(index)类型，String.Index，它对应着字符串中的每一个Character的位置。</p>
-<p>我们知道不同的字符占用的内存空间不同，所以，我们不能使用integer来做索引</p>
-<p>使用startIndex可以获取字符串的首个索引，使用endIndex可以获取字符串的最后一个位置的索引</p>
-<p>通过调用 String 的 index(before:) 或 index(after:) 方法，可以立即得到前面或后面的一个索引。您还可以通过调用 index(_:offsetBy:) 方法来获取对应偏移量的索引，这种方式可以避免多次调用 index(before:) 或 index(after:) 方法。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">let greeting = &quot;Guten Tag!&quot;</div><div class="line">greeting[greeting.startIndex]</div><div class="line">// G</div><div class="line">greeting[greeting.index(before: greeting.endIndex)]</div><div class="line">// !</div><div class="line">greeting[greeting.index(after: greeting.startIndex)]</div><div class="line">// u</div><div class="line"></div><div class="line">let index = greeting.index(greeting.startIndex, offsetBy: 7)</div><div class="line">greeting[index]</div><div class="line">// a</div></pre></td></tr></table></figure>
-<p>使用characters的indices属性，会创建一个包含全部索引的范围，我们可以用这个来遍历字符串中的每一个字符</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">for index in greeting.characters.indices &#123;</div><div class="line">   print(&quot;\(greeting[index]) &quot;, terminator: &quot;&quot;)</div><div class="line">&#125;</div><div class="line">// 打印输出 &quot;G u t e n   T a g !</div></pre></td></tr></table></figure>
-<h4 id="插入和删除"><a href="#插入和删除" class="headerlink" title="插入和删除"></a>插入和删除</h4><p>调用 insert(_:at:) 方法可以在一个字符串的指定索引插入一个字符，调用 insert(contentsOf:at:) 方法可以在一个字符串的指定索引插入一个段字符串。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">var welcome = &quot;hello&quot;</div><div class="line">welcome.insert(&quot;!&quot;, at: welcome.endIndex)</div><div class="line">// welcome 变量现在等于 &quot;hello!&quot;</div><div class="line"> </div><div class="line">welcome.insert(contentsOf:&quot; there&quot;.characters, at: welcome.index(before: welcome.endIndex))</div><div class="line">// welcome 变量现在等于 &quot;hello there!</div></pre></td></tr></table></figure>
-<p>调用 remove(at:) 方法可以在一个字符串的指定索引删除一个字符，调用 removeSubrange(_:) 方法可以在一个字符串的指定索引删除一个子字符串。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">welcome.remove(at: welcome.index(before: welcome.endIndex))</div><div class="line">// welcome 现在等于 &quot;hello there&quot;</div><div class="line"> </div><div class="line">let range = welcome.index(welcome.endIndex, offsetBy: -6)..&lt;welcome.endIndex</div><div class="line">welcome.removeSubrange(range)</div><div class="line">// welcome 现在等于 &quot;hello“</div></pre></td></tr></table></figure>
-<h3 id="字符串的比较"><a href="#字符串的比较" class="headerlink" title="字符串的比较"></a>字符串的比较</h3><h4 id="字符串相等"><a href="#字符串相等" class="headerlink" title="字符串相等"></a>字符串相等</h4><p>判断两个字符串相等或者不等，可以直接使用== !=来判断</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">let quotation = &quot;We&apos;re a lot alike, you and I.&quot;</div><div class="line">let sameQuotation = &quot;We&apos;re a lot alike, you and I.&quot;</div><div class="line">if quotation == sameQuotation &#123;</div><div class="line">    print(&quot;These two strings are considered equal&quot;)</div><div class="line">&#125;</div><div class="line">// 打印输出 &quot;These two strings are considered equal”</div></pre></td></tr></table></figure>
-<h4 id="前缀后缀相等"><a href="#前缀后缀相等" class="headerlink" title="前缀后缀相等"></a>前缀后缀相等</h4><p>通过调用字符串的hasPrefix(_\:)/hasSuffix(_:)方法来检查字符串是否拥有特定前缀/后缀，两个方法均接收一个String类型的参数，并返回一个布尔值。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">let romeoAndJuliet = [</div><div class="line">    &quot;Act 1 Scene 1: Verona, A public place&quot;,</div><div class="line">    &quot;Act 1 Scene 2: Capulet&apos;s mansion&quot;,</div><div class="line">    &quot;Act 1 Scene 3: A room in Capulet&apos;s mansion&quot;,</div><div class="line">    &quot;Act 1 Scene 4: A street outside Capulet&apos;s mansion&quot;,</div><div class="line">    &quot;Act 1 Scene 5: The Great Hall in Capulet&apos;s mansion&quot;,</div><div class="line">    &quot;Act 2 Scene 1: Outside Capulet&apos;s mansion&quot;,</div><div class="line">    &quot;Act 2 Scene 2: Capulet&apos;s orchard&quot;,</div><div class="line">    &quot;Act 2 Scene 3: Outside Friar Lawrence&apos;s cell&quot;,</div><div class="line">    &quot;Act 2 Scene 4: A street in Verona&quot;,</div><div class="line">    &quot;Act 2 Scene 5: Capulet&apos;s mansion&quot;,</div><div class="line">    &quot;Act 2 Scene 6: Friar Lawrence&apos;s cell&quot;</div><div class="line">]</div></pre></td></tr></table></figure>
-<p>计算包含开头是”Act 1”的</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">var act1SceneCount = 0</div><div class="line">for scene in romeoAndJuliet &#123;</div><div class="line">    if scene.hasPrefix(&quot;Act 1 &quot;) &#123;</div><div class="line">        act1SceneCount += 1</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">print(&quot;There are \(act1SceneCount) scenes in Act 1&quot;)</div><div class="line">// 打印输出 &quot;There are 5 scenes in Act 1“</div></pre></td></tr></table></figure>
-<p>计算结尾是”Capulet’s mansion”</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">var mansionCount = 0</div><div class="line">for scene in romeoAndJuliet &#123;</div><div class="line">    if scene.hasSuffix(&quot;Capulet&apos;s mansion&quot;) &#123;</div><div class="line">        mansionCount += 1</div><div class="line">        &#125;</div><div class="line">print(&quot;\(mansionCount) mansion scenes”)</div><div class="line">// 打印输出 &quot;6 mansion scenes”</div></pre></td></tr></table></figure>
-<p>字符和字符串章节结束</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;这个章节，我们讲Swift中的字符串和字符，需要说明的是在Swift中String和OC中的NSString进行了无缝衔接，这就意味着，String类型的字符串可以直接调用NSString中暴露出来的方法，不需要进行类型转换。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="Swift官方教程学习笔记" scheme="http://ppsheep.com/all-categories/Swift%E5%AE%98%E6%96%B9%E6%95%99%E7%A8%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-    
-      <category term="Swift官方教程学习笔记" scheme="http://ppsheep.com/all-tags/Swift%E5%AE%98%E6%96%B9%E6%95%99%E7%A8%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-  </entry>
-  
-  <entry>
     <title>iOS ping网络小工具</title>
     <link href="http://ppsheep.com/2017/01/03/iOS-ping%E7%BD%91%E7%BB%9C%E5%B0%8F%E5%B7%A5%E5%85%B7/"/>
     <id>http://ppsheep.com/2017/01/03/iOS-ping网络小工具/</id>
@@ -381,158 +246,6 @@
     
     
       <category term="ping工具" scheme="http://ppsheep.com/all-tags/ping%E5%B7%A5%E5%85%B7/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Swift教程(一)—基础部分、基本运算符</title>
-    <link href="http://ppsheep.com/2016/12/28/Swift%E6%95%99%E7%A8%8B(%E4%B8%80)%E2%80%94%E5%9F%BA%E7%A1%80%E9%83%A8%E5%88%86%E3%80%81%E5%9F%BA%E6%9C%AC%E8%BF%90%E7%AE%97%E7%AC%A6/"/>
-    <id>http://ppsheep.com/2016/12/28/Swift教程(一)—基础部分、基本运算符/</id>
-    <published>2016-12-28T11:13:10.000Z</published>
-    <updated>2017-01-09T01:52:26.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>Swift  该来的还是要来的，Swift使用范围越来越广，你不用，大家都会用，然后呢。。。你又落后了。。</p>
-<a id="more"></a>
-<h3 id="常量变量"><a href="#常量变量" class="headerlink" title="常量变量"></a>常量变量</h3><p>首先呢，每门语言都是从常量变量讲起，Swift当然也不例外</p>
-<p>在Swift中常量  使用 let声明   变量使用var声明<br>不像OC或者Java 我们在声明常量变量时，可以不加类型，编译器能够帮助我们推断出类型，像这样</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">let myName = &quot;Yang Qian&quot;</div><div class="line"></div><div class="line">var myAge = 23</div></pre></td></tr></table></figure>
-<p>在上面两行中，并没有指明 myAge 和  myName 的类型，编译器也没有报错，当然，我们也是可以声明他们的类型的：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">let myName: String = &quot;Yang Qian&quot;</div><div class="line"></div><div class="line">let myAge: Int  = 23</div><div class="line"></div><div class="line">let 🐶🐮 = &quot;dogcow&quot;</div></pre></td></tr></table></figure>
-<p><em>注意</em>这里有一个书写规范，苹果在文档中特意提醒了，在声明类型的时候，需要在冒号后面空一格，保持格式一致。</p>
-<blockquote>
-<p><strong>常量(let)一旦声明，便不可更改。变量(var)可进行更改</strong></p>
-</blockquote>
-<h3 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">// This is a comment. 这是一行注释</div><div class="line"></div><div class="line">/*</div><div class="line"> 这是多行注释</div><div class="line"> */</div></pre></td></tr></table></figure>
-<h3 id="分号"><a href="#分号" class="headerlink" title="分号"></a>分号</h3><p>关于分号呢，在Swift中，每个语句结束是不用写分号的，当然也可以写，但是我们推荐呢，还是不要写了，苹果都说不用写了，你还写干嘛，而且现在看一些开源的Swift代码，大神都没写分号。</p>
-<p>但是存在一种情况，就是如果你想在一行写多个语句，那每个语句之间你就需要用分号隔开了</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">//这样就会报错了</div><div class="line">let myName: String = &quot;Yang Qian&quot; let myAge: Int  = 23</div><div class="line">//要这样写</div><div class="line">let myName: String = &quot;Yang Qian&quot; ; let myAge: Int  = 23</div></pre></td></tr></table></figure>
-<p>这样的代码也太丑了吧，还是一行一个语句吧，养成良好的代码习惯</p>
-<h3 id="整数Int"><a href="#整数Int" class="headerlink" title="整数Int"></a>整数Int</h3><p>在Swift上，提供了一个特殊的整数类型Int，在32位的机器上运行，那这个整数的长度就是和Int32相同，如果实在64为机器上运行，那这个整数的长度就是Int64的，一般来说  我们直接使用Int就已经OK了。</p>
-<h3 id="无类型UInt"><a href="#无类型UInt" class="headerlink" title="无类型UInt"></a>无类型UInt</h3><p>无符号类型，一般呢我们不使用，为什么呢？  苹果文档上讲的</p>
-<blockquote>
-<p>Use UInt only when you specifically need an unsigned integer type with the same size as the platform’s native word size. If this is not the case, Int is preferred, even when the values to be stored are known to be non-negative</p>
-</blockquote>
-<h3 id="类型别名"><a href="#类型别名" class="headerlink" title="类型别名"></a>类型别名</h3><p>类型别名  就是给现有的类型加上一个我们自己自定义的名称  使用关键字 typealias定义</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">//这样，我们就将UInt16定义成了 AudioSample</div><div class="line">typealias AudioSample = UInt16</div><div class="line"></div><div class="line">var maxAmplitudeFound = AudioSample.min</div><div class="line">// 等价于  var maxAmplitudeFound = UInt16.min</div></pre></td></tr></table></figure>
-<h3 id="Booleans"><a href="#Booleans" class="headerlink" title="Booleans"></a>Booleans</h3><p>现在我们的布尔值  不再是OC 中的  Yes 和  No 了  需要使用  true  false</p>
-<p>而且 现在呢，我们也不能再使用int的  0  1 来表示  true 或者false 了  之前呢  OC是可以这样使用的  但是在swift中，编译器就会报错了</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">let i = 1</div><div class="line">if i &#123;</div><div class="line">    // this example will not compile, and will report an error</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>这样，苹果讲了，是会报错的</p>
-<h3 id="Tuples-元组"><a href="#Tuples-元组" class="headerlink" title="Tuples 元组"></a>Tuples 元组</h3><p>元组，这个厉害了，这个可以把多个值组合成一个复合值，就是一个元组，而且这个元组里的各个值，不用类型相同，这下厉害了，这样一来，我们传参数，还有函数返回值，都可以多个了  想想 挺激动的  虽然还没用</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">let http404Error = (404, &quot;Not Found&quot;)</div></pre></td></tr></table></figure>
-<p>上面，就是一个表示404 的一个元组，看到了，是一个404 Int 和  一个  String</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">let http404Code = (404, &quot;Not Found&quot;)</div><div class="line"></div><div class="line">let (statusCode, statusString) = http404Code</div><div class="line"></div><div class="line">print(&quot;the code is \(statusCode)&quot;)</div><div class="line"></div><div class="line">print(&quot;the message is \(statusString)&quot;)</div></pre></td></tr></table></figure>
-<p>输出：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">the code is 404</div><div class="line">the message is Not Found</div></pre></td></tr></table></figure>
-<p> 如果呢，我们只关心我们需要的数据，不关心其他的，比如在上面的例子中，我们只关心code 那么我们就可以这样写</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"> </div><div class="line">let http404Code = (404, &quot;Not Found&quot;)</div><div class="line"></div><div class="line">let (statusCode, _) = http404Code</div><div class="line"></div><div class="line">print(&quot;the code is \(statusCode)&quot;)</div><div class="line"></div><div class="line">//print(&quot;the message is \(statusString)&quot;)</div></pre></td></tr></table></figure>
-<p>输出</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">the code is 404</div></pre></td></tr></table></figure>
-<p>能少写一点是一点</p>
-<p>还可以呢，像数组一样，输出元组的第几位:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">let http404Code = (404, &quot;Not Found&quot;)</div><div class="line"></div><div class="line">print(&quot;the code is \(http404Code.0)&quot;)</div><div class="line"></div><div class="line">print(&quot;the message is \(http404Code.1)&quot;)</div></pre></td></tr></table></figure>
-<p>输出呢,一样的:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">the code is 404</div><div class="line">the message is Not Found</div></pre></td></tr></table></figure>
-<p>别急 还有写法呢：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">let http200Status = (statusCode: 200, description: &quot;OK&quot;)</div></pre></td></tr></table></figure>
-<p>然后我们来输出:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">print(&quot;The status code is \(http200Status.statusCode)&quot;)</div><div class="line">// Prints &quot;The status code is 200</div></pre></td></tr></table></figure>
-<p>简直太强大了，我个人最喜欢 那种点语法</p>
-<h3 id="Optionals-可选类型"><a href="#Optionals-可选类型" class="headerlink" title="Optionals 可选类型"></a>Optionals 可选类型</h3><p>使用可选类型，用来处理值可能缺失的情况，这样一来，我们的代码安全性能够提升很多</p>
-<p>一般来说，这个可选类型就两种情况</p>
-<ul>
-<li>有值  就是x</li>
-<li>无值  就是nil</li>
-</ul>
-<!--more-->
-<blockquote>
-<p>我们知道在OC中，是没有这个概念的，在OC中，比如我们有一个方法，有返回值，如果是返回的是对象，要么就是返回对象实例，要么返回nil表示值缺失。但是我们遇到需要返回枚举，我们就没办法了，一般我们会定义一个NotFound这种类型，但是在Swift我们就不需要了</p>
-</blockquote>
-<p>我们举个例子</p>
-<p>如果我们想讲一个字符串，强转成一个Int整形，我们知道，不可能每个字符串都能转成整数，像”123”这种可以转成整形，但是”ni hao”这种，能转成整形吗？你在逗我</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">let testString = &quot;123&quot;</div><div class="line">let testString1 = &quot;ni hao&quot;</div><div class="line"></div><div class="line">let testInt1 = Int(testString1)</div><div class="line">let testInt2 = Int(testString)</div></pre></td></tr></table></figure>
-<p><img src="http://o8bxt3lx0.bkt.clouddn.com/blog/2016-12-29-055540.jpg" alt=""></p>
-<p>这样代码并不会报错</p>
-<p>我们可以手动来设置optional值</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">var serverResponseCode: Int? = 404</div><div class="line">// serverResponseCode contains an actual Int value of 404</div><div class="line">serverResponseCode = nil</div><div class="line">// serverResponseCode now contains no value</div></pre></td></tr></table></figure>
-<p><strong>注意，在Swift中，nil的定义和Objective-C中的nil定义不相同，在Swift中，nil只是用来表示值缺失，不管是对象，还是Int之类的基础类型，都可以使用nil来表示值缺失，但是在OC中就只有对象可以使用，因为在OC中是表示一个指向不存在对象的指针</strong></p>
-<p>如果你像下面这样定义了一个变量，不需要你声明他为nil，编译器会自动为他赋值nil，这根OC中  还是有较大的差别的</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">var surveyAnswer: String?</div></pre></td></tr></table></figure>
-<p>同样的，我们还是和OC一样，可以使用==或者!=来判断是否是nil</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">if surveyAnswer != nil&#123;</div><div class="line">	//做什么</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>如果，我们能够确定，这个变量，肯定是有值的，那么我们就可以使用强制解包，在其后面加上一个!</p>
-<p>像这样</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">if surveyAnswer != nil&#123;</div><div class="line">	//我们已经知道surveyAnswer是肯定有值的</div><div class="line">	print(surveyAnswer!)//强制解包 输出</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><strong>在我们强制解包的时候，一定要确保这个值是有的，不然，会出现错误，导致程序崩溃</strong></p>
-<h3 id="可选绑定"><a href="#可选绑定" class="headerlink" title="可选绑定"></a>可选绑定</h3><p>这个  厉害了，很好用的</p>
-<p>我们可以在if 和 while 语句中使用 我就直接上代码了</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">if let actualNumber = Int(possibleNumber) &#123;</div><div class="line">    print(&quot;\&quot;\(possibleNumber)\&quot; has an integer value of \(actualNumber)&quot;)</div><div class="line">&#125; else &#123;</div><div class="line">    print(&quot;\&quot;\(possibleNumber)\&quot; could not be converted to an integer&quot;)</div><div class="line">&#125;</div><div class="line">// Prints &quot;&quot;123&quot; has an integer value of 123”</div></pre></td></tr></table></figure>
-<p>我们上面讲过，这个强转，转出来是一个optional值，我们在if语句中判断这个值，如果存在，则将这个值赋给actualNumber常量，在判断语句中需要使用到，如果转出来是一个nil，那么就跳到另外的语句中</p>
-<p>还有更强大的</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">if let firstNumber = Int(&quot;4&quot;), </div><div class="line">	let secondNumber = Int(&quot;42&quot;), </div><div class="line">	firstNumber &lt; secondNumber &amp;&amp; secondNumber &lt; 100 </div><div class="line">&#123;</div><div class="line">    print(&quot;\(firstNumber) &lt; \(secondNumber) &lt; 100&quot;)</div><div class="line">&#125;</div><div class="line">// Prints &quot;4 &lt; 42 &lt; 100&quot;</div><div class="line"> </div><div class="line">if let firstNumber = Int(&quot;4&quot;)</div><div class="line"> &#123;</div><div class="line">    if let secondNumber = Int(&quot;42&quot;) </div><div class="line">    &#123;</div><div class="line">        if firstNumber &lt; secondNumber &amp;&amp; secondNumber &lt; 100 </div><div class="line">        &#123;</div><div class="line">            print(&quot;\(firstNumber) &lt; \(secondNumber) &lt; 100&quot;)</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">// Prints &quot;4 &lt; 42 &lt; 100”</div></pre></td></tr></table></figure>
-<p>这么强大 的  if语句</p>
-<h3 id="隐式解析"><a href="#隐式解析" class="headerlink" title="隐式解析"></a>隐式解析</h3><p>有时候，我们很确定，一些变量或者常量，肯定是有值的，不需要声明为optional，不然我们每次使用的时候，都需要加上!来进行解包</p>
-<p>Swift为我们提供了隐式声明</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">let absolutString: String! = &quot;我肯定是有值的&quot;</div><div class="line"></div><div class="line">print(absolutString)//可以直接使用，不需要解包</div></pre></td></tr></table></figure>
-<h3 id="错误处理"><a href="#错误处理" class="headerlink" title="错误处理"></a>错误处理</h3><p>如果之前有写过Java的同学肯定对try catch很熟悉  在Swift中，使用try catch来进行错误的捕获和处理</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">func makeASandwich() throws &#123;</div><div class="line">    // 这个函数可能会抛出错误异常</div><div class="line">&#125;</div><div class="line"></div><div class="line"> </div><div class="line">do &#123;</div><div class="line">    try makeASandwich()//开始做三明治</div><div class="line">    eatASandwich()//开始吃三明治</div><div class="line">&#125; catch SandwichError.outOfCleanDishes &#123;//这里捕获到了异常，没有干净的盘子</div><div class="line">    washDishes()</div><div class="line">&#125; catch SandwichError.missingIngredients(let ingredients) &#123;//又捕获到了异常，没有原材料</div><div class="line">    buyGroceries(ingredients)//买原材料</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="断言"><a href="#断言" class="headerlink" title="断言"></a>断言</h3><p>断言是很好用的一个东西，而且鼓励大家使用断言。</p>
-<p>断言是什么意思呢？就是我们在运行一个函数时，有事我们需要某个参数，比如一个Int一定要是一个大于0的数，如果不大于0，我们的函数就无法运行了，这时候，我们就可以使用断言了</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">let age = -3</div><div class="line"></div><div class="line">assert(age &gt;= 0, &quot;A person&apos;s age cannot be less than zero&quot;)</div></pre></td></tr></table></figure>
-<p>这样程序就会检查age是否是大于等于0 的  如果不符合，程序就会终止，并且我们能够很快知道 为什么程序会终止</p>
-<p>那我们什么时候需要用到断言呢？</p>
-<ul>
-<li>当传入一个int的下标时，比如传入数组的索引，这个整数的值可能会太大或者太小</li>
-<li>需要给函数传入一个值，但是非法的值可能导致函数不能正常执行。</li>
-<li>一个可选值现在是nil，但是后面的代码运行需要一个非nil值</li>
-</ul>
-<h3 id="赋值操作"><a href="#赋值操作" class="headerlink" title="赋值操作"></a>赋值操作</h3><p>很简单，就是一个加号</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">let a = 10</div><div class="line">let b = 5</div><div class="line">b = a</div><div class="line">print(b)</div><div class="line">//b输出 10</div></pre></td></tr></table></figure>
-<p>元组赋值</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">let (x,y) = (1,2)</div><div class="line">//好了赋值好了 x = 1 y = 2</div></pre></td></tr></table></figure>
-<h3 id="基本运算"><a href="#基本运算" class="headerlink" title="基本运算"></a>基本运算</h3><p>加减乘除我就不讲了吧</p>
-<p>这里有一个还是要讲一下，字符串的加法  这个在Swift中是特有的</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">let a = &quot;我是&quot;</div><div class="line">let b = &quot;程序员&quot;</div><div class="line">let c = a + b</div><div class="line">print(c)</div><div class="line">//我是程序员</div></pre></td></tr></table></figure>
-<h3 id="取余运算"><a href="#取余运算" class="headerlink" title="取余运算"></a>取余运算</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">9%2 = 1  等价于  (4*2)+1  余下一个1</div><div class="line"></div><div class="line">-9%2 = -1 等价于  (-4*2)+ -1  余下一个 -1</div></pre></td></tr></table></figure>
-<h3 id="负号的使用"><a href="#负号的使用" class="headerlink" title="负号的使用"></a>负号的使用</h3><p>负负得正 这个我们都知道的哦 </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">let a = -1</div><div class="line">let b = -a</div><div class="line">//b现在是1</div><div class="line">let c = -b</div><div class="line">//现在c是-1</div></pre></td></tr></table></figure>
-<h3 id="使用"><a href="#使用" class="headerlink" title="+=使用"></a>+=使用</h3><p>这个  大家也在其他的语言中见过</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">let a = 10</div><div class="line">a+=2  //a = a+2</div><div class="line">print(a)//输出12</div></pre></td></tr></table></figure>
-<p>但是需要注意的是  我们没有这样的用法</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">let b = a+=2 //这种用法是错误的</div></pre></td></tr></table></figure>
-<h3 id="比较运算符"><a href="#比较运算符" class="headerlink" title="比较运算符"></a>比较运算符</h3><p>==  等于</p>
-<p>!=  不等于</p>
-<p>></p>
-<p>&lt;</p>
-<p>>=</p>
-<p>&lt;=</p>
-<p>这里还有一个字符串的比较</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">let a = &quot;world&quot;</div><div class="line">let b = &quot;world&quot;</div><div class="line">if a == b &#123;</div><div class="line">	//这里是能够执行到的  这为真， 这里需要注意下</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>元组的比较</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">(2,&quot;abc&quot;)&gt;(1,&quot;bca&quot;)  //2&gt;1  </div><div class="line">(1,&quot;abc&quot;)&lt;(1,&quot;bca&quot;)  //1相同 比较abc和bca 先比较第一个字母  </div><div class="line">(1,&quot;abc&quot;) == (1,&quot;abc&quot;)</div></pre></td></tr></table></figure>
-<h3 id="三目运算"><a href="#三目运算" class="headerlink" title="三目运算"></a>三目运算</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">let contentHeight = 40</div><div class="line">let hasHeader = true</div><div class="line">let rowHeight = contentHeight + (hasHeader ? 50 : 20)</div><div class="line">// rowHeight is equal to 90</div></pre></td></tr></table></figure>
-<h3 id="空合运算"><a href="#空合运算" class="headerlink" title="空合运算"></a>空合运算</h3><p>这个空合运算时针对值为nil的时候来做的</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">let defaultColorName = &quot;red&quot;</div><div class="line">var userDefinedColorName: String?   // defaults to nil</div><div class="line"> </div><div class="line">var colorNameToUse = userDefinedColorName ?? defaultColorName</div></pre></td></tr></table></figure>
-<p>这里如果userDefinedColorName不是nil的话colorNameToUse的值就是userDefinedColorName的值，如果userDefinedColorName是nil 那么colorNameToUse的值，就是defaultColorName的值</p>
-<h3 id="区间运算符"><a href="#区间运算符" class="headerlink" title="区间运算符"></a>区间运算符</h3><p>闭合运算，包含两端</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">for index in 1...5 &#123;</div><div class="line">    print(&quot;\(index) times 5 is \(index * 5)&quot;)</div><div class="line">&#125;</div><div class="line">// 1 times 5 is 5</div><div class="line">// 2 times 5 is 10</div><div class="line">// 3 times 5 is 15</div><div class="line">// 4 times 5 is 20</div><div class="line">// 5 times 5 is 25</div></pre></td></tr></table></figure>
-<p>半开合运算  包含左端 不包含右端</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">let names = [&quot;Anna&quot;, &quot;Alex&quot;, &quot;Brian&quot;, &quot;Jack&quot;]</div><div class="line">let count = names.count</div><div class="line">for i in 0..&lt;count &#123;</div><div class="line">    print(&quot;Person \(i + 1) is called \(names[i])&quot;)</div><div class="line">&#125;</div><div class="line">// Person 1 is called Anna</div><div class="line">// Person 2 is called Alex</div><div class="line">// Person 3 is called Brian</div><div class="line">// Person 4 is called Jack</div></pre></td></tr></table></figure>
-<h3 id="逻辑运算"><a href="#逻辑运算" class="headerlink" title="逻辑运算"></a>逻辑运算</h3><p>逻辑运算  包括 </p>
-<p>!非<br>&amp;&amp; 且<br>|| 或</p>
-<p>基础的运算符完成了，接下来我们就开始学习String了</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;Swift  该来的还是要来的，Swift使用范围越来越广，你不用，大家都会用，然后呢。。。你又落后了。。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="Swift官方教程学习笔记" scheme="http://ppsheep.com/all-categories/Swift%E5%AE%98%E6%96%B9%E6%95%99%E7%A8%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
-    
-    
-      <category term="Swift官方教程学习笔记" scheme="http://ppsheep.com/all-tags/Swift%E5%AE%98%E6%96%B9%E6%95%99%E7%A8%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
@@ -1382,6 +1095,314 @@
     
     </summary>
     
+    
+  </entry>
+  
+  <entry>
+    <title>iOS CALayer基础介绍</title>
+    <link href="http://ppsheep.com/2016/11/16/iOS%20CALayer%E5%9F%BA%E7%A1%80%E4%BB%8B%E7%BB%8D/"/>
+    <id>http://ppsheep.com/2016/11/16/iOS CALayer基础介绍/</id>
+    <published>2016-11-16T10:40:46.000Z</published>
+    <updated>2017-01-22T06:56:47.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>在上一篇文章中我们讲了CALayer和UIView之间的相似的树级关系，和他们之间的管理关系，并且介绍了CALayer的一些属性，在这片文章中，将继续介绍一些CALayer的属性，虽然这看起来很简单，但是后面等到我们做动画的时候，这些属性都是极其重要的。</p>
+<a id="more"></a>
+<h3 id="动画的由来"><a href="#动画的由来" class="headerlink" title="动画的由来"></a>动画的由来</h3><p>在iOS中所有的视图都是从UIView的基类派生而来，UIView可以处理触摸事件，可以支持基于Core Graphics绘图，也能够做一些简单的动画，比如旋转、缩放或者其他一些滑动渐变的动画。但是实际上，这是苹果为我们封装了一层，真正实现动画的其实是一个叫做图层的玩意儿(CALayer)，UIView所做的一切动画，都是苹果从CALayer封装而来。</p>
+<h3 id="CALayer"><a href="#CALayer" class="headerlink" title="CALayer"></a>CALayer</h3><p>CALayer类在概念上和UIView类似，也可以像View一样添加一些子layer(图片，文本等等)，也能够像View一样，管理子图层的位置大小等等，并且，CALayer有一些非常重要的属性和方法，iOS中的动画就是通过这些来做动画和变换，CALayer和UIView最大的不同就是CALayer不处理用户的交互。</p>
+<h3 id="UIView和CALayer的关系"><a href="#UIView和CALayer的关系" class="headerlink" title="UIView和CALayer的关系"></a>UIView和CALayer的关系</h3><p>每一个UIView都有一个CALayer实例属性，UIView的职责就是创建并创建这个图层，以确保在子视图被创建时，子图层也能够被创建，子视图被添加和移除的时候，子图层也能够做相对的添加移除操作。 他们的关系是一一对应的。</p>
+<p><img src="http://i.imgur.com/2tvoYIJ.jpg" alt=""></p>
+<p>实际上，我们在屏幕上看到的视图或者动画，其实都是图层。UIView只是苹果为我们封装的高级API</p>
+<p>这个就有个历史原因了，主要呢 是要在Mac上也使用CALayer，但是iOS设备的触摸和Mac的鼠标点击又不一样，在Mac上，高级API就叫做NSView了，更多了，就不在这里讲了。</p>
+<h3 id="哪里能用到CALayer"><a href="#哪里能用到CALayer" class="headerlink" title="哪里能用到CALayer"></a>哪里能用到CALayer</h3><p>一般的，我们在处理一些简单的动画时，都用不到CALayer，既然苹果为我们封装好了，干嘛不用呢？但是如果需要再处理一些高级的动画，那UIView可能就不能满足我们的需求了。</p>
+<p>没有暴露出来的CALayer功能：</p>
+<ul>
+<li>阴影，圆角，带颜色的边框</li>
+<li>3D变换</li>
+<li>非矩形范围</li>
+<li>透明遮罩</li>
+<li>多级非线性动画</li>
+</ul>
+<h3 id="使用图层"><a href="#使用图层" class="headerlink" title="使用图层"></a>使用图层</h3><p>我们先来感受一下图层</p>
+<p>新建一个工程</p>
+<p>在view中添加一个view</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">UIView *layerView = [[UIView alloc] initWithFrame:CGRectMake(10, 10, 200, 200)];</div><div class="line">layerView.backgroundColor = [UIColor redColor];</div><div class="line">layerView.center = self.view.center;</div><div class="line">[self.view addSubview:layerView];</div></pre></td></tr></table></figure>
+<p><img src="http://i.imgur.com/zEKwKE7.jpg" alt=""></p>
+<p>然后我们想要在这个小红方框的中间添加上一个蓝色的小方框。当然，我们肯定知道这很简单，直接加上一个子view就行了，但是这样做的，就失去了我们学习CALayer的意义。</p>
+<p>我的想法是这样，既然layer像view一样，那我们是否可以在layerView的layer上加上一个蓝色方框样式的layer 我们的做法是这样</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">CALayer *blueLayer = [CALayer layer];</div><div class="line">blueLayer.frame = CGRectMake(50, 50, 100, 100);</div><div class="line">blueLayer.backgroundColor = [UIColor blueColor].CGColor;</div><div class="line">[layerView.layer addSublayer:blueLayer];</div></pre></td></tr></table></figure>
+<p><img src="http://i.imgur.com/TrH8GPi.jpg" alt=""></p>
+<p>效果就出来了 我们来看看3D图</p>
+<p><img src="http://i.imgur.com/z6Tv4S7.jpg" alt=""></p>
+<p>我们可以看到，这样的效果，我们只能看到一个图层，一个view 并没有向layerView上添加子view</p>
+<p>当然这里我们只是做一个layer的介绍，并不是说你之后添加视图这样添加，这样肯定是错误的，我们之前讲过，layer不能处理用户的交互，这个很重要。</p>
+<p>但是在什么情况下，我们需要这样来使用CALayer呢？</p>
+<ul>
+<li>开发同时可以在macOS上运行的跨平台应用</li>
+<li>使用多种CALayer，并不想创建额外的UIView去封装他们(这个后面会讲到)</li>
+<li>做一些对性能要求较高的工作，但是遇到这种情况，我们很多时候都直接使用OpenGL绘图了</li>
+</ul>
+<p>总的来说呢，处理视图肯定比处理图层简单多了</p>
+<p>我们这里创建这一个例子，只是为了来介绍，图层的树状结构，和视图的一一关联关系。</p>
+<h3 id="寄宿图"><a href="#寄宿图" class="headerlink" title="寄宿图"></a>寄宿图</h3><p>寄宿图是什么意思呢?其实呢，就是图层中包含图</p>
+<h4 id="contents属性"><a href="#contents属性" class="headerlink" title="contents属性"></a>contents属性</h4><p>在CALayer中有一个属性，叫做contents，这个属性的类型被定义为id，看上去好像这个属性能够接收任意类型的值，如果给contents赋予了任意一个类型的值，你的APP也能够编译成功，但是得到的图层确实一个空白的图层，事实上，这个contents在iOS下，是需要一个CGImage的值。</p>
+<p>那为什么这个又要写作一个id类型呢，这个又是一个历史原因了 ，明显的这个是因为macOS的原因，因为在macOS下，这个是接收NSImage类型。</p>
+<p>在UIImage中 有一个CGImage属性，他返回的是一个CGImageRef(指向CGImage的指针)，如果你直接把这个赋给contents，那是会编译出错的。CGImageRef是一个Core Foundation对象，并不是一个cocoa对象，但是我们可以通过bridged来进行转换，我们来向刚刚创建的layerView的图层赋予一张图片</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">UIImage *image = [UIImage imageNamed:@&quot;plane&quot;];</div><div class="line">layerView.layer.contents = (__bridge id _Nullable)(image.CGImage);</div></pre></td></tr></table></figure>
+<p><img src="http://i.imgur.com/TbHbXhg.jpg" alt=""></p>
+<p>这样我们就避开了UIImageView，直接向UIView的图层设置一张图片</p>
+<h4 id="contentsGravity属性"><a href="#contentsGravity属性" class="headerlink" title="contentsGravity属性"></a>contentsGravity属性</h4><p>但是我们看到中间的图片明显被拉伸了，我们想要展示他原有的效果，怎么做呢？</p>
+<p>在我们使用UIImageView时，我们处理这种拉伸，一般是使用UIimageView的一个属性</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">imageView.contentModel = UIViewContentModeScaleAspectFit;</div></pre></td></tr></table></figure>
+<p>在CALayer中有一个和contentMode相似的属性，叫做contentsGravity，不同的是他是一个NSString类型。</p>
+<p>contentsGravity值的类型包含：</p>
+<ul>
+<li>kCAGravityCenter</li>
+<li>kCAGravityTop</li>
+<li>kCAGravityBottom</li>
+<li>kCAGravityLeft</li>
+<li>kCAGravityRight</li>
+<li>kCAGravityTopLeft</li>
+<li>kCAGravityTopRight</li>
+<li>kCAGravityBottomLeft</li>
+<li>kCAGravityBottomRight</li>
+<li>kCAGravityResize</li>
+<li>kCAGravityResizeAspect</li>
+<li>kCAGravityResizeAspectFill</li>
+</ul>
+<p>这其中的类型与contentMode都有一一对应关系的，其中kCAGravityResizeAspect相当于视图中contentMode类型的UIViewContentModeScaleAspectFit</p>
+<p>当我们将layerView的contentsGravity设置成kCAGravityResizeAspect</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">layerView.layer.contentsGravity = kCAGravityResizeAspect;</div></pre></td></tr></table></figure>
+<p><img src="http://i.imgur.com/cTH6idP.jpg" alt=""></p>
+<p>效果就不一样了</p>
+<h4 id="contentsScale属性-主要针对Mac"><a href="#contentsScale属性-主要针对Mac" class="headerlink" title="contentsScale属性(主要针对Mac)"></a>contentsScale属性(主要针对Mac)</h4><p>contentsScale定义了寄宿图的像素尺寸和视图大小的比例，默认情况下是一个值为1.0的浮点数。那么我们一般怎么使用这个属性呢？</p>
+<p>这个属性其实是为了支持高分辨率屏幕机制而出现的，他用来判断在绘制图层的时候，应该为寄宿图创建创建的空间大小和需要显示图片的拉伸度。</p>
+<p>简单来说，如果我们将contentsScale设置为1.0 那么寄宿图创建出来的图片将会以每个点一个像素来绘制图片，如果设置为2，那么将会以每个点2个像素来绘制图片。这个就是我们熟知的retina屏幕。</p>
+<p>在我们之前使用contentsGravity = kCAGravityResizeAspect这个属性时，默认是将图片等比例拉伸至适应图层大小，但是，如果我们将contentsGravity设置成kCAGravityCenter，我们看一下，效果会是什么样？</p>
+<p><img src="http://i.imgur.com/e9qmb5i.jpg" alt=""></p>
+<p>整个图片直接放大，将原图层盖住，这是因为kCAGravityCenter属性值，默认是不会对图片进行拉伸，所以将图片的原始大小展示了出来，这时候，我们的contentsScale就起到了作用 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">layerView.layer.contentsScale = image.scale;</div></pre></td></tr></table></figure>
+<p><img src="http://i.imgur.com/RyHbQXJ.jpg" alt=""></p>
+<p>这时，我们看到，现在使用了正确的图片来进行绘制</p>
+<p><strong>注意，当我们使用代码来设置寄宿图时，我们一定要手动设置contentsScale</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">layerView.layer.contentsScale = [UIScreen mainScreen].scale;</div></pre></td></tr></table></figure>
+<p>这样，我们的图片在retina设备上，才会显示正常。</p>
+<h4 id="maskToBounds属性"><a href="#maskToBounds属性" class="headerlink" title="maskToBounds属性"></a>maskToBounds属性</h4><p>不知大家有没有注意到，在上面的图中，我们的图片已经超过了图层的边界，默认情况下，在UIView中，也会绘制超过边界的内容或者子视图。</p>
+<p>在UIView中，控制是否超出边界的属性是clipsToBounds，在CALayer中，控制的属性是masksToBounds，将他设置成yes</p>
+<p><img src="http://i.imgur.com/7Uh0sZd.jpg" alt=""></p>
+<h4 id="contentsRect属性"><a href="#contentsRect属性" class="headerlink" title="contentsRect属性"></a>contentsRect属性</h4><p>contentRect属性，允许我们在图层中显示寄宿图的部分区域，这涉及到图片的显示和图片是如何拉伸的，所以比contentsGravity灵活得多，这里也会多讲一下。</p>
+<p>虽然这个属性有带一个rect的样式，这样很容易让我们想到bounds和frame，但是这个属性和他们的使用方法确是不一样的。他使用的是单位坐标，单位坐标指定在0到1之间，是一个相对值，是相对于寄宿图的位置和大小。</p>
+<p>默认的contentsRect是{0，0，1，1} 这样就表示寄宿图的全部区域。如果我们指定一个区域，那么寄宿图就会被显示一部分区域</p>
+<p><img src="https://farm6.staticflickr.com/5726/25392255929_3569dda784_o.jpg" alt=""></p>
+<p>可以看到现在寄宿图是全部显示的，这时候我们来设置一下layer的contentsRect属性</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">layerView.layer.contentsRect = CGRectMake(0.5, 0.5, 0.5, 0.5);</div></pre></td></tr></table></figure>
+<p>这时候，图层就会这样显示</p>
+<p><img src="https://farm6.staticflickr.com/5583/30726952920_0a80ddf4ee_o.jpg" alt=""></p>
+<p>明显我们可以看到 这是显示的图片的右下角区域 这样显示也是我们给定的{0.5，0.5，0.5，0.5}决定的 从图片的中点位置开始，显示半宽半高</p>
+<p>那么我们在做APP时，什么地方经常使用到这个属性呢？</p>
+<p>我们经常在图片拼合的时候用到这个属性，这个图片拼合概念在游戏开发中经常碰到。<br>说简单点，就是将多张图片打包成一张图片，然后一次性载入这一帐图片，这样带来的好处就是能够在内存使用上，屏幕渲染上节省很多性能。</p>
+<p>例子：这种使用方法，我们常见的APP中，很多美颜的相机使用了layer添加一些效果图片到当前的显示视图上，比如添加一个什么笑脸啊，相框啊之类的。</p>
+<h4 id="contentsCenter属性"><a href="#contentsCenter属性" class="headerlink" title="contentsCenter属性"></a>contentsCenter属性</h4><p>咋一看，我们会以为这个和寄宿图的位置相关，其实不是的，这个属性主要是用来控制图片的拉伸，其实他是一个CGRect，他定义了<strong>一个固定的边框和一个在图层上可以拉伸的区域，改变contentsCenter的值，并不会影响寄宿图的显示，除非这个图层的大小改变了，我们才能看得到结果</strong></p>
+<p>contentsCenter默认的大小是{0，0，1，1}，这就意味着，如果图层的大小改变了，那么整个寄宿图都会被均匀拉伸，如果我们改变contentsCenter这个属性，定义一个拉伸的区域，那么我们就能看到效果了</p>
+<p><img src="http://o8bxt3lx0.bkt.clouddn.com/blog/2016-11-16-006tNbRwjw1f9u68sxw6ij31kw23uqt1.jpg" alt=""></p>
+<p><strong>注意</strong><br>这里我画了一张图，整个一个方框表示的是一个图层，如果我们将图层的contentsCenter设置为{0.25，0.25，0.25，0.25}那么，其实这个rect形成的一个方框就是中间的I区域，相当于整个图层的正中心，宽高各一半的位置  如果我们现在改变了图层的大小的话，我们定义了这样一个拉伸区域{0.25，0.25，0.25，0.25}，表示的就是在横向拉伸中H区域和D区域会被拉伸，在纵向拉伸中，B区域和F区域会被拉伸，而中间的I区域则是横向纵向均会被拉伸，而其中的A、C、E、G则不会被拉伸，可能这里需要着重理解一下</p>
+<blockquote>
+<p>到这里，基本上就将CALayer中我们可能会经常使用到的一些重要属性讲解了一下</p>
+</blockquote>
+<p><strong>欢迎大家关注我的公众号，我会定期分享一些我在项目中遇到问题的解决办法和一些iOS实用的技巧，现阶段主要是整理出一些基础的知识记录下来</strong></p>
+<div align="middle"><br>    <image src="http://ac-mhke0kuv.clouddn.com/830a4ead8294ceff5160.jpg"></image><br></div>
+
+<p>文章也会同步更新到我的博客：<br><a href="http://ppsheep.com">http://ppsheep.com</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在上一篇文章中我们讲了CALayer和UIView之间的相似的树级关系，和他们之间的管理关系，并且介绍了CALayer的一些属性，在这片文章中，将继续介绍一些CALayer的属性，虽然这看起来很简单，但是后面等到我们做动画的时候，这些属性都是极其重要的。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="iOS动画" scheme="http://ppsheep.com/all-categories/iOS%E5%8A%A8%E7%94%BB/"/>
+    
+    
+      <category term="动画" scheme="http://ppsheep.com/all-tags/%E5%8A%A8%E7%94%BB/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>iOS基础开发技巧-二</title>
+    <link href="http://ppsheep.com/2016/11/09/iOS%E5%9F%BA%E7%A1%80%E5%BC%80%E5%8F%91%E6%8A%80%E5%B7%A7-%E4%BA%8C/"/>
+    <id>http://ppsheep.com/2016/11/09/iOS基础开发技巧-二/</id>
+    <published>2016-11-09T08:51:35.000Z</published>
+    <updated>2016-11-15T09:03:51.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>这里主要讲一些我在日常开发中用到的一些小的技巧，其实也算不上技巧吧，就是省去一些不必要的代码，或者有的小问题困扰你很久说不行在这里你能找到答案</p>
+<a id="more"></a>
+<h3 id="打印系统所有已注册的字体名称"><a href="#打印系统所有已注册的字体名称" class="headerlink" title="打印系统所有已注册的字体名称"></a>打印系统所有已注册的字体名称</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">- (void)enumerateFonts&#123;</div><div class="line">    for(NSString *familyName in [UIFont familyNames])</div><div class="line">    &#123;</div><div class="line">        NSLog(@&quot;%@&quot;,familyName);</div><div class="line">        NSArray *fontNames = [UIFont fontNamesForFamilyName:familyName];</div><div class="line">        for(NSString *fontName in fontNames)</div><div class="line">        &#123;</div><div class="line">            NSLog(@&quot;\t|- %@&quot;,fontName);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="字符串反转"><a href="#字符串反转" class="headerlink" title="字符串反转"></a>字符串反转</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">- (NSString*)reverseWordsInString:(NSString*)str</div><div class="line">&#123;</div><div class="line">    NSMutableString *reverString = [NSMutableString stringWithCapacity:str.length];</div><div class="line">    [str enumerateSubstringsInRange:NSMakeRange(0, str.length) options:NSStringEnumerationReverse | NSStringEnumerationByComposedCharacterSequences  usingBlock:^(NSString *substring, NSRange substringRange, NSRange enclosingRange, BOOL *stop) &#123;</div><div class="line">        [reverString appendString:substring];</div><div class="line">    &#125;];</div><div class="line">    return reverString;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="禁止锁屏"><a href="#禁止锁屏" class="headerlink" title="禁止锁屏"></a>禁止锁屏</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[UIApplication sharedApplication].idleTimerDisabled = YES;</div></pre></td></tr></table></figure>
+<h3 id="字符串按多个符号分割"><a href="#字符串按多个符号分割" class="headerlink" title="字符串按多个符号分割"></a>字符串按多个符号分割</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">- (void)seprartStringWithCharters&#123;</div><div class="line">    NSString *str = @&quot;abc,dsd/123.789&quot;;</div><div class="line">    NSCharacterSet *set = [NSCharacterSet characterSetWithCharactersInString:@&quot;,/.&quot;];</div><div class="line">    NSLog(@&quot;%@&quot;,[str componentsSeparatedByCharactersInSet:set]);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="iOS跳转到App-Store下载应用评分"><a href="#iOS跳转到App-Store下载应用评分" class="headerlink" title="iOS跳转到App Store下载应用评分"></a>iOS跳转到App Store下载应用评分</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[[UIApplication sharedApplication] openURL:[NSURL URLWithString:@&quot;itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&amp;id=APPID&quot;]];</div></pre></td></tr></table></figure>
+<h3 id="判断当前ViewController是push还是present的方式显示的"><a href="#判断当前ViewController是push还是present的方式显示的" class="headerlink" title="判断当前ViewController是push还是present的方式显示的"></a>判断当前ViewController是push还是present的方式显示的</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">NSArray *viewcontrollers=self.navigationController.viewControllers;</div><div class="line"></div><div class="line">if (viewcontrollers.count &gt; 1)</div><div class="line">&#123;</div><div class="line">    if ([viewcontrollers objectAtIndex:viewcontrollers.count - 1] == self)</div><div class="line">    &#123;</div><div class="line">        //push方式</div><div class="line">       [self.navigationController popViewControllerAnimated:YES];</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">else</div><div class="line">&#123;</div><div class="line">    //present方式</div><div class="line">    [self dismissViewControllerAnimated:YES completion:nil];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="获取实际使用的LaunchImage图片"><a href="#获取实际使用的LaunchImage图片" class="headerlink" title="获取实际使用的LaunchImage图片"></a>获取实际使用的LaunchImage图片</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">- (NSString *)getLaunchImageName</div><div class="line">&#123;</div><div class="line">    CGSize viewSize = self.window.bounds.size;</div><div class="line">    // 竖屏    </div><div class="line">    NSString *viewOrientation = @&quot;Portrait&quot;;  </div><div class="line">    NSString *launchImageName = nil;    </div><div class="line">    NSArray* imagesDict = [[[NSBundle mainBundle] infoDictionary] valueForKey:@&quot;UILaunchImages&quot;];</div><div class="line">    for (NSDictionary* dict in imagesDict)</div><div class="line">    &#123;</div><div class="line">        CGSize imageSize = CGSizeFromString(dict[@&quot;UILaunchImageSize&quot;]);</div><div class="line">        if (CGSizeEqualToSize(imageSize, viewSize) &amp;&amp; [viewOrientation isEqualToString:dict[@&quot;UILaunchImageOrientation&quot;]])</div><div class="line">        &#123;</div><div class="line">            launchImageName = dict[@&quot;UILaunchImageName&quot;];        </div><div class="line">        &#125;    </div><div class="line">    &#125;    </div><div class="line">    return launchImageName;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="iOS在当前屏幕获取第一响应"><a href="#iOS在当前屏幕获取第一响应" class="headerlink" title="iOS在当前屏幕获取第一响应"></a>iOS在当前屏幕获取第一响应</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">UIWindow * keyWindow = [[UIApplication sharedApplication] keyWindow];</div><div class="line">UIView * firstResponder = [keyWindow performSelector:@selector(firstResponder)];</div></pre></td></tr></table></figure>
+<h3 id="判断对象是否遵循了某协议"><a href="#判断对象是否遵循了某协议" class="headerlink" title="判断对象是否遵循了某协议"></a>判断对象是否遵循了某协议</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">if ([self.selectedController conformsToProtocol:@protocol(RefreshPtotocol)])</div><div class="line">&#123;</div><div class="line">     [self.selectedController performSelector:@selector(onTriggerRefresh)];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="判断view是不是指定视图的子视图"><a href="#判断view是不是指定视图的子视图" class="headerlink" title="判断view是不是指定视图的子视图"></a>判断view是不是指定视图的子视图</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">BOOL isView = [textView isDescendantOfView:self.view];</div></pre></td></tr></table></figure>
+<h3 id="NSArray-快速求总和-最大值-最小值-和-平均值"><a href="#NSArray-快速求总和-最大值-最小值-和-平均值" class="headerlink" title="NSArray 快速求总和 最大值 最小值 和 平均值"></a>NSArray 快速求总和 最大值 最小值 和 平均值</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">NSArray *array = [NSArray arrayWithObjects:@&quot;2.0&quot;, @&quot;2.3&quot;, @&quot;3.0&quot;, @&quot;4.0&quot;, @&quot;10&quot;, nil];</div><div class="line">CGFloat sum = [[array valueForKeyPath:@&quot;@sum.floatValue&quot;] floatValue];</div><div class="line">CGFloat avg = [[array valueForKeyPath:@&quot;@avg.floatValue&quot;] floatValue];</div><div class="line">CGFloat max =[[array valueForKeyPath:@&quot;@max.floatValue&quot;] floatValue];</div><div class="line">CGFloat min =[[array valueForKeyPath:@&quot;@min.floatValue&quot;] floatValue];</div><div class="line">NSLog(@&quot;%f\n%f\n%f\n%f&quot;,sum,avg,max,min);</div></pre></td></tr></table></figure>
+<h3 id="修改UITextField中Placeholder的文字颜色"><a href="#修改UITextField中Placeholder的文字颜色" class="headerlink" title="修改UITextField中Placeholder的文字颜色"></a>修改UITextField中Placeholder的文字颜色</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[textField setValue:[UIColor redColor] forKeyPath:@&quot;_placeholderLabel.textColor&quot;];</div></pre></td></tr></table></figure>
+<h3 id="关于NSDateFormatter的格式"><a href="#关于NSDateFormatter的格式" class="headerlink" title="关于NSDateFormatter的格式"></a>关于NSDateFormatter的格式</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">G: 公元时代，例如AD公元</div><div class="line">yy: 年的后2位</div><div class="line">yyyy: 完整年</div><div class="line">MM: 月，显示为1-12</div><div class="line">MMM: 月，显示为英文月份简写,如 Jan</div><div class="line">MMMM: 月，显示为英文月份全称，如 Janualy</div><div class="line">dd: 日，2位数表示，如02</div><div class="line">d: 日，1-2位显示，如 2</div><div class="line">EEE: 简写星期几，如Sun</div><div class="line">EEEE: 全写星期几，如Sunday</div><div class="line">aa: 上下午，AM/PM</div><div class="line">H: 时，24小时制，0-23</div><div class="line">K：时，12小时制，0-11</div><div class="line">m: 分，1-2位</div><div class="line">mm: 分，2位</div><div class="line">s: 秒，1-2位</div><div class="line">ss: 秒，2位</div><div class="line">S: 毫秒</div></pre></td></tr></table></figure>
+<h3 id="阿拉伯数字转中文格式"><a href="#阿拉伯数字转中文格式" class="headerlink" title="阿拉伯数字转中文格式"></a>阿拉伯数字转中文格式</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line">+(NSString *)translation:(NSString *)arebic</div><div class="line">&#123;  </div><div class="line">    NSString *str = arebic;</div><div class="line">    NSArray *arabic_numerals = @[@&quot;1&quot;,@&quot;2&quot;,@&quot;3&quot;,@&quot;4&quot;,@&quot;5&quot;,@&quot;6&quot;,@&quot;7&quot;,@&quot;8&quot;,@&quot;9&quot;,@&quot;0&quot;];</div><div class="line">    NSArray *chinese_numerals = @[@&quot;一&quot;,@&quot;二&quot;,@&quot;三&quot;,@&quot;四&quot;,@&quot;五&quot;,@&quot;六&quot;,@&quot;七&quot;,@&quot;八&quot;,@&quot;九&quot;,@&quot;零&quot;];</div><div class="line">    NSArray *digits = @[@&quot;个&quot;,@&quot;十&quot;,@&quot;百&quot;,@&quot;千&quot;,@&quot;万&quot;,@&quot;十&quot;,@&quot;百&quot;,@&quot;千&quot;,@&quot;亿&quot;,@&quot;十&quot;,@&quot;百&quot;,@&quot;千&quot;,@&quot;兆&quot;];</div><div class="line">    NSDictionary *dictionary = [NSDictionary dictionaryWithObjects:chinese_numerals forKeys:arabic_numerals];</div><div class="line"></div><div class="line">    NSMutableArray *sums = [NSMutableArray array];</div><div class="line">    for (int i = 0; i &lt; str.length; i ++) &#123;</div><div class="line">        NSString *substr = [str substringWithRange:NSMakeRange(i, 1)];</div><div class="line">        NSString *a = [dictionary objectForKey:substr];</div><div class="line">        NSString *b = digits[str.length -i-1];</div><div class="line">        NSString *sum = [a stringByAppendingString:b];</div><div class="line">        if ([a isEqualToString:chinese_numerals[9]])</div><div class="line">        &#123;</div><div class="line">            if([b isEqualToString:digits[4]] || [b isEqualToString:digits[8]])</div><div class="line">            &#123;</div><div class="line">                sum = b;</div><div class="line">                if ([[sums lastObject] isEqualToString:chinese_numerals[9]])</div><div class="line">                &#123;</div><div class="line">                    [sums removeLastObject];</div><div class="line">                &#125;</div><div class="line">            &#125;else</div><div class="line">            &#123;</div><div class="line">                sum = chinese_numerals[9];</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            if ([[sums lastObject] isEqualToString:sum])</div><div class="line">            &#123;</div><div class="line">                continue;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        [sums addObject:sum];</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    NSString *sumStr = [sums componentsJoinedByString:@&quot;&quot;];</div><div class="line">    NSString *chinese = [sumStr substringToIndex:sumStr.length-1];</div><div class="line">    NSLog(@&quot;%@&quot;,str);</div><div class="line">    NSLog(@&quot;%@&quot;,chinese);</div><div class="line">    return chinese;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Base64编码与NSString对象或NSData对象的转换"><a href="#Base64编码与NSString对象或NSData对象的转换" class="headerlink" title="Base64编码与NSString对象或NSData对象的转换"></a>Base64编码与NSString对象或NSData对象的转换</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">NSData *nsdata = [@&quot;iOS Developer Tips encoded in Base64&quot;</div><div class="line">  dataUsingEncoding:NSUTF8StringEncoding];</div><div class="line"></div><div class="line"></div><div class="line">NSString *base64Encoded = [nsdata base64EncodedStringWithOptions:0];</div><div class="line"></div><div class="line"></div><div class="line">NSLog(@&quot;Encoded: %@&quot;, base64Encoded);</div><div class="line"></div><div class="line">//另外一种方法</div><div class="line"></div><div class="line"></div><div class="line">NSData *nsdataFromBase64String = [[NSData alloc]</div><div class="line">  initWithBase64EncodedString:base64Encoded options:0];</div><div class="line"></div><div class="line"></div><div class="line">NSString *base64Decoded = [[NSString alloc]</div><div class="line">  initWithData:nsdataFromBase64String encoding:NSUTF8StringEncoding];</div><div class="line">NSLog(@&quot;Decoded: %@&quot;, base64Decoded);</div></pre></td></tr></table></figure>
+<h3 id="取消UICollectionView的隐式动画"><a href="#取消UICollectionView的隐式动画" class="headerlink" title="取消UICollectionView的隐式动画"></a>取消UICollectionView的隐式动画</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">//方法一</div><div class="line">[UIView performWithoutAnimation:^&#123;</div><div class="line">    [collectionView reloadItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:index inSection:0]]];</div><div class="line">&#125;];</div><div class="line"></div><div class="line">//方法二</div><div class="line">[UIView animateWithDuration:0 animations:^&#123;</div><div class="line">    [collectionView performBatchUpdates:^&#123;</div><div class="line">        [collectionView reloadItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:index inSection:0]]];</div><div class="line">    &#125; completion:nil];</div><div class="line">&#125;];</div><div class="line"></div><div class="line">//方法三</div><div class="line">[UIView setAnimationsEnabled:NO];</div><div class="line">[self.trackPanel performBatchUpdates:^&#123;</div><div class="line">    [collectionView reloadItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:index inSection:0]]];</div><div class="line">&#125; completion:^(BOOL finished) &#123;</div><div class="line">    [UIView setAnimationsEnabled:YES];</div><div class="line">&#125;];</div></pre></td></tr></table></figure>
+<h3 id="查看某个UIImage占用内存大小"><a href="#查看某个UIImage占用内存大小" class="headerlink" title="查看某个UIImage占用内存大小"></a>查看某个UIImage占用内存大小</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">UIImage *image = [UIImage imageNamed:@&quot;image&quot;];</div><div class="line">NSUInteger size  = CGImageGetHeight(image.CGImage) * CGImageGetBytesPerRow(image.CGImage);</div></pre></td></tr></table></figure>
+<h3 id="UIView设置部分圆角"><a href="#UIView设置部分圆角" class="headerlink" title="UIView设置部分圆角"></a>UIView设置部分圆角</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">CGRect rect = view.bounds;</div><div class="line">CGSize radio = CGSizeMake(30, 30);//圆角尺寸</div><div class="line">UIRectCorner corner = UIRectCornerTopLeft|UIRectCornerTopRight;//这只圆角位置</div><div class="line">UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:rect byRoundingCorners:corner cornerRadii:radio];</div><div class="line">CAShapeLayer *masklayer = [[CAShapeLayer alloc]init];//创建shapelayer</div><div class="line">masklayer.frame = view.bounds;</div><div class="line">masklayer.path = path.CGPath;//设置路径</div><div class="line">view.layer.mask = masklayer;</div></pre></td></tr></table></figure>
+<h3 id="去掉导航栏的back标题"><a href="#去掉导航栏的back标题" class="headerlink" title="去掉导航栏的back标题"></a>去掉导航栏的back标题</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[[UIBarButtonItemappearance]setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -60)forBarMetrics:UIBarMetricsDefault];</div></pre></td></tr></table></figure>
+<h3 id="dispatch-group的使用"><a href="#dispatch-group的使用" class="headerlink" title="dispatch_group的使用"></a>dispatch_group的使用</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">dispatch_group_t dispatchGroup = dispatch_group_create();</div><div class="line">    dispatch_group_enter(dispatchGroup);</div><div class="line">    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^&#123;</div><div class="line">        NSLog(@&quot;第一个请求完成&quot;);</div><div class="line">        dispatch_group_leave(dispatchGroup);</div><div class="line">    &#125;);</div><div class="line"></div><div class="line">    dispatch_group_enter(dispatchGroup);</div><div class="line"></div><div class="line">    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(10 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^&#123;</div><div class="line">        NSLog(@&quot;第二个请求完成&quot;);</div><div class="line">        dispatch_group_leave(dispatchGroup);</div><div class="line">    &#125;);</div><div class="line"></div><div class="line">    dispatch_group_notify(dispatchGroup, dispatch_get_main_queue(), ^()&#123;</div><div class="line">        NSLog(@&quot;请求完成&quot;);</div><div class="line">    &#125;);</div></pre></td></tr></table></figure>
+<h3 id="获取私有属性和成员变量-记得引入runtime"><a href="#获取私有属性和成员变量-记得引入runtime" class="headerlink" title="获取私有属性和成员变量 记得引入runtime"></a>获取私有属性和成员变量 记得引入runtime</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">//获取私有属性 比如设置UIDatePicker的字体颜色</div><div class="line">- (void)setTextColor</div><div class="line">&#123;</div><div class="line">    //获取所有的属性，去查看有没有对应的属性</div><div class="line">    unsigned int count = 0;</div><div class="line">    objc_property_t *propertys = class_copyPropertyList([UIDatePicker class], &amp;count);</div><div class="line">    for(int i = 0;i &lt; count;i ++)</div><div class="line">    &#123;</div><div class="line">        //获得每一个属性</div><div class="line">        objc_property_t property = propertys[i];</div><div class="line">        //获得属性对应的nsstring</div><div class="line">        NSString *propertyName = [NSString stringWithCString:property_getName(property) encoding:NSUTF8StringEncoding];</div><div class="line">        //输出打印看对应的属性</div><div class="line">        NSLog(@&quot;propertyname = %@&quot;,propertyName);</div><div class="line">        if ([propertyName isEqualToString:@&quot;textColor&quot;])</div><div class="line">        &#123;</div><div class="line">            [datePicker setValue:[UIColor whiteColor] forKey:propertyName];</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">//获得成员变量 比如修改UIAlertAction的按钮字体颜色</div><div class="line">    unsigned int count = 0;</div><div class="line">    Ivar *ivars = class_copyIvarList([UIAlertAction class], &amp;count);</div><div class="line">    for(int i =0;i &lt; count;i ++)</div><div class="line">    &#123;</div><div class="line">        Ivar ivar = ivars[i];</div><div class="line">        NSString *ivarName = [NSString stringWithCString:ivar_getName(ivar) encoding:NSUTF8StringEncoding];</div><div class="line">        NSLog(@&quot;uialertion.ivarName = %@&quot;,ivarName);</div><div class="line">        if ([ivarName isEqualToString:@&quot;_titleTextColor&quot;])</div><div class="line">        &#123;</div><div class="line">            [alertOk setValue:[UIColor blueColor] forKey:@&quot;titleTextColor&quot;];</div><div class="line">            [alertCancel setValue:[UIColor purpleColor] forKey:@&quot;titleTextColor&quot;];</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<h3 id="iOS中数字的格式化"><a href="#iOS中数字的格式化" class="headerlink" title="iOS中数字的格式化"></a>iOS中数字的格式化</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">//通过NSNumberFormatter，同样可以设置NSNumber输出的格式。例如如下代码：</div><div class="line">NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];</div><div class="line">formatter.numberStyle = NSNumberFormatterDecimalStyle;</div><div class="line">NSString *string = [formatter stringFromNumber:[NSNumber numberWithInt:123456789]];</div><div class="line">NSLog(@&quot;Formatted number string:%@&quot;,string);</div><div class="line">//输出结果为：[1223:403] Formatted number string:123,456,789</div><div class="line"></div><div class="line">//其中NSNumberFormatter类有个属性numberStyle，它是一个枚举型，设置不同的值可以输出不同的数字格式。该枚举包括：</div><div class="line">typedef NS_ENUM(NSUInteger, NSNumberFormatterStyle) &#123;</div><div class="line">    NSNumberFormatterNoStyle = kCFNumberFormatterNoStyle,</div><div class="line">    NSNumberFormatterDecimalStyle = kCFNumberFormatterDecimalStyle,</div><div class="line">    NSNumberFormatterCurrencyStyle = kCFNumberFormatterCurrencyStyle,</div><div class="line">    NSNumberFormatterPercentStyle = kCFNumberFormatterPercentStyle,</div><div class="line">    NSNumberFormatterScientificStyle = kCFNumberFormatterScientificStyle,</div><div class="line">    NSNumberFormatterSpellOutStyle = kCFNumberFormatterSpellOutStyle</div><div class="line">&#125;;</div><div class="line">//各个枚举对应输出数字格式的效果如下：其中第三项和最后一项的输出会根据系统设置的语言区域的不同而不同。</div><div class="line">[1243:403] Formatted number string:123456789</div><div class="line">[1243:403] Formatted number string:123,456,789</div><div class="line">[1243:403] Formatted number string:￥123,456,789.00</div><div class="line">[1243:403] Formatted number string:-539,222,988%</div><div class="line">[1243:403] Formatted number string:1.23456789E8</div><div class="line">[1243:403] Formatted number string:一亿二千三百四十五万六千七百八十九</div></pre></td></tr></table></figure>
+<h3 id="获取WebView所有的图片地址"><a href="#获取WebView所有的图片地址" class="headerlink" title="获取WebView所有的图片地址"></a>获取WebView所有的图片地址</h3><p>在网页加载完成时，通过js获取图片和添加点击的识别方式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line">//UIWebView</div><div class="line">- (void)webViewDidFinishLoad:(UIWebView *)webView</div><div class="line">&#123;</div><div class="line">    //这里是js，主要目的实现对url的获取</div><div class="line">    static  NSString * const jsGetImages =</div><div class="line">    @&quot;function getImages()&#123;\</div><div class="line">    var objs = document.getElementsByTagName(\&quot;img\&quot;);\</div><div class="line">    var imgScr = &apos;&apos;;\</div><div class="line">    for(var i=0;i&lt;objs.length;i++)&#123;\</div><div class="line">    imgScr = imgScr + objs[i].src + &apos;+&apos;;\</div><div class="line">    &#125;;\</div><div class="line">    return imgScr;\</div><div class="line">    &#125;;&quot;;</div><div class="line"></div><div class="line">    [webView stringByEvaluatingJavaScriptFromString:jsGetImages];//注入js方法</div><div class="line">    NSString *urlResult = [webView stringByEvaluatingJavaScriptFromString:@&quot;getImages()&quot;];</div><div class="line">    NSArray *urlArray = [NSMutableArray arrayWithArray:[urlResult componentsSeparatedByString:@&quot;+&quot;]];</div><div class="line">    //urlResurlt 就是获取到得所有图片的url的拼接；mUrlArray就是所有Url的数组</div><div class="line">&#125;</div><div class="line"></div><div class="line">//WKWebView</div><div class="line">- (void)webView:(WKWebView *)webView didFinishNavigation:(null_unspecified WKNavigation *)navigation</div><div class="line">&#123;</div><div class="line">    static  NSString * const jsGetImages =</div><div class="line">    @&quot;function getImages()&#123;\</div><div class="line">    var objs = document.getElementsByTagName(\&quot;img\&quot;);\</div><div class="line">    var imgScr = &apos;&apos;;\</div><div class="line">    for(var i=0;i&lt;objs.length;i++)&#123;\</div><div class="line">    imgScr = imgScr + objs[i].src + &apos;+&apos;;\</div><div class="line">    &#125;;\</div><div class="line">    return imgScr;\</div><div class="line">    &#125;;&quot;;</div><div class="line"></div><div class="line">    [webView evaluateJavaScript:jsGetImages completionHandler:nil];</div><div class="line">    [webView evaluateJavaScript:@&quot;getImages()&quot; completionHandler:^(id _Nullable result, NSError * _Nullable error) &#123;</div><div class="line">        NSLog(@&quot;%@&quot;,result);</div><div class="line">    &#125;];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="获取到webview的高度"><a href="#获取到webview的高度" class="headerlink" title="获取到webview的高度"></a>获取到webview的高度</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">CGFloat height = [[self.webView stringByEvaluatingJavaScriptFromString:@&quot;document.body.offsetHeight&quot;] floatValue];</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;这里主要讲一些我在日常开发中用到的一些小的技巧，其实也算不上技巧吧，就是省去一些不必要的代码，或者有的小问题困扰你很久说不行在这里你能找到答案&lt;/p&gt;
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>iOS-有效编写高质量Objective-C方法-三</title>
+    <link href="http://ppsheep.com/2016/11/08/iOS-%E6%9C%89%E6%95%88%E7%BC%96%E5%86%99%E9%AB%98%E8%B4%A8%E9%87%8FObjective-C%E6%96%B9%E6%B3%95-%E4%B8%89/"/>
+    <id>http://ppsheep.com/2016/11/08/iOS-有效编写高质量Objective-C方法-三/</id>
+    <published>2016-11-08T01:49:28.000Z</published>
+    <updated>2016-11-09T08:17:06.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>本篇文章，主要是对OC中的一些原理的讲解，可能会有一些枯燥，但是真正当你理解时，会有一种豁然开朗的感觉。这里会涉及到 对象，属性，消息以及运行期的一些介绍，只有我们真正理解了这些原理之后，我们的开发水平才会进一步提升，而不是止步于view的简单编写，view的编写想要写得好，也需要了解这一些原理。</p>
+<a id="more"></a>
+<h3 id="理解属性-property-这一概念"><a href="#理解属性-property-这一概念" class="headerlink" title="理解属性(property)这一概念"></a>理解属性(property)这一概念</h3><p>在开始讲属性之前，我们先来理解一下几个概念：</p>
+<ul>
+<li>对象：对象是”基本的构造单元”，在OC中，我们经常使用对象来储存和传递数据</li>
+<li>消息传递：在对象之间传递数据并执行任务的过程就叫做消息传递</li>
+<li>OC Runtime：当应用程序运行起来，为其提供相关支持的代码叫做”运行环境(Runtime)”，它提供了一些使得对象之间能够传递数据的函数，并且包含了创建类实例需要的所有逻辑</li>
+</ul>
+<p>上面三个概念，在OC编程中尤其重要，虽然现在可能你没有很深刻的理解，但是随着学习深入，你肯定能够体会到。</p>
+<h4 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h4><p>“属性(property)”相信大家都很熟悉，是OC中用来存储对象的数据的实例变量。实例变量一般是通过”存取方法”来访问，”设置方法”来设置实例变量。在之前我们已经讲过，对于实例变量，如果是本身访问，那么读取最好是直接读取(采用下划线方式直接访问)，而设置最好使用属性来设置。具体的，可以参见上一篇(iOS-有效编写高质量Objective-C方法-二)。</p>
+<p>对于一些简单的概念性的东西我就不讲了，给出结论就行：</p>
+<ul>
+<li>不一定要在接口中或者说是声明文件中定义好所有的实例变量，可以在实现文件中定义，以保护与类实现相关的内部信息</li>
+<li>属性按照标准的命名方式，在编译器编译期间会自动加上存取方法</li>
+</ul>
+<p>接下来，我们来说几个关键字：</p>
+<p><strong>@synthesize</strong></p>
+<p>我们可以在代码中通过这个关键字来指定我们想要的实例变量</p>
+<p>例如：在头文件中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">@interface : NSObject</div><div class="line"></div><div class="line">@property(nonatomic, copy) NSString *name;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
+<p>这个属性，在我们运行期环境下，生成的实例变量为_name，但是我们在.m中并不想使用这个名称，那么我们在实现文件里就可以这样写：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">@implementation</div><div class="line"></div><div class="line">@synthesize name =  _myName</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
+<p>那么我们在.m实现文件中，都可以直接使用_myName来操作属性name</p>
+<p>不过为了书写的规范，和团队之间协作，我还是建议按照规范的OC代码风格来编写代码，团队成员之间，一看就能够看清楚代码</p>
+<p><strong>@dynamic</strong></p>
+<p>这个关键字 是用来阻止编译器自动合成存取方法，不过这个关键字我都用的很少，上面的关键字同样的，也使用较少。</p>
+<p>这个关键字的意思是：阻止编译器合成属性所对应的实例变量，也不要合成实例变量的存取方法  </p>
+<p>这里讲一下<strong>实例变量</strong>就是带下划线的_name而<strong>属性</strong>是通过property声明的name</p>
+<p>这两个需要区分开来</p>
+<h3 id="属性特质"><a href="#属性特质" class="headerlink" title="属性特质"></a>属性特质</h3><h4 id="nonatomic"><a href="#nonatomic" class="headerlink" title="nonatomic"></a>nonatomic</h4><p>所谓的属性特质，就是指我们在申明属性的时候，property括号中跟的一些关键字<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">@property(nonatomic, readwrite, copy);</div></pre></td></tr></table></figure></p>
+<p>其中的nonatomic，readwrite，copy这些都是属性特质，我们先来说nonatomic</p>
+<p>这个关键字叫做属性的原子性，通俗来说，这个关键字主要是来控制属性的<strong>同步锁</strong>。<br>同步锁：不同的线程在读取属性的时候，如果属性是通过atomic来声明的，那么这两个线程总是能够读到属性的有效值<strong>(注意这里是有效的属性值，并没有说是正确的属性值)</strong>，如果属性是通过nonatomic声明的，那么不同的线程读取属性值时，如果有线程正在修改该属性的值，另外的线程正在读取属性值，那么就可能将还未修改完成的属性值读取出来<strong>(这里是尚未修改完成的属性值，有可能读出一个完全没有任何意义的属性值)</strong>。</p>
+<p>那么又要来说一说，为什么我们总是看到在编写iOS程序时，属性总是使用nonatomic来声明的呢，这是因为在iOS中使用同步锁的开销太大，这会带来性能问题。在一般情况下，我们并不要求属性必须具有原子性，因为这个原子性并不是说就是”线程安全了”，如果我们需要实现线程安全，那么还需要使用更为底层的同步锁定机制才行，即便是使用atomic来声明，不同的线程还是可能读取到不同的属性值，只是说这个属性值是有效的，有意义的。</p>
+<p><strong>所以我们在开发iOS程序时，还是使用nonaomic来声明，但是在macOS程序开发中，却不会遇到这种性能瓶颈，性能配置不一样嘛</strong></p>
+<h4 id="readwrite-readonly"><a href="#readwrite-readonly" class="headerlink" title="readwrite/readonly"></a>readwrite/readonly</h4><p>这个属性特质，我们根据字面意思就能看出来，就是声明属性权限的，这个也没什么好说的了。</p>
+<h4 id="strong-copy-assign-weak"><a href="#strong-copy-assign-weak" class="headerlink" title="strong/copy/assign/weak"></a>strong/copy/assign/weak</h4><p>这个可能是我们平时用的最多的，也是思考最多的，其实平时我们怎么用，都是知道的，但是为什么这么用呢？</p>
+<p>assign：”设置方法”只会针对”纯量类型”进行赋值，例如CGFloat、NSInteger这种</p>
+<p>strong：此特质象征了一种拥有关系，在”设置方法”中，这种属性是先保留新值，并且释放旧值，然后将新值设置上去</p>
+<p>copy：这种方法和strong类型有点相似，但是它并不是保留新值，而是直接就想新值拷贝，当属性为NSString类型时，我们经常使用这种，那么为什么我们在NSString经常使用拷贝呢，以为我们在设置时，可能会传进来一个NSMutableString对象，这个对象是NSString的子类，是可以赋值给NSString的，如果我们不使用拷贝，那么当外部改变NSMultableString值时，我们的属性值也会直接被修改掉，所以这时，我们就需要拷贝一份不可变的</p>
+<p>weak：这个是一种弱引用，为这种方法设置时，既不会保留新值，也不会释放旧值，当属性所指的对象销毁时，属性值也会被清空，在ViewController中定义view时我们经常会使用到weak，但是我们经常还是将view声明为strong，当然这使用起来不会有很大的影响，但是我们的应用在运行过程中，就会产生很多的没用view属性值没有被释放掉，占用无效内存。所以建议大家在使用view时，还是声明为weak</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">@property(nonatomic,weak) UILable *lable;</div><div class="line"></div><div class="line">//初始化lable时</div><div class="line"></div><div class="line">UILable * lable = [[UILable alloc] init];</div><div class="line">[self.view addSubview: lable];</div><div class="line">self.lable = lable;</div></pre></td></tr></table></figure>
+<h4 id="方法名"><a href="#方法名" class="headerlink" title="方法名"></a>方法名</h4><p>在我们定义的属性为Boolean值时，我们的习惯是获取方法，一般是”is”<br>开头，那么我们就可以在声明时，这样书写</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">@property(nonatomic,getter=isOn) Bool on;</div></pre></td></tr></table></figure>
+<p>属性的获取方法，就成了isOn;</p>
+<p>我们在属性中定义了属性特质，那么我们在书写赋值时，就应该严格按照属性特质赋值，例如，我们有一个初始方法，需要对我们的属性NSString name赋值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">- (instancetype)initWithName:(NSString *)name&#123;</div><div class="line">	if(self = [super init])&#123;</div><div class="line">	//此处就应该使用copy来对name赋值</div><div class="line">		_name = [name copy];</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="以”类族模式”隐藏实现细节"><a href="#以”类族模式”隐藏实现细节" class="headerlink" title="以”类族模式”隐藏实现细节"></a>以”类族模式”隐藏实现细节</h3><p>类族是一种隐藏抽象基类背后实现细节的很有用的模式。。那么什么叫做类族呢？</p>
+<p>举个例子：</p>
+<p>在UIKit中有一个名叫UIButton的类，如果想要创建按钮，我们可以调用一个类方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">+ (UIButton *)buttonWithType:(UIButtonType)type;</div></pre></td></tr></table></figure>
+<p>该方法返回的对象，取决于传入按钮的类型，然而，不管传入的是什么类型，返回的类都是继承自同一个基类：UIButton。 这样，所有继承自UIButton的类组成了一个类族。</p>
+<p>在系统框架中，使用到了很多的类族。。</p>
+<p>那么为什么要这样做呢？<br>UIButton这个例子，在实现时，使用者无需关心创建出来的按钮是属于哪一个类，也不用考虑按钮的绘制细节，我只需要知道，我怎么创建按钮，如何设置标题。如何增加点击操作等。</p>
+<h4 id="创建类族"><a href="#创建类族" class="headerlink" title="创建类族"></a>创建类族</h4><p>我们现在来假设一个处理雇员的类，每个雇员都拥有自己的名字和薪水这两个属性，管理者可以命令器执行日常工作。但是，各种雇员的工作内容却不同，经理在带领雇员做项目的时候，无需关心每个人怎样完成自己的工作，只需要指示其开工即可。</p>
+<p>首先我们定义一个基类:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">typedef NS_ENUM(NSUinteger, PPSEmployeeType)&#123;</div><div class="line">	PPSEmployeeTypeDeveloper,</div><div class="line">	PPSEmployeeTypeDesigner,</div><div class="line">	PPSEmployeeTypeFinance,</div><div class="line">&#125;</div><div class="line"></div><div class="line">@interface PPSEmployee	:	NSObject</div><div class="line"></div><div class="line">@property (nonatomic, copy) NSStirng *name;</div><div class="line">@property (nonamotic, assign) NSUInteger salary;</div><div class="line"></div><div class="line">//创建方法</div><div class="line">+ (PPSEmployee *)employeeWithType:(PPSEmployeeType) type;</div><div class="line"></div><div class="line">//指示开工</div><div class="line">- (void)doADaysWork;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">@implementation PPSEmployee</div><div class="line"></div><div class="line">+ (PPSEmployee *)employeeWithType:(PPSEmployeeType) type&#123;</div><div class="line">	switch (type)&#123;</div><div class="line">		case PPSEmployeeTypeDeveloper:</div><div class="line">			return [PPSEmployeeDeveloper new];</div><div class="line">			break;</div><div class="line">		case PPSEmployeeTypeDesigner:</div><div class="line">			return [PPSEmployeeDesigner new];</div><div class="line">			break;</div><div class="line">		case PPSEmployeeTypeFinance:</div><div class="line">			return [PPSEmployeeFinance new];</div><div class="line">			break;</div><div class="line">	&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)doADaysWork&#123;</div><div class="line">	// 子类覆写</div><div class="line">&#125;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
+<p>每个实体子类都是从基类继承而来</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">@interface PPSEmployeeDeveloper	:	PPSEmployee</div><div class="line">@end</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">@implementation PPSEmployeeDeveloper</div><div class="line"></div><div class="line">- (void)doADaysWork&#123;</div><div class="line">	[self coding];</div><div class="line">&#125;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
+<p>我们上面实现的方式，是根据雇员的类别，创建雇员类的实例，这其实是一种工厂模式。在Java中，我们知道这种方式一般是通过抽象类来实现，但是OC中没有抽象类这一说，于是开发者通常会在文档中写明使用方法。</p>
+<p>在Cocoa中  有很多的类族 大部分的集合类型都是类族 我们在一个对象是否是属于某一个类时，如果我们采用下面的方式，往往得不到我们想要的效果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">id myArr = @[@&quot;a&quot;,@&quot;b&quot;];</div><div class="line">if([myArr class] == [NSArray class])&#123;</div><div class="line">	//这里永远不会跑到 因为 我们知道这里[myArr class]返回的永远是NSArr的一个子类，NSArray只是一个基类</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>当然，我们要做这个判断的时候，应该都知道是使用isKindOfClass 这个方法，这个方法其实是用来判断是否是同一类族，而不是某个类</p>
+<h3 id="在既有类中使用关联对象存放自定义数据"><a href="#在既有类中使用关联对象存放自定义数据" class="headerlink" title="在既有类中使用关联对象存放自定义数据"></a>在既有类中使用关联对象存放自定义数据</h3><p>有时候我们需要在对象中存放相关的信息，这时候我们能想到的方法就是，创建一个子类，然后我们使用的时候 直接使用子类。 但是并不是所有情况都能够这样做，有时候类的实例可能是由于某种机制所建立的，我们开发者是没有办法创建出自己建立的子类的实例。幸好，我们可以通过OC的一项强大的特性”关联对象”来解决这个问题。</p>
+<p>那么什么事关联对象呢？</p>
+<p><strong>我们可以给某个对象关联许多其他对象，这些对象通过”键”来区分。存储值的时候，可以通过指明存储策略来维护内存，存储策略就是你存储的是一个NSString啊，那你就该把从存储策略改为copy，类似于这种</strong></p>
+<p>下面是对象关联类型：</p>
+<table>
+<thead>
+<tr>
+<th>关联类型</th>
+<th>等效的@property属性</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>OBJC_ASSOCIATION_ASSIGN</td>
+<td>assign</td>
+</tr>
+<tr>
+<td>OBJC_ASSOCIATION_COPY_NONATOMIC</td>
+<td>nonatomic,copy</td>
+</tr>
+<tr>
+<td>OBJC_ASSOCIATION_RETAIN_NONATOMIC</td>
+<td>nonatomic,retain</td>
+</tr>
+<tr>
+<td>OBJC_ASSOCIATION_COPY</td>
+<td>copy</td>
+</tr>
+<tr>
+<td>OBJC_ASSOCIATION_RETAIN</td>
+<td>retain</td>
+</tr>
+</tbody>
+</table>
+<p>管理关联对象的相关方法：</p>
+<ul>
+<li>void objc _ setAssociatedObject(id object, void *key, id value, objc_AssociationPolicy policy) 使用此方法 以给定的键和策略为某对象设置关联对象</li>
+<li>void objc _ getAssociatedObject(id object, void *key) 使用此方法根据给定的键从某对象中获取相关的关联对象的值</li>
+<li>void objc_removeAssociatedObject(id object)使用此方法移除指定对象的全部关联对象</li>
+</ul>
+<p>使用这种方法时，我们可以把某对象想象成一个NSDictionary，把关联到该对象的值理解为字典中的条目，那么这些关联对象，就相当于设置字典里的值和获取字典里的值了</p>
+<h4 id="使用举例"><a href="#使用举例" class="headerlink" title="使用举例"></a>使用举例</h4><p>在iOS中,我们如果想要使用UIAlertView 我们需要这样定义</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@&quot;你确定吗？&quot; </div><div class="line">					 message:@&quot;可能没那么确定吧&quot; </div><div class="line">					 delegate:self</div><div class="line">					 cancelButtonTitle:@&quot;取消&quot; </div><div class="line">					 otherButtonTitles:@&quot;继续&quot;, nil];</div><div class="line">[alert show];</div></pre></td></tr></table></figure>
+<p>然后我们需要实现UIAlertView的代理，来进行操作的识别判断</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex&#123;</div><div class="line">    if (buttonIndex == 0) &#123;</div><div class="line">        [self doCancle];</div><div class="line">    &#125;else&#123;</div><div class="line">        [self doContinue];</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这样写，现在看来是没有什么问题的，但是如果我们需要在当前的一个类中，处理多个警告信息，那么代码将会变得复杂，我们需要在delegate中判断当前的UIAlertView的信息，根据不同的信息实行不同的操作。</p>
+<p>如果 我们能在创建UIAlertView的时候 就将这些操作做好，那么，在delegate中我们就不需要判断UIAlertView了。事实上这种方法是可行的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@&quot;你确定吗？&quot; </div><div class="line">					 message:@&quot;可能没那么确定吧&quot; </div><div class="line">					 delegate:self </div><div class="line">					 cancelButtonTitle:@&quot;取消&quot; </div><div class="line">					 otherButtonTitles:@&quot;继续&quot;, nil];</div><div class="line">void (^block) (NSInteger) = ^(NSInteger buttonIndex)&#123;</div><div class="line">    if (buttonIndex == 0) &#123;</div><div class="line">        NSLog(@&quot;cancle&quot;);</div><div class="line">    &#125;else&#123;</div><div class="line">        NSLog(@&quot;continue&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line">    </div><div class="line">//将block设置为UIAlertView的关联对象</div><div class="line">objc_setAssociatedObject(alert, PPSMyAlertViewKey, block, OBJC_ASSOCIATION_COPY);</div><div class="line">[alert show];</div></pre></td></tr></table></figure>
+<p>我们只需要在delegate中拿到block就行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">void (^block)(NSInteger) =  objc_getAssociatedObject(alertView, PPSMyAlertViewKey);</div><div class="line">block(buttonIndex);</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;本篇文章，主要是对OC中的一些原理的讲解，可能会有一些枯燥，但是真正当你理解时，会有一种豁然开朗的感觉。这里会涉及到 对象，属性，消息以及运行期的一些介绍，只有我们真正理解了这些原理之后，我们的开发水平才会进一步提升，而不是止步于view的简单编写，view的编写想要写得好，也需要了解这一些原理。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="iOS 编写高质量代码的方法" scheme="http://ppsheep.com/all-categories/iOS-%E7%BC%96%E5%86%99%E9%AB%98%E8%B4%A8%E9%87%8F%E4%BB%A3%E7%A0%81%E7%9A%84%E6%96%B9%E6%B3%95/"/>
+    
+    
+      <category term="iOS 编写高质量代码" scheme="http://ppsheep.com/all-tags/iOS-%E7%BC%96%E5%86%99%E9%AB%98%E8%B4%A8%E9%87%8F%E4%BB%A3%E7%A0%81/"/>
     
   </entry>
   
