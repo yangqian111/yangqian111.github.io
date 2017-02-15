@@ -1128,7 +1128,7 @@
     <link href="http://ppsheep.com/2016/05/07/iOS-%E5%BA%94%E7%94%A8%E4%B9%8B%E9%97%B4%E8%B7%B3%E8%BD%AC%E4%BC%A0%E8%BE%93%E6%95%B0%E6%8D%AE%E4%BB%A5%E5%8F%8A%E8%B7%B3%E5%9B%9E%E6%BA%90%E7%A8%8B%E5%BA%8F/"/>
     <id>http://ppsheep.com/2016/05/07/iOS-应用之间跳转传输数据以及跳回源程序/</id>
     <published>2016-05-07T03:15:19.000Z</published>
-    <updated>2017-02-15T05:08:52.000Z</updated>
+    <updated>2017-02-15T05:32:51.000Z</updated>
     
     <content type="html"><![CDATA[<p>之前写了一篇关于APP之间跳转的文章，期间有同学说能否出一个类似于微信登录或者支付宝支付之类的，跳转到支付宝获得消息再调回源程序，并且带上信息。今天我们就再来聊聊，实现这样一种效果，没看过之前应用跳转的，请移步:<br>    <a href="http://ppsheep.com/2016/10/27/iOS应用之间的跳转解析/">http://ppsheep.com/2016/10/27/iOS应用之间的跳转解析/</a></p>
 <a id="more"></a>
@@ -1162,7 +1162,7 @@
     
     </summary>
     
-      <category term="iOS进阶" scheme="http://ppsheep.com/all-categories/iOS%E8%BF%9B%E9%98%B6/"/>
+      <category term="iOS应用之间的跳转、数据传输" scheme="http://ppsheep.com/all-categories/iOS%E5%BA%94%E7%94%A8%E4%B9%8B%E9%97%B4%E7%9A%84%E8%B7%B3%E8%BD%AC%E3%80%81%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93/"/>
     
     
       <category term="iOS应用之间的跳转" scheme="http://ppsheep.com/all-tags/iOS%E5%BA%94%E7%94%A8%E4%B9%8B%E9%97%B4%E7%9A%84%E8%B7%B3%E8%BD%AC/"/>

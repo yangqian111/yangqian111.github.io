@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://ppsheep.com/2016/01/27/iOS%E5%BA%94%E7%94%A8%E4%B9%8B%E9%97%B4%E7%9A%84%E8%B7%B3%E8%BD%AC%E8%A7%A3%E6%9E%90/</loc>
+    
+    <lastmod>2017-02-15T05:33:49.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://ppsheep.com/2016/05/07/iOS-%E5%BA%94%E7%94%A8%E4%B9%8B%E9%97%B4%E8%B7%B3%E8%BD%AC%E4%BC%A0%E8%BE%93%E6%95%B0%E6%8D%AE%E4%BB%A5%E5%8F%8A%E8%B7%B3%E5%9B%9E%E6%BA%90%E7%A8%8B%E5%BA%8F/</loc>
+    
+    <lastmod>2017-02-15T05:32:51.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://ppsheep.com/2016/10/28/swift%E8%B0%88%E4%B8%80%E8%B0%88/</loc>
     
     <lastmod>2017-02-15T05:15:04.000Z</lastmod>
@@ -75,13 +89,6 @@
     <loc>http://ppsheep.com/2016/05/23/iOS%20CALayer%E5%9F%BA%E7%A1%80%E4%BB%8B%E7%BB%8D/</loc>
     
     <lastmod>2017-02-15T05:09:08.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://ppsheep.com/2016/05/07/iOS-%E5%BA%94%E7%94%A8%E4%B9%8B%E9%97%B4%E8%B7%B3%E8%BD%AC%E4%BC%A0%E8%BE%93%E6%95%B0%E6%8D%AE%E4%BB%A5%E5%8F%8A%E8%B7%B3%E5%9B%9E%E6%BA%90%E7%A8%8B%E5%BA%8F/</loc>
-    
-    <lastmod>2017-02-15T05:08:52.000Z</lastmod>
     
   </url>
   
@@ -166,13 +173,6 @@
     <loc>http://ppsheep.com/2016/01/31/iOS-UIScrollView%E4%B8%8A%E6%BB%91%E9%9A%90%E8%97%8FUINavigationBar/</loc>
     
     <lastmod>2017-02-15T05:05:27.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://ppsheep.com/2016/01/27/iOS%E5%BA%94%E7%94%A8%E4%B9%8B%E9%97%B4%E7%9A%84%E8%B7%B3%E8%BD%AC%E8%A7%A3%E6%9E%90/</loc>
-    
-    <lastmod>2017-02-15T05:05:04.000Z</lastmod>
     
   </url>
   
