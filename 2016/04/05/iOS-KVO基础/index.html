@@ -1,0 +1,507 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="ppsheep">
+    <title>iOS KVO基础 - ppsheep</title>
+    <meta name="author" content="ppsheep">
+    
+    
+    
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+    
+    <meta name="description" content="在Objc中有一种观察者模式，即是Key Value Observing(KVO)。利用KVO可以很容易实现视图组件和数据模型的分离。当数据模型的值改变时，会马上触发视图组件，更新视图组件。在Objc中要实现KVO，必须实现NSKeyValueObServing协议，所幸的是NSObject已经实现该协议，也就是说，几乎所有的Objc对象都可以使用KVO。">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="iOS KVO基础">
+<meta property="og:url" content="http://ppsheep.com/2016/04/05/iOS-KVO基础/index.html">
+<meta property="og:site_name" content="ppsheep">
+<meta property="og:description" content="在Objc中有一种观察者模式，即是Key Value Observing(KVO)。利用KVO可以很容易实现视图组件和数据模型的分离。当数据模型的值改变时，会马上触发视图组件，更新视图组件。在Objc中要实现KVO，必须实现NSKeyValueObServing协议，所幸的是NSObject已经实现该协议，也就是说，几乎所有的Objc对象都可以使用KVO。">
+<meta property="og:updated_time" content="2017-02-15T05:07:50.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS KVO基础">
+<meta name="twitter:description" content="在Objc中有一种观察者模式，即是Key Value Observing(KVO)。利用KVO可以很容易实现视图组件和数据模型的分离。当数据模型的值改变时，会马上触发视图组件，更新视图组件。在Objc中要实现KVO，必须实现NSKeyValueObServing协议，所幸的是NSObject已经实现该协议，也就是说，几乎所有的Objc对象都可以使用KVO。">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/7931417.jpeg"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-nuvue6sithwirecbhvw3dkaobiojqvtadsnhguwi7k04xklybw5djl1smadp.min.css">
+    <!--STYLES END-->
+    
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="3">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <h1 class="header-title">
+        <a class="header-title-link" href="/ ">ppsheep</a>
+    </h1>
+    
+        
+            <a  class="header-right-picture "
+                href="#about">
+        
+        
+            <img class="header-picture" src="http://o8bxt3lx0.bkt.clouddn.com/7931417.jpeg"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="3">
+    
+        <div class="sidebar-profile">
+            <a href="/#about">
+                    <img class="sidebar-profile-picture" src="http://o8bxt3lx0.bkt.clouddn.com/7931417.jpeg"/>
+            </a>
+            <span class="sidebar-profile-name">ppsheep</span>
+        </div>
+    
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/ "
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+                    <span class="sidebar-button-desc">首页</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-categories"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+                    <span class="sidebar-button-desc">分类</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-tags"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+                    <span class="sidebar-button-desc">标签</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-archives"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+                    <span class="sidebar-button-desc">归档</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link st-search-show-outputs"
+                         href="#search"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-search"></i>
+                    <span class="sidebar-button-desc">搜索</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="#about"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+                    <span class="sidebar-button-desc">关于</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="https://github.com/yangqian111" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+                    <span class="sidebar-button-desc">GitHub</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="mailto:787688073@qq.com" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-envelope-o"></i>
+                    <span class="sidebar-button-desc">邮箱</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/atom.xml"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+                    <span class="sidebar-button-desc">RSS</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+</nav>
+
+            
+            <div id="main" data-behavior="3"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post" itemscope itemType="http://schema.org/BlogPosting">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title" itemprop="headline">
+            iOS KVO基础
+        </h1>
+    
+    <div class="post-meta">
+    <time itemprop="datePublished" datetime="2016-04-05T15:50:33+08:00">
+	
+		    4月 05, 2016
+    	
+    </time>
+    
+        <span>发布在 </span>
+        
+    <a class="category-link" href="/all-categories/KVC和KVO/">KVC和KVO</a>
+
+
+    
+</div>
+
+</div>
+    
+    <div class="post-content markdown" itemprop="articleBody">
+        <div class="main-content-wrap">
+            <p>在Objc中有一种观察者模式，即是Key Value Observing(KVO)。利用KVO可以很容易实现视图组件和数据模型的分离。当数据模型的值改变时，会马上触发视图组件，更新视图组件。在Objc中要实现KVO，必须实现NSKeyValueObServing协议，所幸的是NSObject已经实现该协议，也就是说，几乎所有的Objc对象都可以使用KVO。</p>
+<a id="more"></a>
+<p>在OC中，KVO的使用步骤一般是：</p>
+<ul>
+<li>被监听者通过 addObserver:forKeyPath:options:context: 方法，添加监听</li>
+<li>监听者重写 observeValueForKeyPath:ofObject:change:context: 方法，实现监听</li>
+<li>被监听者移除监听</li>
+</ul>
+<p>简单的实现一下，首先，我需要一个监听对象，所以创建一个Entity</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">//  Entity.h</div><div class="line">#import &lt;Foundation/Foundation.h&gt;</div><div class="line"></div><div class="line">@interface Entity : NSObject</div><div class="line"></div><div class="line">@property (nonatomic, copy) NSString *name;</div><div class="line"></div><div class="line">/**</div><div class="line"> 因为另外两个属性没有暴露出来 我们只能通过方法来改变</div><div class="line"> */</div><div class="line">- (void)changeName1:(NSString *)name1;</div><div class="line"></div><div class="line">- (void)changeName2:(NSString *)name2;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">//  Entity.m</div><div class="line">@interface Entity()</div><div class="line"></div><div class="line">@property (nonatomic, copy) NSString *name1;</div><div class="line"></div><div class="line">@end</div><div class="line"></div><div class="line">@implementation Entity</div><div class="line">&#123;</div><div class="line">    @private</div><div class="line">    NSString *_name2;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (instancetype)init</div><div class="line">&#123;</div><div class="line">    self = [super init];</div><div class="line">    if (self) &#123;</div><div class="line">        _name = @&quot;name&quot;;</div><div class="line">        _name1 = @&quot;name1&quot;;</div><div class="line">        _name2 = @&quot;name2&quot;;</div><div class="line">    &#125;</div><div class="line">    return self;</div><div class="line">&#125;</div><div class="line"></div><div class="line">-(void)changeName1:(NSString *)name1&#123;</div><div class="line">    _name1 = name1;</div><div class="line">&#125;</div><div class="line"></div><div class="line">-(void)changeName2:(NSString *)name2&#123;</div><div class="line">    _name2 = name2;</div><div class="line">&#125;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
+<p>这里 我们建了三个属性，name,name1,name2，  每个name属性都是不一样的定义，这也是我们日常coding中，最常见的三种属性定义方式。</p>
+<p>待会我们试着对这三个属性都进行监听，看一下效果如何？</p>
+<p>被监听者，已经创建完成了，我们现在需要一个监听者</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">self.model  = [[Entity alloc] init];</div><div class="line">    </div><div class="line">    UIButton *btn1 = [[UIButton alloc] initWithFrame:CGRectMake(100, 100,200, 30)];</div><div class="line">    btn1.tag = 100001;</div><div class="line">    [btn1 addTarget:self action:@selector(changeName:) forControlEvents:UIControlEventTouchUpInside];</div><div class="line">    [btn1 setTitle:@&quot;改变name&quot; forState:UIControlStateNormal];</div><div class="line">    [self.model addObserver:self forKeyPath:@&quot;name&quot; options:NSKeyValueObservingOptionNew context:nil];</div><div class="line">    </div><div class="line">    UIButton *btn2 = [[UIButton alloc] initWithFrame:CGRectMake(100, 200,200, 30)];</div><div class="line">    btn2.tag = 100002;</div><div class="line">    [btn2 addTarget:self action:@selector(changeName:) forControlEvents:UIControlEventTouchUpInside];</div><div class="line">    [btn2 setTitle:@&quot;改变值name1&quot; forState:UIControlStateNormal];</div><div class="line">     [self.model addObserver:self forKeyPath:@&quot;name1&quot; options:NSKeyValueObservingOptionNew context:nil];</div><div class="line">    </div><div class="line">    </div><div class="line">    UIButton *btn3 = [[UIButton alloc] initWithFrame:CGRectMake(100, 300,200, 30)];</div><div class="line">    btn3.tag = 100003;</div><div class="line">    [btn3 addTarget:self action:@selector(changeName:) forControlEvents:UIControlEventTouchUpInside];</div><div class="line">    [btn3 setTitle:@&quot;改变值name2&quot; forState:UIControlStateNormal];</div><div class="line">    [self.model addObserver:self forKeyPath:@&quot;name2&quot; options:NSKeyValueObservingOptionNew context:nil];</div><div class="line">    </div><div class="line">    [self.view addSubview:btn1];</div><div class="line">    [self.view addSubview:btn2];</div><div class="line">    [self.view addSubview:btn3];</div></pre></td></tr></table></figure>
+<p>三个按钮分别对应三个属性，点击每个按钮 触发不同的KVO</p>
+<p>改变model的属性</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">- (void)changeName: (UIButton *)btn&#123;</div><div class="line">    switch (btn.tag) &#123;</div><div class="line">        case 100001:</div><div class="line">            self.model.name = @&quot;change&quot;;</div><div class="line">            break;</div><div class="line">        case 100002:</div><div class="line">            [self.model changeName1:@&quot;change&quot;];</div><div class="line">            break;</div><div class="line">        case 100003:</div><div class="line">            [self.model changeName2:@&quot;changge&quot;];</div><div class="line">            break;</div><div class="line">        default:</div><div class="line">            break;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>当然一定不要忘记了，重写observeValueForKeyPath方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">//KVO监听回调</div><div class="line">-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary&lt;NSKeyValueChangeKey,id&gt; *)change context:(void *)context&#123;</div><div class="line">    NSLog(@&quot;%@&quot;, keyPath);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>打印出当前的keypath</p>
+<p>一定不要忘记移除监听</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">-(void)dealloc&#123;</div><div class="line">    [self.model removeObserver:self forKeyPath:@&quot;name&quot;];</div><div class="line">    [self.model removeObserver:self forKeyPath:@&quot;name1&quot;];</div><div class="line">    [self.model removeObserver:self forKeyPath:@&quot;name2&quot;];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>经过试验  我们发现  只有点击第一个按钮，即name属性对应的按钮，才会触发监听。</p>
+<p>从这一点，我们可以发现，只有在.h中暴露出来的属性，才能被KVO监听到，.m中的属性，是不能够被监听到。</p>
+<p>一个简单的KVO  </p>
+<p>demo放在：</p>
+<p><a href="https://github.com/yangqian111/blog/tree/master/iOS%20KVO初探" target="_blank" rel="external">https://github.com/yangqian111/blog/tree/master/iOS%20KVO初探</a></p>
+
+            
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">标签</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/all-tags/KVC和KVO/">KVC和KVO</a>
+
+            </div>
+        
+        <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/04/15/iOS基础开发技巧-一/"  data-tooltip="iOS基础开发技巧(一)">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/03/28/iOS-有效编写高质量Objective-C方法-五/" data-tooltip="iOS-有效编写高质量Objective-C方法(五)">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://ppsheep.com/2016/04/05/iOS-KVO基础/">
+                <i class="fa fa-google-plus"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://ppsheep.com/2016/04/05/iOS-KVO基础/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://ppsheep.com/2016/04/05/iOS-KVO基础/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        
+            <li class="post-action">
+                <a class="post-action-btn btn btn--default" href="#ds-thread">
+                    <i class="fa fa-comment-o"></i>
+                </a>
+            </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+            
+                <div id="ds-thread" class="ds-thread" data-thread-key="2016/04/05/iOS-KVO基础/"
+     data-title="iOS KVO基础" data-url="http://ppsheep.com/2016/04/05/iOS-KVO基础/">
+</div>
+
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2017 ppsheep. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="3">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/04/15/iOS基础开发技巧-一/"  data-tooltip="iOS基础开发技巧(一)">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/03/28/iOS-有效编写高质量Objective-C方法-五/" data-tooltip="iOS-有效编写高质量Objective-C方法(五)">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://ppsheep.com/2016/04/05/iOS-KVO基础/">
+                <i class="fa fa-google-plus"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://ppsheep.com/2016/04/05/iOS-KVO基础/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://ppsheep.com/2016/04/05/iOS-KVO基础/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        
+            <li class="post-action">
+                <a class="post-action-btn btn btn--default" href="#ds-thread">
+                    <i class="fa fa-comment-o"></i>
+                </a>
+            </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="3">
+    <ul class="share-options">
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://ppsheep.com/2016/04/05/iOS-KVO基础/">
+                <i class="fa fa-google-plus"></i><span class="">分享到 Google+</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://ppsheep.com/2016/04/05/iOS-KVO基础/">
+                <i class="fa fa-facebook-official"></i><span>分享到 Facebook</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://ppsheep.com/2016/04/05/iOS-KVO基础/">
+                <i class="fa fa-twitter"></i><span>分享到 Twitter</span>
+            </a>
+        </li>
+    </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-remove"></i>
+        </div>
+        
+            <img id="about-card-picture" src="http://o8bxt3lx0.bkt.clouddn.com/7931417.jpeg"/>
+        
+            <h4 id="about-card-name">ppsheep</h4>
+        
+            <h5 id="about-card-bio"><p>一个就职于网易的初级iOS开发者<br>目前正在修炼自己</p>
+<p>博客建立不久，正在寻找更好的写作方式<br>博客上的内容会同步到公众号Sheep_iOS，另外也会挑选一些比较好的文章推送给大家</p>
+<p>我个人的微信号YangQian5999<br>文章末尾一般会有公众号二维码<br>欢迎大家关注</p>
+</h5>
+        
+        
+            <h5 id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>iOS开发者</p>
+
+            </h5>
+        
+        
+            <h5 id="about-card-location">
+                <i class="fa fa-map-marker"></i>
+                <br/>
+                杭州
+            </h5>
+        
+    </div>
+</div>
+
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+    </body>
+    <!--SCRIPTS-->
+<script src="/assets/js/script-i4qo6jx6jji9fg0dftpya6ivemizsbow4fhow76d8dwpm7m1wbvi378ssumx.min.js"></script>
+<!--SCRIPTS END-->
+
+    
+        <script type="text/javascript">
+            var duoshuoQuery = {short_name:'yangqian111'};
+            (function() {
+                var ds = document.createElement('script');
+                ds.type = 'text/javascript';ds.async = true;
+                ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+                ds.charset = 'UTF-8';
+                (document.getElementsByTagName('head')[0]
+                || document.getElementsByTagName('body')[0]).appendChild(ds);
+            })();
+        </script>
+    
+
+
+
+</html>

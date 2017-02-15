@@ -1,0 +1,497 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="ppsheep">
+    <title>iOS类似于微信的ActionSheet - ppsheep</title>
+    <meta name="author" content="ppsheep">
+    
+    
+    
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+    
+    <meta name="description" content="之前在做图片浏览器的时候 需要用到类似于微信的ActionSheet  本来可以直接使用iOS官方的UIAlertController 但是我觉得上了 iOS9 之后 这个ActionSheet好丑  不喜欢  就自己 写了一个简单的">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="iOS类似于微信的ActionSheet">
+<meta property="og:url" content="http://ppsheep.com/2016/01/06/iOS类似于微信的ActionSheet/index.html">
+<meta property="og:site_name" content="ppsheep">
+<meta property="og:description" content="之前在做图片浏览器的时候 需要用到类似于微信的ActionSheet  本来可以直接使用iOS官方的UIAlertController 但是我觉得上了 iOS9 之后 这个ActionSheet好丑  不喜欢  就自己 写了一个简单的">
+<meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/actionsheet.gif">
+<meta property="og:updated_time" content="2017-02-15T05:04:21.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS类似于微信的ActionSheet">
+<meta name="twitter:description" content="之前在做图片浏览器的时候 需要用到类似于微信的ActionSheet  本来可以直接使用iOS官方的UIAlertController 但是我觉得上了 iOS9 之后 这个ActionSheet好丑  不喜欢  就自己 写了一个简单的">
+<meta name="twitter:image" content="http://o8bxt3lx0.bkt.clouddn.com/actionsheet.gif">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/7931417.jpeg"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-nuvue6sithwirecbhvw3dkaobiojqvtadsnhguwi7k04xklybw5djl1smadp.min.css">
+    <!--STYLES END-->
+    
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="3">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <h1 class="header-title">
+        <a class="header-title-link" href="/ ">ppsheep</a>
+    </h1>
+    
+        
+            <a  class="header-right-picture "
+                href="#about">
+        
+        
+            <img class="header-picture" src="http://o8bxt3lx0.bkt.clouddn.com/7931417.jpeg"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="3">
+    
+        <div class="sidebar-profile">
+            <a href="/#about">
+                    <img class="sidebar-profile-picture" src="http://o8bxt3lx0.bkt.clouddn.com/7931417.jpeg"/>
+            </a>
+            <span class="sidebar-profile-name">ppsheep</span>
+        </div>
+    
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/ "
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+                    <span class="sidebar-button-desc">首页</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-categories"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+                    <span class="sidebar-button-desc">分类</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-tags"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+                    <span class="sidebar-button-desc">标签</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-archives"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+                    <span class="sidebar-button-desc">归档</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link st-search-show-outputs"
+                         href="#search"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-search"></i>
+                    <span class="sidebar-button-desc">搜索</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="#about"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+                    <span class="sidebar-button-desc">关于</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="https://github.com/yangqian111" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+                    <span class="sidebar-button-desc">GitHub</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="mailto:787688073@qq.com" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-envelope-o"></i>
+                    <span class="sidebar-button-desc">邮箱</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/atom.xml"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+                    <span class="sidebar-button-desc">RSS</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+</nav>
+
+            
+            <div id="main" data-behavior="3"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post" itemscope itemType="http://schema.org/BlogPosting">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title" itemprop="headline">
+            iOS类似于微信的ActionSheet
+        </h1>
+    
+    <div class="post-meta">
+    <time itemprop="datePublished" datetime="2016-01-06T13:47:13+08:00">
+	
+		    1月 06, 2016
+    	
+    </time>
+    
+        <span>发布在 </span>
+        
+    <a class="category-link" href="/all-categories/iOS组件/">iOS组件</a>, <a class="category-link" href="/all-categories/iOS组件/UI小组件/">UI小组件</a>
+
+
+    
+</div>
+
+</div>
+    
+    <div class="post-content markdown" itemprop="articleBody">
+        <div class="main-content-wrap">
+            <p>之前在做图片浏览器的时候 需要用到类似于微信的ActionSheet  本来可以直接使用iOS官方的UIAlertController 但是我觉得上了 iOS9 之后 这个ActionSheet好丑  不喜欢  就自己 写了一个简单的<br><a id="more"></a><br>先看一下效果图</p>
+<p><img src="http://o8bxt3lx0.bkt.clouddn.com/actionsheet.gif" alt="ActionSheet"></p>
+<p>实现起来 还是挺简单的</p>
+<p>首先肯定是一个自定义的view，在这里  是使用delegate实现点击捕获的  个人感觉delegate使用起来比较简单  当然block使用起来也不是特别麻烦，这个就看个人爱好吧</p>
+<p>在自定义view里面有一个协议</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">@protocol PPSActionSheetDelegate &lt;NSObject&gt;</div><div class="line"></div><div class="line">@required //当然这个可以写成optional的，但是不捕获点击事件，又做actionsheet干啥呢  就干脆写成了必须实现的  这样在使用的时候 发现未实现方法</div><div class="line"></div><div class="line">/**</div><div class="line"> 点击选项 实现这个代理必须实现这个方法 不然点击不能实现</div><div class="line"></div><div class="line"> @param actionSheet 当前显示的actionsheet 如果存在多个actionsheet 可以分别出是哪一个actionsheet</div><div class="line"> @param buttonIndex 点击的位置</div><div class="line"> */</div><div class="line">- (void)actionSheet:(PPSActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
+<font color="red">在点击事件里面 回传actionsheet的目的  是因为在一个viewcontroller里面可能会有多个 actionsheet展现，在同一个VC里面就需要区分 是哪个actionsheet 来区分操作<br><br>不同的actionsheet当然可以使用tag来区分 当然也可以用其他的方法区分<br><br>这里就仁者见仁智者见智了</font>
+
+<p>实现方法里面也没有什么可讲的  都是很简单的实现方法</p>
+<p>根据传入的标题数目  来创建button选项</p>
+<p>这一段代码  其实是对传入的othertitles的一个遍历 创建选项</p>
+<p>va_list是C语言中 解决变参问题的一组宏 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">NSString* curStr;</div><div class="line">va_list list;</div><div class="line">   if(otherTitles)</div><div class="line">   &#123;</div><div class="line">       [self setupBtnWithTitle:otherTitles];</div><div class="line">       </div><div class="line">       va_start(list, otherTitles);</div><div class="line">       while ((curStr = va_arg(list, NSString*))) &#123;</div><div class="line">           [self setupBtnWithTitle:curStr];</div><div class="line">           </div><div class="line">       &#125;</div><div class="line">       va_end(list);</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<p>根据颜生成图片的方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> 根据颜色生成图片</div><div class="line"></div><div class="line"> @param color 颜色</div><div class="line"></div><div class="line"> @return 图片</div><div class="line"> */</div><div class="line">- (UIImage*)imageWithColor:(UIColor*)color</div><div class="line">&#123;</div><div class="line">    CGRect rect=CGRectMake(0.0f, 0.0f, 1.0f, 1.0f);</div><div class="line">    UIGraphicsBeginImageContext(rect.size);</div><div class="line">    CGContextRef context = UIGraphicsGetCurrentContext();</div><div class="line">    CGContextSetFillColorWithColor(context, [color CGColor]);</div><div class="line">    CGContextFillRect(context, rect);</div><div class="line">    UIImage *theImage = UIGraphicsGetImageFromCurrentImageContext();</div><div class="line">    UIGraphicsEndImageContext();</div><div class="line">    return theImage;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>源码放在了：<br>    <a href="https://github.com/yangqian111/blog/tree/master/iOS类似微信的ActionSheet" target="_blank" rel="external">https://github.com/yangqian111/blog/tree/master/iOS类似微信的ActionSheet</a></p>
+
+            
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">标签</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/all-tags/ActionSheet/">ActionSheet</a>
+
+            </div>
+        
+        <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/01/14/Mac使用gitbook创建电子书/"  data-tooltip="Mac使用gitbook创建电子书">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2015/12/25/iOS图片浏览器-一/" data-tooltip="iOS图片浏览器(一)">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://ppsheep.com/2016/01/06/iOS类似于微信的ActionSheet/">
+                <i class="fa fa-google-plus"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://ppsheep.com/2016/01/06/iOS类似于微信的ActionSheet/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://ppsheep.com/2016/01/06/iOS类似于微信的ActionSheet/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        
+            <li class="post-action">
+                <a class="post-action-btn btn btn--default" href="#ds-thread">
+                    <i class="fa fa-comment-o"></i>
+                </a>
+            </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+            
+                <div id="ds-thread" class="ds-thread" data-thread-key="2016/01/06/iOS类似于微信的ActionSheet/"
+     data-title="iOS类似于微信的ActionSheet" data-url="http://ppsheep.com/2016/01/06/iOS类似于微信的ActionSheet/">
+</div>
+
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2017 ppsheep. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="3">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/01/14/Mac使用gitbook创建电子书/"  data-tooltip="Mac使用gitbook创建电子书">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2015/12/25/iOS图片浏览器-一/" data-tooltip="iOS图片浏览器(一)">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://ppsheep.com/2016/01/06/iOS类似于微信的ActionSheet/">
+                <i class="fa fa-google-plus"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://ppsheep.com/2016/01/06/iOS类似于微信的ActionSheet/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://ppsheep.com/2016/01/06/iOS类似于微信的ActionSheet/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        
+            <li class="post-action">
+                <a class="post-action-btn btn btn--default" href="#ds-thread">
+                    <i class="fa fa-comment-o"></i>
+                </a>
+            </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="3">
+    <ul class="share-options">
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://ppsheep.com/2016/01/06/iOS类似于微信的ActionSheet/">
+                <i class="fa fa-google-plus"></i><span class="">分享到 Google+</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://ppsheep.com/2016/01/06/iOS类似于微信的ActionSheet/">
+                <i class="fa fa-facebook-official"></i><span>分享到 Facebook</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://ppsheep.com/2016/01/06/iOS类似于微信的ActionSheet/">
+                <i class="fa fa-twitter"></i><span>分享到 Twitter</span>
+            </a>
+        </li>
+    </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-remove"></i>
+        </div>
+        
+            <img id="about-card-picture" src="http://o8bxt3lx0.bkt.clouddn.com/7931417.jpeg"/>
+        
+            <h4 id="about-card-name">ppsheep</h4>
+        
+            <h5 id="about-card-bio"><p>一个就职于网易的初级iOS开发者<br>目前正在修炼自己</p>
+<p>博客建立不久，正在寻找更好的写作方式<br>博客上的内容会同步到公众号Sheep_iOS，另外也会挑选一些比较好的文章推送给大家</p>
+<p>我个人的微信号YangQian5999<br>文章末尾一般会有公众号二维码<br>欢迎大家关注</p>
+</h5>
+        
+        
+            <h5 id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>iOS开发者</p>
+
+            </h5>
+        
+        
+            <h5 id="about-card-location">
+                <i class="fa fa-map-marker"></i>
+                <br/>
+                杭州
+            </h5>
+        
+    </div>
+</div>
+
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+    </body>
+    <!--SCRIPTS-->
+<script src="/assets/js/script-i4qo6jx6jji9fg0dftpya6ivemizsbow4fhow76d8dwpm7m1wbvi378ssumx.min.js"></script>
+<!--SCRIPTS END-->
+
+    
+        <script type="text/javascript">
+            var duoshuoQuery = {short_name:'yangqian111'};
+            (function() {
+                var ds = document.createElement('script');
+                ds.type = 'text/javascript';ds.async = true;
+                ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+                ds.charset = 'UTF-8';
+                (document.getElementsByTagName('head')[0]
+                || document.getElementsByTagName('body')[0]).appendChild(ds);
+            })();
+        </script>
+    
+
+
+
+</html>

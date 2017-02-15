@@ -1,0 +1,503 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="ppsheep">
+    <title>iOS 应用之间跳转传输数据以及跳回源程序 - ppsheep</title>
+    <meta name="author" content="ppsheep">
+    
+    
+    
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+    
+    <meta name="description" content="之前写了一篇关于APP之间跳转的文章，期间有同学说能否出一个类似于微信登录或者支付宝支付之类的，跳转到支付宝获得消息再调回源程序，并且带上信息。今天我们就再来聊聊，实现这样一种效果，没看过之前应用跳转的，请移步:    http://ppsheep.com/2016/10/27/iOS应用之间的跳转解析/">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="iOS 应用之间跳转传输数据以及跳回源程序">
+<meta property="og:url" content="http://ppsheep.com/2016/05/07/iOS-应用之间跳转传输数据以及跳回源程序/index.html">
+<meta property="og:site_name" content="ppsheep">
+<meta property="og:description" content="之前写了一篇关于APP之间跳转的文章，期间有同学说能否出一个类似于微信登录或者支付宝支付之类的，跳转到支付宝获得消息再调回源程序，并且带上信息。今天我们就再来聊聊，实现这样一种效果，没看过之前应用跳转的，请移步:    http://ppsheep.com/2016/10/27/iOS应用之间的跳转解析/">
+<meta property="og:updated_time" content="2017-02-15T05:08:52.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS 应用之间跳转传输数据以及跳回源程序">
+<meta name="twitter:description" content="之前写了一篇关于APP之间跳转的文章，期间有同学说能否出一个类似于微信登录或者支付宝支付之类的，跳转到支付宝获得消息再调回源程序，并且带上信息。今天我们就再来聊聊，实现这样一种效果，没看过之前应用跳转的，请移步:    http://ppsheep.com/2016/10/27/iOS应用之间的跳转解析/">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/7931417.jpeg"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-nuvue6sithwirecbhvw3dkaobiojqvtadsnhguwi7k04xklybw5djl1smadp.min.css">
+    <!--STYLES END-->
+    
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="3">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <h1 class="header-title">
+        <a class="header-title-link" href="/ ">ppsheep</a>
+    </h1>
+    
+        
+            <a  class="header-right-picture "
+                href="#about">
+        
+        
+            <img class="header-picture" src="http://o8bxt3lx0.bkt.clouddn.com/7931417.jpeg"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="3">
+    
+        <div class="sidebar-profile">
+            <a href="/#about">
+                    <img class="sidebar-profile-picture" src="http://o8bxt3lx0.bkt.clouddn.com/7931417.jpeg"/>
+            </a>
+            <span class="sidebar-profile-name">ppsheep</span>
+        </div>
+    
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/ "
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+                    <span class="sidebar-button-desc">首页</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-categories"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+                    <span class="sidebar-button-desc">分类</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-tags"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+                    <span class="sidebar-button-desc">标签</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-archives"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+                    <span class="sidebar-button-desc">归档</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link st-search-show-outputs"
+                         href="#search"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-search"></i>
+                    <span class="sidebar-button-desc">搜索</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="#about"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+                    <span class="sidebar-button-desc">关于</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="https://github.com/yangqian111" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+                    <span class="sidebar-button-desc">GitHub</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="mailto:787688073@qq.com" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-envelope-o"></i>
+                    <span class="sidebar-button-desc">邮箱</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/atom.xml"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+                    <span class="sidebar-button-desc">RSS</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+</nav>
+
+            
+            <div id="main" data-behavior="3"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post" itemscope itemType="http://schema.org/BlogPosting">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title" itemprop="headline">
+            iOS 应用之间跳转传输数据以及跳回源程序
+        </h1>
+    
+    <div class="post-meta">
+    <time itemprop="datePublished" datetime="2016-05-07T11:15:19+08:00">
+	
+		    5月 07, 2016
+    	
+    </time>
+    
+        <span>发布在 </span>
+        
+    <a class="category-link" href="/all-categories/iOS进阶/">iOS进阶</a>
+
+
+    
+</div>
+
+</div>
+    
+    <div class="post-content markdown" itemprop="articleBody">
+        <div class="main-content-wrap">
+            <p>之前写了一篇关于APP之间跳转的文章，期间有同学说能否出一个类似于微信登录或者支付宝支付之类的，跳转到支付宝获得消息再调回源程序，并且带上信息。今天我们就再来聊聊，实现这样一种效果，没看过之前应用跳转的，请移步:<br>    <a href="http://ppsheep.com/2016/10/27/iOS应用之间的跳转解析/">http://ppsheep.com/2016/10/27/iOS应用之间的跳转解析/</a></p>
+<a id="more"></a>
+<p>之前我们说到APP之间的跳转，其实就是通过一个URL Schemes进行跳转，APP之间的传值，其实也是通过这个URL进行传值。</p>
+<p>再有我们想跳回原来程序，那么我们还需要知道源程序的URL Schemes，这样我们才能跳回到源程序，所以在传递参数的时候 我们还需要把源程序的URL Schemes传递过去。</p>
+<p>我们需要传递的参数：</p>
+<ul>
+<li>当前APP的 URL Schemes</li>
+<li>我们需要传递的实际参数</li>
+</ul>
+<p><strong>还有一个重要的事情，因为我们需要从APP2跳回APP1，所以我们还需要设置APP1的URL Schemes，怎么设置，我这里就不写出来了，具体可以看上一篇跳转解析</strong></p>
+<p>我们之前知道 打开另一个APP，是打开一个URL<br> APP2://类似于这种，那我们会想到一般我们http有一种方式携带参数 <a href="http://url?name=?&amp;age=?" target="_blank" rel="external">http://url?name=?&amp;age=?</a></p>
+<p> 我们APP之间的传递参数方式其实也是这样的方式</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">//获取APP2的URL Scheme 还需要带上当前App的APP1</div><div class="line">  NSString *URLScheme = @&quot;APP2://APP1&quot;;</div><div class="line">  </div><div class="line">  //我们参数需要穿name age</div><div class="line">  NSString *params = @&quot;name=yq&amp;age=23&quot;;</div><div class="line">  //接下来加上我们需要携带的参数</div><div class="line">  NSString *realURL = [NSString stringWithFormat:@&quot;%@?%@&quot;,URLScheme,params];</div><div class="line">  </div><div class="line">  NSURL *appURL = [NSURL URLWithString:realURL];</div><div class="line">  </div><div class="line">  //判断手机中是否安装了APP2</div><div class="line">  if ([[UIApplication sharedApplication] canOpenURL:appURL]) &#123;</div><div class="line">      //打开APP2ViewController2</div><div class="line">      [[UIApplication sharedApplication] openURL:appURL];</div><div class="line">  &#125;else&#123;</div><div class="line">      NSLog(@&quot;没有安装APP2&quot;);</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+<p> 我们最终的appURL 是： </p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">APP2://APP1?name=yq&amp;age=23</div></pre></td></tr></table></figure>
+<p> 我们在APP2中处理这个跳转的URL</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">-(BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation&#123;</div><div class="line">	if ([url.absoluteString containsString:@&quot;APP1&quot;])&#123;</div><div class="line">       NSLog(@&quot;%@&quot;,url);</div><div class="line">       </div><div class="line">       //拿到源程序的</div><div class="line">       NSString * urlschemes = [[url.absoluteString componentsSeparatedByString:@&quot;//&quot;][1] componentsSeparatedByString:@&quot;?&quot;][0];</div><div class="line">       </div><div class="line">       //拿到参数</div><div class="line">       NSRange range = [url.absoluteString rangeOfString:@&quot;?&quot;];</div><div class="line">       NSString *paramStr = [url.absoluteString substringFromIndex:range.location+1];//去除问号</div><div class="line">       NSArray *params = [paramStr componentsSeparatedByString:@&quot;&amp;&quot;];</div><div class="line">       NSLog(@&quot;%@&quot;,params);</div><div class="line">       </div><div class="line">       //跳回源程序</div><div class="line">       dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^&#123;</div><div class="line">           // 延时3s模拟处理后回调指定的 URL Schemes并传递结果</div><div class="line">           </div><div class="line">           if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@&quot;APP2://&quot;]]) &#123;</div><div class="line">               </div><div class="line">               NSLog(@&quot;跳转成功&quot;);</div><div class="line">               </div><div class="line">               [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@&quot;%@://back?name=back&amp;code=200&quot;,urlschemes]]];</div><div class="line">               </div><div class="line">           &#125;else&#123;</div><div class="line">               NSLog(@&quot;跳转失败&quot;);</div><div class="line">               NSLog(@&quot;未安装应用!&quot;);</div><div class="line">           &#125;</div><div class="line">       &#125;);</div><div class="line">   &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p> 在APP2中  我们拿到了APP1传递的参数 放在了params数组中，同样的 我们在APP1中再处理从APP2跳回来的信息</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">  /**</div><div class="line"> 跳转回来</div><div class="line"> */</div><div class="line">-(BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary&lt;UIApplicationOpenURLOptionsKey,id&gt; *)options&#123;</div><div class="line">    if ([url.absoluteString containsString:@&quot;back&quot;]) &#123;</div><div class="line">        //拿到参数</div><div class="line">        NSRange range = [url.absoluteString rangeOfString:@&quot;?&quot;];</div><div class="line">        NSString *paramStr = [url.absoluteString substringFromIndex:range.location+1];//去除问号</div><div class="line">        NSArray *params = [paramStr componentsSeparatedByString:@&quot;&amp;&quot;];</div><div class="line">        NSLog(@&quot;%@&quot;,params);</div><div class="line">    &#125;</div><div class="line">    return YES;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这样我们也拿到了APP2跳回来的数据</p>
+<p>在iOS10中跳转的API有更新，具体的变化可以看API 我这里就不列出来了</p>
+<p>源代码放在：</p>
+<p><a href="https://github.com/yangqian111/blog/tree/master/APP-2" target="_blank" rel="external">https://github.com/yangqian111/blog/tree/master/APP-2</a></p>
+<p><a href="https://github.com/yangqian111/blog/tree/master/APP-1" target="_blank" rel="external">https://github.com/yangqian111/blog/tree/master/APP-1</a></p>
+
+            
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">标签</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/all-tags/iOS应用之间的跳转/">iOS应用之间的跳转</a>
+
+            </div>
+        
+        <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/05/23/iOS CALayer基础介绍/"  data-tooltip="iOS CALayer基础介绍">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/04/27/iOS基础开发技巧-二/" data-tooltip="iOS基础开发技巧-二">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://ppsheep.com/2016/05/07/iOS-应用之间跳转传输数据以及跳回源程序/">
+                <i class="fa fa-google-plus"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://ppsheep.com/2016/05/07/iOS-应用之间跳转传输数据以及跳回源程序/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://ppsheep.com/2016/05/07/iOS-应用之间跳转传输数据以及跳回源程序/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        
+            <li class="post-action">
+                <a class="post-action-btn btn btn--default" href="#ds-thread">
+                    <i class="fa fa-comment-o"></i>
+                </a>
+            </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+            
+                <div id="ds-thread" class="ds-thread" data-thread-key="2016/05/07/iOS-应用之间跳转传输数据以及跳回源程序/"
+     data-title="iOS 应用之间跳转传输数据以及跳回源程序" data-url="http://ppsheep.com/2016/05/07/iOS-应用之间跳转传输数据以及跳回源程序/">
+</div>
+
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2017 ppsheep. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="3">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/05/23/iOS CALayer基础介绍/"  data-tooltip="iOS CALayer基础介绍">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/04/27/iOS基础开发技巧-二/" data-tooltip="iOS基础开发技巧-二">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://ppsheep.com/2016/05/07/iOS-应用之间跳转传输数据以及跳回源程序/">
+                <i class="fa fa-google-plus"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://ppsheep.com/2016/05/07/iOS-应用之间跳转传输数据以及跳回源程序/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://ppsheep.com/2016/05/07/iOS-应用之间跳转传输数据以及跳回源程序/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        
+            <li class="post-action">
+                <a class="post-action-btn btn btn--default" href="#ds-thread">
+                    <i class="fa fa-comment-o"></i>
+                </a>
+            </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="3">
+    <ul class="share-options">
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://ppsheep.com/2016/05/07/iOS-应用之间跳转传输数据以及跳回源程序/">
+                <i class="fa fa-google-plus"></i><span class="">分享到 Google+</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://ppsheep.com/2016/05/07/iOS-应用之间跳转传输数据以及跳回源程序/">
+                <i class="fa fa-facebook-official"></i><span>分享到 Facebook</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://ppsheep.com/2016/05/07/iOS-应用之间跳转传输数据以及跳回源程序/">
+                <i class="fa fa-twitter"></i><span>分享到 Twitter</span>
+            </a>
+        </li>
+    </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-remove"></i>
+        </div>
+        
+            <img id="about-card-picture" src="http://o8bxt3lx0.bkt.clouddn.com/7931417.jpeg"/>
+        
+            <h4 id="about-card-name">ppsheep</h4>
+        
+            <h5 id="about-card-bio"><p>一个就职于网易的初级iOS开发者<br>目前正在修炼自己</p>
+<p>博客建立不久，正在寻找更好的写作方式<br>博客上的内容会同步到公众号Sheep_iOS，另外也会挑选一些比较好的文章推送给大家</p>
+<p>我个人的微信号YangQian5999<br>文章末尾一般会有公众号二维码<br>欢迎大家关注</p>
+</h5>
+        
+        
+            <h5 id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>iOS开发者</p>
+
+            </h5>
+        
+        
+            <h5 id="about-card-location">
+                <i class="fa fa-map-marker"></i>
+                <br/>
+                杭州
+            </h5>
+        
+    </div>
+</div>
+
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+    </body>
+    <!--SCRIPTS-->
+<script src="/assets/js/script-i4qo6jx6jji9fg0dftpya6ivemizsbow4fhow76d8dwpm7m1wbvi378ssumx.min.js"></script>
+<!--SCRIPTS END-->
+
+    
+        <script type="text/javascript">
+            var duoshuoQuery = {short_name:'yangqian111'};
+            (function() {
+                var ds = document.createElement('script');
+                ds.type = 'text/javascript';ds.async = true;
+                ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+                ds.charset = 'UTF-8';
+                (document.getElementsByTagName('head')[0]
+                || document.getElementsByTagName('body')[0]).appendChild(ds);
+            })();
+        </script>
+    
+
+
+
+</html>

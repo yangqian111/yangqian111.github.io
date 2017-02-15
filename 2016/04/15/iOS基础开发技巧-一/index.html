@@ -1,0 +1,516 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="ppsheep">
+    <title>iOS基础开发技巧(一) - ppsheep</title>
+    <meta name="author" content="ppsheep">
+    
+    
+    
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+    
+    <meta name="description" content="这里主要讲一些我在日常开发中用到的一些小的技巧，其实也算不上技巧吧，就是省去一些不必要的代码，或者有的小问题困扰你很久说不行在这里你能找到答案">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="iOS基础开发技巧(一)">
+<meta property="og:url" content="http://ppsheep.com/2016/04/15/iOS基础开发技巧-一/index.html">
+<meta property="og:site_name" content="ppsheep">
+<meta property="og:description" content="这里主要讲一些我在日常开发中用到的一些小的技巧，其实也算不上技巧吧，就是省去一些不必要的代码，或者有的小问题困扰你很久说不行在这里你能找到答案">
+<meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/Snip20161028_3.png">
+<meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/Snip20161028_6.png">
+<meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/Snip20161028_5.png">
+<meta property="og:updated_time" content="2017-02-15T05:08:23.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS基础开发技巧(一)">
+<meta name="twitter:description" content="这里主要讲一些我在日常开发中用到的一些小的技巧，其实也算不上技巧吧，就是省去一些不必要的代码，或者有的小问题困扰你很久说不行在这里你能找到答案">
+<meta name="twitter:image" content="http://o8bxt3lx0.bkt.clouddn.com/Snip20161028_3.png">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/7931417.jpeg"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-nuvue6sithwirecbhvw3dkaobiojqvtadsnhguwi7k04xklybw5djl1smadp.min.css">
+    <!--STYLES END-->
+    
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="3">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <h1 class="header-title">
+        <a class="header-title-link" href="/ ">ppsheep</a>
+    </h1>
+    
+        
+            <a  class="header-right-picture "
+                href="#about">
+        
+        
+            <img class="header-picture" src="http://o8bxt3lx0.bkt.clouddn.com/7931417.jpeg"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="3">
+    
+        <div class="sidebar-profile">
+            <a href="/#about">
+                    <img class="sidebar-profile-picture" src="http://o8bxt3lx0.bkt.clouddn.com/7931417.jpeg"/>
+            </a>
+            <span class="sidebar-profile-name">ppsheep</span>
+        </div>
+    
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/ "
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+                    <span class="sidebar-button-desc">首页</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-categories"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+                    <span class="sidebar-button-desc">分类</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-tags"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+                    <span class="sidebar-button-desc">标签</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-archives"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+                    <span class="sidebar-button-desc">归档</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link st-search-show-outputs"
+                         href="#search"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-search"></i>
+                    <span class="sidebar-button-desc">搜索</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="#about"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+                    <span class="sidebar-button-desc">关于</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="https://github.com/yangqian111" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+                    <span class="sidebar-button-desc">GitHub</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="mailto:787688073@qq.com" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-envelope-o"></i>
+                    <span class="sidebar-button-desc">邮箱</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/atom.xml"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+                    <span class="sidebar-button-desc">RSS</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+</nav>
+
+            
+            <div id="main" data-behavior="3"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post" itemscope itemType="http://schema.org/BlogPosting">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title" itemprop="headline">
+            iOS基础开发技巧(一)
+        </h1>
+    
+    <div class="post-meta">
+    <time itemprop="datePublished" datetime="2016-04-15T09:43:23+08:00">
+	
+		    4月 15, 2016
+    	
+    </time>
+    
+        <span>发布在 </span>
+        
+    <a class="category-link" href="/all-categories/iOS基础/">iOS基础</a>
+
+
+    
+</div>
+
+</div>
+    
+    <div class="post-content markdown" itemprop="articleBody">
+        <div class="main-content-wrap">
+            <p>这里主要讲一些我在日常开发中用到的一些小的技巧，其实也算不上技巧吧，就是省去一些不必要的代码，或者有的小问题困扰你很久说不行在这里你能找到答案</p>
+<a id="more"></a>
+<h3 id="在UIView的扩展-快速修改frame"><a href="#在UIView的扩展-快速修改frame" class="headerlink" title="在UIView的扩展 快速修改frame"></a>在UIView的扩展 快速修改frame</h3><p>在iOS修改view的frame，我们经常需要写一大堆代码，来修改frame中的一个小属性，这里有一个方法，就是直接修改frame的每个值</p>
+<p>新建一个category UIView+PPSFrame.h</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">#import &lt;UIKit/UIKit.h&gt;</div><div class="line"></div><div class="line">@interface UIView (PPSFrame)</div><div class="line"></div><div class="line">@property (assign, nonatomic) CGFloat    top;//上 相当于frame.origin.y</div><div class="line">@property (assign, nonatomic) CGFloat    bottom;//下 相当于frame.size.height + frame.origin.y</div><div class="line">@property (assign, nonatomic) CGFloat    left;//相当于frame.origin.x</div><div class="line">@property (assign, nonatomic) CGFloat    right;//相当于frame.origin.x+frame.size.width</div><div class="line"></div><div class="line">@property (assign, nonatomic) CGFloat    centerX;</div><div class="line">@property (assign, nonatomic) CGFloat    centerY;</div><div class="line"></div><div class="line">@property (assign, nonatomic) CGFloat    width;</div><div class="line">@property (assign, nonatomic) CGFloat    height;</div><div class="line">@property (assign, nonatomic) CGSize    size;</div><div class="line"></div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
+<p>在.m文件中设置各个属性</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div></pre></td><td class="code"><pre><div class="line">#import &quot;UIView+Layout.h&quot;</div><div class="line"></div><div class="line">@implementation UIView (Layout)</div><div class="line"></div><div class="line">@dynamic top;</div><div class="line">@dynamic bottom;</div><div class="line">@dynamic left;</div><div class="line">@dynamic right;</div><div class="line"></div><div class="line">@dynamic width;</div><div class="line">@dynamic height;</div><div class="line"></div><div class="line">@dynamic size;</div><div class="line"></div><div class="line">- (CGFloat)top</div><div class="line">&#123;</div><div class="line">    return self.frame.origin.y;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)setTop:(CGFloat)top</div><div class="line">&#123;</div><div class="line">    CGRect frame = self.frame;</div><div class="line">    frame.origin.y = top;</div><div class="line">    self.frame = frame;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (CGFloat)left</div><div class="line">&#123;</div><div class="line">    return self.frame.origin.x;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)setLeft:(CGFloat)left</div><div class="line">&#123;</div><div class="line">    CGRect frame = self.frame;</div><div class="line">    frame.origin.x = left;</div><div class="line">    self.frame = frame;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (CGFloat)bottom</div><div class="line">&#123;</div><div class="line">    return self.frame.size.height + self.frame.origin.y;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)setBottom:(CGFloat)bottom</div><div class="line">&#123;</div><div class="line">    CGRect frame = self.frame;</div><div class="line">    frame.origin.y = bottom - frame.size.height;</div><div class="line">    self.frame = frame;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (CGFloat)right</div><div class="line">&#123;</div><div class="line">    return self.frame.size.width + self.frame.origin.x;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)setRight:(CGFloat)right</div><div class="line">&#123;</div><div class="line">    CGRect frame = self.frame;</div><div class="line">    frame.origin.x = right - frame.size.width;</div><div class="line">    self.frame = frame;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (CGFloat)centerX</div><div class="line">&#123;</div><div class="line">    return self.center.x;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)setCenterX:(CGFloat)centerX</div><div class="line">&#123;</div><div class="line">    CGPoint center = self.center;</div><div class="line">    center.x = centerX;</div><div class="line">    self.center = center;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (CGFloat)centerY</div><div class="line">&#123;</div><div class="line">    return self.center.y;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)setCenterY:(CGFloat)centerY</div><div class="line">&#123;</div><div class="line">    CGPoint center = self.center;</div><div class="line">    center.y = centerY;</div><div class="line">    self.center = center;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (CGFloat)width</div><div class="line">&#123;</div><div class="line">    return self.frame.size.width;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)setWidth:(CGFloat)width</div><div class="line">&#123;</div><div class="line">    CGRect frame = self.frame;</div><div class="line">    frame.size.width = width;</div><div class="line">    self.frame = frame;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (CGFloat)height</div><div class="line">&#123;</div><div class="line">    return self.frame.size.height;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)setHeight:(CGFloat)height</div><div class="line">&#123;</div><div class="line">    CGRect frame = self.frame;</div><div class="line">    frame.size.height = height;</div><div class="line">    self.frame = frame;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (CGSize)size</div><div class="line">&#123;</div><div class="line">    return self.frame.size;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)setSize:(CGSize)size</div><div class="line">&#123;</div><div class="line">    CGRect frame = self.frame;</div><div class="line">    frame.size = size;</div><div class="line">    self.frame = frame;</div><div class="line">&#125;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
+<h3 id="iOS-OC项目的pch文件使用"><a href="#iOS-OC项目的pch文件使用" class="headerlink" title="iOS OC项目的pch文件使用"></a>iOS OC项目的pch文件使用</h3><p>在项目中如果我们需要一些公共的引用，或者一些全局的宏  那我们经常在pch中设置好</p>
+<p>具体怎么设置呢 在项目下新建一个pch文件 </p>
+<p><img src="http://o8bxt3lx0.bkt.clouddn.com/Snip20161028_3.png" alt="1"></p>
+<p>一般我会取名 项目名-PrefixHeader</p>
+<p>在target——&gt;Bulid Setting 中 设置 PrefixHeader<br><img src="http://o8bxt3lx0.bkt.clouddn.com/Snip20161028_6.png" alt="2"></p>
+<p>我的项目文件夹结构</p>
+<p><img src="http://o8bxt3lx0.bkt.clouddn.com/Snip20161028_5.png" alt=""></p>
+<p>$(SRCROOT)这个是指工程的根目录</p>
+<p>找到这个pch文件就行  然后启动APP就会编译这个文件了</p>
+<p>pch.h中 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">//</div><div class="line">//  APP-1-PrefixHeader.pch</div><div class="line">//  APP-1</div><div class="line">//</div><div class="line">//  Created by 羊谦 on 2016/10/28.</div><div class="line">//  Copyright © 2016年 羊谦. All rights reserved.</div><div class="line">//</div><div class="line"></div><div class="line">#ifndef APP_1_PrefixHeader_pch</div><div class="line">#define APP_1_PrefixHeader_pch</div><div class="line"></div><div class="line">//在这里直接定义你的宏变量   或者公共引用就行</div><div class="line"></div><div class="line">#endif /* APP_1_PrefixHeader_pch */</div></pre></td></tr></table></figure>
+<h3 id="UITableView的Group样式下顶部空白处理"><a href="#UITableView的Group样式下顶部空白处理" class="headerlink" title="UITableView的Group样式下顶部空白处理"></a>UITableView的Group样式下顶部空白处理</h3><p>要给tableHeaderView赋一个高度不为0的view才能处理顶部留白</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">//分组列表头部空白处理</div><div class="line">UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0.1)];</div><div class="line">self.tableView.tableHeaderView = view;</div></pre></td></tr></table></figure>
+<h3 id="获取某个view的Controller"><a href="#获取某个view的Controller" class="headerlink" title="获取某个view的Controller"></a>获取某个view的Controller</h3><p>其实就是根据view的响应链，来查找viewcontroller</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">- (UIViewController *)viewController</div><div class="line">&#123;</div><div class="line">  UIViewController *viewController = nil;  </div><div class="line">  UIResponder *next = self.nextResponder;</div><div class="line">  while (next)</div><div class="line">  &#123;</div><div class="line">    if ([next isKindOfClass:[UIViewController class]])</div><div class="line">    &#123;</div><div class="line">      viewController = (UIViewController *)next;      </div><div class="line">      break;    </div><div class="line">    &#125;    </div><div class="line">    next = next.nextResponder;  </div><div class="line">  &#125; </div><div class="line">    return viewController;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="清空NSUserDefaults的记录"><a href="#清空NSUserDefaults的记录" class="headerlink" title="清空NSUserDefaults的记录"></a>清空NSUserDefaults的记录</h3><p>方法一：是获取当前的app的bundleId NSUserDefaults中有方法根据bundleId清空记录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];</div><div class="line">[[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];</div></pre></td></tr></table></figure>
+<p>方法二：获取所有存储在NSUserDefaults中的数据，因为是按照key-value形式存储，所以循环key就能够删除数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">- (void)clearDefaults&#123;</div><div class="line">	NSUserDefaults * defs = [NSUserDefaults standardUserDefaults];</div><div class="line">    NSDictionary * dict = [defs dictionaryRepresentation];</div><div class="line">    for (id key in dict)</div><div class="line">    &#123;</div><div class="line">        [defs removeObjectForKey:key];</div><div class="line">    &#125;</div><div class="line">    [defs synchronize];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="GCD-timer定时器的使用"><a href="#GCD-timer定时器的使用" class="headerlink" title="GCD timer定时器的使用"></a>GCD timer定时器的使用</h3><p>这里的定时器，是一个每秒在主线程跑的一个方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">__block int countSecond = 30; //倒计时</div><div class="line">   dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);</div><div class="line">   dispatch_source_t timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0,queue);</div><div class="line">   dispatch_source_set_timer(timer,dispatch_walltime(NULL, 0),1.0*NSEC_PER_SEC, 0); //每秒执行</div><div class="line">   dispatch_source_set_event_handler(timer, ^&#123;</div><div class="line">       if (countSecond==0) &#123; //倒计时完毕</div><div class="line">           //@&quot;倒计时结束，关闭&quot;</div><div class="line">           dispatch_source_cancel(timer);</div><div class="line">           dispatch_async(dispatch_get_main_queue(), ^&#123;</div><div class="line">               //倒计时完毕需要执行的操作</div><div class="line">           &#125;);</div><div class="line">       &#125;else&#123; //倒计时</div><div class="line">           NSLog(@&quot;%@&quot;, [NSString stringWithFormat:@&quot;%ld&quot;,(long)countSecond]);</div><div class="line">           dispatch_async(dispatch_get_main_queue(), ^&#123;</div><div class="line">               //每秒需要执行的操作</div><div class="line">               //在这里更新UI之类的</div><div class="line">           &#125;);</div><div class="line"></div><div class="line">           countSecond--;</div><div class="line">       &#125;</div><div class="line">   &#125;);</div><div class="line">   dispatch_resume(timer);</div></pre></td></tr></table></figure>
+<h3 id="计算文件大小"><a href="#计算文件大小" class="headerlink" title="计算文件大小"></a>计算文件大小</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">- (long long)fileSizeAtPath:(NSString *)path</div><div class="line">&#123;</div><div class="line">    NSFileManager *fileManager = [NSFileManager defaultManager];</div><div class="line"></div><div class="line">    if ([fileManager fileExistsAtPath:path])</div><div class="line">    &#123;</div><div class="line">        long long size = [fileManager attributesOfItemAtPath:path error:nil].fileSize;</div><div class="line">        return size;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    return 0;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="计算文件夹大小"><a href="#计算文件夹大小" class="headerlink" title="计算文件夹大小"></a>计算文件夹大小</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">- (long long)folderSizeAtPath:(NSString *)path</div><div class="line">&#123;</div><div class="line">    NSFileManager *fileManager = [NSFileManager defaultManager];</div><div class="line"></div><div class="line">    long long folderSize = 0;</div><div class="line"></div><div class="line">    if ([fileManager fileExistsAtPath:path])</div><div class="line">    &#123;</div><div class="line">        NSArray *childerFiles = [fileManager subpathsAtPath:path];</div><div class="line">        for (NSString *fileName in childerFiles)</div><div class="line">        &#123;</div><div class="line">            NSString *fileAbsolutePath = [path stringByAppendingPathComponent:fileName];</div><div class="line">            if ([fileManager fileExistsAtPath:fileAbsolutePath])</div><div class="line">            &#123;</div><div class="line">                long long size = [fileManager attributesOfItemAtPath:fileAbsolutePath error:nil].fileSize;</div><div class="line">                folderSize += size;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    return folderSize;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="向上取整和向下取整"><a href="#向上取整和向下取整" class="headerlink" title="向上取整和向下取整"></a>向上取整和向下取整</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">floor(x)函数，是一个向下取整函数，是一个C函数 即是去不大于x的一个最大整数</div><div class="line">floor(3.12) = 3 floor(4.9) = 4</div><div class="line"></div><div class="line">与floor(x)函数对应的是ceil函数</div><div class="line">这个即是向上取整了</div><div class="line">ceil(3.9) = 4  ceil(1.2) = 2</div></pre></td></tr></table></figure>
+<h3 id="给任何一个view设置一张图片"><a href="#给任何一个view设置一张图片" class="headerlink" title="给任何一个view设置一张图片"></a>给任何一个view设置一张图片</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">UIImage *image = [UIImage imageNamed:@&quot;image&quot;];</div><div class="line">self.MYView.layer.contents = (__bridge id _Nullable)(image.CGImage);</div><div class="line">self.MYView.layer.contentsRect = CGRectMake(0, 0, 0.5, 0.5);</div></pre></td></tr></table></figure>
+<p>未完待续。。。</p>
+
+            
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">标签</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/all-tags/iOSTips/">iOSTips</a>
+
+            </div>
+        
+        <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/04/27/iOS基础开发技巧-二/"  data-tooltip="iOS基础开发技巧-二">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/04/05/iOS-KVO基础/" data-tooltip="iOS KVO基础">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://ppsheep.com/2016/04/15/iOS基础开发技巧-一/">
+                <i class="fa fa-google-plus"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://ppsheep.com/2016/04/15/iOS基础开发技巧-一/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://ppsheep.com/2016/04/15/iOS基础开发技巧-一/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        
+            <li class="post-action">
+                <a class="post-action-btn btn btn--default" href="#ds-thread">
+                    <i class="fa fa-comment-o"></i>
+                </a>
+            </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+            
+                <div id="ds-thread" class="ds-thread" data-thread-key="2016/04/15/iOS基础开发技巧-一/"
+     data-title="iOS基础开发技巧(一)" data-url="http://ppsheep.com/2016/04/15/iOS基础开发技巧-一/">
+</div>
+
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2017 ppsheep. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="3">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/04/27/iOS基础开发技巧-二/"  data-tooltip="iOS基础开发技巧-二">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/04/05/iOS-KVO基础/" data-tooltip="iOS KVO基础">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://ppsheep.com/2016/04/15/iOS基础开发技巧-一/">
+                <i class="fa fa-google-plus"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://ppsheep.com/2016/04/15/iOS基础开发技巧-一/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://ppsheep.com/2016/04/15/iOS基础开发技巧-一/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        
+            <li class="post-action">
+                <a class="post-action-btn btn btn--default" href="#ds-thread">
+                    <i class="fa fa-comment-o"></i>
+                </a>
+            </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="3">
+    <ul class="share-options">
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://ppsheep.com/2016/04/15/iOS基础开发技巧-一/">
+                <i class="fa fa-google-plus"></i><span class="">分享到 Google+</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://ppsheep.com/2016/04/15/iOS基础开发技巧-一/">
+                <i class="fa fa-facebook-official"></i><span>分享到 Facebook</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://ppsheep.com/2016/04/15/iOS基础开发技巧-一/">
+                <i class="fa fa-twitter"></i><span>分享到 Twitter</span>
+            </a>
+        </li>
+    </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-remove"></i>
+        </div>
+        
+            <img id="about-card-picture" src="http://o8bxt3lx0.bkt.clouddn.com/7931417.jpeg"/>
+        
+            <h4 id="about-card-name">ppsheep</h4>
+        
+            <h5 id="about-card-bio"><p>一个就职于网易的初级iOS开发者<br>目前正在修炼自己</p>
+<p>博客建立不久，正在寻找更好的写作方式<br>博客上的内容会同步到公众号Sheep_iOS，另外也会挑选一些比较好的文章推送给大家</p>
+<p>我个人的微信号YangQian5999<br>文章末尾一般会有公众号二维码<br>欢迎大家关注</p>
+</h5>
+        
+        
+            <h5 id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>iOS开发者</p>
+
+            </h5>
+        
+        
+            <h5 id="about-card-location">
+                <i class="fa fa-map-marker"></i>
+                <br/>
+                杭州
+            </h5>
+        
+    </div>
+</div>
+
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+    </body>
+    <!--SCRIPTS-->
+<script src="/assets/js/script-i4qo6jx6jji9fg0dftpya6ivemizsbow4fhow76d8dwpm7m1wbvi378ssumx.min.js"></script>
+<!--SCRIPTS END-->
+
+    
+        <script type="text/javascript">
+            var duoshuoQuery = {short_name:'yangqian111'};
+            (function() {
+                var ds = document.createElement('script');
+                ds.type = 'text/javascript';ds.async = true;
+                ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+                ds.charset = 'UTF-8';
+                (document.getElementsByTagName('head')[0]
+                || document.getElementsByTagName('body')[0]).appendChild(ds);
+            })();
+        </script>
+    
+
+
+
+</html>

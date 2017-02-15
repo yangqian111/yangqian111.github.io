@@ -216,21 +216,21 @@
             <div class="postShorten-header">
                 <h1 class="postShorten-title" itemprop="headline">
                     
-                        <a class="link-unstyled" href="/2016/12/05/ViewControllers瘦身计划-一/">
-                            ViewControllers瘦身计划(一)
+                        <a class="link-unstyled" href="/2016/07/25/Runtime详解/">
+                            Runtime详解
                         </a>
                     
                 </h1>
                 <div class="postShorten-meta">
-    <time itemprop="datePublished" datetime="2016-12-05T22:29:37+08:00">
+    <time itemprop="datePublished" datetime="2016-07-25T10:07:16+08:00">
 	
-		    12月 05, 2016
+		    7月 25, 2016
     	
     </time>
     
         <span>发布在 </span>
         
-    <a class="category-link" href="/all-categories/iOS进阶/">iOS进阶</a>
+    <a class="category-link" href="/all-categories/Runtime/">Runtime</a>
 
 
     
@@ -239,419 +239,12 @@
             </div>
             
                 <div class="postShorten-excerpt" itemprop="articleBody">
-                    <p>View controllers 通常是 iOS 项目中最大的文件，并且它们包含了许多不必要的代码。所以 View controllers 中的代码几乎总是复用率最低的。接下来我将结合一些我自己看到的东西和平时在使用的方法，来节省ViewController中的代码量。</p>
+                    <p>RunTime一直是iOS开发中非常重要的而且必须要理解的东西，最近在学习RunTime，有自己的一些心得，现在记录下来，便于以后查阅<br>
                     
-                        <a href="/2016/12/05/ViewControllers瘦身计划-一/" class="postShorten-excerpt_link link">
+                        <a href="/2016/07/25/Runtime详解/" class="postShorten-excerpt_link link">
                             阅读全文
                         </a>
                         
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title" itemprop="headline">
-                    
-                        <a class="link-unstyled" href="/2016/12/05/KVC和KVO-三/">
-                            KVC和KVO(三)
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time itemprop="datePublished" datetime="2016-12-05T10:04:32+08:00">
-	
-		    12月 05, 2016
-    	
-    </time>
-    
-        <span>发布在 </span>
-        
-    <a class="category-link" href="/all-categories/KVC和KVO/">KVC和KVO</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content" itemprop="articleBody">
-                    <p><strong>欢迎大家关注我的公众号，我会定期分享一些我在项目中遇到问题的解决办法和一些iOS实用的技巧，现阶段主要是整理出一些基础的知识记录下来</strong></p>
-<div align="middle"><br>    <image src="http://ac-mhke0kuv.clouddn.com/830a4ead8294ceff5160.jpg"></image><br></div>
-
-<p>文章也会同步更新到我的博客：<br><a href="http://ppsheep.com">http://ppsheep.com</a></p>
-<h3 id="KVO和线程"><a href="#KVO和线程" class="headerlink" title="KVO和线程"></a>KVO和线程</h3><p>KVO 行为是同步的 并且发生与所观察的值发生变化的同样的线程上。这听起来有点拗口，简单点说，就是监听行为发生的线程和所观察的值发生变化的线程，肯定是同一个线程，这样我们使用的时候就需要注意了：</p>
-<p>当我们试图从其他线程改变属性值的时候我们应当十分小心，除非能确定所有的观察者都用线程安全的方法处理 KVO 通知</p>
-<p>通常来说，我们不推荐把 KVO 和多线程混起来。如果我们要用多个队列和线程，我们不应该在它们互相之间用 KVO。</p>
-<h3 id="KVC"><a href="#KVC" class="headerlink" title="KVC"></a>KVC</h3><p>最简单的 KVC 能让我们通过以下的形式访问属性：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">@property (nonatomic, copy) NSString *name;</div></pre></td></tr></table></figure>
-<p>取值：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">NSString *n = [object valueForKey:@&quot;name&quot;]</div></pre></td></tr></table></figure>
-<p>设定：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[object setValue:@&quot;Daniel&quot; forKey:@&quot;name&quot;]</div></pre></td></tr></table></figure>
-<p>这个不仅可以访问作为对象属性，而且也能访问一些标量（例如 int 和 CGFloat）和 struct（例如 CGRect）。Foundation 框架会为我们自动封装它们。举例来说，如果有以下属性：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">@property (nonatomic) CGFloat height;</div></pre></td></tr></table></figure>
-<p>我们可以这样设置:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[object setValue:@(20) forKey:@&quot;height&quot;]</div></pre></td></tr></table></figure>
-<h3 id="键路径-key-path"><a href="#键路径-key-path" class="headerlink" title="键路径 (key path)"></a>键路径 (key path)</h3><p>KVC 同样允许我们通过关系来访问对象。假设 person 对象有属性 address，address 有属性 city，我们可以这样通过 person 来访问 city：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[person valueForKeyPath:@&quot;address.city&quot;]</div></pre></td></tr></table></figure>
-<p>值得注意的是这里我们调用 -valueForKeyPath: 而不是 -valueForKey:</p>
-<h3 id="Key-Value-Coding-Without-property"><a href="#Key-Value-Coding-Without-property" class="headerlink" title="Key-Value Coding Without @property"></a>Key-Value Coding Without @property</h3><p>不需要 @property 的 KVC</p>
-<p>我们可以实现一个支持 KVC 而不用 @property 和 @synthesize 或是自动 synthesize 的属性。最直接的方式是添加 -<key> 和 -set<key>: 方法。例如我们想要 name ，我们这样做：</key></key></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">- (NSString *)name;</div><div class="line">- (void)setName:(NSString *)name;</div></pre></td></tr></table></figure>
-<p>这完全等于 @property 的实现方式。</p>
-<p>但是当标量和 struct 的值被传入 nil 的时候尤其需要注意。假设我们要 height 属性支持 KVC 我们写了以下的方法：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">- (CGFloat)height;</div><div class="line">- (void)setHeight:(CGFloat)height;</div></pre></td></tr></table></figure>
-<p>然后我们这样调用：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[object setValue:nil forKey:@&quot;height&quot;]</div></pre></td></tr></table></figure>
-<p>这会抛出一个 exception。要正确的处理 nil，我们要像这样 override -setNilValueForKey:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">- (void)setNilValueForKey:(NSString *)key</div><div class="line">&#123;</div><div class="line">    if ([key isEqualToString:@&quot;height&quot;]) &#123;</div><div class="line">        [self setValue:@0 forKey:key];</div><div class="line">    &#125; else</div><div class="line">        [super setNilValueForKey:key];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="集合的操作"><a href="#集合的操作" class="headerlink" title="集合的操作"></a>集合的操作</h3><p>一个常常被忽视的 KVC 特性是它对集合操作的支持。举个例子，我们可以这样来获得一个数组中最大的值：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">NSArray *a = @[@4, @84, @2];</div><div class="line">NSLog(@&quot;max = %@&quot;, [a valueForKeyPath:@&quot;@max.self&quot;]);</div></pre></td></tr></table></figure>
-<p>或者说，我们有一个 Transaction 对象的数组，对象有属性 amount 的话，我们可以这样获得最大的 amount：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">NSArray *a = @[transaction1, transaction2, transaction3];</div><div class="line">NSLog(@&quot;max = %@&quot;, [a valueForKeyPath:@&quot;@max.amount&quot;]);</div></pre></td></tr></table></figure>
-<p>当我们调用 [a valueForKeyPath:@”@max.amount”] 的时候，它会在数组 a 的每个元素中调用 -valueForKey:@”amount” 然后返回最大的那个。</p>
-<h3 id="常见的-KVO-错误"><a href="#常见的-KVO-错误" class="headerlink" title="常见的 KVO 错误"></a>常见的 KVO 错误</h3><p>首先，KVO 兼容是 API 的一部分。如果类的所有者不保证某个属性兼容 KVO，我们就不能保证 KVO 正常工作。苹果文档里有 KVO 兼容属性的文档。例如，NSProgress 类的大多数属性都是兼容 KVO 的。</p>
-<p>当做出改变以后，有些人试着放空的 -willChange 和 -didChange 方法来强制 KVO 的触发。KVO 通知虽然会生效，但是这样做破坏了有依赖于 NSKeyValueObservingOld 选项的观察者。详细来说，这影响了 KVO 对观察键路径 (key path) 的原生支持。KVO 在观察键路径 (key path) 时依赖于 NSKeyValueObservingOld 属性。</p>
-<p>我们也要指出有些集合是不能被观察的。KVO 旨在观察关系 (relationship) 而不是集合。我们不能观察 NSArray，我们只能观察一个对象的属性——而这个属性有可能是 NSArray。举例说，如果我们有一个 ContactList 对象，我们可以观察它的 contacts 属性。但是我们不能向要观察对象的 -addObserver:forKeyPath:… 传入一个 NSArray。</p>
-<p>相似地，观察 self 不是永远都生效的。而且这不是一个好的设计。</p>
-<h3 id="调试-KVO"><a href="#调试-KVO" class="headerlink" title="调试 KVO"></a>调试 KVO</h3><p>你可以在 lldb 里查看一个被观察对象的所有观察信息。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">(lldb) po [observedObject observationInfo]</div></pre></td></tr></table></figure>
-<p>这会打印出有关谁观察谁之类的很多信息。</p>
-<p>这个信息的格式不是公开的，我们不能让任何东西依赖它，因为苹果随时都可以改变它。不过这是一个很强大的排错工具。</p>
-<p>参考：</p>
-<p><a href="https://www.objccn.io/issue-7-3/" target="_blank" rel="external">https://www.objccn.io/issue-7-3/</a></p>
-
-                    
-                        
-                    
-                    
-                        <p>
-                            <a href="/2016/12/05/KVC和KVO-三/#post-footer" class="postShorten-excerpt_link link">
-                                注释和共享
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title" itemprop="headline">
-                    
-                        <a class="link-unstyled" href="/2016/11/28/KVC和KVO-二/">
-                            KVC和KVO(二)
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time itemprop="datePublished" datetime="2016-11-28T09:30:54+08:00">
-	
-		    11月 28, 2016
-    	
-    </time>
-    
-        <span>发布在 </span>
-        
-    <a class="category-link" href="/all-categories/KVC和KVO/">KVC和KVO</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content" itemprop="articleBody">
-                    <p><strong>欢迎大家关注我的公众号，我会定期分享一些我在项目中遇到问题的解决办法和一些iOS实用的技巧，现阶段主要是整理出一些基础的知识记录下来</strong></p>
-<div align="middle"><br>    <image src="http://ac-mhke0kuv.clouddn.com/830a4ead8294ceff5160.jpg"></image><br></div>
-
-<p>文章也会同步更新到我的博客：<br><a href="http://ppsheep.com">http://ppsheep.com</a></p>
-<p>在上一篇文章中，我们讲到，通过键值观察，属性依赖，来讲解KVC，如果没有看过上一篇文章的，请移步<br><a href="http://ppsheep.com/2016/11/19/KVC和KVO(一)/">http://ppsheep.com/2016/11/19/KVC和KVO(一)/</a></p>
-<h3 id="手动通知和自动通知"><a href="#手动通知和自动通知" class="headerlink" title="手动通知和自动通知"></a>手动通知和自动通知</h3><p>在OC中，消息通知扮演着很重要的角色，在我们在调用 LabColor 类的 -setLComponent:方法时，会触发以下方法的调用</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">- (void)willChangeValueForKey:(NSString *)key</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">- (void)didChangeValueForKey:(NSString *)key</div></pre></td></tr></table></figure>
-<p>会在运行 -setLComponent: 中的代码之前以及之后被自动调用。</p>
-<p>有些情况下当我们需要 override -setLComponent: 并且我们要控制是否发送键值改变的通知的时候，我们要做以下的事情：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">//是否自动发送通知</div><div class="line">+ (BOOL)automaticallyNotifiesObserversForLComponent;</div><div class="line">&#123;</div><div class="line">    return NO;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)setLComponent:(double)lComponent;</div><div class="line">&#123;</div><div class="line">    if (_lComponent == lComponent) &#123;</div><div class="line">        return;</div><div class="line">    &#125;</div><div class="line">    //手动调用</div><div class="line">    [self willChangeValueForKey:@&quot;lComponent&quot;];</div><div class="line">    _lComponent = lComponent;</div><div class="line">    [self didChangeValueForKey:@&quot;lComponent&quot;];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>我们关闭了 -willChangeValueForKey: 和 -didChangeValueForKey: 的自动调用，然后我们手动调用他们。我们只应该在关闭了自动调用的时候我们才需要在 setter 方法里手动调用 -willChangeValueForKey: 和 -didChangeValueForKey:。大多数情况下，我们都不会这样做，这样做，会让代码变得复杂，不容易理解</p>
-<h3 id="KVO和context"><a href="#KVO和context" class="headerlink" title="KVO和context"></a>KVO和context</h3><p>有时我们会有理由不想用 KeyValueObserver 辅助类。创建另一个对象会有额外的性能开销。如果我们观察很多个键的话，这个开销可能会变得明显。</p>
-<p>如果我们在实现一个类的时候把它自己注册为观察者的话：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">- (void)addObserver:(NSObject *)anObserver</div><div class="line">         forKeyPath:(NSString *)keyPath</div><div class="line">            options:(NSKeyValueObservingOptions)options</div><div class="line">            context:(void *)context</div></pre></td></tr></table></figure>
-<p>一个非常重要的点是我们要传入一个这个类唯一的 context。推荐把以下代码</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">static int const PrivateKVOContext;</div></pre></td></tr></table></figure>
-<p>写在这个类 .m 文件的顶端，然后我们像这样调用 API 并传入 PrivateKVOContext 的指针：</p>
-<p>我们在LabColor类中定义一个方法</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">//将自己设置为观察者</div><div class="line">- (void)setObserverWithSelf;</div></pre></td></tr></table></figure>
-<p>在本类中实现方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">-(void)setObserverWithSelf&#123;</div><div class="line">    [self addObserver:self forKeyPath:@&quot;lComponent&quot; options:NSKeyValueObservingOptionInitial context:(void *)&amp;PrivateKVOContext];</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>然后我们这样写 -observeValueForKeyPath:… 的方法：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">- (void)observeValueForKeyPath:(NSString *)keyPath</div><div class="line">                      ofObject:(id)object</div><div class="line">                        change:(NSDictionary *)change</div><div class="line">                       context:(void *)context</div><div class="line">&#123;</div><div class="line">    if (context == &amp;PrivateKVOContext) &#123;</div><div class="line">        // 这里写相关的观察代码</div><div class="line">    &#125; else &#123;</div><div class="line">        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>这将确保我们写的子类都是正确的。如此一来，子类和父类都能安全的观察同样的键值而不会冲突。否则我们将会碰到难以 debug 的奇怪行为。</p>
-<h3 id="进阶KVO"><a href="#进阶KVO" class="headerlink" title="进阶KVO"></a>进阶KVO</h3><p>我们常常需要当一个值改变的时候更新 UI，但是我们也要在第一次运行代码的时候更新一次 UI。我们可以用 KVO 并添加 NSKeyValueObservingOptionInitial 的选项 来一箭双雕地做好这样的事情。这将会让 KVO 通知在调用 -addObserver:forKeyPath:… 到时候也被触发。</p>
-<h4 id="之前和之后"><a href="#之前和之后" class="headerlink" title="之前和之后"></a>之前和之后</h4><p>如果我们注册通知的时候附加了 NSKeyValueObservingOptionPrior 选项，我们将会收到两个通知：一个在值变更前，另一个在变更之后。变更前的通知将会在 change 字典中有不同的键。我们可以像以下这样区分通知是在改变之前还是之后被触发的：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">if ([change[NSKeyValueChangeNotificationIsPriorKey] boolValue]) &#123;</div><div class="line">    // 改变之前</div><div class="line">&#125; else &#123;</div><div class="line">    // 改变之后</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h4 id="值"><a href="#值" class="headerlink" title="值"></a>值</h4><p>如果我们需要改变前后的值，我们可以在 KVO 选项中加入 NSKeyValueObservingOptionNew 和/或 NSKeyValueObservingOptionOld。</p>
-<p>更简单的办法是用 NSKeyValueObservingOptionPrior 选项，随后我们就可以用以下方式提取出改变前后的值：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">id oldValue = change[NSKeyValueChangeOldKey];</div><div class="line">id newValue = change[NSKeyValueChangeNewKey];</div></pre></td></tr></table></figure>
-<p>通常来说 KVO 会在 -willChangeValueForKey: 和 -didChangeValueForKey: 被调用的时候存储相应键的值。</p>
-<h4 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h4><p>KVO 对一些集合类也有很强的支持，以下方法会返回集合对象：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">-mutableArrayValueForKey:</div><div class="line">-mutableSetValueForKey:</div><div class="line">-mutableOrderedSetValueForKey:</div></pre></td></tr></table></figure>
-<p>我将会详细解释这是怎么工作的。如果你使用这些方法，change 字典里会包含键值变化的类型（添加、删除和替换）。对于有序的集合，change 字典会包含受影响的 index。</p>
-<p>集合代理对象和变化的通知在用于更新UI的时候非常有效，尤其是处理大集合的时候。但是它们需要花费你一些心思。</p>
-<p>后面将会结合UI层面，来对KVC和KVO进行进一步讲解</p>
-<p>参考:</p>
-<p><a href="https://www.objccn.io" target="_blank" rel="external">https://www.objccn.io</a></p>
-
-                    
-                        
-                    
-                    
-                        <p>
-                            <a href="/2016/11/28/KVC和KVO-二/#post-footer" class="postShorten-excerpt_link link">
-                                注释和共享
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title" itemprop="headline">
-                    
-                        <a class="link-unstyled" href="/2016/11/19/KVC和KVO(一)/">
-                            KVC和KVO(一)
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time itemprop="datePublished" datetime="2016-11-19T16:08:32+08:00">
-	
-		    11月 19, 2016
-    	
-    </time>
-    
-        <span>发布在 </span>
-        
-    <a class="category-link" href="/all-categories/KVC和KVO/">KVC和KVO</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content" itemprop="articleBody">
-                    <p><strong>欢迎大家关注我的公众号，我会定期分享一些我在项目中遇到问题的解决办法和一些iOS实用的技巧，现阶段主要是整理出一些基础的知识记录下来</strong></p>
-<div align="middle"><br>    <image src="http://ac-mhke0kuv.clouddn.com/830a4ead8294ceff5160.jpg"></image><br></div>
-
-<p>文章也会同步更新到我的博客：<br><a href="http://ppsheep.com">http://ppsheep.com</a></p>
-<h3 id="观察model对象的变化"><a href="#观察model对象的变化" class="headerlink" title="观察model对象的变化"></a>观察model对象的变化</h3><p>在 Cocoa 的模型-视图-控制器 (Model-view-controller)架构里，控制器负责让视图和模型同步。这一共有两步：当 model 对象改变的时候，视图应该随之改变以反映模型的变化；当用户和控制器交互的时候，模型也应该做出相应的改变。</p>
-<p>KVO 能帮助我们让视图和模型保持同步。控制器可以观察视图依赖的属性变化。</p>
-<p>让我们看一个例子：我们的模型类 LabColor 代表一种 Lab色彩空间里的颜色。和 RGB 不同，这种色彩空间有三个元素 L, a, b。我们要做一个用来改变这些值的滑块和一个显示颜色的方块区域。</p>
-<p>我们的模型类有以下三个用来代表颜色的属性：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">@property (nonatomic) double lComponent;</div><div class="line">@property (nonatomic) double aComponent;</div><div class="line">@property (nonatomic) double bComponent;</div></pre></td></tr></table></figure>
-<h3 id="依赖的属性"><a href="#依赖的属性" class="headerlink" title="依赖的属性"></a>依赖的属性</h3><p>我们需要从这个类创建一个 UIColor 对象来显示出颜色。我们添加三个额外的属性，分别对应 R, G, B：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">@property (nonatomic, readonly) double redComponent;</div><div class="line">@property (nonatomic, readonly) double greenComponent;</div><div class="line">@property (nonatomic, readonly) double blueComponent;</div><div class="line"></div><div class="line">@property (nonatomic, strong, readonly) UIColor *color;</div></pre></td></tr></table></figure>
-<p>有了这些以后，我们就可以创建这个类的接口了：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">@interface LabColor : NSObject</div><div class="line"></div><div class="line">@property (nonatomic) double lComponent;</div><div class="line">@property (nonatomic) double aComponent;</div><div class="line">@property (nonatomic) double bComponent;</div><div class="line"></div><div class="line">@property (nonatomic, readonly) double redComponent;</div><div class="line">@property (nonatomic, readonly) double greenComponent;</div><div class="line">@property (nonatomic, readonly) double blueComponent;</div><div class="line"></div><div class="line">@property (nonatomic, strong, readonly) UIColor *color;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
-<p>维基百科提供了转换 RGB 到 Lab 色彩空间的算法。写成方法之后如下所示：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">- (double)greenComponent;</div><div class="line">&#123;</div><div class="line">    return D65TristimulusValues[1] * inverseF(1./116. * (self.lComponent + 16) + 1./500. * self.aComponent);</div><div class="line">&#125;</div><div class="line"></div><div class="line">[...]</div><div class="line"></div><div class="line">- (UIColor *)color</div><div class="line">&#123;</div><div class="line">    return [UIColor colorWithRed:self.redComponent * 0.01 green:self.greenComponent * 0.01 blue:self.blueComponent * 0.01 alpha:1.];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>这些代码没什么令人激动的地方。有趣的是 greenComponent 属性依赖于 lComponent 和 aComponent。不论何时设置 lComponent 的值，我们需要让 RGB 三个 component 中与其相关的成员以及 color 属性都要得到通知以保持一致。这一点这在 KVO 中很重要。</p>
-<p>Foundation 框架提供的表示属性依赖的机制如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">+ (NSSet *)keyPathsForValuesAffectingValueForKey:(NSString *)key</div></pre></td></tr></table></figure>
-<p>更详细的如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">+ (NSSet *)keyPathsForValuesAffecting&lt;键名&gt;</div></pre></td></tr></table></figure>
-<p>在我们的例子中如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">+ (NSSet *)keyPathsForValuesAffectingRedComponent</div><div class="line">&#123;</div><div class="line">    return [NSSet setWithObject:@&quot;lComponent&quot;];</div><div class="line">&#125;</div><div class="line"></div><div class="line">+ (NSSet *)keyPathsForValuesAffectingGreenComponent</div><div class="line">&#123;</div><div class="line">    return [NSSet setWithObjects:@&quot;lComponent&quot;, @&quot;aComponent&quot;, nil];</div><div class="line">&#125;</div><div class="line"></div><div class="line">+ (NSSet *)keyPathsForValuesAffectingBlueComponent</div><div class="line">&#123;</div><div class="line">    return [NSSet setWithObjects:@&quot;lComponent&quot;, @&quot;bComponent&quot;, nil];</div><div class="line">&#125;</div><div class="line"></div><div class="line">+ (NSSet *)keyPathsForValuesAffectingColor</div><div class="line">&#123;</div><div class="line">    return [NSSet setWithObjects:@&quot;redComponent&quot;, @&quot;greenComponent&quot;, @&quot;blueComponent&quot;, nil];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><strong>注意</strong></p>
-<p>这里解释一下，可能有一些朋友对这里的对象依赖关系不是特别清楚。我们拿出一个来解释</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">+ (NSSet *)keyPathsForValuesAffectingGreenComponent</div><div class="line">&#123;</div><div class="line">    return [NSSet setWithObjects:@&quot;lComponent&quot;, @&quot;aComponent&quot;, nil];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><strong>重要</strong></p>
-<p>在这个方法中，它代表的意思是当lComponent属性，或者aComponent属性改变时，需要通知到greenComponent，就相当于，lComponent或者aComponent中的任何一个作出改变时，可以认为greenComponent也发生了改变，如果这时，有一个监听对象，在监听greenComponent，那么当我们改变lComponent或aComponent，这个监听会被触发</p>
-<p>至于这个方法怎么得来的，在peoperty中定义了该属性，你只要敲keyPath就会自动提示出来，有哪些可以设置依赖了</p>
-<p>在我们的color中</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">+ (NSSet *)keyPathsForValuesAffectingColor</div><div class="line">&#123;</div><div class="line">    return [NSSet setWithObjects:@&quot;redComponent&quot;, @&quot;greenComponent&quot;, @&quot;blueComponent&quot;, nil];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>color是依赖于redComponent、greenComponent和blueComponent，这样 我们就能知道，改变lComponent、aComponent、bComponent任何一个，都会触发color的监听</p>
-<p>现在我们完整的表达了属性之间的依赖关系。请注意，我们可以把这些属性链接起来。打个比方，如果我们写一个子类去 override redComponent 方法，这些依赖关系仍然能正常工作。</p>
-<h3 id="观察变化"><a href="#观察变化" class="headerlink" title="观察变化"></a>观察变化</h3><p>现在让我们目光转向控制器。 UIViewController 的子类拥有 LabColor model 对象作为其属性。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">@interface ViewController ()</div><div class="line"></div><div class="line">@property (nonatomic, strong) LabColor *labColor;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
-<p>我们把视图控制器注册为观察者来接收 KVO 的通知，这可以用以下 NSObject 的方法来实现：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">- (void)addObserver:(NSObject *)anObserver</div><div class="line">         forKeyPath:(NSString *)keyPath</div><div class="line">            options:(NSKeyValueObservingOptions)options</div><div class="line">            context:(void *)context</div></pre></td></tr></table></figure>
-<p>这会让以下方法：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">- (void)observeValueForKeyPath:(NSString *)keyPath</div><div class="line">                      ofObject:(id)object</div><div class="line">                        change:(NSDictionary *)change</div><div class="line">                       context:(void *)context</div></pre></td></tr></table></figure>
-<p>在当 keyPath 的值改变的时候在观察者 anObserver 上面被调用。这个 API 看起来有一点吓人。更糟糕的是，我们还得记得调用以下的方法</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">- (void)removeObserver:(NSObject *)anObserver</div><div class="line">            forKeyPath:(NSString *)keyPath</div></pre></td></tr></table></figure>
-<p>来移除观察者，否则我们我们的 app 会因为某些奇怪的原因崩溃。</p>
-<p>对于大多数的应用来说，KVO 可以通过辅助类用一种更简单优雅的方式实现。我们在视图控制器添加以下的观察记号（Observation token）属性：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">@property (nonatomic, strong) id colorObserveToken;</div></pre></td></tr></table></figure>
-<p>当 labColor 在视图控制器中被设置时，我们只要 override labColor 的 setter 方法就行了：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">- (void)setLabColor:(LabColor *)labColor</div><div class="line">&#123;</div><div class="line">    _labColor = labColor;</div><div class="line">    self.colorObserveToken = [KeyValueObserver observeObject:labColor</div><div class="line">                                                     keyPath:@&quot;color&quot;</div><div class="line">                                                      target:self</div><div class="line">                                                    selector:@selector(colorDidChange:)</div><div class="line">                                                     options:NSKeyValueObservingOptionInitial];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)colorDidChange:(NSDictionary *)change;</div><div class="line">&#123;</div><div class="line">    self.colorView.backgroundColor = self.labColor.color;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>我们封装一个KeyValueObserver辅助类</p>
-<p>KeyValueObserver 辅助类 封装了 -addObserver:forKeyPath:options:context:，-observeValueForKeyPath:ofObject:change:context:和-removeObserverForKeyPath: 的调用，让视图控制器远离杂乱的代码。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">// 其中__attribute__((warn_unused_result))这个的意思是，当调用这个方法时，必须要检查返回值，或者使用返回值，不然编译器直接报警告</div><div class="line"></div><div class="line">+ (NSObject *)observeObject:(id)object keyPath:(NSString*)keyPath target:(id)target selector:(SEL)selector __attribute__((warn_unused_result));</div><div class="line"></div><div class="line"></div><div class="line">+ (NSObject *)observeObject:(id)object keyPath:(NSString*)keyPath target:(id)target selector:(SEL)selector options:(NSKeyValueObservingOptions)options __attribute__((warn_unused_result));</div></pre></td></tr></table></figure>
-<h3 id="整合到一起"><a href="#整合到一起" class="headerlink" title="整合到一起"></a>整合到一起</h3><p>视图控制器需要对 L，a，b 的滑块控制做出反应：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">- (void)updateLComponent:(UISlider *)sender;</div><div class="line">&#123;</div><div class="line">    self.labColor.lComponent = sender.value;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)updateAComponent:(UISlider *)sender;</div><div class="line">&#123;</div><div class="line">    self.labColor.aComponent = sender.value;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)updateBComponent:(UISlider *)sender;</div><div class="line">&#123;</div><div class="line">    self.labColor.bComponent = sender.value;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>我们来看一下效果</p>
-<p><img src="http://o8bxt3lx0.bkt.clouddn.com/blog/2016-11-21-KVC%26KVO-%E4%B8%80-.gif" alt=""></p>
-<p>源工程:</p>
-<p><a href="https://github.com/yangqian111/blog/tree/master/iOS%20KVC和KVO(一" target="_blank" rel="external">https://github.com/yangqian111/blog/tree/master/iOS%20KVC和KVO(一</a>)</p>
-<p>参考:<br>    <a href="https://www.objccn.io/issue-7-3/" target="_blank" rel="external">https://www.objccn.io/issue-7-3/</a></p>
-
-                    
-                        
-                    
-                    
-                        <p>
-                            <a href="/2016/11/19/KVC和KVO(一)/#post-footer" class="postShorten-excerpt_link link">
-                                注释和共享
-                            </a>
-                        </p>
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title" itemprop="headline">
-                    
-                        <a class="link-unstyled" href="/2016/11/18/iOS图形几何学基础/">
-                            iOS图形几何学基础
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time itemprop="datePublished" datetime="2016-11-18T13:58:09+08:00">
-	
-		    11月 18, 2016
-    	
-    </time>
-    
-        <span>发布在 </span>
-        
-    <a class="category-link" href="/all-categories/iOS动画/">iOS动画</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-content" itemprop="articleBody">
-                    <p><strong>欢迎大家关注我的公众号，我会定期分享一些我在项目中遇到问题的解决办法和一些iOS实用的技巧，现阶段主要是整理出一些基础的知识记录下来</strong></p>
-<div align="middle"><br>    <image src="http://ac-mhke0kuv.clouddn.com/830a4ead8294ceff5160.jpg"></image><br></div>
-
-<p>文章也会同步更新到我的博客：<br><a href="http://ppsheep.com">http://ppsheep.com</a></p>
-<h3 id="布局"><a href="#布局" class="headerlink" title="布局"></a>布局</h3><p>UIView有三个比较重要的布局属性：</p>
-<ul>
-<li>frame    (代表了图层的外部坐标，也就是相对于父视图的位置)</li>
-<li>bounds    (代表了内部坐标，其参照的是自己，左上角的左边永远是{0,0})</li>
-<li>center    (代表了相对于父图层的anchorPoint所在的位置，这个我们后面会介绍，现在将他想象成中心点就行)</li>
-</ul>
-<p>而在CALayr中也有三个与之相对的属性：</p>
-<ul>
-<li>frame</li>
-<li>bounds</li>
-<li>position</li>
-</ul>
-<p>他们一一对应</p>
-<p><img src="http://o8bxt3lx0.bkt.clouddn.com/blog/2016-11-19-3.1.jpeg" alt=""></p>
-<p>从上面这张图中我们可以看出，frame的左上角坐标，是相对于父图层的位置</p>
-<p><strong>注意</strong><br>我们通常修改视图的frame、bounds、center其实都只是存取方法，实质上修改的还是位于视图下的CALayer的frame、bounds和center</p>
-<p>在我们日常的做图层变换中，经常做一些旋转或者缩放，这时候，frame和bounds的就不再一致了</p>
-<p><img src="http://o8bxt3lx0.bkt.clouddn.com/blog/2016-11-19-3.2.jpeg" alt=""></p>
-<p>在这幅图中，我们将图层做了一个旋转，我们可以看到，frame是整个图层占据的外层的那个大矩形的区域，而bounds是图层的内部坐标，所以bounds依然没有改变</p>
-<h3 id="锚点"><a href="#锚点" class="headerlink" title="锚点"></a>锚点</h3><p>之前我们提到过anchorPoint，视图的center和图层的position属性，指定的anchorPoint相对于父图层的位置。图层的anchorPoint通过position来控制它的frame位置，其实就是通过anchorPoint来移动图层</p>
-<p>默认anchorPoint位于图层的中点，但是anchorPoint是属性并没有被UIView暴露出来，这也是视图的属性被叫做center的原因。</p>
-<p><strong>接下来，我要讲的都是跟图层相关，需要抛开视图的概念，不然，就比较难以理解了</strong></p>
-<p>因为图层的anchorPoint可以被移动，我们之前说过图层的anchorPoint通过position来控制它的frame的位置，那么如果我们将图层的anchorPoint置于图层的frame的左上角，那么图层将会怎么移动呢，图层将会向右下角移动</p>
-<p><img src="http://o8bxt3lx0.bkt.clouddn.com/blog/2016-11-19-3.3.jpeg" alt=""></p>
-<p>这里需要大家好好理解一下，position属性为什么没有变，而frame却改变了</p>
-<p>anchorPoint的坐标 也是使用的相对坐标来表示，当然也可以指定他是小于0或者大于1，来将图层内容放在图层范围之外</p>
-<p>那我们在想，我们可以通过图层的frame随意改变图层的位置，为什么还要通过anchorPoint来改变图层的位置，而且这个这么难以理解</p>
-<p>我们来举一个例子：</p>
-<p>我们需要模拟一个闹钟，闹钟的钟面由四张图片组成，为了简单，我们还是使用传统的四个UIImgaeView来加载，当然你也可以使用contents属性</p>
-<p><img src="http://o8bxt3lx0.bkt.clouddn.com/blog/2016-11-19-3.5.jpeg" alt=""></p>
-<p>我们使用NSTimer来更新闹钟，使用视图的transform属性来旋转钟表</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">- (void)viewDidLoad</div><div class="line">&#123;</div><div class="line">    [super viewDidLoad];</div><div class="line">    //start timer</div><div class="line">    self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(tick) userInfo:nil repeats:YES];</div><div class="line">                  ￼</div><div class="line">    //set initial hand positions</div><div class="line">    [self tick];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">//convert time to hours, minutes </div><div class="line"></div><div class="line">NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];</div><div class="line">NSUInteger units = NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit;</div><div class="line">NSDateComponents *components = [calendar components:units fromDate:[NSDate date]];</div><div class="line">CGFloat hoursAngle = (components.hour / 12.0) * M_PI * 2.0;</div><div class="line">//calculate hour hand angle //calculate minute hand angle</div><div class="line">CGFloat minsAngle = (components.minute / 60.0) * M_PI * 2.0;</div><div class="line">//calculate second hand angle</div><div class="line">CGFloat secsAngle = (components.second / 60.0) * M_PI * 2.0;</div><div class="line">//rotate hands</div><div class="line">self.hourHand.transform = CGAffineTransformMakeRotation(hoursAngle);</div><div class="line">self.minuteHand.transform = CGAffineTransformMakeRotation(minsAngle);</div><div class="line">self.secondHand.transform = CGAffineTransformMakeRotation(secsAngle);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><img src="http://o8bxt3lx0.bkt.clouddn.com/blog/2016-11-19-3.6.jpeg" alt=""></p>
-<p>这样看起来有点怪，我们可以看到，明显的时针分针的转动，都是通过中心位置转动，为什么呢？<br>因为默认的anchorPoint在中心位置，图片的旋转，都是围绕anchorPoint转动的，这时候我们就需要移动anchorPoint的位置了</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">self.secondHand.layer.anchorPoint = CGPointMake(0.5f, 0.9f); </div><div class="line">self.minuteHand.layer.anchorPoint = CGPointMake(0.5f, 0.9f); </div><div class="line">self.hourHand.layer.anchorPoint = CGPointMake(0.5f, 0.9f);</div></pre></td></tr></table></figure>
-<p>将每个指针的anchorPoint移动到需要他围绕旋转的位置</p>
-<p><img src="http://o8bxt3lx0.bkt.clouddn.com/blog/2016-11-19-3.7.jpeg" alt=""></p>
-<h3 id="圆角"><a href="#圆角" class="headerlink" title="圆角"></a>圆角</h3><p>圆角是iOS的一个标志性美学效果，我们想要实现圆角效果其实很简单</p>
-<p>CALayer有一个属性叫做conrnerRadius控制着图层的角的曲率，默认情况下，他为0表示<br>矩形，但是我们将他设置成任意的值</p>
-<p>我们在当前的VC中添加一个UIImageView,并设置他的cornerRadius为20个点，我们来看看效果</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">UIImageView *imagView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@&quot;timg&quot;]];</div><div class="line">imagView.frame = CGRectMake(50, 100, 150, 200);</div><div class="line">imagView.layer.cornerRadius = 20;</div><div class="line">[self.view addSubview:imagView];</div></pre></td></tr></table></figure>
-<p><img src="http://o8bxt3lx0.bkt.clouddn.com/blog/2016-11-19-Snip20161119_1.png" alt=""></p>
-<p>我们看到这个视图并没有显示出圆角，这是什么原因？</p>
-<p>这是因为</p>
-<p><strong>默认情况下，这个曲率值只影响背景颜色而不影响背景图片或是子图层</strong></p>
-<p>不过，如果我们将masksToBounds设置为yes，那么图层里面的所有东西都会被截取</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">imagView.layer.masksToBounds = YES;</div></pre></td></tr></table></figure>
-<p><img src="http://o8bxt3lx0.bkt.clouddn.com/blog/2016-11-19-070020.jpg" alt=""></p>
-<p>这样效果就出来了</p>
-<p>再来试一个例子，我们在这个图层的左上角加上一个超出了图片边界的一个view</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">UIImageView *imagView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@&quot;timg&quot;]];</div><div class="line">imagView.frame = CGRectMake(50, 100, 150, 200);</div><div class="line">//    imagView.layer.masksToBounds = YES;</div><div class="line">imagView.layer.cornerRadius = 20;</div><div class="line">[self.view addSubview:imagView];</div><div class="line">    </div><div class="line">UIView *view = [[UIView alloc] initWithFrame:CGRectMake(-10, -10, 20, 20)];</div><div class="line">view.backgroundColor = [UIColor redColor];</div><div class="line">[imagView addSubview:view];</div></pre></td></tr></table></figure>
-<p>如果我们未将图层的masksToBounds设置为yes，那么我们得到的效果是这样的</p>
-<p><img src="http://o8bxt3lx0.bkt.clouddn.com/blog/2016-11-19-070343.jpg" alt=""></p>
-<p>我们之前讲过，不管是图层还是视图，都会默认渲染超出父图层的视图或者图层</p>
-<p>如果我们将masksToBounds设置成了yes，按照我们之前讲的，这个红色的区域应该会被裁剪，那我们来看看效果</p>
-<p><img src="http://o8bxt3lx0.bkt.clouddn.com/blog/2016-11-19-070514.jpg" alt=""></p>
-<p>这样就完全将图层裁剪</p>
-<h3 id="图层边框"><a href="#图层边框" class="headerlink" title="图层边框"></a>图层边框</h3><p>CALayer还有两个非常有用的属性，borderWidth和borderColor，这两个可以用来设置图层边的样式</p>
-<p>我们设置一下图片的边框</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">UIImageView *imagView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@&quot;timg&quot;]];</div><div class="line">imagView.frame = CGRectMake(50, 100, 150, 200);</div><div class="line">//    imagView.layer.masksToBounds = YES;</div><div class="line">imagView.layer.cornerRadius = 20;</div><div class="line">[self.view addSubview:imagView];</div><div class="line">    </div><div class="line">UIView *view = [[UIView alloc] initWithFrame:CGRectMake(-10, -10, 20, 20)];</div><div class="line">view.backgroundColor = [UIColor redColor];</div><div class="line">[imagView addSubview:view];</div><div class="line">    </div><div class="line">imagView.layer.borderColor = [UIColor greenColor].CGColor;</div><div class="line">imagView.layer.borderWidth = 4;</div></pre></td></tr></table></figure>
-<p><img src="http://o8bxt3lx0.bkt.clouddn.com/blog/2016-11-19-070912.jpg" alt=""></p>
-<p>大家不要奇怪，为什么我们的边框会是这样的，那是因为图层的边框是跟着边界走的，和图层的内容并不相关，我们之前设置了图层的圆角，那么图层的边框就已经成为了有圆角的，但是图层内容，因为我们没有设置masksToBounds，所以图层的内容没有被裁剪</p>
-<p><img src="http://o8bxt3lx0.bkt.clouddn.com/blog/2016-11-19-071146.jpg" alt=""></p>
-<p>设置一下masksToBounds就可以了</p>
-<p><strong>所以设置圆角的时候不要忘记了masksToBounds属性</strong></p>
-<h3 id="阴影"><a href="#阴影" class="headerlink" title="阴影"></a>阴影</h3><p>接下来，我们来介绍阴影，我们可以通过shadowOpacity来设置图层的阴影，<strong><em>shadowOpacity是一个必须在0.0（不可见）和1.0（完全不透明）之间的浮点数</em></strong></p>
-<p>如果我们要改变阴影的表现，有三个属性，可以通过他们来改变阴影的表现</p>
-<ul>
-<li>shadowColor</li>
-<li>shadowOffset</li>
-<li>shadowRadius</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">UIImageView *imagView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@&quot;1&quot;]];</div><div class="line">imagView.frame = CGRectMake(50, 100, 150, 200);</div><div class="line">[self.view addSubview:imagView];</div><div class="line">    </div><div class="line">imagView.layer.shadowColor = [UIColor redColor].CGColor;</div><div class="line">imagView.layer.shadowOffset = CGSizeMake(10, 20);</div><div class="line">imagView.layer.shadowRadius = 10;</div><div class="line">imagView.layer.shadowOpacity = 0.5;</div></pre></td></tr></table></figure>
-<p><img src="http://o8bxt3lx0.bkt.clouddn.com/blog/2016-11-19-072737.jpg" alt=""></p>
-<p><strong>shadowColor</strong>肯定是控制阴影颜色的，这个不用讲<br><strong>shadowOffset</strong>控制着阴影的方向和距离，他是一个CGSize，宽度控制这阴影横向的位移，高度控制着纵向的位移<br><strong>shadowRadius</strong>控制着阴影的模糊度</p>
-<p>我们通过阴影可以将我们的视图的立体感增强</p>
-
-                    
-                        
-                    
-                    
-                        <p>
-                            <a href="/2016/11/18/iOS图形几何学基础/#post-footer" class="postShorten-excerpt_link link">
-                                注释和共享
-                            </a>
-                        </p>
                     
                 </div>
             
@@ -666,15 +259,101 @@
             <div class="postShorten-header">
                 <h1 class="postShorten-title" itemprop="headline">
                     
-                        <a class="link-unstyled" href="/2016/11/17/iOS-sqlite简单封装使用/">
+                        <a class="link-unstyled" href="/2016/07/05/KVC和KVO-三/">
+                            KVC和KVO(三)
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time itemprop="datePublished" datetime="2016-07-05T10:04:32+08:00">
+	
+		    7月 05, 2016
+    	
+    </time>
+    
+        <span>发布在 </span>
+        
+    <a class="category-link" href="/all-categories/KVC和KVO/">KVC和KVO</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-excerpt" itemprop="articleBody">
+                    <p>继续我们之前的KVC和KVO系列，这是这个系列的最后一篇，这两周都没怎么写东西，估计这一周过后，文章更新会正常了，手头上的事情多了，就不想写了，写出来的东西也是粗制滥造</p>
+                    
+                        <a href="/2016/07/05/KVC和KVO-三/" class="postShorten-excerpt_link link">
+                            阅读全文
+                        </a>
+                        
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-right" itemscope itemType="http://schema.org/BlogPosting">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title" itemprop="headline">
+                    
+                        <a class="link-unstyled" href="/2016/06/28/KVC和KVO-二/">
+                            KVC和KVO(二)
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time itemprop="datePublished" datetime="2016-06-28T09:30:54+08:00">
+	
+		    6月 28, 2016
+    	
+    </time>
+    
+        <span>发布在 </span>
+        
+    <a class="category-link" href="/all-categories/KVC和KVO/">KVC和KVO</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-excerpt" itemprop="articleBody">
+                    <p>上一周实在是手头上的事情太多，项目忙着出版本，都没怎么写点东西，估计这一周也不会轻松，感觉已经好久没动了，还是需要积累点东西的。上一篇文章，我们讲到了KVC和KVO，我们接着完成这个系列，这个系列是我在喵神的Objc上看到的，结合自己的一点理解，记录下来。</p>
+                    
+                        <a href="/2016/06/28/KVC和KVO-二/" class="postShorten-excerpt_link link">
+                            阅读全文
+                        </a>
+                        
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-right" itemscope itemType="http://schema.org/BlogPosting">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title" itemprop="headline">
+                    
+                        <a class="link-unstyled" href="/2016/06/17/iOS-sqlite简单封装使用/">
                             iOS sqlite简单封装使用
                         </a>
                     
                 </h1>
                 <div class="postShorten-meta">
-    <time itemprop="datePublished" datetime="2016-11-17T16:38:49+08:00">
+    <time itemprop="datePublished" datetime="2016-06-17T16:38:49+08:00">
 	
-		    11月 17, 2016
+		    6月 17, 2016
     	
     </time>
     
@@ -691,7 +370,7 @@
                 <div class="postShorten-excerpt" itemprop="articleBody">
                     <p>sqlite几乎在每个APP编码都会涉及到，它是一种轻量级的数据库，在手机端使用起来极其方便，因为SQLite原生的接口都是使用C写的，不是特别友好，所有有一个强大库就出现了FMDB，今天我们基于FMDB来进行二次封装</p>
                     
-                        <a href="/2016/11/17/iOS-sqlite简单封装使用/" class="postShorten-excerpt_link link">
+                        <a href="/2016/06/17/iOS-sqlite简单封装使用/" class="postShorten-excerpt_link link">
                             阅读全文
                         </a>
                         
@@ -709,15 +388,58 @@
             <div class="postShorten-header">
                 <h1 class="postShorten-title" itemprop="headline">
                     
-                        <a class="link-unstyled" href="/2016/11/17/iOS每个ViewController一个NavigationBar/">
+                        <a class="link-unstyled" href="/2016/06/08/KVC和KVO(一)/">
+                            KVC和KVO(一)
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time itemprop="datePublished" datetime="2016-06-08T16:08:32+08:00">
+	
+		    6月 08, 2016
+    	
+    </time>
+    
+        <span>发布在 </span>
+        
+    <a class="category-link" href="/all-categories/KVC和KVO/">KVC和KVO</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-excerpt" itemprop="articleBody">
+                    <p>Key-value coding (KVC) 和 key-value observing (KVO) 是两种能让我们驾驭 Objective-C 动态特性并简化代码的机制。在这篇文章里，我们将接触一些如何利用这些特性的例子。</p>
+                    
+                        <a href="/2016/06/08/KVC和KVO(一)/" class="postShorten-excerpt_link link">
+                            阅读全文
+                        </a>
+                        
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-right" itemscope itemType="http://schema.org/BlogPosting">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title" itemprop="headline">
+                    
+                        <a class="link-unstyled" href="/2016/05/29/iOS每个ViewController一个NavigationBar/">
                             iOS每个ViewController一个NavigationBar
                         </a>
                     
                 </h1>
                 <div class="postShorten-meta">
-    <time itemprop="datePublished" datetime="2016-11-17T13:03:38+08:00">
+    <time itemprop="datePublished" datetime="2016-05-29T13:03:38+08:00">
 	
-		    11月 17, 2016
+		    5月 29, 2016
     	
     </time>
     
@@ -728,7 +450,7 @@
                 <div class="postShorten-excerpt" itemprop="articleBody">
                     <p>在日常开发中，我们经常会碰到一些关于导航栏的问题，例如视觉设计，经常性的改变NavigationBar的风格，虽然我们能够在viewwillApper中来进行处理，但是总是太麻烦，而且需要写很多多余的代码，今天就来讲讲这种效果，其实已经有很多APP都是使用这种效果</p>
                     
-                        <a href="/2016/11/17/iOS每个ViewController一个NavigationBar/" class="postShorten-excerpt_link link">
+                        <a href="/2016/05/29/iOS每个ViewController一个NavigationBar/" class="postShorten-excerpt_link link">
                             阅读全文
                         </a>
                         
@@ -746,15 +468,15 @@
             <div class="postShorten-header">
                 <h1 class="postShorten-title" itemprop="headline">
                     
-                        <a class="link-unstyled" href="/2016/11/16/iOS CALayer基础介绍/">
+                        <a class="link-unstyled" href="/2016/05/23/iOS CALayer基础介绍/">
                             iOS CALayer基础介绍
                         </a>
                     
                 </h1>
                 <div class="postShorten-meta">
-    <time itemprop="datePublished" datetime="2016-11-16T18:40:46+08:00">
+    <time itemprop="datePublished" datetime="2016-05-23T18:40:46+08:00">
 	
-		    11月 16, 2016
+		    5月 23, 2016
     	
     </time>
     
@@ -771,7 +493,7 @@
                 <div class="postShorten-excerpt" itemprop="articleBody">
                     <p>在上一篇文章中我们讲了CALayer和UIView之间的相似的树级关系，和他们之间的管理关系，并且介绍了CALayer的一些属性，在这片文章中，将继续介绍一些CALayer的属性，虽然这看起来很简单，但是后面等到我们做动画的时候，这些属性都是极其重要的。</p>
                     
-                        <a href="/2016/11/16/iOS CALayer基础介绍/" class="postShorten-excerpt_link link">
+                        <a href="/2016/05/23/iOS CALayer基础介绍/" class="postShorten-excerpt_link link">
                             阅读全文
                         </a>
                         
@@ -789,15 +511,58 @@
             <div class="postShorten-header">
                 <h1 class="postShorten-title" itemprop="headline">
                     
-                        <a class="link-unstyled" href="/2016/11/09/iOS基础开发技巧-二/">
+                        <a class="link-unstyled" href="/2016/05/07/iOS-应用之间跳转传输数据以及跳回源程序/">
+                            iOS 应用之间跳转传输数据以及跳回源程序
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time itemprop="datePublished" datetime="2016-05-07T11:15:19+08:00">
+	
+		    5月 07, 2016
+    	
+    </time>
+    
+        <span>发布在 </span>
+        
+    <a class="category-link" href="/all-categories/iOS进阶/">iOS进阶</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-excerpt" itemprop="articleBody">
+                    <p>之前写了一篇关于APP之间跳转的文章，期间有同学说能否出一个类似于微信登录或者支付宝支付之类的，跳转到支付宝获得消息再调回源程序，并且带上信息。今天我们就再来聊聊，实现这样一种效果，没看过之前应用跳转的，请移步:<br>    <a href="http://ppsheep.com/2016/10/27/iOS应用之间的跳转解析/">http://ppsheep.com/2016/10/27/iOS应用之间的跳转解析/</a></p>
+                    
+                        <a href="/2016/05/07/iOS-应用之间跳转传输数据以及跳回源程序/" class="postShorten-excerpt_link link">
+                            阅读全文
+                        </a>
+                        
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-right" itemscope itemType="http://schema.org/BlogPosting">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title" itemprop="headline">
+                    
+                        <a class="link-unstyled" href="/2016/04/27/iOS基础开发技巧-二/">
                             iOS基础开发技巧-二
                         </a>
                     
                 </h1>
                 <div class="postShorten-meta">
-    <time itemprop="datePublished" datetime="2016-11-09T16:51:35+08:00">
+    <time itemprop="datePublished" datetime="2016-04-27T16:51:35+08:00">
 	
-		    11月 09, 2016
+		    4月 27, 2016
     	
     </time>
     
@@ -808,7 +573,7 @@
                 <div class="postShorten-excerpt" itemprop="articleBody">
                     <p>这里主要讲一些我在日常开发中用到的一些小的技巧，其实也算不上技巧吧，就是省去一些不必要的代码，或者有的小问题困扰你很久说不行在这里你能找到答案</p>
                     
-                        <a href="/2016/11/09/iOS基础开发技巧-二/" class="postShorten-excerpt_link link">
+                        <a href="/2016/04/27/iOS基础开发技巧-二/" class="postShorten-excerpt_link link">
                             阅读全文
                         </a>
                         
@@ -826,21 +591,21 @@
             <div class="postShorten-header">
                 <h1 class="postShorten-title" itemprop="headline">
                     
-                        <a class="link-unstyled" href="/2016/11/08/iOS-有效编写高质量Objective-C方法-三/">
-                            iOS-有效编写高质量Objective-C方法-三
+                        <a class="link-unstyled" href="/2016/04/15/iOS基础开发技巧-一/">
+                            iOS基础开发技巧(一)
                         </a>
                     
                 </h1>
                 <div class="postShorten-meta">
-    <time itemprop="datePublished" datetime="2016-11-08T09:49:28+08:00">
+    <time itemprop="datePublished" datetime="2016-04-15T09:43:23+08:00">
 	
-		    11月 08, 2016
+		    4月 15, 2016
     	
     </time>
     
         <span>发布在 </span>
         
-    <a class="category-link" href="/all-categories/iOS-编写高质量代码的方法/">iOS 编写高质量代码的方法</a>
+    <a class="category-link" href="/all-categories/iOS基础/">iOS基础</a>
 
 
     
@@ -849,9 +614,9 @@
             </div>
             
                 <div class="postShorten-excerpt" itemprop="articleBody">
-                    <p>本篇文章，主要是对OC中的一些原理的讲解，可能会有一些枯燥，但是真正当你理解时，会有一种豁然开朗的感觉。这里会涉及到 对象，属性，消息以及运行期的一些介绍，只有我们真正理解了这些原理之后，我们的开发水平才会进一步提升，而不是止步于view的简单编写，view的编写想要写得好，也需要了解这一些原理。</p>
+                    <p>这里主要讲一些我在日常开发中用到的一些小的技巧，其实也算不上技巧吧，就是省去一些不必要的代码，或者有的小问题困扰你很久说不行在这里你能找到答案</p>
                     
-                        <a href="/2016/11/08/iOS-有效编写高质量Objective-C方法-三/" class="postShorten-excerpt_link link">
+                        <a href="/2016/04/15/iOS基础开发技巧-一/" class="postShorten-excerpt_link link">
                             阅读全文
                         </a>
                         
@@ -882,7 +647,7 @@
             </a>
         </li>
         
-        <li class="pagination-number">第 2 页 共 5 页</li>
+        <li class="pagination-number">第 2 页 共 4 页</li>
     </ul>
 </div>
 
@@ -915,7 +680,9 @@
         
             <h4 id="about-card-name">ppsheep</h4>
         
-            <h5 id="about-card-bio"><p>一个就职于网易的初级iOS开发者，目前正在修炼自己，博客建立不久，正在寻找更好的写作方式。。。。。。。 目前还在维护一个微信公众号Sheep_iOS，文章末尾一般会有公众号二维码，博客的内容，我会同步到微信公众号，欢迎大家关注</p>
+            <h5 id="about-card-bio"><p>一个就职于网易的初级iOS开发者<br>目前正在修炼自己</p>
+<p>博客建立不久，正在寻找更好的写作方式<br>博客上的内容会同步到公众号Sheep_iOS，另外也会挑选一些比较好的文章推送给大家</p>
+<p>我个人的微信号YangQian5999<br>文章末尾一般会有公众号二维码<br>欢迎大家关注</p>
 </h5>
         
         

@@ -211,27 +211,27 @@
 <section class="postShorten-group main-content-wrap">
     
     
-    <article class="postShorten postShorten--thumbnailimg-bottom" itemscope itemType="http://schema.org/BlogPosting">
+    <article class="postShorten postShorten--thumbnailimg-right" itemscope itemType="http://schema.org/BlogPosting">
         <div class="postShorten-wrap">
             
             <div class="postShorten-header">
                 <h1 class="postShorten-title" itemprop="headline">
                     
-                        <a class="link-unstyled" href="/2016/11/18/iOS图形几何学基础/">
-                            iOS图形几何学基础
+                        <a class="link-unstyled" href="/2016/07/05/KVC和KVO-三/">
+                            KVC和KVO(三)
                         </a>
                     
                 </h1>
                 <div class="postShorten-meta">
-    <time itemprop="datePublished" datetime="2016-11-18T13:58:09+08:00">
+    <time itemprop="datePublished" datetime="2016-07-05T10:04:32+08:00">
 	
-		    11月 18, 2016
+		    7月 05, 2016
     	
     </time>
     
         <span>发布在 </span>
         
-    <a class="category-link" href="/all-categories/iOS动画/">iOS动画</a>
+    <a class="category-link" href="/all-categories/KVC和KVO/">KVC和KVO</a>
 
 
     
@@ -239,98 +239,13 @@
 
             </div>
             
-                <div class="postShorten-content" itemprop="articleBody">
-                    <p><strong>欢迎大家关注我的公众号，我会定期分享一些我在项目中遇到问题的解决办法和一些iOS实用的技巧，现阶段主要是整理出一些基础的知识记录下来</strong></p>
-<div align="middle"><br>    <image src="http://ac-mhke0kuv.clouddn.com/830a4ead8294ceff5160.jpg"></image><br></div>
-
-<p>文章也会同步更新到我的博客：<br><a href="http://ppsheep.com">http://ppsheep.com</a></p>
-<h3 id="布局"><a href="#布局" class="headerlink" title="布局"></a>布局</h3><p>UIView有三个比较重要的布局属性：</p>
-<ul>
-<li>frame    (代表了图层的外部坐标，也就是相对于父视图的位置)</li>
-<li>bounds    (代表了内部坐标，其参照的是自己，左上角的左边永远是{0,0})</li>
-<li>center    (代表了相对于父图层的anchorPoint所在的位置，这个我们后面会介绍，现在将他想象成中心点就行)</li>
-</ul>
-<p>而在CALayr中也有三个与之相对的属性：</p>
-<ul>
-<li>frame</li>
-<li>bounds</li>
-<li>position</li>
-</ul>
-<p>他们一一对应</p>
-<p><img src="http://o8bxt3lx0.bkt.clouddn.com/blog/2016-11-19-3.1.jpeg" alt=""></p>
-<p>从上面这张图中我们可以看出，frame的左上角坐标，是相对于父图层的位置</p>
-<p><strong>注意</strong><br>我们通常修改视图的frame、bounds、center其实都只是存取方法，实质上修改的还是位于视图下的CALayer的frame、bounds和center</p>
-<p>在我们日常的做图层变换中，经常做一些旋转或者缩放，这时候，frame和bounds的就不再一致了</p>
-<p><img src="http://o8bxt3lx0.bkt.clouddn.com/blog/2016-11-19-3.2.jpeg" alt=""></p>
-<p>在这幅图中，我们将图层做了一个旋转，我们可以看到，frame是整个图层占据的外层的那个大矩形的区域，而bounds是图层的内部坐标，所以bounds依然没有改变</p>
-<h3 id="锚点"><a href="#锚点" class="headerlink" title="锚点"></a>锚点</h3><p>之前我们提到过anchorPoint，视图的center和图层的position属性，指定的anchorPoint相对于父图层的位置。图层的anchorPoint通过position来控制它的frame位置，其实就是通过anchorPoint来移动图层</p>
-<p>默认anchorPoint位于图层的中点，但是anchorPoint是属性并没有被UIView暴露出来，这也是视图的属性被叫做center的原因。</p>
-<p><strong>接下来，我要讲的都是跟图层相关，需要抛开视图的概念，不然，就比较难以理解了</strong></p>
-<p>因为图层的anchorPoint可以被移动，我们之前说过图层的anchorPoint通过position来控制它的frame的位置，那么如果我们将图层的anchorPoint置于图层的frame的左上角，那么图层将会怎么移动呢，图层将会向右下角移动</p>
-<p><img src="http://o8bxt3lx0.bkt.clouddn.com/blog/2016-11-19-3.3.jpeg" alt=""></p>
-<p>这里需要大家好好理解一下，position属性为什么没有变，而frame却改变了</p>
-<p>anchorPoint的坐标 也是使用的相对坐标来表示，当然也可以指定他是小于0或者大于1，来将图层内容放在图层范围之外</p>
-<p>那我们在想，我们可以通过图层的frame随意改变图层的位置，为什么还要通过anchorPoint来改变图层的位置，而且这个这么难以理解</p>
-<p>我们来举一个例子：</p>
-<p>我们需要模拟一个闹钟，闹钟的钟面由四张图片组成，为了简单，我们还是使用传统的四个UIImgaeView来加载，当然你也可以使用contents属性</p>
-<p><img src="http://o8bxt3lx0.bkt.clouddn.com/blog/2016-11-19-3.5.jpeg" alt=""></p>
-<p>我们使用NSTimer来更新闹钟，使用视图的transform属性来旋转钟表</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">- (void)viewDidLoad</div><div class="line">&#123;</div><div class="line">    [super viewDidLoad];</div><div class="line">    //start timer</div><div class="line">    self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(tick) userInfo:nil repeats:YES];</div><div class="line">                  ￼</div><div class="line">    //set initial hand positions</div><div class="line">    [self tick];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">//convert time to hours, minutes </div><div class="line"></div><div class="line">NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];</div><div class="line">NSUInteger units = NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit;</div><div class="line">NSDateComponents *components = [calendar components:units fromDate:[NSDate date]];</div><div class="line">CGFloat hoursAngle = (components.hour / 12.0) * M_PI * 2.0;</div><div class="line">//calculate hour hand angle //calculate minute hand angle</div><div class="line">CGFloat minsAngle = (components.minute / 60.0) * M_PI * 2.0;</div><div class="line">//calculate second hand angle</div><div class="line">CGFloat secsAngle = (components.second / 60.0) * M_PI * 2.0;</div><div class="line">//rotate hands</div><div class="line">self.hourHand.transform = CGAffineTransformMakeRotation(hoursAngle);</div><div class="line">self.minuteHand.transform = CGAffineTransformMakeRotation(minsAngle);</div><div class="line">self.secondHand.transform = CGAffineTransformMakeRotation(secsAngle);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><img src="http://o8bxt3lx0.bkt.clouddn.com/blog/2016-11-19-3.6.jpeg" alt=""></p>
-<p>这样看起来有点怪，我们可以看到，明显的时针分针的转动，都是通过中心位置转动，为什么呢？<br>因为默认的anchorPoint在中心位置，图片的旋转，都是围绕anchorPoint转动的，这时候我们就需要移动anchorPoint的位置了</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">self.secondHand.layer.anchorPoint = CGPointMake(0.5f, 0.9f); </div><div class="line">self.minuteHand.layer.anchorPoint = CGPointMake(0.5f, 0.9f); </div><div class="line">self.hourHand.layer.anchorPoint = CGPointMake(0.5f, 0.9f);</div></pre></td></tr></table></figure>
-<p>将每个指针的anchorPoint移动到需要他围绕旋转的位置</p>
-<p><img src="http://o8bxt3lx0.bkt.clouddn.com/blog/2016-11-19-3.7.jpeg" alt=""></p>
-<h3 id="圆角"><a href="#圆角" class="headerlink" title="圆角"></a>圆角</h3><p>圆角是iOS的一个标志性美学效果，我们想要实现圆角效果其实很简单</p>
-<p>CALayer有一个属性叫做conrnerRadius控制着图层的角的曲率，默认情况下，他为0表示<br>矩形，但是我们将他设置成任意的值</p>
-<p>我们在当前的VC中添加一个UIImageView,并设置他的cornerRadius为20个点，我们来看看效果</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">UIImageView *imagView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@&quot;timg&quot;]];</div><div class="line">imagView.frame = CGRectMake(50, 100, 150, 200);</div><div class="line">imagView.layer.cornerRadius = 20;</div><div class="line">[self.view addSubview:imagView];</div></pre></td></tr></table></figure>
-<p><img src="http://o8bxt3lx0.bkt.clouddn.com/blog/2016-11-19-Snip20161119_1.png" alt=""></p>
-<p>我们看到这个视图并没有显示出圆角，这是什么原因？</p>
-<p>这是因为</p>
-<p><strong>默认情况下，这个曲率值只影响背景颜色而不影响背景图片或是子图层</strong></p>
-<p>不过，如果我们将masksToBounds设置为yes，那么图层里面的所有东西都会被截取</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">imagView.layer.masksToBounds = YES;</div></pre></td></tr></table></figure>
-<p><img src="http://o8bxt3lx0.bkt.clouddn.com/blog/2016-11-19-070020.jpg" alt=""></p>
-<p>这样效果就出来了</p>
-<p>再来试一个例子，我们在这个图层的左上角加上一个超出了图片边界的一个view</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">UIImageView *imagView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@&quot;timg&quot;]];</div><div class="line">imagView.frame = CGRectMake(50, 100, 150, 200);</div><div class="line">//    imagView.layer.masksToBounds = YES;</div><div class="line">imagView.layer.cornerRadius = 20;</div><div class="line">[self.view addSubview:imagView];</div><div class="line">    </div><div class="line">UIView *view = [[UIView alloc] initWithFrame:CGRectMake(-10, -10, 20, 20)];</div><div class="line">view.backgroundColor = [UIColor redColor];</div><div class="line">[imagView addSubview:view];</div></pre></td></tr></table></figure>
-<p>如果我们未将图层的masksToBounds设置为yes，那么我们得到的效果是这样的</p>
-<p><img src="http://o8bxt3lx0.bkt.clouddn.com/blog/2016-11-19-070343.jpg" alt=""></p>
-<p>我们之前讲过，不管是图层还是视图，都会默认渲染超出父图层的视图或者图层</p>
-<p>如果我们将masksToBounds设置成了yes，按照我们之前讲的，这个红色的区域应该会被裁剪，那我们来看看效果</p>
-<p><img src="http://o8bxt3lx0.bkt.clouddn.com/blog/2016-11-19-070514.jpg" alt=""></p>
-<p>这样就完全将图层裁剪</p>
-<h3 id="图层边框"><a href="#图层边框" class="headerlink" title="图层边框"></a>图层边框</h3><p>CALayer还有两个非常有用的属性，borderWidth和borderColor，这两个可以用来设置图层边的样式</p>
-<p>我们设置一下图片的边框</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">UIImageView *imagView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@&quot;timg&quot;]];</div><div class="line">imagView.frame = CGRectMake(50, 100, 150, 200);</div><div class="line">//    imagView.layer.masksToBounds = YES;</div><div class="line">imagView.layer.cornerRadius = 20;</div><div class="line">[self.view addSubview:imagView];</div><div class="line">    </div><div class="line">UIView *view = [[UIView alloc] initWithFrame:CGRectMake(-10, -10, 20, 20)];</div><div class="line">view.backgroundColor = [UIColor redColor];</div><div class="line">[imagView addSubview:view];</div><div class="line">    </div><div class="line">imagView.layer.borderColor = [UIColor greenColor].CGColor;</div><div class="line">imagView.layer.borderWidth = 4;</div></pre></td></tr></table></figure>
-<p><img src="http://o8bxt3lx0.bkt.clouddn.com/blog/2016-11-19-070912.jpg" alt=""></p>
-<p>大家不要奇怪，为什么我们的边框会是这样的，那是因为图层的边框是跟着边界走的，和图层的内容并不相关，我们之前设置了图层的圆角，那么图层的边框就已经成为了有圆角的，但是图层内容，因为我们没有设置masksToBounds，所以图层的内容没有被裁剪</p>
-<p><img src="http://o8bxt3lx0.bkt.clouddn.com/blog/2016-11-19-071146.jpg" alt=""></p>
-<p>设置一下masksToBounds就可以了</p>
-<p><strong>所以设置圆角的时候不要忘记了masksToBounds属性</strong></p>
-<h3 id="阴影"><a href="#阴影" class="headerlink" title="阴影"></a>阴影</h3><p>接下来，我们来介绍阴影，我们可以通过shadowOpacity来设置图层的阴影，<strong><em>shadowOpacity是一个必须在0.0（不可见）和1.0（完全不透明）之间的浮点数</em></strong></p>
-<p>如果我们要改变阴影的表现，有三个属性，可以通过他们来改变阴影的表现</p>
-<ul>
-<li>shadowColor</li>
-<li>shadowOffset</li>
-<li>shadowRadius</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">UIImageView *imagView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@&quot;1&quot;]];</div><div class="line">imagView.frame = CGRectMake(50, 100, 150, 200);</div><div class="line">[self.view addSubview:imagView];</div><div class="line">    </div><div class="line">imagView.layer.shadowColor = [UIColor redColor].CGColor;</div><div class="line">imagView.layer.shadowOffset = CGSizeMake(10, 20);</div><div class="line">imagView.layer.shadowRadius = 10;</div><div class="line">imagView.layer.shadowOpacity = 0.5;</div></pre></td></tr></table></figure>
-<p><img src="http://o8bxt3lx0.bkt.clouddn.com/blog/2016-11-19-072737.jpg" alt=""></p>
-<p><strong>shadowColor</strong>肯定是控制阴影颜色的，这个不用讲<br><strong>shadowOffset</strong>控制着阴影的方向和距离，他是一个CGSize，宽度控制这阴影横向的位移，高度控制着纵向的位移<br><strong>shadowRadius</strong>控制着阴影的模糊度</p>
-<p>我们通过阴影可以将我们的视图的立体感增强</p>
-
+                <div class="postShorten-excerpt" itemprop="articleBody">
+                    <p>继续我们之前的KVC和KVO系列，这是这个系列的最后一篇，这两周都没怎么写东西，估计这一周过后，文章更新会正常了，手头上的事情多了，就不想写了，写出来的东西也是粗制滥造</p>
                     
+                        <a href="/2016/07/05/KVC和KVO-三/" class="postShorten-excerpt_link link">
+                            阅读全文
+                        </a>
                         
-                    
-                    
-                        <p>
-                            <a href="/2016/11/18/iOS图形几何学基础/#post-footer" class="postShorten-excerpt_link link">
-                                注释和共享
-                            </a>
-                        </p>
                     
                 </div>
             
@@ -345,15 +260,58 @@
             <div class="postShorten-header">
                 <h1 class="postShorten-title" itemprop="headline">
                     
-                        <a class="link-unstyled" href="/2016/11/17/iOS-sqlite简单封装使用/">
+                        <a class="link-unstyled" href="/2016/06/28/KVC和KVO-二/">
+                            KVC和KVO(二)
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time itemprop="datePublished" datetime="2016-06-28T09:30:54+08:00">
+	
+		    6月 28, 2016
+    	
+    </time>
+    
+        <span>发布在 </span>
+        
+    <a class="category-link" href="/all-categories/KVC和KVO/">KVC和KVO</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-excerpt" itemprop="articleBody">
+                    <p>上一周实在是手头上的事情太多，项目忙着出版本，都没怎么写点东西，估计这一周也不会轻松，感觉已经好久没动了，还是需要积累点东西的。上一篇文章，我们讲到了KVC和KVO，我们接着完成这个系列，这个系列是我在喵神的Objc上看到的，结合自己的一点理解，记录下来。</p>
+                    
+                        <a href="/2016/06/28/KVC和KVO-二/" class="postShorten-excerpt_link link">
+                            阅读全文
+                        </a>
+                        
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-right" itemscope itemType="http://schema.org/BlogPosting">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title" itemprop="headline">
+                    
+                        <a class="link-unstyled" href="/2016/06/17/iOS-sqlite简单封装使用/">
                             iOS sqlite简单封装使用
                         </a>
                     
                 </h1>
                 <div class="postShorten-meta">
-    <time itemprop="datePublished" datetime="2016-11-17T16:38:49+08:00">
+    <time itemprop="datePublished" datetime="2016-06-17T16:38:49+08:00">
 	
-		    11月 17, 2016
+		    6月 17, 2016
     	
     </time>
     
@@ -370,7 +328,7 @@
                 <div class="postShorten-excerpt" itemprop="articleBody">
                     <p>sqlite几乎在每个APP编码都会涉及到，它是一种轻量级的数据库，在手机端使用起来极其方便，因为SQLite原生的接口都是使用C写的，不是特别友好，所有有一个强大库就出现了FMDB，今天我们基于FMDB来进行二次封装</p>
                     
-                        <a href="/2016/11/17/iOS-sqlite简单封装使用/" class="postShorten-excerpt_link link">
+                        <a href="/2016/06/17/iOS-sqlite简单封装使用/" class="postShorten-excerpt_link link">
                             阅读全文
                         </a>
                         
@@ -388,15 +346,58 @@
             <div class="postShorten-header">
                 <h1 class="postShorten-title" itemprop="headline">
                     
-                        <a class="link-unstyled" href="/2016/11/17/iOS每个ViewController一个NavigationBar/">
+                        <a class="link-unstyled" href="/2016/06/08/KVC和KVO(一)/">
+                            KVC和KVO(一)
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time itemprop="datePublished" datetime="2016-06-08T16:08:32+08:00">
+	
+		    6月 08, 2016
+    	
+    </time>
+    
+        <span>发布在 </span>
+        
+    <a class="category-link" href="/all-categories/KVC和KVO/">KVC和KVO</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-excerpt" itemprop="articleBody">
+                    <p>Key-value coding (KVC) 和 key-value observing (KVO) 是两种能让我们驾驭 Objective-C 动态特性并简化代码的机制。在这篇文章里，我们将接触一些如何利用这些特性的例子。</p>
+                    
+                        <a href="/2016/06/08/KVC和KVO(一)/" class="postShorten-excerpt_link link">
+                            阅读全文
+                        </a>
+                        
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-right" itemscope itemType="http://schema.org/BlogPosting">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title" itemprop="headline">
+                    
+                        <a class="link-unstyled" href="/2016/05/29/iOS每个ViewController一个NavigationBar/">
                             iOS每个ViewController一个NavigationBar
                         </a>
                     
                 </h1>
                 <div class="postShorten-meta">
-    <time itemprop="datePublished" datetime="2016-11-17T13:03:38+08:00">
+    <time itemprop="datePublished" datetime="2016-05-29T13:03:38+08:00">
 	
-		    11月 17, 2016
+		    5月 29, 2016
     	
     </time>
     
@@ -407,7 +408,7 @@
                 <div class="postShorten-excerpt" itemprop="articleBody">
                     <p>在日常开发中，我们经常会碰到一些关于导航栏的问题，例如视觉设计，经常性的改变NavigationBar的风格，虽然我们能够在viewwillApper中来进行处理，但是总是太麻烦，而且需要写很多多余的代码，今天就来讲讲这种效果，其实已经有很多APP都是使用这种效果</p>
                     
-                        <a href="/2016/11/17/iOS每个ViewController一个NavigationBar/" class="postShorten-excerpt_link link">
+                        <a href="/2016/05/29/iOS每个ViewController一个NavigationBar/" class="postShorten-excerpt_link link">
                             阅读全文
                         </a>
                         
@@ -425,15 +426,15 @@
             <div class="postShorten-header">
                 <h1 class="postShorten-title" itemprop="headline">
                     
-                        <a class="link-unstyled" href="/2016/11/16/iOS CALayer基础介绍/">
+                        <a class="link-unstyled" href="/2016/05/23/iOS CALayer基础介绍/">
                             iOS CALayer基础介绍
                         </a>
                     
                 </h1>
                 <div class="postShorten-meta">
-    <time itemprop="datePublished" datetime="2016-11-16T18:40:46+08:00">
+    <time itemprop="datePublished" datetime="2016-05-23T18:40:46+08:00">
 	
-		    11月 16, 2016
+		    5月 23, 2016
     	
     </time>
     
@@ -450,7 +451,7 @@
                 <div class="postShorten-excerpt" itemprop="articleBody">
                     <p>在上一篇文章中我们讲了CALayer和UIView之间的相似的树级关系，和他们之间的管理关系，并且介绍了CALayer的一些属性，在这片文章中，将继续介绍一些CALayer的属性，虽然这看起来很简单，但是后面等到我们做动画的时候，这些属性都是极其重要的。</p>
                     
-                        <a href="/2016/11/16/iOS CALayer基础介绍/" class="postShorten-excerpt_link link">
+                        <a href="/2016/05/23/iOS CALayer基础介绍/" class="postShorten-excerpt_link link">
                             阅读全文
                         </a>
                         
@@ -468,95 +469,15 @@
             <div class="postShorten-header">
                 <h1 class="postShorten-title" itemprop="headline">
                     
-                        <a class="link-unstyled" href="/2016/11/09/iOS基础开发技巧-二/">
-                            iOS基础开发技巧-二
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time itemprop="datePublished" datetime="2016-11-09T16:51:35+08:00">
-	
-		    11月 09, 2016
-    	
-    </time>
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-excerpt" itemprop="articleBody">
-                    <p>这里主要讲一些我在日常开发中用到的一些小的技巧，其实也算不上技巧吧，就是省去一些不必要的代码，或者有的小问题困扰你很久说不行在这里你能找到答案</p>
-                    
-                        <a href="/2016/11/09/iOS基础开发技巧-二/" class="postShorten-excerpt_link link">
-                            阅读全文
-                        </a>
-                        
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-right" itemscope itemType="http://schema.org/BlogPosting">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title" itemprop="headline">
-                    
-                        <a class="link-unstyled" href="/2016/11/08/iOS-有效编写高质量Objective-C方法-三/">
-                            iOS-有效编写高质量Objective-C方法-三
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time itemprop="datePublished" datetime="2016-11-08T09:49:28+08:00">
-	
-		    11月 08, 2016
-    	
-    </time>
-    
-        <span>发布在 </span>
-        
-    <a class="category-link" href="/all-categories/iOS-编写高质量代码的方法/">iOS 编写高质量代码的方法</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-excerpt" itemprop="articleBody">
-                    <p>本篇文章，主要是对OC中的一些原理的讲解，可能会有一些枯燥，但是真正当你理解时，会有一种豁然开朗的感觉。这里会涉及到 对象，属性，消息以及运行期的一些介绍，只有我们真正理解了这些原理之后，我们的开发水平才会进一步提升，而不是止步于view的简单编写，view的编写想要写得好，也需要了解这一些原理。</p>
-                    
-                        <a href="/2016/11/08/iOS-有效编写高质量Objective-C方法-三/" class="postShorten-excerpt_link link">
-                            阅读全文
-                        </a>
-                        
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-right" itemscope itemType="http://schema.org/BlogPosting">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title" itemprop="headline">
-                    
-                        <a class="link-unstyled" href="/2016/11/07/iOS-应用之间跳转传输数据以及跳回源程序/">
+                        <a class="link-unstyled" href="/2016/05/07/iOS-应用之间跳转传输数据以及跳回源程序/">
                             iOS 应用之间跳转传输数据以及跳回源程序
                         </a>
                     
                 </h1>
                 <div class="postShorten-meta">
-    <time itemprop="datePublished" datetime="2016-11-07T11:15:19+08:00">
+    <time itemprop="datePublished" datetime="2016-05-07T11:15:19+08:00">
 	
-		    11月 07, 2016
+		    5月 07, 2016
     	
     </time>
     
@@ -573,7 +494,7 @@
                 <div class="postShorten-excerpt" itemprop="articleBody">
                     <p>之前写了一篇关于APP之间跳转的文章，期间有同学说能否出一个类似于微信登录或者支付宝支付之类的，跳转到支付宝获得消息再调回源程序，并且带上信息。今天我们就再来聊聊，实现这样一种效果，没看过之前应用跳转的，请移步:<br>    <a href="http://ppsheep.com/2016/10/27/iOS应用之间的跳转解析/">http://ppsheep.com/2016/10/27/iOS应用之间的跳转解析/</a></p>
                     
-                        <a href="/2016/11/07/iOS-应用之间跳转传输数据以及跳回源程序/" class="postShorten-excerpt_link link">
+                        <a href="/2016/05/07/iOS-应用之间跳转传输数据以及跳回源程序/" class="postShorten-excerpt_link link">
                             阅读全文
                         </a>
                         
@@ -591,15 +512,52 @@
             <div class="postShorten-header">
                 <h1 class="postShorten-title" itemprop="headline">
                     
-                        <a class="link-unstyled" href="/2016/11/07/iOS基础开发技巧-一/">
+                        <a class="link-unstyled" href="/2016/04/27/iOS基础开发技巧-二/">
+                            iOS基础开发技巧-二
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time itemprop="datePublished" datetime="2016-04-27T16:51:35+08:00">
+	
+		    4月 27, 2016
+    	
+    </time>
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-excerpt" itemprop="articleBody">
+                    <p>这里主要讲一些我在日常开发中用到的一些小的技巧，其实也算不上技巧吧，就是省去一些不必要的代码，或者有的小问题困扰你很久说不行在这里你能找到答案</p>
+                    
+                        <a href="/2016/04/27/iOS基础开发技巧-二/" class="postShorten-excerpt_link link">
+                            阅读全文
+                        </a>
+                        
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-right" itemscope itemType="http://schema.org/BlogPosting">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title" itemprop="headline">
+                    
+                        <a class="link-unstyled" href="/2016/04/15/iOS基础开发技巧-一/">
                             iOS基础开发技巧(一)
                         </a>
                     
                 </h1>
                 <div class="postShorten-meta">
-    <time itemprop="datePublished" datetime="2016-11-07T09:43:23+08:00">
+    <time itemprop="datePublished" datetime="2016-04-15T09:43:23+08:00">
 	
-		    11月 07, 2016
+		    4月 15, 2016
     	
     </time>
     
@@ -616,7 +574,7 @@
                 <div class="postShorten-excerpt" itemprop="articleBody">
                     <p>这里主要讲一些我在日常开发中用到的一些小的技巧，其实也算不上技巧吧，就是省去一些不必要的代码，或者有的小问题困扰你很久说不行在这里你能找到答案</p>
                     
-                        <a href="/2016/11/07/iOS基础开发技巧-一/" class="postShorten-excerpt_link link">
+                        <a href="/2016/04/15/iOS基础开发技巧-一/" class="postShorten-excerpt_link link">
                             阅读全文
                         </a>
                         
@@ -634,15 +592,15 @@
             <div class="postShorten-header">
                 <h1 class="postShorten-title" itemprop="headline">
                     
-                        <a class="link-unstyled" href="/2016/11/05/iOS-KVO基础/">
+                        <a class="link-unstyled" href="/2016/04/05/iOS-KVO基础/">
                             iOS KVO基础
                         </a>
                     
                 </h1>
                 <div class="postShorten-meta">
-    <time itemprop="datePublished" datetime="2016-11-05T15:50:33+08:00">
+    <time itemprop="datePublished" datetime="2016-04-05T15:50:33+08:00">
 	
-		    11月 05, 2016
+		    4月 05, 2016
     	
     </time>
     
@@ -659,50 +617,7 @@
                 <div class="postShorten-excerpt" itemprop="articleBody">
                     <p>在Objc中有一种观察者模式，即是Key Value Observing(KVO)。利用KVO可以很容易实现视图组件和数据模型的分离。当数据模型的值改变时，会马上触发视图组件，更新视图组件。在Objc中要实现KVO，必须实现NSKeyValueObServing协议，所幸的是NSObject已经实现该协议，也就是说，几乎所有的Objc对象都可以使用KVO。</p>
                     
-                        <a href="/2016/11/05/iOS-KVO基础/" class="postShorten-excerpt_link link">
-                            阅读全文
-                        </a>
-                        
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-right" itemscope itemType="http://schema.org/BlogPosting">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title" itemprop="headline">
-                    
-                        <a class="link-unstyled" href="/2016/11/04/iOS-有效编写高质量Objective-C方法-二/">
-                            iOS-有效编写高质量Objective-C方法(二)
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time itemprop="datePublished" datetime="2016-11-04T15:28:43+08:00">
-	
-		    11月 04, 2016
-    	
-    </time>
-    
-        <span>发布在 </span>
-        
-    <a class="category-link" href="/all-categories/iOS-编写高质量代码的方法/">iOS 编写高质量代码的方法</a>
-
-
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-excerpt" itemprop="articleBody">
-                    <p>关于Effective Objective-C 的阅读分享系列文章，我们继续<br>在本篇文章中，我将重点介绍枚举类型，枚举在OC中，可以说用到的地方特别多，那我们真正有了解它吗？</p>
-                    
-                        <a href="/2016/11/04/iOS-有效编写高质量Objective-C方法-二/" class="postShorten-excerpt_link link">
+                        <a href="/2016/04/05/iOS-KVO基础/" class="postShorten-excerpt_link link">
                             阅读全文
                         </a>
                         
@@ -767,7 +682,9 @@
         
             <h4 id="about-card-name">ppsheep</h4>
         
-            <h5 id="about-card-bio"><p>一个就职于网易的初级iOS开发者，目前正在修炼自己，博客建立不久，正在寻找更好的写作方式。。。。。。。 目前还在维护一个微信公众号Sheep_iOS，文章末尾一般会有公众号二维码，博客的内容，我会同步到微信公众号，欢迎大家关注</p>
+            <h5 id="about-card-bio"><p>一个就职于网易的初级iOS开发者<br>目前正在修炼自己</p>
+<p>博客建立不久，正在寻找更好的写作方式<br>博客上的内容会同步到公众号Sheep_iOS，另外也会挑选一些比较好的文章推送给大家</p>
+<p>我个人的微信号YangQian5999<br>文章末尾一般会有公众号二维码<br>欢迎大家关注</p>
 </h5>
         
         

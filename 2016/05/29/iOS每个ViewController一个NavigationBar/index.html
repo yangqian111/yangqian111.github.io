@@ -1,0 +1,522 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="ppsheep">
+    <title>iOS每个ViewController一个NavigationBar - ppsheep</title>
+    <meta name="author" content="ppsheep">
+    
+    
+    
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+    
+    <meta name="description" content="在日常开发中，我们经常会碰到一些关于导航栏的问题，例如视觉设计，经常性的改变NavigationBar的风格，虽然我们能够在viewwillApper中来进行处理，但是总是太麻烦，而且需要写很多多余的代码，今天就来讲讲这种效果，其实已经有很多APP都是使用这种效果">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="iOS每个ViewController一个NavigationBar">
+<meta property="og:url" content="http://ppsheep.com/2016/05/29/iOS每个ViewController一个NavigationBar/index.html">
+<meta property="og:site_name" content="ppsheep">
+<meta property="og:description" content="在日常开发中，我们经常会碰到一些关于导航栏的问题，例如视觉设计，经常性的改变NavigationBar的风格，虽然我们能够在viewwillApper中来进行处理，但是总是太麻烦，而且需要写很多多余的代码，今天就来讲讲这种效果，其实已经有很多APP都是使用这种效果">
+<meta property="og:image" content="http://i.imgur.com/Hz7Ixkj.gif">
+<meta property="og:image" content="http://i.imgur.com/JClX4Z3.gif">
+<meta property="og:image" content="http://i.imgur.com/L89Z6fk.gif">
+<meta property="og:image" content="http://i.imgur.com/zOrrJZW.jpg">
+<meta property="og:image" content="http://i.imgur.com/I5tVOEx.gif">
+<meta property="og:image" content="http://i.imgur.com/tQ2vyPz.gif">
+<meta property="og:image" content="http://i.imgur.com/8ABurCG.gif">
+<meta property="og:image" content="http://i.imgur.com/mFby2bB.gif">
+<meta property="og:updated_time" content="2017-02-15T05:09:38.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS每个ViewController一个NavigationBar">
+<meta name="twitter:description" content="在日常开发中，我们经常会碰到一些关于导航栏的问题，例如视觉设计，经常性的改变NavigationBar的风格，虽然我们能够在viewwillApper中来进行处理，但是总是太麻烦，而且需要写很多多余的代码，今天就来讲讲这种效果，其实已经有很多APP都是使用这种效果">
+<meta name="twitter:image" content="http://i.imgur.com/Hz7Ixkj.gif">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/7931417.jpeg"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-nuvue6sithwirecbhvw3dkaobiojqvtadsnhguwi7k04xklybw5djl1smadp.min.css">
+    <!--STYLES END-->
+    
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="3">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <h1 class="header-title">
+        <a class="header-title-link" href="/ ">ppsheep</a>
+    </h1>
+    
+        
+            <a  class="header-right-picture "
+                href="#about">
+        
+        
+            <img class="header-picture" src="http://o8bxt3lx0.bkt.clouddn.com/7931417.jpeg"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="3">
+    
+        <div class="sidebar-profile">
+            <a href="/#about">
+                    <img class="sidebar-profile-picture" src="http://o8bxt3lx0.bkt.clouddn.com/7931417.jpeg"/>
+            </a>
+            <span class="sidebar-profile-name">ppsheep</span>
+        </div>
+    
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/ "
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+                    <span class="sidebar-button-desc">首页</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-categories"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+                    <span class="sidebar-button-desc">分类</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-tags"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+                    <span class="sidebar-button-desc">标签</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-archives"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+                    <span class="sidebar-button-desc">归档</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link st-search-show-outputs"
+                         href="#search"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-search"></i>
+                    <span class="sidebar-button-desc">搜索</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="#about"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+                    <span class="sidebar-button-desc">关于</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="https://github.com/yangqian111" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+                    <span class="sidebar-button-desc">GitHub</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="mailto:787688073@qq.com" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-envelope-o"></i>
+                    <span class="sidebar-button-desc">邮箱</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/atom.xml"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+                    <span class="sidebar-button-desc">RSS</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+</nav>
+
+            
+            <div id="main" data-behavior="3"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post" itemscope itemType="http://schema.org/BlogPosting">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title" itemprop="headline">
+            iOS每个ViewController一个NavigationBar
+        </h1>
+    
+    <div class="post-meta">
+    <time itemprop="datePublished" datetime="2016-05-29T13:03:38+08:00">
+	
+		    5月 29, 2016
+    	
+    </time>
+    
+</div>
+
+</div>
+    
+    <div class="post-content markdown" itemprop="articleBody">
+        <div class="main-content-wrap">
+            <p>在日常开发中，我们经常会碰到一些关于导航栏的问题，例如视觉设计，经常性的改变NavigationBar的风格，虽然我们能够在viewwillApper中来进行处理，但是总是太麻烦，而且需要写很多多余的代码，今天就来讲讲这种效果，其实已经有很多APP都是使用这种效果</p>
+<a id="more"></a>
+<p>我们先来看看已经有的一些APP使用的这种效果</p>
+<p>这是天猫APP的效果，注意观察他的导航栏</p>
+<p><img src="http://i.imgur.com/Hz7Ixkj.gif" alt=""></p>
+<p>这是网易新闻，注意看导航栏</p>
+<p><img src="http://i.imgur.com/JClX4Z3.gif" alt=""></p>
+<p>越来越多的APP采用这种样式来控制导航栏的不同风格，今天我们就来实现这一效果。</p>
+<p>这里需要使用到一个第三方库</p>
+<p><a href="https://github.com/rickytan/RTRootNavigationController" target="_blank" rel="external">https://github.com/rickytan/RTRootNavigationController</a></p>
+<p>借助这个库我们能够轻松实现这一效果</p>
+<p>新建一个工程，这里我们使用cocoapods来集成这个第三方库</p>
+<h3 id="集成RTRootNavigationController"><a href="#集成RTRootNavigationController" class="headerlink" title="集成RTRootNavigationController"></a>集成RTRootNavigationController</h3><p>podfile</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">workspace ‘iOS每个VC单独的一个导航栏.xcworkspace’</div><div class="line"></div><div class="line">project ‘iOS每个VC单独的一个导航栏.xcodeproj’</div><div class="line"></div><div class="line">platform :ios, &apos;8.0&apos;</div><div class="line"></div><div class="line">target &apos;iOS每个VC单独的一个导航栏&apos; do </div><div class="line"></div><div class="line">pod ‘RTRootNavigationController’</div><div class="line"></div><div class="line">end</div></pre></td></tr></table></figure>
+<h3 id="使用RTRootNavigationController当做当前的rootController"><a href="#使用RTRootNavigationController当做当前的rootController" class="headerlink" title="使用RTRootNavigationController当做当前的rootController"></a>使用RTRootNavigationController当做当前的rootController</h3><h4 id="创建BaseViewController"><a href="#创建BaseViewController" class="headerlink" title="创建BaseViewController"></a>创建BaseViewController</h4><p>我这里新建一个BaseViewController 主要是为了引入RTRootNavigationController，当然如果是OC项目的话，可以直接创建一个PCH文件，直接全局引用也行，不过我们一般都会有一个基类的ViewController，在这个基类中，没有做任何操作，只是引用了一个RTRootNavigationController</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">#import &quot;RTRootNavigationController.h&quot;</div><div class="line"></div><div class="line">@interface BaseViewController : UIViewController</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
+<h4 id="设置根控制器"><a href="#设置根控制器" class="headerlink" title="设置根控制器"></a>设置根控制器</h4><p>在Appdelegate中，我们需要将我们的window的rootcontroller设置为RTRootNavigationController</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];</div><div class="line">ViewController *viewController = [[ViewController alloc] init];</div><div class="line">RTRootNavigationController *rootViewController1 = [[RTRootNavigationController alloc] initWithRootViewController:viewController];</div><div class="line">_window.rootViewController = rootViewController1;</div><div class="line">_window.backgroundColor = [UIColor whiteColor];</div><div class="line">[_window makeKeyAndVisible];</div><div class="line">return YES;</div></pre></td></tr></table></figure>
+<p>在ViewController中，我们需要push出去一个vc的时候，我们需要这样实现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">//注意这里push的时候需要使用rt_navigation push出去</div><div class="line">[self.rt_navigationController pushViewController:vc1 animated:YES complete:nil];</div></pre></td></tr></table></figure>
+<p>看一下效果</p>
+<p><img src="http://i.imgur.com/L89Z6fk.gif" alt=""></p>
+<h4 id="设置返回NavigationBar按钮"><a href="#设置返回NavigationBar按钮" class="headerlink" title="设置返回NavigationBar按钮"></a>设置返回NavigationBar按钮</h4><p>在当前的vc中，我们设置返回按钮，或者其他的按钮，也很方便</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"> UIButton *btn1 = [UIButton buttonWithType:UIButtonTypeCustom];</div><div class="line">[btn1 addTarget:self action:@selector(leftBar1Clicked) forControlEvents:UIControlEventTouchUpInside];</div><div class="line">[btn1 setTitle:@&quot;返回1&quot; forState:UIControlStateNormal];</div><div class="line">[btn1 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];</div><div class="line">[btn1 sizeToFit];</div><div class="line">UIBarButtonItem *item1 = [[UIBarButtonItem alloc] initWithCustomView:btn1];</div><div class="line">    </div><div class="line">UIButton *btn2 = [UIButton buttonWithType:UIButtonTypeCustom];</div><div class="line">[btn2 setTitle:@&quot;返回2&quot; forState:UIControlStateNormal];</div><div class="line">[btn2 setTitleColor:[UIColor redColor] forState:UIControlStateNormal];</div><div class="line">[btn2 addTarget:self action:@selector(leftBar2Clicked) forControlEvents:UIControlEventTouchUpInside];</div><div class="line">[btn2 sizeToFit];</div><div class="line">UIBarButtonItem *item2 = [[UIBarButtonItem alloc] initWithCustomView:btn2];</div><div class="line"></div><div class="line">self.navigationItem.leftBarButtonItems = @[item1,item2];</div><div class="line">    </div><div class="line">UIButton *btn3 = [UIButton buttonWithType:UIButtonTypeCustom];</div><div class="line">[btn3 setTitle:@&quot;右键&quot; forState:UIControlStateNormal];</div><div class="line">[btn3 setTitleColor:[UIColor redColor] forState:UIControlStateNormal];</div><div class="line">[btn3 addTarget:self action:@selector(rightBarClicked) forControlEvents:UIControlEventTouchUpInside];</div><div class="line">[btn3 sizeToFit];</div><div class="line">UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:btn3];</div><div class="line">    </div><div class="line">self.navigationItem.rightBarButtonItem = rightItem;</div><div class="line">    </div><div class="line">[self.view addSubview:label];</div></pre></td></tr></table></figure>
+<p><img src="http://i.imgur.com/zOrrJZW.jpg" alt=""></p>
+<p>多个按钮定义也是很方便的</p>
+<p>如果只是需要一个左边的返回按钮，这个按钮需要自定义样式，那么可以直接在当前VC冲下方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> 如果对于返回事件不需要做任何处理，</div><div class="line"> 但是有想要自定义返回按钮的样式，</div><div class="line"> 可以直接重写这个方法</div><div class="line"></div><div class="line"> @param target 监听对象</div><div class="line"> @param action 返回事件</div><div class="line"> @return 自定义的返回按钮</div><div class="line"> */</div><div class="line">-(UIBarButtonItem *)customBackItemWithTarget:(id)target action:(SEL)action&#123;</div><div class="line">    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];</div><div class="line">    [btn setTitle:@&quot;返回&quot; forState:UIControlStateNormal];</div><div class="line">    [btn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];</div><div class="line">    [btn sizeToFit];</div><div class="line">    [btn addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];</div><div class="line">    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:btn];</div><div class="line">    return item;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这样的话，就不要去单独设置左上角的返回按钮了</p>
+<p><img src="http://i.imgur.com/I5tVOEx.gif" alt=""></p>
+<h4 id="跳到最开始的VC"><a href="#跳到最开始的VC" class="headerlink" title="跳到最开始的VC"></a>跳到最开始的VC</h4><p>在我们pop的时候，可以直接pop在栈顶的VC</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[self.rt_navigationController popToRootViewControllerAnimated:YES complete:nil];</div></pre></td></tr></table></figure>
+<p><img src="http://i.imgur.com/tQ2vyPz.gif" alt=""></p>
+<h4 id="push到另外一个VC-销毁当前的VC"><a href="#push到另外一个VC-销毁当前的VC" class="headerlink" title="push到另外一个VC 销毁当前的VC"></a>push到另外一个VC 销毁当前的VC</h4><p>有时我们想要实现这样一种效果，当当前的VCpush出去过后，希望销毁当前的VC</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">ViewController4 *vc4 = [[ViewController4 alloc] init];</div><div class="line">[self.rt_navigationController pushViewController:vc4 animated:vc4 complete:^(BOOL finished) &#123;</div><div class="line">     [self.rt_navigationController removeViewController:self];</div><div class="line"> &#125;];</div></pre></td></tr></table></figure>
+<p><img src="http://i.imgur.com/8ABurCG.gif" alt=""></p>
+<h4 id="更改导航栏颜色"><a href="#更改导航栏颜色" class="headerlink" title="更改导航栏颜色"></a>更改导航栏颜色</h4><p>之前忘记更改导航栏的颜色了，这里看一下，更改导航栏的颜色，只需要</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">self.navigationController.navigationBar.barTintColor = [UIColor greenColor];</div></pre></td></tr></table></figure>
+<p><img src="http://i.imgur.com/mFby2bB.gif" alt=""></p>
+<p><strong>总结</strong></p>
+<p>如果你的APP在导航栏有多种样式的话，你完全可以使用这种方法，使用起来很方便</p>
+<p>感谢:<br>    rickyTan开源<br>    <a href="https://github.com/rickytan/RTRootNavigationController" target="_blank" rel="external">https://github.com/rickytan/RTRootNavigationController</a></p>
+<p>项目的源码我放在了：<br>    <a href="https://github.com/yangqian111/blog/tree/master/iOS每个VC单独的一个导航栏" target="_blank" rel="external">https://github.com/yangqian111/blog/tree/master/iOS每个VC单独的一个导航栏</a></p>
+<p><strong>欢迎大家关注我的公众号，我会定期分享一些我在项目中遇到问题的解决办法和一些iOS实用的技巧，现阶段主要是整理出一些基础的知识记录下来</strong></p>
+<div align="middle"><br>    <image src="http://ac-mhke0kuv.clouddn.com/830a4ead8294ceff5160.jpg"></image><br></div>
+
+<p>文章也会同步更新到我的博客：<br><a href="http://ppsheep.com">http://ppsheep.com</a></p>
+
+            
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+        <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/06/08/KVC和KVO(一)/"  data-tooltip="KVC和KVO(一)">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/05/23/iOS CALayer基础介绍/" data-tooltip="iOS CALayer基础介绍">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://ppsheep.com/2016/05/29/iOS每个ViewController一个NavigationBar/">
+                <i class="fa fa-google-plus"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://ppsheep.com/2016/05/29/iOS每个ViewController一个NavigationBar/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://ppsheep.com/2016/05/29/iOS每个ViewController一个NavigationBar/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        
+            <li class="post-action">
+                <a class="post-action-btn btn btn--default" href="#ds-thread">
+                    <i class="fa fa-comment-o"></i>
+                </a>
+            </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+            
+                <div id="ds-thread" class="ds-thread" data-thread-key="2016/05/29/iOS每个ViewController一个NavigationBar/"
+     data-title="iOS每个ViewController一个NavigationBar" data-url="http://ppsheep.com/2016/05/29/iOS每个ViewController一个NavigationBar/">
+</div>
+
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2017 ppsheep. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="3">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/06/08/KVC和KVO(一)/"  data-tooltip="KVC和KVO(一)">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2016/05/23/iOS CALayer基础介绍/" data-tooltip="iOS CALayer基础介绍">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://ppsheep.com/2016/05/29/iOS每个ViewController一个NavigationBar/">
+                <i class="fa fa-google-plus"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://ppsheep.com/2016/05/29/iOS每个ViewController一个NavigationBar/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://ppsheep.com/2016/05/29/iOS每个ViewController一个NavigationBar/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        
+            <li class="post-action">
+                <a class="post-action-btn btn btn--default" href="#ds-thread">
+                    <i class="fa fa-comment-o"></i>
+                </a>
+            </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="3">
+    <ul class="share-options">
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://ppsheep.com/2016/05/29/iOS每个ViewController一个NavigationBar/">
+                <i class="fa fa-google-plus"></i><span class="">分享到 Google+</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://ppsheep.com/2016/05/29/iOS每个ViewController一个NavigationBar/">
+                <i class="fa fa-facebook-official"></i><span>分享到 Facebook</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://ppsheep.com/2016/05/29/iOS每个ViewController一个NavigationBar/">
+                <i class="fa fa-twitter"></i><span>分享到 Twitter</span>
+            </a>
+        </li>
+    </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-remove"></i>
+        </div>
+        
+            <img id="about-card-picture" src="http://o8bxt3lx0.bkt.clouddn.com/7931417.jpeg"/>
+        
+            <h4 id="about-card-name">ppsheep</h4>
+        
+            <h5 id="about-card-bio"><p>一个就职于网易的初级iOS开发者<br>目前正在修炼自己</p>
+<p>博客建立不久，正在寻找更好的写作方式<br>博客上的内容会同步到公众号Sheep_iOS，另外也会挑选一些比较好的文章推送给大家</p>
+<p>我个人的微信号YangQian5999<br>文章末尾一般会有公众号二维码<br>欢迎大家关注</p>
+</h5>
+        
+        
+            <h5 id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>iOS开发者</p>
+
+            </h5>
+        
+        
+            <h5 id="about-card-location">
+                <i class="fa fa-map-marker"></i>
+                <br/>
+                杭州
+            </h5>
+        
+    </div>
+</div>
+
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+    </body>
+    <!--SCRIPTS-->
+<script src="/assets/js/script-i4qo6jx6jji9fg0dftpya6ivemizsbow4fhow76d8dwpm7m1wbvi378ssumx.min.js"></script>
+<!--SCRIPTS END-->
+
+    
+        <script type="text/javascript">
+            var duoshuoQuery = {short_name:'yangqian111'};
+            (function() {
+                var ds = document.createElement('script');
+                ds.type = 'text/javascript';ds.async = true;
+                ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+                ds.charset = 'UTF-8';
+                (document.getElementsByTagName('head')[0]
+                || document.getElementsByTagName('body')[0]).appendChild(ds);
+            })();
+        </script>
+    
+
+
+
+</html>
