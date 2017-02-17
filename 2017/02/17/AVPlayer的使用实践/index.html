@@ -1,0 +1,541 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="ppsheep">
+    <title>AVPlayer的使用实践 - ppsheep</title>
+    <meta name="author" content="ppsheep">
+    
+    
+    
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+    
+    <meta name="description" content="前两天在网上看到一篇博客，介绍AVPlayer的使用，但是只简单介绍了一下单个的本地文件如何播放，心血来潮，就想着做一个类似于播放器的东西，能够实现播放网络歌曲，循环播放多首音乐，下面我们来实现一下">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="AVPlayer的使用实践">
+<meta property="og:url" content="http://ppsheep.com/2017/02/17/AVPlayer的使用实践/index.html">
+<meta property="og:site_name" content="ppsheep">
+<meta property="og:description" content="前两天在网上看到一篇博客，介绍AVPlayer的使用，但是只简单介绍了一下单个的本地文件如何播放，心血来潮，就想着做一个类似于播放器的东西，能够实现播放网络歌曲，循环播放多首音乐，下面我们来实现一下">
+<meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/blog/2017-02-17-100118.jpg">
+<meta property="og:updated_time" content="2017-02-17T10:14:08.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="AVPlayer的使用实践">
+<meta name="twitter:description" content="前两天在网上看到一篇博客，介绍AVPlayer的使用，但是只简单介绍了一下单个的本地文件如何播放，心血来潮，就想着做一个类似于播放器的东西，能够实现播放网络歌曲，循环播放多首音乐，下面我们来实现一下">
+<meta name="twitter:image" content="http://o8bxt3lx0.bkt.clouddn.com/blog/2017-02-17-100118.jpg">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/7931417.jpeg"/>
+    
+    
+        <meta property="og:image" content="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1487333225527&amp;di=e1436c4803287b5e1003403b9002f82c&amp;imgtype=0&amp;src=http%3A%2F%2Fpic.58pic.com%2F58pic%2F14%2F82%2F01%2F95y58PICKbG_1024.jpg"/>
+        <meta class="swiftype" name="image" data-type="enum" content="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1487333225527&amp;di=e1436c4803287b5e1003403b9002f82c&amp;imgtype=0&amp;src=http%3A%2F%2Fpic.58pic.com%2F58pic%2F14%2F82%2F01%2F95y58PICKbG_1024.jpg" />
+    
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-nuvue6sithwirecbhvw3dkaobiojqvtadsnhguwi7k04xklybw5djl1smadp.min.css">
+    <!--STYLES END-->
+    
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="3">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <h1 class="header-title">
+        <a class="header-title-link" href="/ ">ppsheep</a>
+    </h1>
+    
+        
+            <a  class="header-right-picture "
+                href="#about">
+        
+        
+            <img class="header-picture" src="http://o8bxt3lx0.bkt.clouddn.com/7931417.jpeg"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="3">
+    
+        <div class="sidebar-profile">
+            <a href="/#about">
+                    <img class="sidebar-profile-picture" src="http://o8bxt3lx0.bkt.clouddn.com/7931417.jpeg"/>
+            </a>
+            <span class="sidebar-profile-name">ppsheep</span>
+        </div>
+    
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/ "
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+                    <span class="sidebar-button-desc">首页</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-categories"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+                    <span class="sidebar-button-desc">分类</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-tags"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+                    <span class="sidebar-button-desc">标签</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-archives"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+                    <span class="sidebar-button-desc">归档</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link st-search-show-outputs"
+                         href="#search"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-search"></i>
+                    <span class="sidebar-button-desc">搜索</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="#about"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+                    <span class="sidebar-button-desc">关于</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="https://github.com/yangqian111" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+                    <span class="sidebar-button-desc">GitHub</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="mailto:787688073@qq.com" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-envelope-o"></i>
+                    <span class="sidebar-button-desc">邮箱</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/atom.xml"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+                    <span class="sidebar-button-desc">RSS</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+</nav>
+
+            
+            <div id="main" data-behavior="3"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post" itemscope itemType="http://schema.org/BlogPosting">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title" itemprop="headline">
+            AVPlayer的使用实践
+        </h1>
+    
+    <div class="post-meta">
+    <time itemprop="datePublished" datetime="2017-02-17T17:17:58+08:00">
+	
+		    2月 17, 2017
+    	
+    </time>
+    
+        <span>发布在 </span>
+        
+    <a class="category-link" href="/all-categories/iOS基础/">iOS基础</a>
+
+
+    
+</div>
+
+</div>
+    
+    <div class="post-content markdown" itemprop="articleBody">
+        <div class="main-content-wrap">
+            <p>前两天在网上看到一篇博客，介绍AVPlayer的使用，但是只简单介绍了一下单个的本地文件如何播放，心血来潮，就想着做一个类似于播放器的东西，能够实现播放网络歌曲，循环播放多首音乐，下面我们来实现一下</p>
+<a id="more"></a>
+<p>首先明确一下，在本文中需要讲到的几点：</p>
+<ul>
+<li>实现网络歌曲的播放</li>
+<li>实现在后台也能播放歌曲</li>
+<li>实现多首歌曲的循环播放</li>
+<li>需要有播放/暂停和下一首的功能</li>
+<li>需要在播放期间能够得知该首歌曲的总时长和当前播放时长</li>
+</ul>
+<p>本文中就暂时将这名多，后面还会丰富，例如实现缓存下载，实现歌曲缓存的进度查看，实现能够使用耳机按钮控制播放等等。</p>
+<h3 id="播放网络歌曲"><a href="#播放网络歌曲" class="headerlink" title="播放网络歌曲"></a>播放网络歌曲</h3><p>因为需要播放网络歌曲，我就往七牛云上传了几首歌，就不用再自己到处去找歌曲了</p>
+<p>首先，明确我们播放歌曲使用的是AVPlayer，至于为什么使用它不使用其他的，因为它好用啊，苹果封装了强大的功能，让我们使用，干嘛不用！其实还有其他原因，这个就等着你自己去搜索了。</p>
+<h5 id="AVQueuePlayer"><a href="#AVQueuePlayer" class="headerlink" title="AVQueuePlayer"></a>AVQueuePlayer</h5><p>AVQueuePlayer是AVPlayer的一个子类，他可以实现多首歌曲播放，所以我们直接使用它了</p>
+<figure class="highlight obj-c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//传入多个AVPlayerItem来初始化AVQueuePlayer</span></div><div class="line">+ (<span class="keyword">instancetype</span>)queuePlayerWithItems:(<span class="built_in">NSArray</span>&lt;<span class="built_in">AVPlayerItem</span> *&gt; *)items;</div></pre></td></tr></table></figure>
+<h5 id="AVPlayerItem"><a href="#AVPlayerItem" class="headerlink" title="AVPlayerItem"></a>AVPlayerItem</h5><p>AVPlayerItem是一个资源对象，我们加载歌曲的时候都是使用它，它提供了两种初始化方法</p>
+<figure class="highlight obj-c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//初始化网络资源</span></div><div class="line">+ (<span class="keyword">instancetype</span>)playerItemWithURL:(<span class="built_in">NSURL</span> *)URL;</div><div class="line"></div><div class="line"><span class="comment">//初始化本地资源，本地的音乐或者影片资源都是通过AVAsset拿出来</span></div><div class="line">+ (<span class="keyword">instancetype</span>)playerItemWithAsset:(<span class="built_in">AVAsset</span> *)asset;</div></pre></td></tr></table></figure>
+<p>先来试一下：</p>
+<figure class="highlight obj-c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//初始化AVPlayerItem</span></div><div class="line"><span class="built_in">NSMutableArray</span> *items = [<span class="built_in">NSMutableArray</span> array];</div><div class="line"><span class="built_in">NSArray</span> *urls = @[MUSIC_URL1,MUSIC_URL2,MUSIC_URL3,MUSIC_URL4,MUSIC_URL5];</div><div class="line"><span class="keyword">for</span> (<span class="built_in">NSString</span> *url <span class="keyword">in</span> urls) &#123;</div><div class="line">        <span class="built_in">AVPlayerItem</span> *item = [[<span class="built_in">AVPlayerItem</span> alloc] initWithURL:[<span class="built_in">NSURL</span> URLWithString:url]];</div><div class="line">        [items addObject:item];</div><div class="line">    &#125;</div><div class="line"><span class="comment">//初始化AVQueuePlayer</span></div><div class="line"><span class="built_in">AVQueuePlayer</span> *player = [<span class="built_in">AVQueuePlayer</span> queuePlayerWithItems: items];</div><div class="line"><span class="comment">//测试播放</span></div><div class="line"><span class="keyword">if</span>(player.status == <span class="built_in">AVPlayerStatusReadyToPlay</span>)&#123;</div><div class="line">	[player play];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上面的代码看起来没有错，但是我在做的时候，却遇到一个问题，第一次点击的时候，并不会播放，第二次第三次就会开始播放了。</p>
+<p>其实这里是有一个缓冲的原因，因为是网络资源，涉及到一个缓冲，后面我们会对这个做处理，歌曲确实是能够播放的</p>
+<p>就这样，简单实现了多首歌曲的播放，但是我们还需要实现循环播放，这个就相对麻烦一点了。</p>
+<p>要实现循环播放，我们就需要知道AVQueuePlayer的播放机制，对于AVQueuePlayer播放，是有一个队列，每次播放完成一首歌曲过后，这首歌曲就会从队列中删除，即这个item会从队列中删除，并且如果我们想直接再将这个item再次加入队列，是不能够加入的，我们必须要在new 一个item,再次加载到这个队列当中，才能够实现再次播放。这个也是挺蛋疼的。</p>
+<p>知道了这个，我们就有想法了，我们能够在player最后一首歌曲即将播放完成后，再来新建一个队列啊。思路是正确的，但是我们不能够直接得到player正在播放最后一首歌曲，这时候我想到的是一个timer检测，通过timer去检测player的播放队列是否还剩下一首歌曲，如果是的话，我们就新建队列，加入到player的播放序列中</p>
+<p>首先，我们在开始播放歌曲的时候，就需要将timer启动，监测player</p>
+<figure class="highlight obj-c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">self</span>.checkMusicTimer = [<span class="built_in">NSTimer</span> scheduledTimerWithTimeInterval:<span class="number">3</span> target:<span class="keyword">self</span> selector:<span class="keyword">@selector</span>(checkMusic) userInfo:<span class="literal">nil</span> repeats:<span class="literal">YES</span>];</div></pre></td></tr></table></figure>
+<p>在checkMusic我们判断当前是否队列中只有一首歌曲</p>
+<figure class="highlight obj-c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)checkMusic</div><div class="line">&#123;</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (<span class="keyword">self</span>.player.items.count == <span class="number">1</span>)&#123;</div><div class="line">        [<span class="keyword">self</span> prepareItems];<span class="comment">//这个方法即是再次创建队列，加入到player播放序列中</span></div><div class="line">        [<span class="keyword">self</span> play];</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight obj-c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 准备歌曲</span></div><div class="line"><span class="comment">// 因为需要歌曲循环播放，每次AVQueuePlayer播放完成一首歌曲，就会将其从队列中移除</span></div><div class="line"><span class="comment">// 所以我们需要在歌曲最后一首播放完之前重新为AVQueuePlayer创建一个播放队列，这样就能够实现循环播放</span></div><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">//</span></div><div class="line">- (<span class="keyword">void</span>)prepareItems&#123;</div><div class="line">    <span class="built_in">NSMutableArray</span> *items = [<span class="built_in">NSMutableArray</span> array];</div><div class="line">    <span class="built_in">NSArray</span> *urls = @[MUSIC_URL1,MUSIC_URL2,MUSIC_URL3,MUSIC_URL4,MUSIC_URL5];</div><div class="line">    <span class="keyword">for</span> (<span class="built_in">NSString</span> *url <span class="keyword">in</span> urls) &#123;</div><div class="line">        <span class="built_in">AVPlayerItem</span> *item = [[<span class="built_in">AVPlayerItem</span> alloc] initWithURL:[<span class="built_in">NSURL</span> URLWithString:url]];</div><div class="line">        [items addObject:item];</div><div class="line"><span class="comment">//这里是添加每首歌曲的监测，我们后面会讲到</span></div><div class="line">        [item addObserver:<span class="keyword">self</span> forKeyPath:<span class="string">@"loadedTimeRanges"</span> options:<span class="built_in">NSKeyValueObservingOptionNew</span> context:<span class="literal">nil</span>];</div><div class="line">        [[<span class="built_in">NSNotificationCenter</span> defaultCenter] addObserver:<span class="keyword">self</span> selector:<span class="keyword">@selector</span>(playbackFinished:) name:<span class="built_in">AVPlayerItemDidPlayToEndTimeNotification</span> object:item];</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">self</span>.playerItems = items;</div><div class="line">    <span class="keyword">for</span> (<span class="built_in">AVPlayerItem</span> *item <span class="keyword">in</span> items) &#123;</div><div class="line">        <span class="keyword">if</span> ([<span class="keyword">self</span>.player canInsertItem:item afterItem:<span class="keyword">self</span>.player.items.lastObject]) &#123;</div><div class="line">            [<span class="keyword">self</span>.player insertItem:item afterItem:<span class="keyword">self</span>.player.items.lastObject];</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这样一来，我们就能够实现循环播放了，这里的代码和后面要讲到的有关联，所以这里看不清晰也没关系，接着往后看</p>
+<p>上面我们讲了，有个缓冲的原因，导致首次点击播放的时候，不能够成功播放，在AVPlayerItem中有一个属性loadedTimeRanges，表示的是缓存状态，我们可以对他进行观察，来进行播放</p>
+<figure class="highlight obj-c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//上面的代码已经写出了对缓冲的检测</span></div><div class="line">[item addObserver:<span class="keyword">self</span> forKeyPath:<span class="string">@"loadedTimeRanges"</span> options:<span class="built_in">NSKeyValueObservingOptionNew</span> context:<span class="literal">nil</span>];</div></pre></td></tr></table></figure>
+<p>然后我们在观察者中</p>
+<figure class="highlight obj-c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">-(<span class="keyword">void</span>)observeValueForKeyPath:(<span class="built_in">NSString</span> *)keyPath ofObject:(<span class="keyword">id</span>)object change:(<span class="built_in">NSDictionary</span>&lt;<span class="built_in">NSKeyValueChangeKey</span>,<span class="keyword">id</span>&gt; *)change context:(<span class="keyword">void</span> *)context&#123;</div><div class="line">    <span class="keyword">if</span> ([keyPath isEqualToString:<span class="string">@"loadedTimeRanges"</span>]) &#123;</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"缓冲"</span>);</div><div class="line">        [<span class="keyword">self</span> play];</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>我们在每个item中加入了观察者，在什么时候移除呢，当然是在每首歌曲播放完成后移除，如果不移除将会崩溃</p>
+<p>再次对每个item进行观测，播放结束时</p>
+<figure class="highlight obj-c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[[<span class="built_in">NSNotificationCenter</span> defaultCenter] addObserver:<span class="keyword">self</span> selector:<span class="keyword">@selector</span>(playbackFinished:) name:<span class="built_in">AVPlayerItemDidPlayToEndTimeNotification</span> object:item];</div></pre></td></tr></table></figure>
+<p>在播放结束，移除观察者</p>
+<figure class="highlight obj-c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)playbackFinished:(<span class="built_in">NSNotification</span> *)notice &#123;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"播放完成"</span>);</div><div class="line">    [<span class="keyword">self</span>.currentItem removeObserver:<span class="keyword">self</span> forKeyPath:<span class="string">@"loadedTimeRanges"</span>];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="实现后台播放"><a href="#实现后台播放" class="headerlink" title="实现后台播放"></a>实现后台播放</h3><p>要实现后台播放，很简单只需要加入几行代码</p>
+<figure class="highlight obj-c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//设置可后台播放</span></div><div class="line"><span class="built_in">NSError</span> *error = <span class="literal">nil</span>;</div><div class="line">[[<span class="built_in">AVAudioSession</span> sharedInstance] setCategory:<span class="built_in">AVAudioSessionCategoryPlayback</span> error:&amp;error];</div><div class="line">[[<span class="built_in">AVAudioSession</span> sharedInstance] setActive:<span class="literal">YES</span> error:<span class="literal">nil</span>];</div></pre></td></tr></table></figure>
+<p>然后我们还需要在项目里设置</p>
+<p><img src="http://o8bxt3lx0.bkt.clouddn.com/blog/2017-02-17-100118.jpg" alt=""></p>
+<h3 id="播放暂停"><a href="#播放暂停" class="headerlink" title="播放暂停"></a>播放暂停</h3><p>这个就很简单了</p>
+<p>直接调方法就行</p>
+<p>上一首下一首也是直接调用方法就行</p>
+<figure class="highlight obj-c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/*!</span></div><div class="line"> @method		play</div><div class="line"> @abstract		Signals the desire to begin playback at the current item's natural rate.</div><div class="line"> @discussion	Equivalent to setting the value of rate to 1.0.</div><div class="line"> */</div><div class="line"> </div><div class="line">- (<span class="keyword">void</span>)play;</div><div class="line">- <span class="comment">/*!</span></div><div class="line"> @method		pause</div><div class="line"> @abstract		Pauses playback.</div><div class="line"> @discussion	Equivalent to setting the value of rate to 0.0.</div><div class="line"> */</div><div class="line">- (<span class="keyword">void</span>)pause;</div><div class="line"></div><div class="line"><span class="comment">/*!</span></div><div class="line">    @method     advanceToNextItem</div><div class="line">    @abstract   Ends playback of the current item and initiates playback of the next item in the player's queue.</div><div class="line">    @discussion Removes the current item from the play queue.</div><div class="line">*/</div><div class="line">- (<span class="keyword">void</span>)advanceToNextItem;</div></pre></td></tr></table></figure>
+<h3 id="时长计算"><a href="#时长计算" class="headerlink" title="时长计算"></a>时长计算</h3><p>为player加一个观察者就行</p>
+<figure class="highlight obj-c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">-(<span class="keyword">void</span>)playerDidPlay&#123;</div><div class="line">    <span class="comment">//    //添加播放进度观察者</span></div><div class="line">        __<span class="keyword">weak</span> <span class="keyword">typeof</span>(<span class="keyword">self</span>) weakSelf = <span class="keyword">self</span>;</div><div class="line">        <span class="keyword">self</span>.timeObserver = [<span class="keyword">self</span>.manager.player addPeriodicTimeObserverForInterval:<span class="built_in">CMTimeMake</span>(<span class="number">1.0</span>,<span class="number">1.0</span>) queue:dispatch_get_main_queue() usingBlock:^(<span class="built_in">CMTime</span> time) &#123;</div><div class="line">            <span class="keyword">float</span> current = <span class="built_in">CMTimeGetSeconds</span>(time);</div><div class="line">            <span class="keyword">float</span> total = <span class="built_in">CMTimeGetSeconds</span>(weakSelf.manager.currentItem.duration);</div><div class="line">            weakSelf.total = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"%.2f"</span>,total];</div><div class="line">            weakSelf.current = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"%.f"</span>,current];</div><div class="line">            weakSelf.label.text = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"%@/%@"</span>,weakSelf.current,weakSelf.total];</div><div class="line">        &#125;];</div><div class="line">    _isPlaying = <span class="literal">YES</span>;</div><div class="line">    [<span class="keyword">self</span>.play setTitle:<span class="string">@"暂停"</span> forState:<span class="built_in">UIControlStateNormal</span>];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>其中的CMTime指的是帧数</p>
+<p>基本上就是这些了，我把源码先放上去，后面再来丰富</p>
+<p>源码地址</p>
+<p><a href="https://github.com/yangqian111/AVPlayer" target="_blank" rel="external">https://github.com/yangqian111/AVPlayer</a></p>
+<p><strong>欢迎大家关注我的公众号，我会定期分享一些我在项目中遇到问题的解决办法和一些iOS实用的技巧，现阶段主要是整理出一些基础的知识记录下来</strong></p>
+<div align="middle"><br>    <image src="http://ac-mhke0kuv.clouddn.com/830a4ead8294ceff5160.jpg"></image><br></div>
+
+<p>文章也会同步更新到我的博客：<br><a href="http://ppsheep.com">http://ppsheep.com</a></p>
+
+            
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">标签</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/all-tags/AVPlayer/">AVPlayer</a>
+
+            </div>
+        
+        <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--disabled">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/01/03/iOS-ping网络小工具/" data-tooltip="iOS ping网络小工具">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://ppsheep.com/2017/02/17/AVPlayer的使用实践/">
+                <i class="fa fa-google-plus"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://ppsheep.com/2017/02/17/AVPlayer的使用实践/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://ppsheep.com/2017/02/17/AVPlayer的使用实践/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        
+            <li class="post-action">
+                <a class="post-action-btn btn btn--default" href="#ds-thread">
+                    <i class="fa fa-comment-o"></i>
+                </a>
+            </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+            
+                <div id="ds-thread" class="ds-thread" data-thread-key="2017/02/17/AVPlayer的使用实践/"
+     data-title="AVPlayer的使用实践" data-url="http://ppsheep.com/2017/02/17/AVPlayer的使用实践/">
+</div>
+
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2017 ppsheep. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="3">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--disabled">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/01/03/iOS-ping网络小工具/" data-tooltip="iOS ping网络小工具">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://ppsheep.com/2017/02/17/AVPlayer的使用实践/">
+                <i class="fa fa-google-plus"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://ppsheep.com/2017/02/17/AVPlayer的使用实践/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://ppsheep.com/2017/02/17/AVPlayer的使用实践/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        
+            <li class="post-action">
+                <a class="post-action-btn btn btn--default" href="#ds-thread">
+                    <i class="fa fa-comment-o"></i>
+                </a>
+            </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="3">
+    <ul class="share-options">
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://ppsheep.com/2017/02/17/AVPlayer的使用实践/">
+                <i class="fa fa-google-plus"></i><span class="">分享到 Google+</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://ppsheep.com/2017/02/17/AVPlayer的使用实践/">
+                <i class="fa fa-facebook-official"></i><span>分享到 Facebook</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://ppsheep.com/2017/02/17/AVPlayer的使用实践/">
+                <i class="fa fa-twitter"></i><span>分享到 Twitter</span>
+            </a>
+        </li>
+    </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-remove"></i>
+        </div>
+        
+            <img id="about-card-picture" src="http://o8bxt3lx0.bkt.clouddn.com/7931417.jpeg"/>
+        
+            <h4 id="about-card-name">ppsheep</h4>
+        
+            <h5 id="about-card-bio"><p>一个就职于网易的初级iOS开发者<br>目前正在修炼自己</p>
+<p>博客建立不久，正在寻找更好的写作方式<br>博客上的内容会同步到公众号Sheep_iOS，另外也会挑选一些比较好的文章推送给大家</p>
+<p>我个人的微信号YangQian5999<br>文章末尾一般会有公众号二维码<br>欢迎大家关注</p>
+</h5>
+        
+        
+            <h5 id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>iOS开发者</p>
+
+            </h5>
+        
+        
+            <h5 id="about-card-location">
+                <i class="fa fa-map-marker"></i>
+                <br/>
+                杭州
+            </h5>
+        
+    </div>
+</div>
+
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+    </body>
+    <!--SCRIPTS-->
+<script src="/assets/js/script-i4qo6jx6jji9fg0dftpya6ivemizsbow4fhow76d8dwpm7m1wbvi378ssumx.min.js"></script>
+<!--SCRIPTS END-->
+
+    
+        <script type="text/javascript">
+            var duoshuoQuery = {short_name:'yangqian111'};
+            (function() {
+                var ds = document.createElement('script');
+                ds.type = 'text/javascript';ds.async = true;
+                ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+                ds.charset = 'UTF-8';
+                (document.getElementsByTagName('head')[0]
+                || document.getElementsByTagName('body')[0]).appendChild(ds);
+            })();
+        </script>
+    
+
+
+
+</html>
