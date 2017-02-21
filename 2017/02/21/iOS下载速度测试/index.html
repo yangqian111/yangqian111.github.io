@@ -1,0 +1,518 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="ppsheep">
+    <title>iOS下载速度测试 - ppsheep</title>
+    <meta name="author" content="ppsheep">
+    
+    
+    
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+    
+    <meta name="description" content="今天分享一个下载速度测试的方法，很多APP都有测试网络延迟，测试下载上传速度。之前测试网络延迟的ping我们已经说过了，今天再来讲讲下载速度测试的办法。">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="iOS下载速度测试">
+<meta property="og:url" content="http://ppsheep.com/2017/02/21/iOS下载速度测试/index.html">
+<meta property="og:site_name" content="ppsheep">
+<meta property="og:description" content="今天分享一个下载速度测试的方法，很多APP都有测试网络延迟，测试下载上传速度。之前测试网络延迟的ping我们已经说过了，今天再来讲讲下载速度测试的办法。">
+<meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/blog/2017-02-21-6.gif">
+<meta property="og:updated_time" content="2017-02-21T07:13:03.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS下载速度测试">
+<meta name="twitter:description" content="今天分享一个下载速度测试的方法，很多APP都有测试网络延迟，测试下载上传速度。之前测试网络延迟的ping我们已经说过了，今天再来讲讲下载速度测试的办法。">
+<meta name="twitter:image" content="http://o8bxt3lx0.bkt.clouddn.com/blog/2017-02-21-6.gif">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/7931417.jpeg"/>
+    
+    
+        <meta property="og:image" content="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1488263254&amp;di=9dbe1893837f38d3be5fc742d3401a97&amp;imgtype=jpg&amp;er=1&amp;src=http%3A%2F%2Fimg.taopic.com%2Fuploads%2Fallimg%2F121016%2F240425-1210161T34331.jpg"/>
+        <meta class="swiftype" name="image" data-type="enum" content="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1488263254&amp;di=9dbe1893837f38d3be5fc742d3401a97&amp;imgtype=jpg&amp;er=1&amp;src=http%3A%2F%2Fimg.taopic.com%2Fuploads%2Fallimg%2F121016%2F240425-1210161T34331.jpg" />
+    
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-nuvue6sithwirecbhvw3dkaobiojqvtadsnhguwi7k04xklybw5djl1smadp.min.css">
+    <!--STYLES END-->
+    
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="3">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <h1 class="header-title">
+        <a class="header-title-link" href="/ ">ppsheep</a>
+    </h1>
+    
+        
+            <a  class="header-right-picture "
+                href="#about">
+        
+        
+            <img class="header-picture" src="http://o8bxt3lx0.bkt.clouddn.com/7931417.jpeg"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="3">
+    
+        <div class="sidebar-profile">
+            <a href="/#about">
+                    <img class="sidebar-profile-picture" src="http://o8bxt3lx0.bkt.clouddn.com/7931417.jpeg"/>
+            </a>
+            <span class="sidebar-profile-name">ppsheep</span>
+        </div>
+    
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/ "
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+                    <span class="sidebar-button-desc">首页</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-categories"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+                    <span class="sidebar-button-desc">分类</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-tags"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+                    <span class="sidebar-button-desc">标签</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-archives"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+                    <span class="sidebar-button-desc">归档</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link st-search-show-outputs"
+                         href="#search"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-search"></i>
+                    <span class="sidebar-button-desc">搜索</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="#about"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+                    <span class="sidebar-button-desc">关于</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="https://github.com/yangqian111" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+                    <span class="sidebar-button-desc">GitHub</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="mailto:787688073@qq.com" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-envelope-o"></i>
+                    <span class="sidebar-button-desc">邮箱</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/atom.xml"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+                    <span class="sidebar-button-desc">RSS</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+</nav>
+
+            
+            <div id="main" data-behavior="3"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post" itemscope itemType="http://schema.org/BlogPosting">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title" itemprop="headline">
+            iOS下载速度测试
+        </h1>
+    
+    <div class="post-meta">
+    <time itemprop="datePublished" datetime="2017-02-21T14:03:50+08:00">
+	
+		    2月 21, 2017
+    	
+    </time>
+    
+        <span>发布在 </span>
+        
+    <a class="category-link" href="/all-categories/iOS组件/">iOS组件</a>, <a class="category-link" href="/all-categories/iOS组件/网络小工具/">网络小工具</a>
+
+
+    
+</div>
+
+</div>
+    
+    <div class="post-content markdown" itemprop="articleBody">
+        <div class="main-content-wrap">
+            <p>今天分享一个下载速度测试的方法，很多APP都有测试网络延迟，测试下载上传速度。之前测试网络延迟的ping我们已经说过了，今天再来讲讲下载速度测试的办法。</p>
+<a id="more"></a>
+<h3 id="基本想法"><a href="#基本想法" class="headerlink" title="基本想法"></a>基本想法</h3><p>下载上传速度的测试，我的想法是下载一个静态资源，然后计算他的速度，这里使用AF来做下载，当然原生的NSURLSession也是一样的，为了方便，我就直接使用AF了</p>
+<p>去百度上找一个静态资源：</p>
+<p><a href="http://sw.bos.baidu.com/sw-search-sp/software/d28b12c330f7b/android-studio-bundle_2.2.0.0.exe" target="_blank" rel="external">http://sw.bos.baidu.com/sw-search-sp/software/d28b12c330f7b/android-studio-bundle_2.2.0.0.exe</a></p>
+<p>Android studion </p>
+<p>新建一个类，用于速度的测试PPSNetSpeedTest</p>
+<figure class="highlight obj-c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">typedef</span> <span class="keyword">void</span>(^NetSpeedBlock)(<span class="built_in">NSString</span> *speed);</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">PPSNetSpeedTest</span> : <span class="title">NSObject</span></span></div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> 下载网速测试</div><div class="line"> </div><div class="line"> @param callBackBlock 每秒回调，用于实时回传网速</div><div class="line"> @param completeBlock 最后测试完成，回调平均网速</div><div class="line"> */</div><div class="line">- (<span class="keyword">void</span>)startDownLoadTestWithCallBlock:(NetSpeedBlock)callBackBlock completeBlock:(NetSpeedBlock)completeBlock;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<p>其中的NetSpeedBlock是每次速度的回调</p>
+<p>方法startDownLoadTestWithCallBlock:completeBlock:分别回传了每秒的下载速度和最后的平均速度</p>
+<p>在实现方法里</p>
+<p>说一下，我计算每秒下载速度的思路，在AF中，有一个下载的NSProgress，在progress中有这个文件的总大小，和当前下载的大小，我进行一个timer重复操作，每秒执行一个方法，来计算速度，在每次下载progress更新的时候，我都记录上了当前完成的文件大小，然后在计算的时候，来计算这一秒下载多少文件，那就是速度了。</p>
+<p>说太多，我上代码吧</p>
+<figure class="highlight obj-c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">- (<span class="keyword">void</span>)startDownLoadTestWithCallBlock:(NetSpeedBlock)callBackBlock completeBlock:(NetSpeedBlock)completeBlock&#123;</div><div class="line">    <span class="keyword">self</span>.callBackBlock = callBackBlock;</div><div class="line">    <span class="keyword">self</span>.completeBlock = completeBlock;</div><div class="line">    <span class="built_in">NSURLRequest</span> *request = [<span class="built_in">NSURLRequest</span> requestWithURL:[<span class="built_in">NSURL</span> URLWithString:FILE_PATH]];</div><div class="line">    <span class="keyword">self</span>.downloadTask = [_urlManager downloadTaskWithRequest:request progress:^(<span class="built_in">NSProgress</span> * _Nonnull downloadProgress) &#123;</div><div class="line">        _completeFile = downloadProgress.completedUnitCount;</div><div class="line">    &#125; destination:^<span class="built_in">NSURL</span> * _Nonnull(<span class="built_in">NSURL</span> * _Nonnull targetPath, <span class="built_in">NSURLResponse</span> * _Nonnull response) &#123;</div><div class="line">        <span class="built_in">NSURL</span> *downloadURL = [[<span class="built_in">NSFileManager</span> defaultManager] URLForDirectory:<span class="built_in">NSDocumentDirectory</span> inDomain:<span class="built_in">NSUserDomainMask</span> appropriateForURL:<span class="literal">nil</span> create:<span class="literal">NO</span> error:<span class="literal">nil</span>];</div><div class="line">        <span class="keyword">return</span> [downloadURL URLByAppendingPathComponent:[response suggestedFilename]];</div><div class="line">    &#125; completionHandler:^(<span class="built_in">NSURLResponse</span> * _Nonnull response, <span class="built_in">NSURL</span> * _Nullable filePath, <span class="built_in">NSError</span> * _Nullable error) &#123;</div><div class="line">        <span class="built_in">NSLog</span>(<span class="string">@"完成下载,然后删除文件"</span>);</div><div class="line">        <span class="built_in">NSString</span> *filesTR = filePath.path;</div><div class="line">        <span class="keyword">if</span> (_second&lt;<span class="number">9</span>) &#123;</div><div class="line">            [<span class="keyword">self</span> finishDownLoad];<span class="comment">//网速太快，10秒内下载完毕</span></div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> ([[<span class="built_in">NSFileManager</span> defaultManager] fileExistsAtPath:filesTR]) &#123;</div><div class="line">            <span class="built_in">NSError</span> *error;</div><div class="line">            [[<span class="built_in">NSFileManager</span> defaultManager] removeItemAtURL:filePath error:&amp;error];</div><div class="line">        &#125;</div><div class="line">    &#125;];</div><div class="line">    [<span class="keyword">self</span>.downloadTask resume];</div><div class="line">    _timer = [<span class="built_in">NSTimer</span> scheduledTimerWithTimeInterval:<span class="number">1.0</span> target:<span class="keyword">self</span> selector:<span class="keyword">@selector</span>(countTime) userInfo:<span class="literal">nil</span> repeats:<span class="literal">YES</span>];</div><div class="line">    [_timer fire];</div><div class="line">    _second = <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这里需要注意的一个问题  就是在文件下载完成后，测试结束，需要把文件删除掉</p>
+<figure class="highlight obj-c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)countTime&#123;</div><div class="line">    ++ _second;</div><div class="line">    <span class="keyword">if</span> (_second == <span class="number">9</span>) &#123;</div><div class="line">        [<span class="keyword">self</span> finishCurrentTest];</div><div class="line">        <span class="built_in">CGFloat</span> averageSpeed = <span class="keyword">self</span>.completeFile/(pow(<span class="number">1024</span>, <span class="number">2</span>)*<span class="number">10.0</span>);</div><div class="line">        <span class="keyword">self</span>.completeBlock([<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"%.2fM"</span>,averageSpeed]);</div><div class="line">        <span class="keyword">self</span>.completeBlock = <span class="literal">nil</span>;</div><div class="line">        [<span class="keyword">self</span>.downloadTask cancel];</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="built_in">NSInteger</span> everySecondFile = <span class="keyword">self</span>.completeFile - <span class="keyword">self</span>.lastSecondCompleteFile;</div><div class="line">    <span class="built_in">CGFloat</span> sppeed = everySecondFile/pow(<span class="number">1024</span>, <span class="number">2</span>)*<span class="number">1.0</span>;</div><div class="line">    <span class="keyword">self</span>.callBackBlock([<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"%.2fM"</span>,sppeed]);</div><div class="line">    <span class="keyword">self</span>.lastSecondCompleteFile = <span class="keyword">self</span>.completeFile;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>因为下载的文件都是以字节为单位，所以我转换成了M</p>
+<p>pow(1024, 2) = 1024*1024</p>
+<p>self.lastSecondCompleteFile = self.completeFile;</p>
+<p>这句代码 是将每次计算完成之后，将lastSecondCompleteFile更新为此次下载的大小，等到下一秒，再来进行计算</p>
+<p>非常重要的一点是，我们这里使用了timer，一定不要忘记，将timer invalidate</p>
+<p>在下载完成，计算平均速度</p>
+<figure class="highlight obj-c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)finishDownLoad&#123;</div><div class="line">    [<span class="keyword">self</span> finishCurrentTest];</div><div class="line">    ++ _second;</div><div class="line">    <span class="built_in">CGFloat</span> averageSpeed = <span class="keyword">self</span>.completeFile/(pow(<span class="number">1024</span>, <span class="number">2</span>)*(_second+<span class="number">1</span>)*<span class="number">1.0</span>);</div><div class="line">    <span class="keyword">self</span>.completeBlock([<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"%.2fM"</span>,averageSpeed]);</div><div class="line">    <span class="keyword">self</span>.completeBlock = <span class="literal">nil</span>;</div><div class="line">    <span class="keyword">self</span>.callBackBlock = <span class="literal">nil</span>;</div><div class="line">    [<span class="keyword">self</span>.downloadTask cancel];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight obj-c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)finishCurrentTest&#123;</div><div class="line">    [_timer invalidate];</div><div class="line">    _timer = <span class="literal">nil</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight obj-c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">-(<span class="keyword">void</span>)dealloc&#123;</div><div class="line">    [_timer invalidate];</div><div class="line">    _timer = <span class="literal">nil</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>简单看一下效果</p>
+<p><img src="http://o8bxt3lx0.bkt.clouddn.com/blog/2017-02-21-6.gif" alt=""></p>
+<p>源代码</p>
+<p><a href="https://github.com/yangqian111/NetSpeedTest" target="_blank" rel="external">https://github.com/yangqian111/NetSpeedTest</a></p>
+<p><strong>欢迎大家关注我的公众号，我会定期分享一些我在项目中遇到问题的解决办法和一些iOS实用的技巧，现阶段主要是整理出一些基础的知识记录下来</strong></p>
+<p>左边是公众号，右边是我个人微信</p>
+<div align="middle"><br>    <image src="http://ac-mhke0kuv.clouddn.com/830a4ead8294ceff5160.jpg"></image><br>    <image src="http://o8bxt3lx0.bkt.clouddn.com/avatar.jpg"></image><br></div>
+
+<p>文章也会同步更新到我的博客：<br><a href="http://ppsheep.com">http://ppsheep.com</a></p>
+
+            
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">标签</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/all-tags/下载速度测试/">下载速度测试</a>
+
+            </div>
+        
+        <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--disabled">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/02/17/AVPlayer的使用实践/" data-tooltip="AVPlayer的使用实践">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://ppsheep.com/2017/02/21/iOS下载速度测试/">
+                <i class="fa fa-google-plus"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://ppsheep.com/2017/02/21/iOS下载速度测试/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://ppsheep.com/2017/02/21/iOS下载速度测试/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        
+            <li class="post-action">
+                <a class="post-action-btn btn btn--default" href="#ds-thread">
+                    <i class="fa fa-comment-o"></i>
+                </a>
+            </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+            
+                <div id="ds-thread" class="ds-thread" data-thread-key="2017/02/21/iOS下载速度测试/"
+     data-title="iOS下载速度测试" data-url="http://ppsheep.com/2017/02/21/iOS下载速度测试/">
+</div>
+
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2017 ppsheep. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="3">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--disabled">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/02/17/AVPlayer的使用实践/" data-tooltip="AVPlayer的使用实践">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://ppsheep.com/2017/02/21/iOS下载速度测试/">
+                <i class="fa fa-google-plus"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://ppsheep.com/2017/02/21/iOS下载速度测试/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://ppsheep.com/2017/02/21/iOS下载速度测试/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        
+            <li class="post-action">
+                <a class="post-action-btn btn btn--default" href="#ds-thread">
+                    <i class="fa fa-comment-o"></i>
+                </a>
+            </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="3">
+    <ul class="share-options">
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://ppsheep.com/2017/02/21/iOS下载速度测试/">
+                <i class="fa fa-google-plus"></i><span class="">分享到 Google+</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://ppsheep.com/2017/02/21/iOS下载速度测试/">
+                <i class="fa fa-facebook-official"></i><span>分享到 Facebook</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://ppsheep.com/2017/02/21/iOS下载速度测试/">
+                <i class="fa fa-twitter"></i><span>分享到 Twitter</span>
+            </a>
+        </li>
+    </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-remove"></i>
+        </div>
+        
+            <img id="about-card-picture" src="http://o8bxt3lx0.bkt.clouddn.com/7931417.jpeg"/>
+        
+            <h4 id="about-card-name">ppsheep</h4>
+        
+            <h5 id="about-card-bio"><p>一个就职于网易的初级iOS开发者<br>目前正在修炼自己</p>
+<p>博客建立不久，正在寻找更好的写作方式<br>博客上的内容会同步到公众号Sheep_iOS，另外也会挑选一些比较好的文章推送给大家</p>
+<p>我个人的微信号YangQian5999<br>文章末尾一般会有公众号二维码<br>欢迎大家关注</p>
+</h5>
+        
+        
+            <h5 id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>iOS开发者</p>
+
+            </h5>
+        
+        
+            <h5 id="about-card-location">
+                <i class="fa fa-map-marker"></i>
+                <br/>
+                杭州
+            </h5>
+        
+    </div>
+</div>
+
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+    </body>
+    <!--SCRIPTS-->
+<script src="/assets/js/script-i4qo6jx6jji9fg0dftpya6ivemizsbow4fhow76d8dwpm7m1wbvi378ssumx.min.js"></script>
+<!--SCRIPTS END-->
+
+    
+        <script type="text/javascript">
+            var duoshuoQuery = {short_name:'yangqian111'};
+            (function() {
+                var ds = document.createElement('script');
+                ds.type = 'text/javascript';ds.async = true;
+                ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+                ds.charset = 'UTF-8';
+                (document.getElementsByTagName('head')[0]
+                || document.getElementsByTagName('body')[0]).appendChild(ds);
+            })();
+        </script>
+    
+
+
+
+</html>
