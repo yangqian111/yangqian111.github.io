@@ -1,0 +1,545 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="ppsheep">
+    <title>自定义模态loading - ppsheep</title>
+    <meta name="author" content="ppsheep">
+    
+    
+    
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+    
+    <meta name="description" content="今天带来一款自定义的模态loading的实现，通过自定义UI，画出loading的样式，并且有个转动的样式，下面我们就来实现以下。">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="自定义模态loading">
+<meta property="og:url" content="http://ppsheep.com/2017/02/24/自定义模态loading/index.html">
+<meta property="og:site_name" content="ppsheep">
+<meta property="og:description" content="今天带来一款自定义的模态loading的实现，通过自定义UI，画出loading的样式，并且有个转动的样式，下面我们就来实现以下。">
+<meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/blog/2017-02-24-%E6%A8%A1%E6%80%81loading.gif">
+<meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/blog/2017-02-24-071550.jpg">
+<meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/blog/2017-02-24-071712.jpg">
+<meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/blog/2017-02-24-072259.jpg">
+<meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/blog/2017-02-24-%E6%A8%A1%E6%80%81loading1.gif">
+<meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/blog/2017-02-24-%E6%A8%A1%E6%80%81loading2.gif">
+<meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/blog/2017-02-24-%E6%A8%A1%E6%80%81loading3.gif">
+<meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/blog/2017-02-24-%E6%A8%A1%E6%80%81loading4.gif">
+<meta property="og:updated_time" content="2017-02-24T07:46:45.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="自定义模态loading">
+<meta name="twitter:description" content="今天带来一款自定义的模态loading的实现，通过自定义UI，画出loading的样式，并且有个转动的样式，下面我们就来实现以下。">
+<meta name="twitter:image" content="http://o8bxt3lx0.bkt.clouddn.com/blog/2017-02-24-%E6%A8%A1%E6%80%81loading.gif">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/7931417.jpeg"/>
+    
+    
+        <meta property="og:image" content="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1487929234595&amp;di=f14ae0d3f076dc03c4f2dc28f98d8597&amp;imgtype=0&amp;src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F018e1f575784840000012e7e5209be.jpg"/>
+        <meta class="swiftype" name="image" data-type="enum" content="https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1487929234595&amp;di=f14ae0d3f076dc03c4f2dc28f98d8597&amp;imgtype=0&amp;src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F018e1f575784840000012e7e5209be.jpg" />
+    
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-nuvue6sithwirecbhvw3dkaobiojqvtadsnhguwi7k04xklybw5djl1smadp.min.css">
+    <!--STYLES END-->
+    
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="3">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <h1 class="header-title">
+        <a class="header-title-link" href="/ ">ppsheep</a>
+    </h1>
+    
+        
+            <a  class="header-right-picture "
+                href="#about">
+        
+        
+            <img class="header-picture" src="http://o8bxt3lx0.bkt.clouddn.com/7931417.jpeg"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="3">
+    
+        <div class="sidebar-profile">
+            <a href="/#about">
+                    <img class="sidebar-profile-picture" src="http://o8bxt3lx0.bkt.clouddn.com/7931417.jpeg"/>
+            </a>
+            <span class="sidebar-profile-name">ppsheep</span>
+        </div>
+    
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/ "
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+                    <span class="sidebar-button-desc">首页</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-categories"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+                    <span class="sidebar-button-desc">分类</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-tags"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+                    <span class="sidebar-button-desc">标签</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-archives"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+                    <span class="sidebar-button-desc">归档</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link st-search-show-outputs"
+                         href="#search"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-search"></i>
+                    <span class="sidebar-button-desc">搜索</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="#about"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+                    <span class="sidebar-button-desc">关于</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="https://github.com/yangqian111" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+                    <span class="sidebar-button-desc">GitHub</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="mailto:787688073@qq.com" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-envelope-o"></i>
+                    <span class="sidebar-button-desc">邮箱</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/atom.xml"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+                    <span class="sidebar-button-desc">RSS</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+</nav>
+
+            
+            <div id="main" data-behavior="3"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post" itemscope itemType="http://schema.org/BlogPosting">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title" itemprop="headline">
+            自定义模态loading
+        </h1>
+    
+    <div class="post-meta">
+    <time itemprop="datePublished" datetime="2017-02-24T14:49:01+08:00">
+	
+		    2月 24, 2017
+    	
+    </time>
+    
+        <span>发布在 </span>
+        
+    <a class="category-link" href="/all-categories/iOS组件/">iOS组件</a>, <a class="category-link" href="/all-categories/iOS组件/UI小组件/">UI小组件</a>
+
+
+    
+</div>
+
+</div>
+    
+    <div class="post-content markdown" itemprop="articleBody">
+        <div class="main-content-wrap">
+            <p>今天带来一款自定义的模态loading的实现，通过自定义UI，画出loading的样式，并且有个转动的样式，下面我们就来实现以下。</p>
+<a id="more"></a>
+<p>首先，我们来看一下效果，可能图片看着有点卡看一下大致的效果</p>
+<p><img src="http://o8bxt3lx0.bkt.clouddn.com/blog/2017-02-24-%E6%A8%A1%E6%80%81loading.gif" alt=""></p>
+<p>首先来分析以下，做动画都是先分析，再来下手</p>
+<ul>
+<li>首先底部是一个毛玻璃样式，图片上看不大清楚</li>
+<li>然后两个圆，第一个是底部的灰色圆环</li>
+<li>第二个圆是一个跑动的圆弧，这个怎么做呢，其实它也是一个圆环，只是起点和终点在不停变换，而这个变换，我们可以通过layer的动画做到</li>
+<li>最小面还有一个label</li>
+</ul>
+<p>好了就这些，没了，看起来还是很简单的</p>
+<h3 id="底部毛玻璃样式"><a href="#底部毛玻璃样式" class="headerlink" title="底部毛玻璃样式"></a>底部毛玻璃样式</h3><p>首先我们来讲底部的毛玻璃效果加上，在系统提供的UIKit中，我们就可以简单实现这种小效果，有一个类UIVisualEffectView，可以用来实现很多特殊效果</p>
+<figure class="highlight obj-c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">blurView = [[<span class="built_in">UIVisualEffectView</span> alloc] initWithEffect:[<span class="built_in">UIBlurEffect</span> effectWithStyle:<span class="built_in">UIBlurEffectStyleExtraLight</span>]];</div><div class="line">blurView.layer.cornerRadius = <span class="number">10</span>;</div><div class="line">blurView.layer.masksToBounds = <span class="literal">YES</span>;</div><div class="line">blurView.frame = <span class="built_in">CGRectMake</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">100</span>, <span class="number">100</span>);</div><div class="line">blurView.center = <span class="built_in">CGPointMake</span>(viewCenterX, viewCenterY);</div></pre></td></tr></table></figure>
+<p>这样几句简单的代码，就已经有了毛玻璃效果</p>
+<p><img src="http://o8bxt3lx0.bkt.clouddn.com/blog/2017-02-24-071550.jpg" alt=""></p>
+<p>应该还是能够看出来的</p>
+<h3 id="底部圆环"><a href="#底部圆环" class="headerlink" title="底部圆环"></a>底部圆环</h3><p>接下来我们来画底部的圆环，画圆的方式有很多，这里我就通过CAShapeLayer来画圆</p>
+<figure class="highlight obj-c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"> <span class="comment">/// 底部的灰色layer</span></div><div class="line"><span class="built_in">CAShapeLayer</span> *bottomShapeLayer = [<span class="built_in">CAShapeLayer</span> layer];</div><div class="line">bottomShapeLayer.strokeColor = [<span class="built_in">UIColor</span> colorWithRed:<span class="number">229</span>/<span class="number">255.0</span> green:<span class="number">229</span>/<span class="number">255.0</span> blue:<span class="number">229</span>/<span class="number">255.0</span> alpha:<span class="number">1</span>].CGColor;</div><div class="line">bottomShapeLayer.fillColor = [<span class="built_in">UIColor</span> clearColor].CGColor;</div><div class="line">bottomShapeLayer.lineWidth = KShapelayerLineWidth;</div><div class="line">bottomShapeLayer.path = [<span class="built_in">UIBezierPath</span> bezierPathWithRoundedRect:<span class="built_in">CGRectMake</span>(KShapeLayerMargin, <span class="number">0</span>, KShapeLayerWidth, KShapeLayerWidth) cornerRadius:KShapeLayerRadius].CGPath;</div><div class="line">[<span class="keyword">self</span>.layer addSublayer:bottomShapeLayer];</div></pre></td></tr></table></figure>
+<p>还是来看效果图</p>
+<p><img src="http://o8bxt3lx0.bkt.clouddn.com/blog/2017-02-24-071712.jpg" alt=""></p>
+<p>灰色的圆，我们已经画出来了，关于画圆的代码，我就不具体解释了，就是一个简单的UIBezierPath应用，不了解的，可以去点进源码看看，就是给定一个曲线，然后画图</p>
+<h3 id="运动的圆环"><a href="#运动的圆环" class="headerlink" title="运动的圆环"></a>运动的圆环</h3><p>接下来，接着画中间的红色圆环，这里可能有的同学会走偏，其实这个运动的动画，如果对动画理解不多，很容易想到去画圆弧去了，其实这里它也是一个完整的圆，只是对它的起点和终点做了动画，所以看起来就是运动着的圆弧</p>
+<figure class="highlight obj-c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/// 橘黄色的layer</span></div><div class="line"><span class="keyword">self</span>.ovalShapeLayer = [<span class="built_in">CAShapeLayer</span> layer];</div><div class="line"><span class="keyword">self</span>.ovalShapeLayer.strokeColor = [<span class="built_in">UIColor</span> colorWithRed:<span class="number">0.984</span> green:<span class="number">0.153</span> blue:<span class="number">0.039</span> alpha:<span class="number">1.000</span>].CGColor;</div><div class="line"><span class="keyword">self</span>.ovalShapeLayer.fillColor = [<span class="built_in">UIColor</span> clearColor].CGColor;</div><div class="line"><span class="keyword">self</span>.ovalShapeLayer.lineWidth = KShapelayerLineWidth;</div><div class="line"><span class="keyword">self</span>.ovalShapeLayer.path = [<span class="built_in">UIBezierPath</span> bezierPathWithRoundedRect:<span class="built_in">CGRectMake</span>(KShapeLayerMargin, <span class="number">0</span>,KShapeLayerWidth, KShapeLayerWidth) cornerRadius:KShapeLayerRadius].CGPath;</div><div class="line">[<span class="keyword">self</span>.layer addSublayer:<span class="keyword">self</span>.ovalShapeLayer];</div></pre></td></tr></table></figure>
+<p>来看看效果图</p>
+<p><img src="http://o8bxt3lx0.bkt.clouddn.com/blog/2017-02-24-072259.jpg" alt=""></p>
+<p>现在，中间的红色圆环，已经完全把灰色的圆遮住了，好进入重要的步骤，做动画</p>
+<p>我们来细看一下这个动画，在整个圆的前半部分，终点的运动速度很快，起点的速度运动很慢，然后当终点走到了圆的一半，起点着急了，加快了速度，最后在整个圆的位置追上了终点点，这就是整个动画的要点</p>
+<p>所以这个动画要分两步，前半部分和后半部分，我们先来做前半部分</p>
+<p>要让起点和终点的速度不一样，那就是在相同的时间内，运动的弧度不同了</p>
+<figure class="highlight obj-c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/// 起点动画</span></div><div class="line"><span class="built_in">CABasicAnimation</span> * strokeStartAnimation = [<span class="built_in">CABasicAnimation</span> animationWithKeyPath:<span class="string">@"strokeStart"</span>];</div><div class="line">strokeStartAnimation.fromValue = @(<span class="number">0.0</span>);</div><div class="line">strokeStartAnimation.toValue = @(<span class="number">0.25</span>);</div><div class="line">    </div><div class="line"><span class="comment">/// 终点动画</span></div><div class="line"><span class="built_in">CABasicAnimation</span> * strokeEndAnimation = [<span class="built_in">CABasicAnimation</span> animationWithKeyPath:<span class="string">@"strokeEnd"</span>];</div><div class="line">strokeEndAnimation.fromValue = @(<span class="number">0.0</span>);</div><div class="line">strokeEndAnimation.toValue = @(<span class="number">0.5</span>);</div><div class="line">    </div><div class="line"><span class="comment">/// 组合动画</span></div><div class="line"><span class="built_in">CAAnimationGroup</span> *animationGroup = [<span class="built_in">CAAnimationGroup</span> animation];</div><div class="line">animationGroup.animations = @[strokeStartAnimation,strokeEndAnimation];</div><div class="line">animationGroup.duration = KAnimationDurationTime;</div><div class="line">animationGroup.repeatCount = <span class="number">1</span>;</div><div class="line">animationGroup.fillMode = kCAFillModeForwards;</div><div class="line">animationGroup.removedOnCompletion = <span class="literal">NO</span>;</div><div class="line">[<span class="keyword">self</span>.ovalShapeLayer addAnimation:animationGroup forKey:<span class="literal">nil</span>];</div></pre></td></tr></table></figure>
+<p>解释一下，在相同时间内，起点走了0.25个弧度，终点走了0.5个弧度，那这个动画组的动画就正好是我们说的前半部分  来看看效果</p>
+<p><img src="http://o8bxt3lx0.bkt.clouddn.com/blog/2017-02-24-%E6%A8%A1%E6%80%81loading1.gif" alt=""></p>
+<p>正好是我们想要的结果，再来做，下半部分动画，同样的，后面的动画就反过来了</p>
+<figure class="highlight obj-c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">CABasicAnimation</span> * strokeStartAnimation = [<span class="built_in">CABasicAnimation</span> animationWithKeyPath:<span class="string">@"strokeStart"</span>];</div><div class="line">strokeStartAnimation.fromValue = @(<span class="number">0.25</span>);</div><div class="line">strokeStartAnimation.toValue = @(<span class="number">1.0</span>);</div><div class="line">    </div><div class="line"><span class="comment">/// 终点动画</span></div><div class="line"><span class="built_in">CABasicAnimation</span> * strokeEndAnimation = [<span class="built_in">CABasicAnimation</span> animationWithKeyPath:<span class="string">@"strokeEnd"</span>];</div><div class="line">strokeEndAnimation.fromValue = @(<span class="number">0.5</span>);</div><div class="line">strokeEndAnimation.toValue = @(<span class="number">1.0</span>);</div><div class="line">    </div><div class="line"><span class="comment">/// 组合动画</span></div><div class="line"><span class="built_in">CAAnimationGroup</span> *animationGroup = [<span class="built_in">CAAnimationGroup</span> animation];</div><div class="line">animationGroup.animations = @[strokeStartAnimation,strokeEndAnimation];</div><div class="line">animationGroup.duration = KAnimationDurationTime;</div><div class="line">animationGroup.repeatCount = <span class="number">1</span>;</div><div class="line">animationGroup.fillMode = kCAFillModeForwards;</div><div class="line">animationGroup.removedOnCompletion = <span class="literal">NO</span>;</div><div class="line">[<span class="keyword">self</span>.ovalShapeLayer addAnimation:animationGroup forKey:<span class="literal">nil</span>];</div></pre></td></tr></table></figure>
+<p>同样的 看看效果图</p>
+<p><img src="http://o8bxt3lx0.bkt.clouddn.com/blog/2017-02-24-%E6%A8%A1%E6%80%81loading2.gif" alt=""></p>
+<p>这个效果也达到了，好了现在，我们要做的，就是将两个动画组合起来，我们在第一组动画结束时，再执行第二组动画，通过GCD来做</p>
+<figure class="highlight obj-c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(<span class="number">0.9</span> * <span class="built_in">NSEC_PER_SEC</span>)), dispatch_get_main_queue(), ^&#123;&#125;);</div></pre></td></tr></table></figure>
+<p>在第一组动画开始执行时，第二组动画延时第一组动画执行的时间，再执行，注意为了两组动画衔接流畅，做了一点时间的调整</p>
+<figure class="highlight obj-c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)animations&#123;</div><div class="line">    <span class="comment">/// 起点动画</span></div><div class="line">    <span class="built_in">CABasicAnimation</span> * strokeStartAnimation = [<span class="built_in">CABasicAnimation</span> animationWithKeyPath:<span class="string">@"strokeStart"</span>];</div><div class="line">    strokeStartAnimation.fromValue = @(<span class="number">0.0</span>);</div><div class="line">    strokeStartAnimation.toValue = @(<span class="number">0.25</span>);</div><div class="line">    </div><div class="line">    <span class="comment">/// 终点动画</span></div><div class="line">    <span class="built_in">CABasicAnimation</span> * strokeEndAnimation = [<span class="built_in">CABasicAnimation</span> animationWithKeyPath:<span class="string">@"strokeEnd"</span>];</div><div class="line">    strokeEndAnimation.fromValue = @(<span class="number">0.0</span>);</div><div class="line">    strokeEndAnimation.toValue = @(<span class="number">0.5</span>);</div><div class="line">    </div><div class="line">    <span class="comment">/// 组合动画</span></div><div class="line">    <span class="built_in">CAAnimationGroup</span> *animationGroup = [<span class="built_in">CAAnimationGroup</span> animation];</div><div class="line">    animationGroup.animations = @[strokeStartAnimation,strokeEndAnimation];</div><div class="line">    animationGroup.duration = KAnimationDurationTime;</div><div class="line">    animationGroup.repeatCount = <span class="number">1</span>;</div><div class="line">    animationGroup.fillMode = kCAFillModeForwards;</div><div class="line">    animationGroup.removedOnCompletion = <span class="literal">NO</span>;</div><div class="line">    [<span class="keyword">self</span>.ovalShapeLayer addAnimation:animationGroup forKey:<span class="literal">nil</span>];</div><div class="line">    </div><div class="line">    </div><div class="line">    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(<span class="number">0.9</span> * <span class="built_in">NSEC_PER_SEC</span>)), dispatch_get_main_queue(), ^&#123;</div><div class="line">        <span class="comment">/// 起点动画</span></div><div class="line">        <span class="built_in">CABasicAnimation</span> * strokeStartAnimation = [<span class="built_in">CABasicAnimation</span> animationWithKeyPath:<span class="string">@"strokeStart"</span>];</div><div class="line">        strokeStartAnimation.fromValue = @(<span class="number">0.25</span>);</div><div class="line">        strokeStartAnimation.toValue = @(<span class="number">1.0</span>);</div><div class="line">        </div><div class="line">        <span class="comment">/// 终点动画</span></div><div class="line">        <span class="built_in">CABasicAnimation</span> * strokeEndAnimation = [<span class="built_in">CABasicAnimation</span> animationWithKeyPath:<span class="string">@"strokeEnd"</span>];</div><div class="line">        strokeEndAnimation.fromValue = @(<span class="number">0.5</span>);</div><div class="line">        strokeEndAnimation.toValue = @(<span class="number">1.0</span>);</div><div class="line">        </div><div class="line">        <span class="comment">/// 组合动画</span></div><div class="line">        <span class="built_in">CAAnimationGroup</span> *animationGroup = [<span class="built_in">CAAnimationGroup</span> animation];</div><div class="line">        animationGroup.animations = @[strokeStartAnimation,strokeEndAnimation];</div><div class="line">        animationGroup.duration = KAnimationDurationTime;</div><div class="line">        animationGroup.repeatCount = <span class="number">1</span>;</div><div class="line">        animationGroup.fillMode = kCAFillModeForwards;</div><div class="line">        animationGroup.removedOnCompletion = <span class="literal">NO</span>;</div><div class="line">        [<span class="keyword">self</span>.ovalShapeLayer addAnimation:animationGroup forKey:<span class="literal">nil</span>];</div><div class="line">    &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这样得到的效果，就是一次执行load的动画</p>
+<p><img src="http://o8bxt3lx0.bkt.clouddn.com/blog/2017-02-24-%E6%A8%A1%E6%80%81loading3.gif" alt=""></p>
+<p>我们想要重复执行，在这里我使用了timer</p>
+<figure class="highlight obj-c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">self</span>.timer = [<span class="built_in">NSTimer</span> scheduledTimerWithTimeInterval:<span class="number">2.0</span> target:<span class="keyword">self</span> selector:<span class="keyword">@selector</span>(animations) userInfo:<span class="literal">nil</span> repeats:<span class="literal">YES</span>];</div><div class="line">[<span class="keyword">self</span>.timer fire];</div></pre></td></tr></table></figure>
+<p>这下就可以重复执行了</p>
+<p><img src="http://o8bxt3lx0.bkt.clouddn.com/blog/2017-02-24-%E6%A8%A1%E6%80%81loading4.gif" alt=""></p>
+<p>至于label的添加，我就不写出来了，这个就很简单了，同样的源代码，放上去</p>
+<p><a href="https://github.com/yangqian111/LoadingView" target="_blank" rel="external">https://github.com/yangqian111/LoadingView</a></p>
+<p><strong>欢迎大家关注我的公众号，我会定期分享一些我在项目中遇到问题的解决办法和一些iOS实用的技巧，现阶段主要是整理出一些基础的知识记录下来</strong></p>
+<p>上边是公众号，下边是我个人微信</p>
+<div align="middle"><br>    <image src="http://ac-mhke0kuv.clouddn.com/830a4ead8294ceff5160.jpg"></image><br>    <image src="http://o8bxt3lx0.bkt.clouddn.com/avatar.jpg"></image><br></div>
+
+<p>文章也会同步更新到我的博客：<br><a href="http://ppsheep.com">http://ppsheep.com</a></p>
+
+            
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">标签</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/all-tags/模态loading/">模态loading</a>
+
+            </div>
+        
+        <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--disabled">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/02/21/iOS下载速度测试/" data-tooltip="iOS下载速度测试">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://ppsheep.com/2017/02/24/自定义模态loading/">
+                <i class="fa fa-google-plus"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://ppsheep.com/2017/02/24/自定义模态loading/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://ppsheep.com/2017/02/24/自定义模态loading/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        
+            <li class="post-action">
+                <a class="post-action-btn btn btn--default" href="#ds-thread">
+                    <i class="fa fa-comment-o"></i>
+                </a>
+            </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+            
+                <div id="ds-thread" class="ds-thread" data-thread-key="2017/02/24/自定义模态loading/"
+     data-title="自定义模态loading" data-url="http://ppsheep.com/2017/02/24/自定义模态loading/">
+</div>
+
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2017 ppsheep. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="3">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--disabled">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/02/21/iOS下载速度测试/" data-tooltip="iOS下载速度测试">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://ppsheep.com/2017/02/24/自定义模态loading/">
+                <i class="fa fa-google-plus"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://ppsheep.com/2017/02/24/自定义模态loading/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://ppsheep.com/2017/02/24/自定义模态loading/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        
+            <li class="post-action">
+                <a class="post-action-btn btn btn--default" href="#ds-thread">
+                    <i class="fa fa-comment-o"></i>
+                </a>
+            </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="3">
+    <ul class="share-options">
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://ppsheep.com/2017/02/24/自定义模态loading/">
+                <i class="fa fa-google-plus"></i><span class="">分享到 Google+</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://ppsheep.com/2017/02/24/自定义模态loading/">
+                <i class="fa fa-facebook-official"></i><span>分享到 Facebook</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://ppsheep.com/2017/02/24/自定义模态loading/">
+                <i class="fa fa-twitter"></i><span>分享到 Twitter</span>
+            </a>
+        </li>
+    </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-remove"></i>
+        </div>
+        
+            <img id="about-card-picture" src="http://o8bxt3lx0.bkt.clouddn.com/7931417.jpeg"/>
+        
+            <h4 id="about-card-name">ppsheep</h4>
+        
+            <h5 id="about-card-bio"><p>一个就职于网易的初级iOS开发者<br>目前正在修炼自己</p>
+<p>博客建立不久，正在寻找更好的写作方式<br>博客上的内容会同步到公众号Sheep_iOS，另外也会挑选一些比较好的文章推送给大家</p>
+<p>我个人的微信号YangQian5999<br>文章末尾一般会有公众号二维码<br>欢迎大家关注</p>
+</h5>
+        
+        
+            <h5 id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>iOS开发者</p>
+
+            </h5>
+        
+        
+            <h5 id="about-card-location">
+                <i class="fa fa-map-marker"></i>
+                <br/>
+                杭州
+            </h5>
+        
+    </div>
+</div>
+
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+    </body>
+    <!--SCRIPTS-->
+<script src="/assets/js/script-i4qo6jx6jji9fg0dftpya6ivemizsbow4fhow76d8dwpm7m1wbvi378ssumx.min.js"></script>
+<!--SCRIPTS END-->
+
+    
+        <script type="text/javascript">
+            var duoshuoQuery = {short_name:'yangqian111'};
+            (function() {
+                var ds = document.createElement('script');
+                ds.type = 'text/javascript';ds.async = true;
+                ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+                ds.charset = 'UTF-8';
+                (document.getElementsByTagName('head')[0]
+                || document.getElementsByTagName('body')[0]).appendChild(ds);
+            })();
+        </script>
+    
+
+
+
+</html>
