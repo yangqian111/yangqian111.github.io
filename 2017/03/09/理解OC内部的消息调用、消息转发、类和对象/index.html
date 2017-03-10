@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="ppsheep">
-    <title>理解OC内部的消息调用、消息转发、类和对象 - ppsheep</title>
+    <title>理解OC内部的消息调用、消息转发、类和对象(一) - ppsheep</title>
     <meta name="author" content="ppsheep">
     
     
@@ -15,14 +15,14 @@
     
     <meta name="description" content="之前看过Effective Objective-C 2.0 这本书的同学可能会注意到，我之前写的关于这本书的笔记，跳过了其中的几个章节，那时候没有记下来，是觉得我自己还没有理解到位，还不能贸然瞎说，最近仔细研究了一下，还看了Runtime和Runloop，渐渐的开始理解这些东西了，现在慢慢开始记录一下，大家一起学习。">
 <meta property="og:type" content="blog">
-<meta property="og:title" content="理解OC内部的消息调用、消息转发、类和对象">
+<meta property="og:title" content="理解OC内部的消息调用、消息转发、类和对象(一)">
 <meta property="og:url" content="http://ppsheep.com/2017/03/09/理解OC内部的消息调用、消息转发、类和对象/index.html">
 <meta property="og:site_name" content="ppsheep">
 <meta property="og:description" content="之前看过Effective Objective-C 2.0 这本书的同学可能会注意到，我之前写的关于这本书的笔记，跳过了其中的几个章节，那时候没有记下来，是觉得我自己还没有理解到位，还不能贸然瞎说，最近仔细研究了一下，还看了Runtime和Runloop，渐渐的开始理解这些东西了，现在慢慢开始记录一下，大家一起学习。">
 <meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/blog/2017-03-10-080312.jpg">
-<meta property="og:updated_time" content="2017-03-10T09:37:16.000Z">
+<meta property="og:updated_time" content="2017-03-10T09:41:24.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="理解OC内部的消息调用、消息转发、类和对象">
+<meta name="twitter:title" content="理解OC内部的消息调用、消息转发、类和对象(一)">
 <meta name="twitter:description" content="之前看过Effective Objective-C 2.0 这本书的同学可能会注意到，我之前写的关于这本书的笔记，跳过了其中的几个章节，那时候没有记下来，是觉得我自己还没有理解到位，还不能贸然瞎说，最近仔细研究了一下，还看了Runtime和Runloop，渐渐的开始理解这些东西了，现在慢慢开始记录一下，大家一起学习。">
 <meta name="twitter:image" content="http://o8bxt3lx0.bkt.clouddn.com/blog/2017-03-10-080312.jpg">
     
@@ -218,7 +218,7 @@
         <div class="post-header main-content-wrap text-left">
     
         <h1 class="post-title" itemprop="headline">
-            理解OC内部的消息调用、消息转发、类和对象
+            理解OC内部的消息调用、消息转发、类和对象(一)
         </h1>
     
     <div class="post-meta">
@@ -384,7 +384,7 @@
         
             
                 <div id="ds-thread" class="ds-thread" data-thread-key="2017/03/09/理解OC内部的消息调用、消息转发、类和对象/"
-     data-title="理解OC内部的消息调用、消息转发、类和对象" data-url="http://ppsheep.com/2017/03/09/理解OC内部的消息调用、消息转发、类和对象/">
+     data-title="理解OC内部的消息调用、消息转发、类和对象(一)" data-url="http://ppsheep.com/2017/03/09/理解OC内部的消息调用、消息转发、类和对象/">
 </div>
 
             
