@@ -1,0 +1,552 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="ppsheep">
+    <title>理解OC内部的消息调用、消息转发、类和对象 - ppsheep</title>
+    <meta name="author" content="ppsheep">
+    
+    
+    
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+    
+    <meta name="description" content="之前看过Effective Objective-C 2.0 这本书的同学可能会注意到，我之前写的关于这本书的笔记，跳过了其中的几个章节，那时候没有记下来，是觉得我自己还没有理解到位，还不能贸然瞎说，最近仔细研究了一下，还看了Runtime和Runloop，渐渐的开始理解这些东西了，现在慢慢开始记录一下，大家一起学习。">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="理解OC内部的消息调用、消息转发、类和对象">
+<meta property="og:url" content="http://ppsheep.com/2017/03/09/理解OC内部的消息调用、消息转发、类和对象/index.html">
+<meta property="og:site_name" content="ppsheep">
+<meta property="og:description" content="之前看过Effective Objective-C 2.0 这本书的同学可能会注意到，我之前写的关于这本书的笔记，跳过了其中的几个章节，那时候没有记下来，是觉得我自己还没有理解到位，还不能贸然瞎说，最近仔细研究了一下，还看了Runtime和Runloop，渐渐的开始理解这些东西了，现在慢慢开始记录一下，大家一起学习。">
+<meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/blog/2017-03-10-080312.jpg">
+<meta property="og:updated_time" content="2017-03-10T09:37:16.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="理解OC内部的消息调用、消息转发、类和对象">
+<meta name="twitter:description" content="之前看过Effective Objective-C 2.0 这本书的同学可能会注意到，我之前写的关于这本书的笔记，跳过了其中的几个章节，那时候没有记下来，是觉得我自己还没有理解到位，还不能贸然瞎说，最近仔细研究了一下，还看了Runtime和Runloop，渐渐的开始理解这些东西了，现在慢慢开始记录一下，大家一起学习。">
+<meta name="twitter:image" content="http://o8bxt3lx0.bkt.clouddn.com/blog/2017-03-10-080312.jpg">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/7931417.jpeg"/>
+    
+    
+        <meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/blog/2017-03-09-timg-5.jpeg"/>
+        <meta class="swiftype" name="image" data-type="enum" content="http://o8bxt3lx0.bkt.clouddn.com/blog/2017-03-09-timg-5.jpeg" />
+    
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-nuvue6sithwirecbhvw3dkaobiojqvtadsnhguwi7k04xklybw5djl1smadp.min.css">
+    <!--STYLES END-->
+    
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="3">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <h1 class="header-title">
+        <a class="header-title-link" href="/ ">ppsheep</a>
+    </h1>
+    
+        
+            <a  class="header-right-picture "
+                href="#about">
+        
+        
+            <img class="header-picture" src="http://o8bxt3lx0.bkt.clouddn.com/7931417.jpeg"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="3">
+    
+        <div class="sidebar-profile">
+            <a href="/#about">
+                    <img class="sidebar-profile-picture" src="http://o8bxt3lx0.bkt.clouddn.com/7931417.jpeg"/>
+            </a>
+            <span class="sidebar-profile-name">ppsheep</span>
+        </div>
+    
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/ "
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+                    <span class="sidebar-button-desc">首页</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-categories"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+                    <span class="sidebar-button-desc">分类</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-tags"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+                    <span class="sidebar-button-desc">标签</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-archives"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+                    <span class="sidebar-button-desc">归档</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link st-search-show-outputs"
+                         href="#search"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-search"></i>
+                    <span class="sidebar-button-desc">搜索</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="#about"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+                    <span class="sidebar-button-desc">关于</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="https://github.com/yangqian111" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+                    <span class="sidebar-button-desc">GitHub</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="mailto:787688073@qq.com" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-envelope-o"></i>
+                    <span class="sidebar-button-desc">邮箱</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/atom.xml"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+                    <span class="sidebar-button-desc">RSS</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+</nav>
+
+            
+            <div id="main" data-behavior="3"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post" itemscope itemType="http://schema.org/BlogPosting">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title" itemprop="headline">
+            理解OC内部的消息调用、消息转发、类和对象
+        </h1>
+    
+    <div class="post-meta">
+    <time itemprop="datePublished" datetime="2017-03-09T10:28:35+08:00">
+	
+		    3月 09, 2017
+    	
+    </time>
+    
+        <span>发布在 </span>
+        
+    <a class="category-link" href="/all-categories/iOS-编写高质量代码的方法/">iOS 编写高质量代码的方法</a>
+
+
+    
+</div>
+
+</div>
+    
+    <div class="post-content markdown" itemprop="articleBody">
+        <div class="main-content-wrap">
+            <p>之前看过Effective Objective-C 2.0 这本书的同学可能会注意到，我之前写的关于这本书的笔记，跳过了其中的几个章节，那时候没有记下来，是觉得我自己还没有理解到位，还不能贸然瞎说，最近仔细研究了一下，还看了Runtime和Runloop，渐渐的开始理解这些东西了，现在慢慢开始记录一下，大家一起学习。</p>
+<a id="more"></a>
+<h3 id="对象的方法调用objc-msgSend"><a href="#对象的方法调用objc-msgSend" class="headerlink" title="对象的方法调用objc_msgSend"></a>对象的方法调用objc_msgSend</h3><p>之前已经讲过了消息派发，我决定呢将这个放在这篇文章里来，这样一起看整个一个OC的运行期进行的一些操作，理解起来也会有益处的。</p>
+<p>在对象实例上调用方法是Objective-C常用的功能。用Objc的术语来讲，叫做“传递消息”。消息有“名称(name)”或“选择子(selector)”，可以接受参数，可以有返回值。</p>
+<p>由于OC是C的超集，所以最好先理解C语言的函数调用方式。C语言使用“静态绑定”，也就是说，在编译期间，就能够知道所应该调用的函数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">#include &lt;stdio.h&gt;</div><div class="line"></div><div class="line">void printHello()&#123;</div><div class="line">    printf(&quot;Hello world\n&quot;);</div><div class="line">&#125;</div><div class="line"></div><div class="line">void printGoodBye()&#123;</div><div class="line">    printf(&quot;Goodbye world\n&quot;);</div><div class="line">&#125;</div><div class="line"></div><div class="line">void doTheThing(int type)&#123;</div><div class="line">    if (type == 0) &#123;</div><div class="line">        printHello();</div><div class="line">    &#125;else&#123;</div><div class="line">        printGoodBye();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果不考虑内联关系，那么编译器在编译代码的时候就已经知道了程序中有printHello和printGoodBye这两个函数了，如果我们将编写的方式改变一下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">void printHello()&#123;</div><div class="line">    printf(&quot;Hello world\n&quot;);</div><div class="line">&#125;</div><div class="line"></div><div class="line">void printGoodBye()&#123;</div><div class="line">    printf(&quot;Goodbye world\n&quot;);</div><div class="line">&#125;</div><div class="line"></div><div class="line">void doTheThing(int type)&#123;</div><div class="line">    void (*fnc)();</div><div class="line">    if (type == 0) &#123;</div><div class="line">        fnc = printHello;</div><div class="line">    &#125;else&#123;</div><div class="line">        fnc = printGoodBye;</div><div class="line">    &#125;</div><div class="line">    fnc();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这下，就必须要使用动态绑定了，因为需要调用的函数，在运行期间才能够知道。在objc中，要向对象传递消息，就必须要使用到动态绑定的机制来决定需要调用的方法。</p>
+<p>给对象传递消息，可以这样写</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">id returnValue = [someObject messageName:parameter];</div></pre></td></tr></table></figure>
+<p>在上面代码中，someObject叫做接收者，messageName叫做选择子，选择子和参数合起来叫做消息。编译器在看到该消息后，将其转化成为一条标准的C语言函数调用，所调用的函数叫做objc_msgSend，其原型：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">void objc_msgSend(id self,SEL cmd,...)</div></pre></td></tr></table></figure>
+<p>这是一个参数可变的函数，其中第一个参数代表的是接收者，第二个代表的是选择子，第三个以及后面的代表的是参数，编译器会把上面的传递消息的例子改为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">id returnValue = objc_msgSend(someObject,@selector(messageName:),</div><div class="line">									parameter);</div></pre></td></tr></table></figure>
+<p>objc_msgSend函数会根据接收者和选择子来选择调用的方法，改函数会在接收者的类中寻找方法列表，如果能找到与选择子名称相符的方法，就跳至其，实现代码，如果找不到，那就继续沿着继承体系往上找，如果最终还是找不到方法，那么就会执行”消息转发“操作</p>
+<p>这样看来，好像我们调用一个方法需要很多步骤，所幸的是，objc_msgSend会将匹配结果缓存子啊一张快速映射表中，我们在之后会讲到这个缓存。这样一来，每个类都会有一个缓存，这样虽然第一次执行起来会稍慢，但是后面就会很迅速了。</p>
+<h3 id="类和对象"><a href="#类和对象" class="headerlink" title="类和对象"></a>类和对象</h3><p>要讲消息转发机制，首先我们需要先了了解一下OC中的类和对象，OC的runtime是开源的，我们可以先从这里下载到源码，对着源码来看</p>
+<p><a href="https://opensource.apple.com/tarballs/objc4/" target="_blank" rel="external">https://opensource.apple.com/tarballs/objc4/</a></p>
+<p>首先，我们来看一下类和对象的定义，在objc.h文件和runtime.h文件中分别定义了对象和类</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/// An opaque type that represents an Objective-C class.</span></div><div class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> objc_class *Class;</div><div class="line"></div><div class="line"><span class="comment">/// Represents an instance of a class.</span></div><div class="line"><span class="keyword">struct</span> objc_object &#123;</div><div class="line">    Class isa  OBJC_ISA_AVAILABILITY;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">/// A pointer to an instance of a class.</span></div><div class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> objc_object *id;</div></pre></td></tr></table></figure>
+<p>从上面的代码中，我们可以看出，在OC中id代表的是一个OC对象，Class代表的是OC中的一个类。在对象定义中，首地址是一个*isa的struct的指针。这个指针指向对象所代表的类(Class)。</p>
+<p>我们再来看看类的定义</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">struct</span> objc_class &#123;</div><div class="line">    Class isa  OBJC_ISA_AVAILABILITY;</div><div class="line"></div><div class="line"><span class="meta">#<span class="meta-keyword">if</span> !__OBJC2__</span></div><div class="line">    Class super_class                                        OBJC2_UNAVAILABLE;</div><div class="line">    <span class="keyword">const</span> <span class="keyword">char</span> *name                                         OBJC2_UNAVAILABLE;</div><div class="line">    <span class="keyword">long</span> version                                             OBJC2_UNAVAILABLE;</div><div class="line">    <span class="keyword">long</span> info                                                OBJC2_UNAVAILABLE;</div><div class="line">    <span class="keyword">long</span> instance_size                                       OBJC2_UNAVAILABLE;</div><div class="line">    <span class="keyword">struct</span> objc_ivar_list *ivars                             OBJC2_UNAVAILABLE;</div><div class="line">    <span class="keyword">struct</span> objc_method_list **methodLists                    OBJC2_UNAVAILABLE;</div><div class="line">    <span class="keyword">struct</span> objc_cache *cache                                 OBJC2_UNAVAILABLE;</div><div class="line">    <span class="keyword">struct</span> objc_protocol_list *protocols                     OBJC2_UNAVAILABLE;</div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></div><div class="line"></div><div class="line">&#125; OBJC2_UNAVAILABLE;</div><div class="line"><span class="comment">/* Use `Class` instead of `struct objc_class *` */</span></div></pre></td></tr></table></figure>
+<p>我们先抛开其他的不看，一眼就看到了类的首地址也是一个*isa的指针，这个就说明，其实类他也是一个对象，也是指向了一个类，这样一想，其实也是合理的，在OC中，一切皆是对象，类当然也除外，那这个类对象是属于什么类的呢？</p>
+<p>其实在OC中，还有一个meta-class的概念，一般把它叫做元类，我们上面说到的类，其实就是元类的一个实例，这里有点拗口，但是这个感念一定要清楚，那之前说的OC一切皆是对象，那元类也应该是一个实例，他也应该指向一个类，说的没错，我们来看一下OC中的类的继承图就清楚了</p>
+<p><img src="http://o8bxt3lx0.bkt.clouddn.com/blog/2017-03-10-080312.jpg" alt=""></p>
+<p>上面是我画的一个继承图，在图中，我们能够看出，所有的类都是继承自NSObject，NSObject的父类为nil，所有的类都是元类的实例，然后根元类，即是NSObject的元类，他的父类是NSObject，然后他自己是自己的实例，这样一来就形成了一个循环，正好OC  一切皆是对象。</p>
+<p>当然，在我们平时开发中，基本不会接触到元类。但是我们也需要了解其中的具体原理。</p>
+<p>我们再看看上面的类定义，其中还有其他的结构</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">Class super_class                                        OBJC2_UNAVAILABLE;</div><div class="line"><span class="keyword">const</span> <span class="keyword">char</span> *name                                         OBJC2_UNAVAILABLE;</div><div class="line"><span class="keyword">long</span> version                                             OBJC2_UNAVAILABLE;</div><div class="line"><span class="keyword">long</span> info                                                OBJC2_UNAVAILABLE;</div><div class="line"><span class="keyword">long</span> instance_size                                       OBJC2_UNAVAILABLE;</div><div class="line"><span class="keyword">struct</span> objc_ivar_list *ivars                             OBJC2_UNAVAILABLE;</div><div class="line"><span class="keyword">struct</span> objc_method_list **methodLists                    OBJC2_UNAVAILABLE;</div><div class="line"><span class="keyword">struct</span> objc_cache *cache                                 OBJC2_UNAVAILABLE;</div><div class="line"><span class="keyword">struct</span> objc_protocol_list *protocols                     OBJC2_UNAVAILABLE;</div></pre></td></tr></table></figure>
+<p>这其中包含了这个类的所有信息，其中我们常用到的就是属性列表，方法列表，还有实现的协议列表，其中有个cache，这个其实就是我们上面说到的快速缓存表，关于其中的属性列表和方法列表之类的，我在之前的一篇文章中提到过这些的应用，请移步<br> <a href="http://ppsheep.com/2016/07/25/Runtime详解/">http://ppsheep.com/2016/07/25/Runtime详解/</a></p>
+<h3 id="理解消息转发机制"><a href="#理解消息转发机制" class="headerlink" title="理解消息转发机制"></a>理解消息转发机制</h3><p>好，现在我们开始来讲一下消息转发，首先我们来看实例的消息转发，这里说的消息转发，其实是方法的调用，我们上面已经讲过了。<br>先来看例子</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//首先我在VC里执行一个不存在的方法</span></div><div class="line">[<span class="keyword">self</span> performSelector:<span class="keyword">@selector</span>(logInstanceMethod)];</div></pre></td></tr></table></figure>
+<p>这里需要说明一下，因为现在项目基本都会使用ARC，如果使用了ARC，那么如果我们直接像平时调用方法那样调用一个不存在的方法，编译器会报错，因为ARC其实是在我们编译阶段，插入了内存管理的代码，在运行期间，是没有ARC的，这个和Java就不一样了。没有方法，当然没办法进行引用计数，所以，编译会报错，但是使用performSelector，这个方法，我的理解是在运行期间，才会知道是否有这样一个方法，这个方法定义出来，就是为了runtime实现的。如果有同学详细了解过，麻烦告知一下。</p>
+<p>然后我们在VC里面实现几个方法，这几个方法都在NSObject头文件中有声明</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">id</span>)forwardingTargetForSelector:(SEL)aSelector&#123;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"forwardingTargetForSelector"</span>);</div><div class="line">    <span class="keyword">return</span> [<span class="keyword">super</span> forwardingTargetForSelector:aSelector];</div><div class="line">&#125;</div><div class="line"></div><div class="line">-(<span class="keyword">void</span>)forwardInvocation:(<span class="built_in">NSInvocation</span> *)anInvocation&#123;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"forwardInvocation"</span>);</div><div class="line"><span class="comment">//    [super forwardInvocation:anInvocation];</span></div><div class="line">&#125;</div><div class="line"></div><div class="line">+(<span class="built_in">BOOL</span>)resolveInstanceMethod:(SEL)sel&#123;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"resolveInstanceMethod"</span>);</div><div class="line">    <span class="keyword">return</span> [<span class="keyword">super</span> resolveInstanceMethod:sel];</div><div class="line">&#125;</div><div class="line"></div><div class="line">-(<span class="built_in">NSMethodSignature</span> *)methodSignatureForSelector:(SEL)aSelector&#123;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"methodSignatureForSelector"</span>);</div><div class="line">    <span class="keyword">if</span> ([<span class="keyword">self</span> respondsToSelector:aSelector]) &#123;</div><div class="line">        <span class="keyword">return</span> [<span class="keyword">super</span> methodSignatureForSelector:aSelector];</div><div class="line">    &#125;<span class="keyword">else</span>&#123;</div><div class="line">        <span class="keyword">return</span> [<span class="built_in">NSMethodSignature</span> signatureWithObjCTypes:<span class="string">"v@:"</span>];</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>先不做解释，我们运行一下，看看效果怎么样</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="number">2017</span><span class="number">-03</span><span class="number">-10</span> <span class="number">17</span>:<span class="number">15</span>:<span class="number">32.265</span> 动态添加实例方法和类方法[<span class="number">29490</span>:<span class="number">5570176</span>] resolveInstanceMethod</div><div class="line"><span class="number">2017</span><span class="number">-03</span><span class="number">-10</span> <span class="number">17</span>:<span class="number">15</span>:<span class="number">32.267</span> 动态添加实例方法和类方法[<span class="number">29490</span>:<span class="number">5570176</span>] forwardingTargetForSelector</div><div class="line"><span class="number">2017</span><span class="number">-03</span><span class="number">-10</span> <span class="number">17</span>:<span class="number">15</span>:<span class="number">32.267</span> 动态添加实例方法和类方法[<span class="number">29490</span>:<span class="number">5570176</span>] methodSignatureForSelector</div><div class="line"><span class="number">2017</span><span class="number">-03</span><span class="number">-10</span> <span class="number">17</span>:<span class="number">15</span>:<span class="number">32.268</span> 动态添加实例方法和类方法[<span class="number">29490</span>:<span class="number">5570176</span>] forwardInvocation</div></pre></td></tr></table></figure>
+<p>程序并没有崩溃，而是有先后顺序调用了这几个方法，这里需要说明，如果使用storyBoard的同学，resolveInstanceMethod会调用两次，因为这个初始化是，会调用一个方法叫做 setStoryBoard，这个方法，需要在父类中才会处理，在当前是找不到的，所以会直接来调用。</p>
+<p>好，来分析一下：</p>
+<p>消息转发大致分为两个阶段：</p>
+<ul>
+<li>阶段一  动态方法解析：首先会先问当前类能否动态增加方法，来处理这个不能被处理的消息，这时候就会调用到方法resolveInstanceMethod:，在这个方法中，我们可以进行动态增加方法，来处理这个实例不能处理的方法，如果当前类不能够动态增加方法，那么直接返回NO，这时候就进入第二个阶段，完整的消息转发</li>
+<li>阶段二 完整消息转发：完整消息转发也分为几步   首先，类已经不能动态增加方法了，那么就需要找其他能够处理的类来处理这个方法，如果有其他对象能够处理这个消息，那么直接将这个消息发送给他，进行消息处理。如果没有找到能够处理的对象，那么进行第二步，到方法签名，然后将消息的所有细节全部封装到NSInvocation对象，进行最后的处理，如果还未能处理，那么将会调用到NSObject的doesNotRecgnized什么方法，不知道拼的对不对，意思就是没找到这个方法，然后崩溃。</li>
+</ul>
+<p>大致的一个流程就是这样，也对应到我们的方法调用，这里为什么我们的没有崩溃呢，因为在forwardInvocation上，我没有调用super，这样就不会到NSObject的方法了</p>
+<p>上面就是一个消息转发的全过程，接下来我们来讲动态增加实例方法。</p>
+<h3 id="动态增加实例方法"><a href="#动态增加实例方法" class="headerlink" title="动态增加实例方法"></a>动态增加实例方法</h3><p>上面，我们讲了，动态增加实例方法，都是在resolveInstanceMethod方法中，那么我们来增加试试看</p>
+<p>首先，我先自定义一个实例方法</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)myInstanceMethod&#123;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"我的实例方法"</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>然后，我在动态解析方法时，将执行的logInstanceMethod，换成我的这个方法myInstanceMethod</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> 处理实例方法</div><div class="line"></div><div class="line"> @param sel 需要动态添加的方法</div><div class="line"> @return 是否已经有可实现的方法</div><div class="line"> */</div><div class="line">+(<span class="built_in">BOOL</span>)resolveInstanceMethod:(SEL)sel&#123;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"resolveInstanceMethod"</span>);</div><div class="line">    IMP imp = [<span class="keyword">self</span> instanceMethodForSelector:<span class="keyword">@selector</span>(myInstanceMethod)];</div><div class="line">    <span class="keyword">if</span> (sel == <span class="keyword">@selector</span>(logInstanceMethod)) &#123;</div><div class="line">        class_addMethod([<span class="keyword">self</span> <span class="keyword">class</span>], sel, imp, <span class="string">"v@:"</span>);</div><div class="line">        <span class="keyword">return</span> <span class="literal">YES</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> [<span class="keyword">super</span> resolveInstanceMethod:sel];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)myInstanceMethod&#123;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"我的实例方法"</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>其中class_addMethod有四个参数</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function">OBJC_EXPORT BOOL <span class="title">class_addMethod</span><span class="params">(Class cls, SEL name, IMP imp, </span></span></div><div class="line">                                 <span class="keyword">const</span> <span class="keyword">char</span> *types) </div><div class="line">    <span class="title">OBJC_AVAILABLE</span><span class="params">(<span class="number">10.5</span>, <span class="number">2.0</span>, <span class="number">9.0</span>, <span class="number">1.0</span>)</span>;</div></pre></td></tr></table></figure>
+<p>分别代表的含义是  需要给哪个类增加方法，增加的方法的名称，具体实现的方法地址，方法的返回值和参数</p>
+<p>这里解释一下，关于方法的返回值和参数，是通过字符串来表示的，具体的，可以看一下这里 </p>
+<p><a href="https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html#//apple_ref/doc/uid/TP40008048-CH100" target="_blank" rel="external">https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html#//apple_ref/doc/uid/TP40008048-CH100</a></p>
+<p>这样，我们就给我们当前的类增加了一个名为logInstanceMethod的方法，他的实现，则是在方法myInstanceMethod里</p>
+<p>这里需要注意一点，我们传Class的时候，传的是 [self class]，这个返回的是当前实例所属的对象，后面我们再讲动态增加类方法的时候，还需要传一个，那就是meta-class，到时候我在讲，这里只是提一下，注意两者之间的区别</p>
+<p>我们再来运行一下</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="number">2017</span><span class="number">-03</span><span class="number">-10</span> <span class="number">17</span>:<span class="number">31</span>:<span class="number">49.298</span> 动态添加实例方法和类方法[<span class="number">31090</span>:<span class="number">5856225</span>] resolveInstanceMethod</div><div class="line"><span class="number">2017</span><span class="number">-03</span><span class="number">-10</span> <span class="number">17</span>:<span class="number">31</span>:<span class="number">49.299</span> 动态添加实例方法和类方法[<span class="number">31090</span>:<span class="number">5856225</span>] 我的实例方法</div></pre></td></tr></table></figure>
+<p>这里可以看到，到了动态解析，消息转发就已经完成了，并且，我们的方法，动态添加了进去</p>
+<p>好今天，先讲到这里，消化一下，说的有点多，后面一篇文章，我将会讲到，将消息转发给其他对象处理，还有动态增加类方法。</p>
+<p><strong>欢迎大家关注我的公众号，我会定期分享一些我在项目中遇到问题的解决办法和一些iOS实用的技巧，现阶段主要是整理出一些基础的知识记录下来</strong></p>
+<div align="middle"><br>    <image src="http://ac-mhke0kuv.clouddn.com/830a4ead8294ceff5160.jpg"></image><br></div>
+
+<p>文章也会同步更新到我的博客：<br><a href="http://ppsheep.com">http://ppsheep.com</a></p>
+
+            
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">标签</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/all-tags/iOS-编写高质量代码/">iOS 编写高质量代码</a>
+
+            </div>
+        
+        <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--disabled">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/02/24/自定义模态loading/" data-tooltip="自定义模态loading">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://ppsheep.com/2017/03/09/理解OC内部的消息调用、消息转发、类和对象/">
+                <i class="fa fa-google-plus"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://ppsheep.com/2017/03/09/理解OC内部的消息调用、消息转发、类和对象/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://ppsheep.com/2017/03/09/理解OC内部的消息调用、消息转发、类和对象/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        
+            <li class="post-action">
+                <a class="post-action-btn btn btn--default" href="#ds-thread">
+                    <i class="fa fa-comment-o"></i>
+                </a>
+            </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+            
+                <div id="ds-thread" class="ds-thread" data-thread-key="2017/03/09/理解OC内部的消息调用、消息转发、类和对象/"
+     data-title="理解OC内部的消息调用、消息转发、类和对象" data-url="http://ppsheep.com/2017/03/09/理解OC内部的消息调用、消息转发、类和对象/">
+</div>
+
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2017 ppsheep. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="3">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--disabled">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/02/24/自定义模态loading/" data-tooltip="自定义模态loading">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://ppsheep.com/2017/03/09/理解OC内部的消息调用、消息转发、类和对象/">
+                <i class="fa fa-google-plus"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://ppsheep.com/2017/03/09/理解OC内部的消息调用、消息转发、类和对象/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://ppsheep.com/2017/03/09/理解OC内部的消息调用、消息转发、类和对象/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        
+            <li class="post-action">
+                <a class="post-action-btn btn btn--default" href="#ds-thread">
+                    <i class="fa fa-comment-o"></i>
+                </a>
+            </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="3">
+    <ul class="share-options">
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://ppsheep.com/2017/03/09/理解OC内部的消息调用、消息转发、类和对象/">
+                <i class="fa fa-google-plus"></i><span class="">分享到 Google+</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://ppsheep.com/2017/03/09/理解OC内部的消息调用、消息转发、类和对象/">
+                <i class="fa fa-facebook-official"></i><span>分享到 Facebook</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://ppsheep.com/2017/03/09/理解OC内部的消息调用、消息转发、类和对象/">
+                <i class="fa fa-twitter"></i><span>分享到 Twitter</span>
+            </a>
+        </li>
+    </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-remove"></i>
+        </div>
+        
+            <img id="about-card-picture" src="http://o8bxt3lx0.bkt.clouddn.com/7931417.jpeg"/>
+        
+            <h4 id="about-card-name">ppsheep</h4>
+        
+            <h5 id="about-card-bio"><p>一个就职于网易的初级iOS开发者<br>目前正在修炼自己</p>
+<p>博客建立不久，正在寻找更好的写作方式<br>博客上的内容会同步到公众号Sheep_iOS，另外也会挑选一些比较好的文章推送给大家</p>
+<p>我个人的微信号YangQian5999<br>文章末尾一般会有公众号二维码<br>欢迎大家关注</p>
+</h5>
+        
+        
+            <h5 id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>iOS开发者</p>
+
+            </h5>
+        
+        
+            <h5 id="about-card-location">
+                <i class="fa fa-map-marker"></i>
+                <br/>
+                杭州
+            </h5>
+        
+    </div>
+</div>
+
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+    </body>
+    <!--SCRIPTS-->
+<script src="/assets/js/script-i4qo6jx6jji9fg0dftpya6ivemizsbow4fhow76d8dwpm7m1wbvi378ssumx.min.js"></script>
+<!--SCRIPTS END-->
+
+    
+        <script type="text/javascript">
+            var duoshuoQuery = {short_name:'yangqian111'};
+            (function() {
+                var ds = document.createElement('script');
+                ds.type = 'text/javascript';ds.async = true;
+                ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+                ds.charset = 'UTF-8';
+                (document.getElementsByTagName('head')[0]
+                || document.getElementsByTagName('body')[0]).appendChild(ds);
+            })();
+        </script>
+    
+
+
+
+</html>
