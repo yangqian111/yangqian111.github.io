@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://ppsheep.com/"/>
-  <updated>2017-03-10T09:56:26.000Z</updated>
+  <updated>2017-03-13T07:18:30.000Z</updated>
   <id>http://ppsheep.com/</id>
   
   <author>
@@ -16,11 +16,67 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>理解OC内部的消息调用、消息转发、类和对象-二</title>
+    <link href="http://ppsheep.com/2017/03/13/%E7%90%86%E8%A7%A3OC%E5%86%85%E9%83%A8%E7%9A%84%E6%B6%88%E6%81%AF%E8%B0%83%E7%94%A8%E3%80%81%E6%B6%88%E6%81%AF%E8%BD%AC%E5%8F%91%E3%80%81%E7%B1%BB%E5%92%8C%E5%AF%B9%E8%B1%A1-%E4%BA%8C/"/>
+    <id>http://ppsheep.com/2017/03/13/理解OC内部的消息调用、消息转发、类和对象-二/</id>
+    <published>2017-03-13T03:17:49.000Z</published>
+    <updated>2017-03-13T07:18:30.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>之前我们讲了关于OC消息转发，类和对象的内部实现的一些原理，现在我们接着讲，关于消息转发过程中的另外几个过程，将消息转发给其他对象处理，另外还有类方法的动态添加。</p>
+<a id="more"></a>
+<h3 id="消息传递给其他对象"><a href="#消息传递给其他对象" class="headerlink" title="消息传递给其他对象"></a>消息传递给其他对象</h3><p>首先，我创建一个我自己的对象PPSMyObject，这个对象中有一个方法logMyInfo，然后我在我们的viewcontroller中来执行这个方法，当然VC里面是没有这个方法的，我肯定需要将这个方法传递给PPSMyObject来处理</p>
+<h3 id="forwardingTargetForSelector"><a href="#forwardingTargetForSelector" class="headerlink" title="forwardingTargetForSelector:"></a>forwardingTargetForSelector:</h3><p>首先，我们在方法forwardingTargetForSelector:中来处理</p>
+<p>PPSMyObject这个对象很简单，就只有一个方法logMyInfo，而且这个方法是在实现文件中，没有在头文件中声明，大家可以思考一下，消息转发为什么能够直接到实现文件中的方法呢？</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#import <span class="meta-string">"PPSMyObject.h"</span></span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">PPSMyObject</span></span></div><div class="line"></div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)logMyInfo&#123;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"myInfo"</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<p>然后在VC中，我们来执行消息转发，同样执行这个不存在的方法</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[<span class="keyword">self</span> performSelector:<span class="keyword">@selector</span>(logMyInfo)];</div></pre></td></tr></table></figure>
+<p>然后在方法forwardingTargetForSelector:中，将这个方法抛给PPSMyObject来处理</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">id</span>)forwardingTargetForSelector:(SEL)aSelector&#123;</div><div class="line">    <span class="keyword">if</span> (aSelector == <span class="keyword">@selector</span>(logMyInfo)) &#123;</div><div class="line">        PPSMyObject *myObject = [[PPSMyObject alloc] init];</div><div class="line">        <span class="keyword">return</span> myObject;</div><div class="line">    &#125;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"forwardingTargetForSelector"</span>);</div><div class="line">    <span class="keyword">return</span> [<span class="keyword">super</span> forwardingTargetForSelector:aSelector];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>执行后的效果，想想也应该清楚，程序没有崩溃，直接将这个消息传递给了PPSMyObject来处理</p>
+<p>除了这一步，我们还有最后一步来处理</p>
+<h3 id="methodSignatureForSelector-amp-forwardInvocation"><a href="#methodSignatureForSelector-amp-forwardInvocation" class="headerlink" title="methodSignatureForSelector: &amp; forwardInvocation:"></a>methodSignatureForSelector: &amp; forwardInvocation:</h3><p>通过这两个方法也能最后实现消息的转发</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">-(<span class="built_in">NSMethodSignature</span> *)methodSignatureForSelector:(SEL)aSelector&#123;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"methodSignatureForSelector"</span>);</div><div class="line">    <span class="built_in">NSMethodSignature</span> *signature = [<span class="keyword">super</span> methodSignatureForSelector:aSelector];</div><div class="line">    <span class="keyword">if</span> (!signature) &#123;</div><div class="line">        <span class="keyword">if</span> ([PPSMyObject instancesRespondToSelector:aSelector]) &#123;</div><div class="line">            signature = [PPSMyObject instanceMethodSignatureForSelector:aSelector];</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> signature;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在此方法中，找到如果PPSMyObject中能够找到方法aSelector，那么就将方法使用PPSMyObject签名</p>
+<p>然后在方法forwardInvocation:中，NSInvocation封装了所有的该消息的实现细节，在此方法中实现方法</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">-(<span class="keyword">void</span>)forwardInvocation:(<span class="built_in">NSInvocation</span> *)anInvocation&#123;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"forwardInvocation"</span>);</div><div class="line">    <span class="keyword">if</span> ([PPSMyObject instancesRespondToSelector:anInvocation.selector]) &#123;</div><div class="line">        [anInvocation invokeWithTarget:[[PPSMyObject alloc] init]];</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这样，我们就使用了两种方法，来实现消息的传递</p>
+<h3 id="类方法的动态添加"><a href="#类方法的动态添加" class="headerlink" title="类方法的动态添加"></a>类方法的动态添加</h3><p>关于类方法的消息转发流程，我查了很久，但是目前也只是查到了在方法resolveClassMethod:中来处理，其他的转发流程我都没有找到，如果有同学了解的，请分享一下</p>
+<p>我们之前说了一句，添加一个实例方法，其实是在类中增加一个方法，那么添加一个类方法，就应该是在元类中增加一个方法，因为我们之前讲了类对象其实是一个元类的实例，类比就能够理解到其中的原理</p>
+<p>我们还是来看代码吧，一目了然</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[[ViewController <span class="keyword">class</span>] performSelector:<span class="keyword">@selector</span>(logClassMethod)];</div></pre></td></tr></table></figure>
+<p>在类中，我执行一个类方法，在这里其实我们可以再聊一下类对象。在方法performSelector:，我们查一下这个其实是一个NSObject的实例方法，那么就说明[ViewController class]返回的是一个实例，我们再去Runtime的开源中看一下这个class方法，在Object.mm文件中这个方法是这样的</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">+ (<span class="keyword">id</span>)<span class="keyword">class</span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">return</span> <span class="keyword">self</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>返回的是自己  self  这里更是说明了ViewController其实是一个对象实例</p>
+<p>好，回过头来，我们接着讲</p>
+<p>调用了logClassMethod:方法，但是类中没有这个类方法，在resolveClassMethod:来动态增加</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> 处理类方法</div><div class="line"></div><div class="line"> @param sel 需要动态添加的方法 @return 是否已经有可实现的方法</div><div class="line"> */</div><div class="line">+(<span class="built_in">BOOL</span>)resolveClassMethod:(SEL)sel&#123;</div><div class="line">    Class metaClass = objc_getMetaClass(class_getName(<span class="keyword">self</span>));</div><div class="line">    IMP imp = [<span class="keyword">self</span> instanceMethodForSelector:<span class="keyword">@selector</span>(myClassMethod)];</div><div class="line">    <span class="keyword">if</span> (sel == <span class="keyword">@selector</span>(logClassMethod)) &#123;</div><div class="line">        class_addMethod(metaClass, sel,imp , <span class="string">"v@:"</span>);</div><div class="line">        <span class="keyword">return</span> <span class="literal">YES</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> [<span class="keyword">super</span> resolveClassMethod:sel];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)myClassMethod&#123;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"我的动态类方法"</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这样，就能够正常实现了</p>
+<p><strong>欢迎大家关注我的公众号，我会定期分享一些我在项目中遇到问题的解决办法和一些iOS实用的技巧，现阶段主要是整理出一些基础的知识记录下来</strong></p>
+<p>上边是公众号，下边是我个人微信</p>
+<div align="middle"><br>    <image src="http://ac-mhke0kuv.clouddn.com/830a4ead8294ceff5160.jpg"></image><br>    <image src="http://o8bxt3lx0.bkt.clouddn.com/avatar.jpg"></image><br></div>
+
+<p>文章也会同步更新到我的博客：<br><a href="http://ppsheep.com">http://ppsheep.com</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;之前我们讲了关于OC消息转发，类和对象的内部实现的一些原理，现在我们接着讲，关于消息转发过程中的另外几个过程，将消息转发给其他对象处理，另外还有类方法的动态添加。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Runtime" scheme="http://ppsheep.com/all-categories/Runtime/"/>
+    
+    
+      <category term="Runtime" scheme="http://ppsheep.com/all-tags/Runtime/"/>
+    
+  </entry>
+  
+  <entry>
     <title>理解OC内部的消息调用、消息转发、类和对象(一)</title>
-    <link href="http://ppsheep.com/2017/03/09/%E7%90%86%E8%A7%A3OC%E5%86%85%E9%83%A8%E7%9A%84%E6%B6%88%E6%81%AF%E8%B0%83%E7%94%A8%E3%80%81%E6%B6%88%E6%81%AF%E8%BD%AC%E5%8F%91%E3%80%81%E7%B1%BB%E5%92%8C%E5%AF%B9%E8%B1%A1/"/>
-    <id>http://ppsheep.com/2017/03/09/理解OC内部的消息调用、消息转发、类和对象/</id>
+    <link href="http://ppsheep.com/2017/03/09/%E7%90%86%E8%A7%A3OC%E5%86%85%E9%83%A8%E7%9A%84%E6%B6%88%E6%81%AF%E8%B0%83%E7%94%A8%E3%80%81%E6%B6%88%E6%81%AF%E8%BD%AC%E5%8F%91%E3%80%81%E7%B1%BB%E5%92%8C%E5%AF%B9%E8%B1%A1-%E4%B8%80/"/>
+    <id>http://ppsheep.com/2017/03/09/理解OC内部的消息调用、消息转发、类和对象-一/</id>
     <published>2017-03-09T02:28:35.000Z</published>
-    <updated>2017-03-10T09:56:26.000Z</updated>
+    <updated>2017-03-13T03:24:05.000Z</updated>
     
     <content type="html"><![CDATA[<p>之前看过Effective Objective-C 2.0 这本书的同学可能会注意到，我之前写的关于这本书的笔记，跳过了其中的几个章节，那时候没有记下来，是觉得我自己还没有理解到位，还不能贸然瞎说，最近仔细研究了一下，还看了Runtime和Runloop，渐渐的开始理解这些东西了，现在慢慢开始记录一下，大家一起学习。</p>
 <a id="more"></a>
@@ -99,10 +155,10 @@
     
     </summary>
     
-      <category term="iOS 编写高质量代码的方法" scheme="http://ppsheep.com/all-categories/iOS-%E7%BC%96%E5%86%99%E9%AB%98%E8%B4%A8%E9%87%8F%E4%BB%A3%E7%A0%81%E7%9A%84%E6%96%B9%E6%B3%95/"/>
+      <category term="Runtime" scheme="http://ppsheep.com/all-categories/Runtime/"/>
     
     
-      <category term="iOS 编写高质量代码" scheme="http://ppsheep.com/all-tags/iOS-%E7%BC%96%E5%86%99%E9%AB%98%E8%B4%A8%E9%87%8F%E4%BB%A3%E7%A0%81/"/>
+      <category term="Runtime" scheme="http://ppsheep.com/all-tags/Runtime/"/>
     
   </entry>
   
@@ -1257,71 +1313,6 @@
     
     
       <category term="KVC和KVO" scheme="http://ppsheep.com/all-tags/KVC%E5%92%8CKVO/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>iOS每个ViewController一个NavigationBar</title>
-    <link href="http://ppsheep.com/2016/05/29/iOS%E6%AF%8F%E4%B8%AAViewController%E4%B8%80%E4%B8%AANavigationBar/"/>
-    <id>http://ppsheep.com/2016/05/29/iOS每个ViewController一个NavigationBar/</id>
-    <published>2016-05-29T05:03:38.000Z</published>
-    <updated>2017-02-15T05:09:38.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>在日常开发中，我们经常会碰到一些关于导航栏的问题，例如视觉设计，经常性的改变NavigationBar的风格，虽然我们能够在viewwillApper中来进行处理，但是总是太麻烦，而且需要写很多多余的代码，今天就来讲讲这种效果，其实已经有很多APP都是使用这种效果</p>
-<a id="more"></a>
-<p>我们先来看看已经有的一些APP使用的这种效果</p>
-<p>这是天猫APP的效果，注意观察他的导航栏</p>
-<p><img src="http://i.imgur.com/Hz7Ixkj.gif" alt=""></p>
-<p>这是网易新闻，注意看导航栏</p>
-<p><img src="http://i.imgur.com/JClX4Z3.gif" alt=""></p>
-<p>越来越多的APP采用这种样式来控制导航栏的不同风格，今天我们就来实现这一效果。</p>
-<p>这里需要使用到一个第三方库</p>
-<p><a href="https://github.com/rickytan/RTRootNavigationController" target="_blank" rel="external">https://github.com/rickytan/RTRootNavigationController</a></p>
-<p>借助这个库我们能够轻松实现这一效果</p>
-<p>新建一个工程，这里我们使用cocoapods来集成这个第三方库</p>
-<h3 id="集成RTRootNavigationController"><a href="#集成RTRootNavigationController" class="headerlink" title="集成RTRootNavigationController"></a>集成RTRootNavigationController</h3><p>podfile</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">workspace ‘iOS每个VC单独的一个导航栏.xcworkspace’</div><div class="line"></div><div class="line">project ‘iOS每个VC单独的一个导航栏.xcodeproj’</div><div class="line"></div><div class="line">platform :ios, &apos;8.0&apos;</div><div class="line"></div><div class="line">target &apos;iOS每个VC单独的一个导航栏&apos; do </div><div class="line"></div><div class="line">pod ‘RTRootNavigationController’</div><div class="line"></div><div class="line">end</div></pre></td></tr></table></figure>
-<h3 id="使用RTRootNavigationController当做当前的rootController"><a href="#使用RTRootNavigationController当做当前的rootController" class="headerlink" title="使用RTRootNavigationController当做当前的rootController"></a>使用RTRootNavigationController当做当前的rootController</h3><h4 id="创建BaseViewController"><a href="#创建BaseViewController" class="headerlink" title="创建BaseViewController"></a>创建BaseViewController</h4><p>我这里新建一个BaseViewController 主要是为了引入RTRootNavigationController，当然如果是OC项目的话，可以直接创建一个PCH文件，直接全局引用也行，不过我们一般都会有一个基类的ViewController，在这个基类中，没有做任何操作，只是引用了一个RTRootNavigationController</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">#import &quot;RTRootNavigationController.h&quot;</div><div class="line"></div><div class="line">@interface BaseViewController : UIViewController</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
-<h4 id="设置根控制器"><a href="#设置根控制器" class="headerlink" title="设置根控制器"></a>设置根控制器</h4><p>在Appdelegate中，我们需要将我们的window的rootcontroller设置为RTRootNavigationController</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];</div><div class="line">ViewController *viewController = [[ViewController alloc] init];</div><div class="line">RTRootNavigationController *rootViewController1 = [[RTRootNavigationController alloc] initWithRootViewController:viewController];</div><div class="line">_window.rootViewController = rootViewController1;</div><div class="line">_window.backgroundColor = [UIColor whiteColor];</div><div class="line">[_window makeKeyAndVisible];</div><div class="line">return YES;</div></pre></td></tr></table></figure>
-<p>在ViewController中，我们需要push出去一个vc的时候，我们需要这样实现</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">//注意这里push的时候需要使用rt_navigation push出去</div><div class="line">[self.rt_navigationController pushViewController:vc1 animated:YES complete:nil];</div></pre></td></tr></table></figure>
-<p>看一下效果</p>
-<p><img src="http://i.imgur.com/L89Z6fk.gif" alt=""></p>
-<h4 id="设置返回NavigationBar按钮"><a href="#设置返回NavigationBar按钮" class="headerlink" title="设置返回NavigationBar按钮"></a>设置返回NavigationBar按钮</h4><p>在当前的vc中，我们设置返回按钮，或者其他的按钮，也很方便</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"> UIButton *btn1 = [UIButton buttonWithType:UIButtonTypeCustom];</div><div class="line">[btn1 addTarget:self action:@selector(leftBar1Clicked) forControlEvents:UIControlEventTouchUpInside];</div><div class="line">[btn1 setTitle:@&quot;返回1&quot; forState:UIControlStateNormal];</div><div class="line">[btn1 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];</div><div class="line">[btn1 sizeToFit];</div><div class="line">UIBarButtonItem *item1 = [[UIBarButtonItem alloc] initWithCustomView:btn1];</div><div class="line">    </div><div class="line">UIButton *btn2 = [UIButton buttonWithType:UIButtonTypeCustom];</div><div class="line">[btn2 setTitle:@&quot;返回2&quot; forState:UIControlStateNormal];</div><div class="line">[btn2 setTitleColor:[UIColor redColor] forState:UIControlStateNormal];</div><div class="line">[btn2 addTarget:self action:@selector(leftBar2Clicked) forControlEvents:UIControlEventTouchUpInside];</div><div class="line">[btn2 sizeToFit];</div><div class="line">UIBarButtonItem *item2 = [[UIBarButtonItem alloc] initWithCustomView:btn2];</div><div class="line"></div><div class="line">self.navigationItem.leftBarButtonItems = @[item1,item2];</div><div class="line">    </div><div class="line">UIButton *btn3 = [UIButton buttonWithType:UIButtonTypeCustom];</div><div class="line">[btn3 setTitle:@&quot;右键&quot; forState:UIControlStateNormal];</div><div class="line">[btn3 setTitleColor:[UIColor redColor] forState:UIControlStateNormal];</div><div class="line">[btn3 addTarget:self action:@selector(rightBarClicked) forControlEvents:UIControlEventTouchUpInside];</div><div class="line">[btn3 sizeToFit];</div><div class="line">UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:btn3];</div><div class="line">    </div><div class="line">self.navigationItem.rightBarButtonItem = rightItem;</div><div class="line">    </div><div class="line">[self.view addSubview:label];</div></pre></td></tr></table></figure>
-<p><img src="http://i.imgur.com/zOrrJZW.jpg" alt=""></p>
-<p>多个按钮定义也是很方便的</p>
-<p>如果只是需要一个左边的返回按钮，这个按钮需要自定义样式，那么可以直接在当前VC冲下方法</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> 如果对于返回事件不需要做任何处理，</div><div class="line"> 但是有想要自定义返回按钮的样式，</div><div class="line"> 可以直接重写这个方法</div><div class="line"></div><div class="line"> @param target 监听对象</div><div class="line"> @param action 返回事件</div><div class="line"> @return 自定义的返回按钮</div><div class="line"> */</div><div class="line">-(UIBarButtonItem *)customBackItemWithTarget:(id)target action:(SEL)action&#123;</div><div class="line">    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];</div><div class="line">    [btn setTitle:@&quot;返回&quot; forState:UIControlStateNormal];</div><div class="line">    [btn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];</div><div class="line">    [btn sizeToFit];</div><div class="line">    [btn addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];</div><div class="line">    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:btn];</div><div class="line">    return item;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>这样的话，就不要去单独设置左上角的返回按钮了</p>
-<p><img src="http://i.imgur.com/I5tVOEx.gif" alt=""></p>
-<h4 id="跳到最开始的VC"><a href="#跳到最开始的VC" class="headerlink" title="跳到最开始的VC"></a>跳到最开始的VC</h4><p>在我们pop的时候，可以直接pop在栈顶的VC</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[self.rt_navigationController popToRootViewControllerAnimated:YES complete:nil];</div></pre></td></tr></table></figure>
-<p><img src="http://i.imgur.com/tQ2vyPz.gif" alt=""></p>
-<h4 id="push到另外一个VC-销毁当前的VC"><a href="#push到另外一个VC-销毁当前的VC" class="headerlink" title="push到另外一个VC 销毁当前的VC"></a>push到另外一个VC 销毁当前的VC</h4><p>有时我们想要实现这样一种效果，当当前的VCpush出去过后，希望销毁当前的VC</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">ViewController4 *vc4 = [[ViewController4 alloc] init];</div><div class="line">[self.rt_navigationController pushViewController:vc4 animated:vc4 complete:^(BOOL finished) &#123;</div><div class="line">     [self.rt_navigationController removeViewController:self];</div><div class="line"> &#125;];</div></pre></td></tr></table></figure>
-<p><img src="http://i.imgur.com/8ABurCG.gif" alt=""></p>
-<h4 id="更改导航栏颜色"><a href="#更改导航栏颜色" class="headerlink" title="更改导航栏颜色"></a>更改导航栏颜色</h4><p>之前忘记更改导航栏的颜色了，这里看一下，更改导航栏的颜色，只需要</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">self.navigationController.navigationBar.barTintColor = [UIColor greenColor];</div></pre></td></tr></table></figure>
-<p><img src="http://i.imgur.com/mFby2bB.gif" alt=""></p>
-<p><strong>总结</strong></p>
-<p>如果你的APP在导航栏有多种样式的话，你完全可以使用这种方法，使用起来很方便</p>
-<p>感谢:<br>    rickyTan开源<br>    <a href="https://github.com/rickytan/RTRootNavigationController" target="_blank" rel="external">https://github.com/rickytan/RTRootNavigationController</a></p>
-<p>项目的源码我放在了：<br>    <a href="https://github.com/yangqian111/blog/tree/master/iOS每个VC单独的一个导航栏" target="_blank" rel="external">https://github.com/yangqian111/blog/tree/master/iOS每个VC单独的一个导航栏</a></p>
-<p><strong>欢迎大家关注我的公众号，我会定期分享一些我在项目中遇到问题的解决办法和一些iOS实用的技巧，现阶段主要是整理出一些基础的知识记录下来</strong></p>
-<div align="middle"><br>    <image src="http://ac-mhke0kuv.clouddn.com/830a4ead8294ceff5160.jpg"></image><br></div>
-
-<p>文章也会同步更新到我的博客：<br><a href="http://ppsheep.com">http://ppsheep.com</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;在日常开发中，我们经常会碰到一些关于导航栏的问题，例如视觉设计，经常性的改变NavigationBar的风格，虽然我们能够在viewwillApper中来进行处理，但是总是太麻烦，而且需要写很多多余的代码，今天就来讲讲这种效果，其实已经有很多APP都是使用这种效果&lt;/p&gt;
-    
-    </summary>
-    
     
   </entry>
   
