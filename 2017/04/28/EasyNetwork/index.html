@@ -13,17 +13,17 @@
     
         <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
     
-    <meta name="description" content="正在维护两个SDK，两个SDK中均需要进行网络请求，但是从业务方了解到，他们不希望每次集成一个SDK，就是集成了一个大的网络库，代码量急剧上升，所以在考虑自己在SDK中封装一套网络库，精简可用，不需要引入第三方的代码，也能够大大缩减SDK的体积">
+    <meta name="description" content="在国外一个小哥的博客上看到一篇关于swift封装系统网络框架的文章，这里对文章做了一个代码的实现">
 <meta property="og:type" content="blog">
 <meta property="og:title" content="EasyNetwork--精简的网络封装 不依赖第三方库">
 <meta property="og:url" content="http://ppsheep.com/2017/04/28/EasyNetwork/index.html">
 <meta property="og:site_name" content="ppsheep">
-<meta property="og:description" content="正在维护两个SDK，两个SDK中均需要进行网络请求，但是从业务方了解到，他们不希望每次集成一个SDK，就是集成了一个大的网络库，代码量急剧上升，所以在考虑自己在SDK中封装一套网络库，精简可用，不需要引入第三方的代码，也能够大大缩减SDK的体积">
+<meta property="og:description" content="在国外一个小哥的博客上看到一篇关于swift封装系统网络框架的文章，这里对文章做了一个代码的实现">
 <meta property="og:image" content="http://ac-mhke0kuv.clouddn.com/830a4ead8294ceff5160.jpg">
-<meta property="og:updated_time" content="2017-04-28T09:06:22.000Z">
+<meta property="og:updated_time" content="2017-07-06T01:31:30.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="EasyNetwork--精简的网络封装 不依赖第三方库">
-<meta name="twitter:description" content="正在维护两个SDK，两个SDK中均需要进行网络请求，但是从业务方了解到，他们不希望每次集成一个SDK，就是集成了一个大的网络库，代码量急剧上升，所以在考虑自己在SDK中封装一套网络库，精简可用，不需要引入第三方的代码，也能够大大缩减SDK的体积">
+<meta name="twitter:description" content="在国外一个小哥的博客上看到一篇关于swift封装系统网络框架的文章，这里对文章做了一个代码的实现">
 <meta name="twitter:image" content="http://ac-mhke0kuv.clouddn.com/830a4ead8294ceff5160.jpg">
     
     
@@ -249,11 +249,12 @@
     
     <div class="post-content markdown" itemprop="articleBody">
         <div class="main-content-wrap">
-            <p>正在维护两个SDK，两个SDK中均需要进行网络请求，但是从业务方了解到，他们不希望每次集成一个SDK，就是集成了一个大的网络库，代码量急剧上升，所以在考虑自己在SDK中封装一套网络库，精简可用，不需要引入第三方的代码，也能够大大缩减SDK的体积</p>
+            <p>在国外一个小哥的博客上看到一篇关于swift封装系统网络框架的文章，这里对文章做了一个代码的实现</p>
 <a id="more"></a>
 <blockquote>
-<p>本篇文章思路来源于 <a href="http://szulctomasz.com/how-do-I-build-a-network-layer/" target="_blank" rel="external">http://szulctomasz.com/how-do-I-build-a-network-layer/</a> 非常感谢Tomasz Szulc的分享</p>
+<p>原文链接 <a href="http://szulctomasz.com/how-do-I-build-a-network-layer/" target="_blank" rel="external">http://szulctomasz.com/how-do-I-build-a-network-layer/</a> </p>
 </blockquote>
+<p>实现之后，也具体阅读了源码，基本上和作者的思路是一致的</p>
 <p>我们一步一步来实现这个网络框架，首先，我需要一个request类，来保存我每次请求的参数、请求方法、请求的API等等</p>
 <h3 id="APIRequets"><a href="#APIRequets" class="headerlink" title="APIRequets"></a>APIRequets</h3><p>之前看到的很多这种request，都是有一个基类，然后每个request是子类，重写父类的一些方法，这里我是通过协议来实现</p>
 <h5 id="BaseAPIRequest"><a href="#BaseAPIRequest" class="headerlink" title="BaseAPIRequest"></a>BaseAPIRequest</h5><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> Foundation</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">protocol</span> <span class="title">BaseAPIRequest</span> </span>&#123;</div><div class="line">    <span class="keyword">var</span> api: <span class="type">String</span> &#123; <span class="keyword">get</span> &#125;</div><div class="line">    <span class="keyword">var</span> method: <span class="type">NetworkService</span>.<span class="type">Method</span> &#123; <span class="keyword">get</span> &#125;</div><div class="line">    <span class="keyword">var</span> query: <span class="type">NetworkService</span>.<span class="type">QueryType</span> &#123; <span class="keyword">get</span> &#125;</div><div class="line">    <span class="keyword">var</span> params: [<span class="type">String</span> : <span class="type">Any</span>]? &#123; <span class="keyword">get</span> &#125;</div><div class="line">    <span class="keyword">var</span> headers: [<span class="type">String</span> : <span class="type">String</span>]? &#123; <span class="keyword">get</span> &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">extension</span> <span class="title">BaseAPIRequest</span> </span>&#123;</div><div class="line">    </div><div class="line">    <span class="comment">///默认返回json</span></div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">defaultJsonHeader</span><span class="params">()</span></span> -&gt; [<span class="type">String</span> : <span class="type">String</span>] &#123;</div><div class="line">        <span class="keyword">return</span> [<span class="string">"Content-Type"</span> : <span class="string">"application/json"</span>]</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
@@ -323,7 +324,7 @@
         <ul class="post-actions post-action-nav">
             <li class="post-action">
                 
-                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/05/10/ARC/"  data-tooltip="谈谈ARC的本质和实现">
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/05/11/private-static-library/"  data-tooltip="用CocoaPod创建私有的静态库(不公开源码)">
                 
                     <i class="fa fa-angle-left"></i>
                     <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
@@ -394,7 +395,7 @@
         <ul class="post-actions post-action-nav">
             <li class="post-action">
                 
-                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/05/10/ARC/"  data-tooltip="谈谈ARC的本质和实现">
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/05/11/private-static-library/"  data-tooltip="用CocoaPod创建私有的静态库(不公开源码)">
                 
                     <i class="fa fa-angle-left"></i>
                     <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>

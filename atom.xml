@@ -190,45 +190,18 @@
   </entry>
   
   <entry>
-    <title>谈谈ARC的本质和实现</title>
-    <link href="http://ppsheep.com/2017/05/10/ARC/"/>
-    <id>http://ppsheep.com/2017/05/10/ARC/</id>
-    <published>2017-05-10T01:43:03.000Z</published>
-    <updated>2017-05-10T02:14:29.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>自从在iOS 5.0苹果推出ARC以来，现在ARC基本成为了每个项目的标配，除开一下特别老的项目还在使用MRC，换句话说，如果你手上的项目还在使用MRC，那么你可看看外面的世界了(赶快跳)。</p>
-<a id="more"></a>
-<p><strong>欢迎关注微博：ppsheep_Qian</strong></p>
-<p><a href="http://weibo.com/ppsheep" target="_blank" rel="external">http://weibo.com/ppsheep</a></p>
-<p><strong>欢迎关注公众号</strong></p>
-<p><img src="http://ac-mhke0kuv.clouddn.com/830a4ead8294ceff5160.jpg" alt=""></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;自从在iOS 5.0苹果推出ARC以来，现在ARC基本成为了每个项目的标配，除开一下特别老的项目还在使用MRC，换句话说，如果你手上的项目还在使用MRC，那么你可看看外面的世界了(赶快跳)。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="iOS进阶" scheme="http://ppsheep.com/all-categories/iOS%E8%BF%9B%E9%98%B6/"/>
-    
-    
-      <category term="ARC" scheme="http://ppsheep.com/all-tags/ARC/"/>
-    
-  </entry>
-  
-  <entry>
     <title>EasyNetwork--精简的网络封装 不依赖第三方库</title>
     <link href="http://ppsheep.com/2017/04/28/EasyNetwork/"/>
     <id>http://ppsheep.com/2017/04/28/EasyNetwork/</id>
     <published>2017-04-28T07:22:36.000Z</published>
-    <updated>2017-04-28T09:06:22.000Z</updated>
+    <updated>2017-07-06T01:31:30.000Z</updated>
     
-    <content type="html"><![CDATA[<p>正在维护两个SDK，两个SDK中均需要进行网络请求，但是从业务方了解到，他们不希望每次集成一个SDK，就是集成了一个大的网络库，代码量急剧上升，所以在考虑自己在SDK中封装一套网络库，精简可用，不需要引入第三方的代码，也能够大大缩减SDK的体积</p>
+    <content type="html"><![CDATA[<p>在国外一个小哥的博客上看到一篇关于swift封装系统网络框架的文章，这里对文章做了一个代码的实现</p>
 <a id="more"></a>
 <blockquote>
-<p>本篇文章思路来源于 <a href="http://szulctomasz.com/how-do-I-build-a-network-layer/" target="_blank" rel="external">http://szulctomasz.com/how-do-I-build-a-network-layer/</a> 非常感谢Tomasz Szulc的分享</p>
+<p>原文链接 <a href="http://szulctomasz.com/how-do-I-build-a-network-layer/" target="_blank" rel="external">http://szulctomasz.com/how-do-I-build-a-network-layer/</a> </p>
 </blockquote>
+<p>实现之后，也具体阅读了源码，基本上和作者的思路是一致的</p>
 <p>我们一步一步来实现这个网络框架，首先，我需要一个request类，来保存我每次请求的参数、请求方法、请求的API等等</p>
 <h3 id="APIRequets"><a href="#APIRequets" class="headerlink" title="APIRequets"></a>APIRequets</h3><p>之前看到的很多这种request，都是有一个基类，然后每个request是子类，重写父类的一些方法，这里我是通过协议来实现</p>
 <h5 id="BaseAPIRequest"><a href="#BaseAPIRequest" class="headerlink" title="BaseAPIRequest"></a>BaseAPIRequest</h5><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> Foundation</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">protocol</span> <span class="title">BaseAPIRequest</span> </span>&#123;</div><div class="line">    <span class="keyword">var</span> api: <span class="type">String</span> &#123; <span class="keyword">get</span> &#125;</div><div class="line">    <span class="keyword">var</span> method: <span class="type">NetworkService</span>.<span class="type">Method</span> &#123; <span class="keyword">get</span> &#125;</div><div class="line">    <span class="keyword">var</span> query: <span class="type">NetworkService</span>.<span class="type">QueryType</span> &#123; <span class="keyword">get</span> &#125;</div><div class="line">    <span class="keyword">var</span> params: [<span class="type">String</span> : <span class="type">Any</span>]? &#123; <span class="keyword">get</span> &#125;</div><div class="line">    <span class="keyword">var</span> headers: [<span class="type">String</span> : <span class="type">String</span>]? &#123; <span class="keyword">get</span> &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">extension</span> <span class="title">BaseAPIRequest</span> </span>&#123;</div><div class="line">    </div><div class="line">    <span class="comment">///默认返回json</span></div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">defaultJsonHeader</span><span class="params">()</span></span> -&gt; [<span class="type">String</span> : <span class="type">String</span>] &#123;</div><div class="line">        <span class="keyword">return</span> [<span class="string">"Content-Type"</span> : <span class="string">"application/json"</span>]</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
@@ -284,7 +257,7 @@
     
     <summary type="html">
     
-      &lt;p&gt;正在维护两个SDK，两个SDK中均需要进行网络请求，但是从业务方了解到，他们不希望每次集成一个SDK，就是集成了一个大的网络库，代码量急剧上升，所以在考虑自己在SDK中封装一套网络库，精简可用，不需要引入第三方的代码，也能够大大缩减SDK的体积&lt;/p&gt;
+      &lt;p&gt;在国外一个小哥的博客上看到一篇关于swift封装系统网络框架的文章，这里对文章做了一个代码的实现&lt;/p&gt;
     
     </summary>
     
@@ -1363,6 +1336,75 @@
     
     
       <category term="扯淡" scheme="http://ppsheep.com/all-tags/%E6%89%AF%E6%B7%A1/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>iOS动画实践三(UIView的动画你真的会用吗？)</title>
+    <link href="http://ppsheep.com/2016/08/20/iOS%E5%8A%A8%E7%94%BB%E5%AE%9E%E8%B7%B5%E4%B8%89-UIView%E7%9A%84%E5%8A%A8%E7%94%BB%E4%BD%A0%E7%9C%9F%E7%9A%84%E4%BC%9A%E7%94%A8%E5%90%97/"/>
+    <id>http://ppsheep.com/2016/08/20/iOS动画实践三-UIView的动画你真的会用吗/</id>
+    <published>2016-08-20T02:31:53.000Z</published>
+    <updated>2017-02-15T05:12:09.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>在这一节中，我们继续讲解UIView中的一些动画的使用，之前已经讲过了基础的用法，和spring动画的用法，在这一节中，我们将要介绍Transitions，也是一个我们经常使用到的动画</p>
+<a id="more"></a>
+<p>首先我们把上次的工程打开，没看上一篇文章的同学，请移步</p>
+<p><a href="http://ppsheep.com/2017/01/22/iOS动画实践二-UIView的动画你真的会用吗/">http://ppsheep.com/2017/01/22/iOS动画实践二-UIView的动画你真的会用吗/</a></p>
+<h3 id="加入、移除、隐藏-view的动画"><a href="#加入、移除、隐藏-view的动画" class="headerlink" title="加入、移除、隐藏 view的动画"></a>加入、移除、隐藏 view的动画</h3><p>我们知道Transitions的意思是一个过渡动画、转变动画，但是具体什么效果，我们还是不知道，接下来，我们先来看看这个动画是一个什么要样的效果？</p>
+<p>首先我们创建一个animationContainerView，这个就是做动画的view，为什么叫做ContainerView，因为我们还要在这个view中放上其他的一些控件一起来做动画</p>
+<p>我们将其他的控件先隐藏掉，加入动画的view看看，是什么效果</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">animationContainerView = <span class="type">UIView</span>(frame: view.bounds)</div><div class="line">animationContainerView?.frame = view.bounds</div><div class="line">view.addSubview(animationContainerView!)</div></pre></td></tr></table></figure>
+<p>然后再viewDidAppear方法中，做一个transition动画</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> newView = <span class="type">UIImageView</span>(image: <span class="type">UIImage</span>(named: <span class="string">"banner"</span>))</div><div class="line">newView.center  = animationContainerView!.center</div><div class="line"><span class="type">UIView</span>.transition(with: animationContainerView!, duration: <span class="number">0.83</span>, options: [.curveEaseOut,.transitionFlipFromTop], animations: &#123;</div><div class="line">    <span class="keyword">self</span>.animationContainerView?.addSubview(newView)</div><div class="line">&#125;, completion: <span class="literal">nil</span>)</div></pre></td></tr></table></figure>
+<p>好我们来看看效果</p>
+<p><img src="http://o8bxt3lx0.bkt.clouddn.com/blog/2017-01-24-2.gif" alt=""></p>
+<p>我故意将动画放的很慢，这样效果就能够更明显，这里这个option有很多种效果，我就不全部展示了，这里我提两个比较不一样的</p>
+<h4 id="transitionCrossDissolve"><a href="#transitionCrossDissolve" class="headerlink" title="transitionCrossDissolve"></a>transitionCrossDissolve</h4><p>这是一个渐渐显示的一个效果</p>
+<p>将option参数换掉就行，还是直接看效果</p>
+<p><img src="http://o8bxt3lx0.bkt.clouddn.com/blog/2017-01-24-3.gif" alt=""></p>
+<p>可能模拟器的动画效果不是那么明显，大家可以自己手动实验一下</p>
+<h4 id="transitionCurlUp-这个是整个一个view的一个效果"><a href="#transitionCurlUp-这个是整个一个view的一个效果" class="headerlink" title="transitionCurlUp 这个是整个一个view的一个效果"></a>transitionCurlUp 这个是整个一个view的一个效果</h4><p><img src="http://o8bxt3lx0.bkt.clouddn.com/blog/2017-01-24-4.gif" alt=""></p>
+<p>上面我都是使用的addsubview来做动画，要做移除view的动画，或者隐藏的动画，直接变换方法就行，具体的操作，我就不做了</p>
+<h4 id="翻转效果"><a href="#翻转效果" class="headerlink" title="翻转效果"></a>翻转效果</h4><p>我们新创建一个VC-AnotherViewController</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="type">UIView</span>.transition(from: view, to: anotherVc.view , duration: <span class="number">1.0</span>, options: [.curveEaseInOut,.transitionFlipFromLeft]) &#123; (<span class="literal">true</span>) <span class="keyword">in</span></div><div class="line">    </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这一行代码就可以实现翻转效果</p>
+<p><img src="http://o8bxt3lx0.bkt.clouddn.com/blog/2017-01-24-5.gif" alt=""></p>
+<p>这种效果也是我们常见的</p>
+<h3 id="登录动画"><a href="#登录动画" class="headerlink" title="登录动画"></a>登录动画</h3><p>接下来我们在我们之前做的登录页面上，加上一些Transitions的动画</p>
+<p>说一下我想要实现的效果，当我们点击登录按钮的时候，有一个动画出现，显示当前的登录进度，就是这么一个简单的实现</p>
+<p>一步一步来，首先，在点击按钮的时候，让label出现</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//首先将lable加入到view中</span></div><div class="line">    <span class="comment">//动画的view</span></div><div class="line">    <span class="keyword">let</span> status = <span class="type">UIImageView</span>(image: <span class="type">UIImage</span>(named: <span class="string">"banner"</span>))</div><div class="line">    <span class="keyword">let</span> label = <span class="type">UILabel</span>()</div><div class="line">    <span class="keyword">let</span> message = [<span class="string">"连接中..."</span>,<span class="string">"授权中..."</span>,<span class="string">"发送认证消息..."</span>,<span class="string">"认证失败..."</span>]</div><div class="line">    <span class="keyword">var</span> statusPosition = <span class="type">CGPoint</span>.zero</div></pre></td></tr></table></figure>
+<p>在页面加载时将status隐藏起来</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//首先将label隐藏</span></div><div class="line">status.isHidden = <span class="literal">true</span></div><div class="line">status.center = loginBtn.center</div><div class="line">view.addSubview(status)</div><div class="line"></div><div class="line">label.frame = <span class="type">CGRect</span>(x: <span class="number">0</span>, y: <span class="number">0</span>, width: status.frame.size.width, height: status.frame.size.height)</div><div class="line">label.textAlignment = .center</div><div class="line">label.font = <span class="type">UIFont</span>(name: <span class="string">"HelveticaNeue"</span>, size: <span class="number">18</span>)</div><div class="line">label.textColor = <span class="type">UIColor</span>.blue</div><div class="line">status.addSubview(label)</div><div class="line"></div><div class="line">statusPosition = status.center</div></pre></td></tr></table></figure>
+<p>然后我们在点击的时候，调用方法 showMeesage</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">showMessage</span><span class="params">(index: Int)</span></span> &#123;</div><div class="line">    label.text = message[index]</div><div class="line">    <span class="type">UIView</span>.transition(with: status, duration: <span class="number">0.5</span>, options: [.curveEaseIn,.transitionFlipFromBottom], animations: &#123; </div><div class="line">        <span class="keyword">self</span>.status.isHidden = <span class="literal">false</span></div><div class="line">    &#125;) &#123; (<span class="literal">true</span>) <span class="keyword">in</span></div><div class="line">        </div><div class="line">    &#125;</div><div class="line">    </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>还是看一下效果</p>
+<p><img src="http://o8bxt3lx0.bkt.clouddn.com/blog/2017-01-24-6.gif" alt=""></p>
+<h4 id="加上动效"><a href="#加上动效" class="headerlink" title="加上动效"></a>加上动效</h4><p>现在连接的状态是出现了，但是这样它就不动了，我们想要这个状态不断更新，为了实现这样的操作，我们定义一个函数，这个函数是这样的，传入一个重复操作的间隔时间，再传入需要操作的方法，即一个闭包</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// A delay function</span></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">delay</span><span class="params">(seconds: Double, completion:@escaping <span class="params">()</span></span></span>-&gt;()) &#123;</div><div class="line">  <span class="keyword">let</span> popTime = <span class="type">DispatchTime</span>.now() + <span class="type">Double</span>(<span class="type">Int64</span>( <span class="type">Double</span>(<span class="type">NSEC_PER_SEC</span>) * seconds )) / <span class="type">Double</span>(<span class="type">NSEC_PER_SEC</span>)</div><div class="line">  </div><div class="line">  <span class="type">DispatchQueue</span>.main.asyncAfter(deadline: popTime) &#123;</div><div class="line">    completion()</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上面这个方法的意思是，每几秒钟执行一次completion，因为我们需要更新UI，所以这个completion必须要在主线程中执行</p>
+<p>另外我们还需要一个移除状态的方法</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">removeMessage</span><span class="params">(index: Int)</span></span> &#123;</div><div class="line">    <span class="type">UIView</span>.animate(withDuration: <span class="number">0.5</span>, delay: <span class="number">0.0</span>, options: [], animations: &#123; </div><div class="line">        <span class="keyword">self</span>.status.center.x += <span class="keyword">self</span>.view.bounds.size.width</div><div class="line">    &#125;) &#123; <span class="number">_</span> <span class="keyword">in</span></div><div class="line">        <span class="keyword">self</span>.status.isHidden = <span class="literal">true</span></div><div class="line">        <span class="keyword">self</span>.status.center = <span class="keyword">self</span>.statusPosition</div><div class="line">        </div><div class="line">        <span class="keyword">self</span> .showMessage(index: index+<span class="number">1</span>)</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">showMessage</span><span class="params">(index: Int)</span></span> &#123;</div><div class="line">    label.text = message[index]</div><div class="line">    <span class="type">UIView</span>.transition(with: status, duration: <span class="number">0.5</span>, options: [.curveEaseIn,.transitionFlipFromBottom], animations: &#123; </div><div class="line">        <span class="keyword">self</span>.status.isHidden = <span class="literal">false</span></div><div class="line">    &#125;) &#123; <span class="number">_</span> <span class="keyword">in</span></div><div class="line">        </div><div class="line">        delay(seconds: <span class="number">2</span>, completion: &#123; </div><div class="line">            <span class="keyword">if</span> index &lt; <span class="keyword">self</span>.message.<span class="built_in">count</span>-<span class="number">1</span> &#123;<span class="comment">//到了最后一条消息</span></div><div class="line">                <span class="keyword">self</span>.removeMessage(index: index)</div><div class="line">            &#125;<span class="keyword">else</span>&#123;</div><div class="line">                </div><div class="line">            &#125;</div><div class="line">        &#125;)</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>看一下效果</p>
+<p><img src="http://o8bxt3lx0.bkt.clouddn.com/blog/2017-01-24-7.gif" alt=""></p>
+<p>好今天就讲到这里，马上要放假咯，收拾收拾，回家过年</p>
+<p><strong>欢迎大家关注我的公众号，我会定期分享一些我在项目中遇到问题的解决办法和一些iOS实用的技巧，现阶段主要是整理出一些基础的知识记录下来</strong></p>
+<div align="middle"><br>    <image src="http://ac-mhke0kuv.clouddn.com/830a4ead8294ceff5160.jpg"></image><br></div>
+
+<p>文章也会同步更新到我的博客：<br><a href="http://ppsheep.com">http://ppsheep.com</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在这一节中，我们继续讲解UIView中的一些动画的使用，之前已经讲过了基础的用法，和spring动画的用法，在这一节中，我们将要介绍Transitions，也是一个我们经常使用到的动画&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="iOS动画" scheme="http://ppsheep.com/all-categories/iOS%E5%8A%A8%E7%94%BB/"/>
+    
+    
+      <category term="iOS动画" scheme="http://ppsheep.com/all-tags/iOS%E5%8A%A8%E7%94%BB/"/>
     
   </entry>
   
