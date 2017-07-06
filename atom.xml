@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://ppsheep.com/"/>
-  <updated>2017-07-06T08:49:24.000Z</updated>
+  <updated>2017-07-06T09:03:45.000Z</updated>
   <id>http://ppsheep.com/</id>
   
   <author>
@@ -16,11 +16,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>全局单例的正确使用</title>
+    <title>全局单例换一种姿势使用</title>
     <link href="http://ppsheep.com/2017/07/06/single/"/>
     <id>http://ppsheep.com/2017/07/06/single/</id>
     <published>2017-07-06T08:22:17.000Z</published>
-    <updated>2017-07-06T08:49:24.000Z</updated>
+    <updated>2017-07-06T09:03:45.000Z</updated>
     
     <content type="html"><![CDATA[<p>最近在写项目中遇到一个问题，是关于单例的问题，一般我们使用单例，其实用起来很简单，但是在某些场景下，我们目前的使用方式就会出现问题，下面我们来看看。</p>
 <a id="more"></a>
