@@ -1,0 +1,522 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="ppsheep">
+    <title>EasyNetwork--精简的网络封装 不依赖第三方库 - ppsheep</title>
+    <meta name="author" content="ppsheep">
+    
+    
+    
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+    
+    <meta name="description" content="正在维护两个SDK，两个SDK中均需要进行网络请求，但是从业务方了解到，他们不希望每次集成一个SDK，就是集成了一个大的网络库，代码量急剧上升，所以在考虑自己在SDK中封装一套网络库，精简可用，不需要引入第三方的代码，也能够大大缩减SDK的体积">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="EasyNetwork--精简的网络封装 不依赖第三方库">
+<meta property="og:url" content="http://ppsheep.com/2017/04/28/EasyNetwork/index.html">
+<meta property="og:site_name" content="ppsheep">
+<meta property="og:description" content="正在维护两个SDK，两个SDK中均需要进行网络请求，但是从业务方了解到，他们不希望每次集成一个SDK，就是集成了一个大的网络库，代码量急剧上升，所以在考虑自己在SDK中封装一套网络库，精简可用，不需要引入第三方的代码，也能够大大缩减SDK的体积">
+<meta property="og:image" content="http://ac-mhke0kuv.clouddn.com/830a4ead8294ceff5160.jpg">
+<meta property="og:updated_time" content="2017-04-28T09:06:22.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="EasyNetwork--精简的网络封装 不依赖第三方库">
+<meta name="twitter:description" content="正在维护两个SDK，两个SDK中均需要进行网络请求，但是从业务方了解到，他们不希望每次集成一个SDK，就是集成了一个大的网络库，代码量急剧上升，所以在考虑自己在SDK中封装一套网络库，精简可用，不需要引入第三方的代码，也能够大大缩减SDK的体积">
+<meta name="twitter:image" content="http://ac-mhke0kuv.clouddn.com/830a4ead8294ceff5160.jpg">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/7931417.jpeg"/>
+    
+    
+        <meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/ppsheep/6lwwx.jpeg"/>
+        <meta class="swiftype" name="image" data-type="enum" content="http://o8bxt3lx0.bkt.clouddn.com/ppsheep/6lwwx.jpeg" />
+    
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-nuvue6sithwirecbhvw3dkaobiojqvtadsnhguwi7k04xklybw5djl1smadp.min.css">
+    <!--STYLES END-->
+    
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="3">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <h1 class="header-title">
+        <a class="header-title-link" href="/ ">ppsheep</a>
+    </h1>
+    
+        
+            <a  class="header-right-picture "
+                href="#about">
+        
+        
+            <img class="header-picture" src="http://o8bxt3lx0.bkt.clouddn.com/7931417.jpeg"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="3">
+    
+        <div class="sidebar-profile">
+            <a href="/#about">
+                    <img class="sidebar-profile-picture" src="http://o8bxt3lx0.bkt.clouddn.com/7931417.jpeg"/>
+            </a>
+            <span class="sidebar-profile-name">ppsheep</span>
+        </div>
+    
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/ "
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+                    <span class="sidebar-button-desc">首页</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-categories"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+                    <span class="sidebar-button-desc">分类</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-tags"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+                    <span class="sidebar-button-desc">标签</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-archives"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+                    <span class="sidebar-button-desc">归档</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link st-search-show-outputs"
+                         href="#search"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-search"></i>
+                    <span class="sidebar-button-desc">搜索</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="#about"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+                    <span class="sidebar-button-desc">关于</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="https://github.com/yangqian111" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+                    <span class="sidebar-button-desc">GitHub</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="http://weibo.com/6071931832/profile?topnav=1&wvr=6" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+                    <span class="sidebar-button-desc">微博</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="mailto:ppsheep.qian@gmail.com" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+                    <span class="sidebar-button-desc">邮箱</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/atom.xml"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+                    <span class="sidebar-button-desc">RSS</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+</nav>
+
+            
+            <div id="main" data-behavior="3"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post" itemscope itemType="http://schema.org/BlogPosting">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title" itemprop="headline">
+            EasyNetwork--精简的网络封装 不依赖第三方库
+        </h1>
+    
+    <div class="post-meta">
+    <time itemprop="datePublished" datetime="2017-04-28T15:22:36+08:00">
+	
+		    4月 28, 2017
+    	
+    </time>
+    
+        <span>发布在 </span>
+        
+    <a class="category-link" href="/all-categories/网络/">网络</a>
+
+
+    
+</div>
+
+</div>
+    
+    <div class="post-content markdown" itemprop="articleBody">
+        <div class="main-content-wrap">
+            <p>正在维护两个SDK，两个SDK中均需要进行网络请求，但是从业务方了解到，他们不希望每次集成一个SDK，就是集成了一个大的网络库，代码量急剧上升，所以在考虑自己在SDK中封装一套网络库，精简可用，不需要引入第三方的代码，也能够大大缩减SDK的体积</p>
+<a id="more"></a>
+<blockquote>
+<p>本篇文章思路来源于 <a href="http://szulctomasz.com/how-do-I-build-a-network-layer/" target="_blank" rel="external">http://szulctomasz.com/how-do-I-build-a-network-layer/</a> 非常感谢Tomasz Szulc的分享</p>
+</blockquote>
+<p>我们一步一步来实现这个网络框架，首先，我需要一个request类，来保存我每次请求的参数、请求方法、请求的API等等</p>
+<h3 id="APIRequets"><a href="#APIRequets" class="headerlink" title="APIRequets"></a>APIRequets</h3><p>之前看到的很多这种request，都是有一个基类，然后每个request是子类，重写父类的一些方法，这里我是通过协议来实现</p>
+<h5 id="BaseAPIRequest"><a href="#BaseAPIRequest" class="headerlink" title="BaseAPIRequest"></a>BaseAPIRequest</h5><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> Foundation</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">protocol</span> <span class="title">BaseAPIRequest</span> </span>&#123;</div><div class="line">    <span class="keyword">var</span> api: <span class="type">String</span> &#123; <span class="keyword">get</span> &#125;</div><div class="line">    <span class="keyword">var</span> method: <span class="type">NetworkService</span>.<span class="type">Method</span> &#123; <span class="keyword">get</span> &#125;</div><div class="line">    <span class="keyword">var</span> query: <span class="type">NetworkService</span>.<span class="type">QueryType</span> &#123; <span class="keyword">get</span> &#125;</div><div class="line">    <span class="keyword">var</span> params: [<span class="type">String</span> : <span class="type">Any</span>]? &#123; <span class="keyword">get</span> &#125;</div><div class="line">    <span class="keyword">var</span> headers: [<span class="type">String</span> : <span class="type">String</span>]? &#123; <span class="keyword">get</span> &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">extension</span> <span class="title">BaseAPIRequest</span> </span>&#123;</div><div class="line">    </div><div class="line">    <span class="comment">///默认返回json</span></div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">defaultJsonHeader</span><span class="params">()</span></span> -&gt; [<span class="type">String</span> : <span class="type">String</span>] &#123;</div><div class="line">        <span class="keyword">return</span> [<span class="string">"Content-Type"</span> : <span class="string">"application/json"</span>]</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>协议包含了我们普通请求的所需要的参数、请求地址、请求方法、请求类型和请求头，并且还有一个扩展，默认请求类型是json</p>
+<p>关于请求方法和请求类型的枚举类型，后面我们会讲到</p>
+<p>有一个登录请求request，他实现了BaseAPIRequest</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> Foundation</div><div class="line"></div><div class="line"><span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">SignInRequest</span>: <span class="title">BaseAPIRequest</span> </span>&#123;</div><div class="line">    </div><div class="line">    <span class="keyword">private</span> <span class="keyword">let</span> userName: <span class="type">String</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">let</span> password: <span class="type">String</span></div><div class="line">    </div><div class="line">    <span class="keyword">init</span>(userName: <span class="type">String</span>, password: <span class="type">String</span>) &#123;</div><div class="line">        <span class="keyword">self</span>.userName = userName</div><div class="line">        <span class="keyword">self</span>.password = password</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    </div><div class="line">    <span class="keyword">var</span> method: <span class="type">NetworkService</span>.<span class="type">Method</span> &#123;</div><div class="line">        <span class="keyword">return</span> .post</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">var</span> query: <span class="type">NetworkService</span>.<span class="type">QueryType</span> &#123;</div><div class="line">        <span class="keyword">return</span> .json</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">var</span> params: [<span class="type">String</span> : <span class="type">Any</span>]? &#123;</div><div class="line">        <span class="keyword">return</span> [</div><div class="line">            <span class="string">"username"</span> : userName,</div><div class="line">            <span class="string">"password"</span> : password</div><div class="line">        ]</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">var</span> api: <span class="type">String</span> &#123;</div><div class="line">        <span class="keyword">return</span> <span class="string">"/sign_in"</span></div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">var</span> headers: [<span class="type">String</span> : <span class="type">String</span>]? &#123;</div><div class="line">        <span class="keyword">return</span> defaultJsonHeader()</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这样，我们每个请求的所需要的参数，都封装在了一个request对象当中，接下来要考虑的是怎样发起这个网络请求，最终采取的方案是，通过NSOperation和NSOperationQueue来实现网络请求的发起</p>
+<p>这里用到了自定义operation，如果对这一块不太了解的同学，可以看看我之前的一篇文章</p>
+<p><a href="http://ppsheep.com/2017/03/14/Operation-Queues并发编程/">http://ppsheep.com/2017/03/14/Operation-Queues并发编程/</a></p>
+<h3 id="Operation发起网络请求"><a href="#Operation发起网络请求" class="headerlink" title="Operation发起网络请求"></a>Operation发起网络请求</h3><p>自定义一个可并发的operation</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> Foundation</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NetworkOperation</span>: <span class="title">Operation</span> </span>&#123;</div><div class="line">    </div><div class="line">    <span class="keyword">private</span> <span class="keyword">var</span> _isReady: <span class="type">Bool</span></div><div class="line">    </div><div class="line">    <span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">var</span> isReady: <span class="type">Bool</span> &#123;</div><div class="line">        <span class="keyword">get</span> &#123; <span class="keyword">return</span> _isReady &#125;</div><div class="line">        <span class="keyword">set</span> &#123; update(</div><div class="line">            &#123; <span class="keyword">self</span>._isReady = newValue &#125;, key: <span class="string">"isReady"</span>) &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">private</span> <span class="keyword">var</span> _isExecuting: <span class="type">Bool</span></div><div class="line">    <span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">var</span> isExecuting: <span class="type">Bool</span> &#123;</div><div class="line">        <span class="keyword">get</span> &#123; <span class="keyword">return</span> _isExecuting &#125;</div><div class="line">        <span class="keyword">set</span> &#123; update(&#123; <span class="keyword">self</span>._isExecuting = newValue &#125;, key: <span class="string">"isExecuting"</span>) &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">private</span> <span class="keyword">var</span> _isFinished: <span class="type">Bool</span></div><div class="line">    <span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">var</span> isFinished: <span class="type">Bool</span> &#123;</div><div class="line">        <span class="keyword">get</span> &#123; <span class="keyword">return</span> _isFinished &#125;</div><div class="line">        <span class="keyword">set</span> &#123; update(&#123; <span class="keyword">self</span>._isFinished = newValue &#125;, key: <span class="string">"isFinished"</span>) &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">private</span> <span class="keyword">var</span> _isCancelled: <span class="type">Bool</span></div><div class="line">    <span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">var</span> isCancelled: <span class="type">Bool</span> &#123;</div><div class="line">        <span class="keyword">get</span> &#123; <span class="keyword">return</span> _isCancelled &#125;</div><div class="line">        <span class="keyword">set</span> &#123; update(&#123; <span class="keyword">self</span>._isCancelled = newValue &#125;, key: <span class="string">"isCancelled"</span>) &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">private</span> <span class="function"><span class="keyword">func</span> <span class="title">update</span><span class="params">(<span class="number">_</span> change: <span class="params">(Void)</span></span></span> -&gt; <span class="type">Void</span>, key: <span class="type">String</span>) &#123;</div><div class="line">        willChangeValue(forKey: key)</div><div class="line">        change()</div><div class="line">        didChangeValue(forKey: key)</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">override</span> <span class="keyword">init</span>() &#123;</div><div class="line">        _isReady = <span class="literal">true</span></div><div class="line">        _isExecuting = <span class="literal">false</span></div><div class="line">        _isFinished = <span class="literal">false</span></div><div class="line">        _isCancelled = <span class="literal">false</span></div><div class="line">        <span class="keyword">super</span>.<span class="keyword">init</span>()</div><div class="line">        name = <span class="string">"Network Operation"</span></div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">var</span> isAsynchronous: <span class="type">Bool</span> &#123;</div><div class="line">        <span class="keyword">return</span> <span class="literal">true</span></div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">public</span> <span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">start</span><span class="params">()</span></span> &#123;</div><div class="line">        <span class="keyword">if</span> <span class="keyword">self</span>.isExecuting == <span class="literal">false</span> &#123;</div><div class="line">            <span class="keyword">self</span>.isReady = <span class="literal">false</span></div><div class="line">            <span class="keyword">self</span>.isExecuting = <span class="literal">true</span></div><div class="line">            <span class="keyword">self</span>.isFinished = <span class="literal">false</span></div><div class="line">            <span class="keyword">self</span>.isCancelled = <span class="literal">false</span></div><div class="line">            <span class="built_in">print</span>(<span class="string">"\(self.name!) operation started."</span>)</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">/// Used only by subclasses. Externally you should use `cancel`.</span></div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">finish</span><span class="params">()</span></span> &#123;</div><div class="line">        <span class="built_in">print</span>(<span class="string">"\(self.name!) operation finished."</span>)</div><div class="line">        <span class="keyword">self</span>.isExecuting = <span class="literal">false</span></div><div class="line">        <span class="keyword">self</span>.isFinished = <span class="literal">true</span></div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">public</span> <span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">cancel</span><span class="params">()</span></span> &#123;</div><div class="line">        <span class="built_in">print</span>(<span class="string">"\(self.name!) operation cancelled."</span>)</div><div class="line">        <span class="keyword">self</span>.isExecuting = <span class="literal">false</span></div><div class="line">        <span class="keyword">self</span>.isCancelled = <span class="literal">true</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>ServiceOperation是NetworkOperation的一个子类，在其中加入了网络请求入口EasyNetworkService，并且将取消请求的方法定义设置</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> Foundation</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ServiceOperation</span>: <span class="title">NetworkOperation</span> </span>&#123;</div><div class="line">    </div><div class="line">    <span class="keyword">let</span> service: <span class="type">EasyNetworkService</span></div><div class="line">    </div><div class="line">    <span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">init</span>() &#123;</div><div class="line">        <span class="keyword">self</span>.service = <span class="type">EasyNetworkService</span>(<span class="type">HostConfiguration</span>.shared)</div><div class="line">        <span class="keyword">super</span>.<span class="keyword">init</span>()</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">public</span> <span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">cancel</span><span class="params">()</span></span> &#123;</div><div class="line">        service.cancle()</div><div class="line">        <span class="keyword">super</span>.cancel()</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>接下来，我每个请求的operation，都继承自ServiceOperation，在每个请求发起的时候，将这个operation添加到队列当中即可</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> Foundation</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SignInOperation</span>: <span class="title">ServiceOperation</span> </span>&#123;</div><div class="line">    </div><div class="line">    <span class="keyword">private</span> <span class="keyword">let</span> request: <span class="type">SignInRequest</span></div><div class="line">    </div><div class="line">    <span class="keyword">public</span> <span class="keyword">var</span> success: ((<span class="type">SignInItem</span>) -&gt; <span class="type">Void</span>)?</div><div class="line">    <span class="keyword">public</span> <span class="keyword">var</span> failure: ((<span class="type">NSError</span>) -&gt; <span class="type">Void</span>)?</div><div class="line">    </div><div class="line">    <span class="keyword">public</span> <span class="keyword">init</span>(userName: <span class="type">String</span>, password: <span class="type">String</span>) &#123;</div><div class="line">        request = <span class="type">SignInRequest</span>(userName: userName, password: password)</div><div class="line">        <span class="keyword">super</span>.<span class="keyword">init</span>()</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">public</span> <span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">start</span><span class="params">()</span></span> &#123;</div><div class="line">        <span class="keyword">super</span>.start()</div><div class="line">        service.request(request, success: handleSuccess, failure: handleFailure)</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">private</span> <span class="function"><span class="keyword">func</span> <span class="title">handleSuccess</span><span class="params">(<span class="number">_</span> response: AnyObject?)</span></span> &#123;</div><div class="line">        <span class="keyword">do</span> &#123;</div><div class="line">            <span class="keyword">let</span> item = <span class="keyword">try</span> <span class="type">SignInResponseMapper</span>.process(response)</div><div class="line">            <span class="keyword">self</span>.success?(item)</div><div class="line">            <span class="keyword">self</span>.finish()</div><div class="line">        &#125; <span class="keyword">catch</span> &#123;</div><div class="line">            handleFailure(<span class="type">NSError</span>.cannotParseResponse())</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">private</span> <span class="function"><span class="keyword">func</span> <span class="title">handleFailure</span><span class="params">(<span class="number">_</span> error: NSError)</span></span> &#123;</div><div class="line">        <span class="keyword">self</span>.failure?(error)</div><div class="line">        <span class="keyword">self</span>.finish()</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在上面的登录请求operation中，有成功的回调和失败的回调，其中还涉及到了将返回的数据转成一个model，后面我们也是会讲到的</p>
+<p>operation已经定义好，我们还需要一个operationQueue来执行我们的operation</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> Foundation</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NetworkQueue</span> </span>&#123;</div><div class="line">    </div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">var</span> shared = <span class="type">NetworkQueue</span>()</div><div class="line">    </div><div class="line">    <span class="keyword">let</span> queue = <span class="type">OperationQueue</span>()</div><div class="line">    </div><div class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">func</span> <span class="title">addOperation</span><span class="params">(<span class="number">_</span> op: Operation)</span></span> &#123;</div><div class="line">        queue.addOperation(op)</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这样，我们对外需要暴露的接口基本上已经实现完成，现在如果我要发起一次请求，就是这样一种方式</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> signInOperation = <span class="type">SignInOperation</span>(userName: <span class="string">"userName"</span>, password: <span class="string">"password"</span>)</div><div class="line">signInOperation.success = &#123; item <span class="keyword">in</span> <span class="built_in">print</span>(<span class="string">"User id is \(item.userName)"</span>) &#125;</div><div class="line">signInOperation.failure = &#123; error <span class="keyword">in</span> <span class="built_in">print</span>(error.localizedDescription) &#125;</div><div class="line"><span class="type">NetworkQueue</span>.shared.addOperation(signInOperation)</div></pre></td></tr></table></figure>
+<p>好像还缺点什么，好像还没有baseURL的定义，加一个，定义baseURL</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> Foundation</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">HostConfiguration</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">let</span> baseURL: <span class="type">URL</span></div><div class="line">    </div><div class="line">    <span class="keyword">public</span> <span class="keyword">init</span>(baseURL: <span class="type">URL</span>) &#123;</div><div class="line">        <span class="keyword">self</span>.baseURL = baseURL</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">var</span> shared: <span class="type">HostConfiguration</span>!</div><div class="line">    </div><div class="line">    <span class="class"><span class="keyword">class</span> <span class="title">func</span> <span class="title">baseURL</span>(<span class="title">_</span> <span class="title">urlString</span>: <span class="title">String</span>) </span>&#123;</div><div class="line">        <span class="keyword">let</span> url = <span class="type">URL</span>(string: urlString)!</div><div class="line">        <span class="type">HostConfiguration</span>.shared = <span class="type">HostConfiguration</span>(baseURL: url)</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在我们启动之后，将baseURL设置进去就行</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="type">HostConfiguration</span>.baseURL(<span class="string">"http://"</span>)<span class="comment">//设置baseURL</span></div></pre></td></tr></table></figure>
+<p>接下来，我们就来实现内部的网络请求，真正的网络请求发送，我们使用的是apple提供的URLSession框架</p>
+<p>我们发起网络请求，到达最后的地方，是在operation的start方法中，调用了</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">start</span><span class="params">()</span></span> &#123;</div><div class="line">        <span class="keyword">super</span>.start()</div><div class="line">        service.request(request, success: handleSuccess, failure: handleFailure)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这个service是一个EasyNetworkService，它内部实现了完整URL的拼接，header的设置，在它内部实现了具体的请求调用</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">let</span> <span class="type">DidPerformUnauthorizedOperation</span> = <span class="string">"DidPerformUnauthorizedOperation"</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> Foundation</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">EasyNetworkService</span> </span>&#123;</div><div class="line">    </div><div class="line">    <span class="keyword">private</span> <span class="keyword">let</span> conf: <span class="type">HostConfiguration</span> <span class="comment">//</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">let</span> service = <span class="type">NetworkService</span>()<span class="comment">//发请求的网络服务类</span></div><div class="line">    </div><div class="line">    <span class="keyword">init</span>(<span class="number">_</span> conf: <span class="type">HostConfiguration</span>) &#123;</div><div class="line">        <span class="keyword">self</span>.conf = conf</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">request</span><span class="params">(<span class="number">_</span> request: BaseAPIRequest,</span></span></div><div class="line">                 success: <span class="params">(<span class="params">(AnyObject?)</span></span> -&gt; <span class="type">Void</span>)? = <span class="literal">nil</span>,</div><div class="line">                 failure: ((<span class="type">NSError</span>) -&gt; <span class="type">Void</span>)? = <span class="literal">nil</span>) &#123;</div><div class="line">        </div><div class="line">         <span class="keyword">let</span> url = conf.baseURL.appendingPathComponent(request.api)</div><div class="line">        </div><div class="line">        <span class="keyword">let</span> headers = request.headers</div><div class="line">        </div><div class="line">        service.makeRequest(<span class="keyword">for</span>: url, method: request.method, queryType: request.query, params: request.params, headers: headers, success: &#123; data <span class="keyword">in</span></div><div class="line">            <span class="keyword">var</span> json: <span class="type">AnyObject</span>? = <span class="literal">nil</span></div><div class="line">            <span class="keyword">if</span> <span class="keyword">let</span> data = data &#123;</div><div class="line">                json = <span class="keyword">try</span>? <span class="type">JSONSerialization</span>.jsonObject(with: data <span class="keyword">as</span> <span class="type">Data</span>, options: []) <span class="keyword">as</span> <span class="type">AnyObject</span></div><div class="line">            &#125;</div><div class="line">            success?(json)</div><div class="line">        &#125;, failure: &#123; data, error, statusCode <span class="keyword">in</span></div><div class="line">            <span class="keyword">if</span> statusCode == <span class="number">401</span> &#123;</div><div class="line">                <span class="comment">// Operation not authorized</span></div><div class="line">                <span class="type">NotificationCenter</span>.<span class="keyword">default</span>.post(name: <span class="type">NSNotification</span>.<span class="type">Name</span>(rawValue: <span class="type">DidPerformUnauthorizedOperation</span>), object: <span class="literal">nil</span>)</div><div class="line">                <span class="keyword">return</span></div><div class="line">            &#125;</div><div class="line">            </div><div class="line">            <span class="keyword">if</span> <span class="keyword">let</span> data = data &#123;</div><div class="line">                <span class="keyword">let</span> json = <span class="keyword">try</span>? <span class="type">JSONSerialization</span>.jsonObject(with: data <span class="keyword">as</span> <span class="type">Data</span>, options: []) <span class="keyword">as</span> <span class="type">AnyObject</span></div><div class="line">                <span class="keyword">let</span> info = [</div><div class="line">                    <span class="type">NSLocalizedDescriptionKey</span>: json?[<span class="string">"error"</span>] <span class="keyword">as</span>? <span class="type">String</span> ?? <span class="string">""</span>,</div><div class="line">                    <span class="type">NSLocalizedFailureReasonErrorKey</span>: <span class="string">"Probably not allowed action."</span></div><div class="line">                ]</div><div class="line">                <span class="keyword">let</span> error = <span class="type">NSError</span>(domain: <span class="string">"EasyNetworkService"</span>, code: <span class="number">0</span>, userInfo: info)</div><div class="line">                failure?(error)</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                failure?(error ?? <span class="type">NSError</span>(domain: <span class="string">"EasyNetworkService"</span>, code: <span class="number">0</span>, userInfo: <span class="literal">nil</span>))</div><div class="line">            &#125;</div><div class="line">        &#125;)</div><div class="line">        </div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">cancle</span><span class="params">()</span></span> &#123;</div><div class="line">        service.cancel()</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在上面的service中，又出现了一个NetworkService，这个service就是组装URLSession，进行网络请求的发出</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">import</span> Foundation</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">NetworkService</span> </span>&#123;</div><div class="line">    </div><div class="line">    <span class="keyword">private</span> <span class="keyword">var</span> task: <span class="type">URLSessionDataTask</span>?</div><div class="line">    <span class="keyword">private</span> <span class="keyword">var</span> successCodes: <span class="type">CountableRange</span>&lt;<span class="type">Int</span>&gt; = <span class="number">200</span>..&lt;<span class="number">299</span><span class="comment">//成功的code</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">var</span> failureCodes: <span class="type">CountableRange</span>&lt;<span class="type">Int</span>&gt; = <span class="number">400</span>..&lt;<span class="number">499</span><span class="comment">//错误的code</span></div><div class="line">    </div><div class="line">    <span class="comment">///HTTP METHOD</span></div><div class="line">    <span class="class"><span class="keyword">enum</span> <span class="title">Method</span>: <span class="title">String</span> </span>&#123;</div><div class="line">        <span class="keyword">case</span> <span class="keyword">get</span>, post, put, delete</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="class"><span class="keyword">enum</span> <span class="title">QueryType</span> </span>&#123;</div><div class="line">        <span class="keyword">case</span> json, path</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">makeRequest</span><span class="params">(<span class="keyword">for</span> url: URL, method: Method, queryType: QueryType,</span></span></div><div class="line">                     params: [String : Any]? = <span class="literal">nil</span>,</div><div class="line">                     headers: [String : String]? = <span class="literal">nil</span>,</div><div class="line">                     success: <span class="params">(<span class="params">(Data?)</span></span> -&gt; <span class="type">Void</span>)? = <span class="literal">nil</span>,</div><div class="line">                     failure: ((<span class="number">_</span> data: <span class="type">Data</span>?, <span class="number">_</span> error: <span class="type">NSError</span>?, <span class="number">_</span> responseCode: <span class="type">Int</span>) -&gt; <span class="type">Void</span>)? = <span class="literal">nil</span>) &#123;</div><div class="line">        <span class="keyword">var</span> mutableRequest = makeQuery(<span class="keyword">for</span>: url, params: params, type: queryType)</div><div class="line">        </div><div class="line">        mutableRequest.allHTTPHeaderFields = headers</div><div class="line">        mutableRequest.httpMethod = method.rawValue</div><div class="line">        </div><div class="line">        <span class="keyword">let</span> session = <span class="type">URLSession</span>.shared</div><div class="line">        </div><div class="line">        task = session.dataTask(with: mutableRequest, completionHandler: &#123; (data, response, error) <span class="keyword">in</span></div><div class="line">            <span class="keyword">guard</span> <span class="keyword">let</span> httpResponse = response <span class="keyword">as</span>? <span class="type">HTTPURLResponse</span> <span class="keyword">else</span> &#123;</div><div class="line">                failure?(data, error <span class="keyword">as</span> <span class="type">NSError</span>?, <span class="number">0</span>)</div><div class="line">                <span class="keyword">return</span></div><div class="line">            &#125;</div><div class="line">            </div><div class="line">            <span class="keyword">if</span> <span class="keyword">let</span> error = error &#123;</div><div class="line">                failure?(data, error <span class="keyword">as</span> <span class="type">NSError</span>?, <span class="number">0</span>)</div><div class="line">                <span class="keyword">return</span></div><div class="line">            &#125;</div><div class="line">            </div><div class="line">            <span class="keyword">if</span> <span class="keyword">self</span>.successCodes.<span class="built_in">contains</span>(httpResponse.statusCode) &#123;</div><div class="line">                success?(data)</div><div class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> <span class="keyword">self</span>.failureCodes.<span class="built_in">contains</span>(httpResponse.statusCode) &#123;</div><div class="line">                failure?(data, error <span class="keyword">as</span> <span class="type">NSError</span>?, httpResponse.statusCode)</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                <span class="keyword">let</span> info = [</div><div class="line">                    <span class="type">NSLocalizedDescriptionKey</span>: <span class="string">"Request failed with code \(httpResponse.statusCode)"</span>,</div><div class="line">                    <span class="type">NSLocalizedFailureReasonErrorKey</span>: <span class="string">"Wrong handling logic, wrong endpoing mapping or EasyNetwork bug."</span></div><div class="line">                ]</div><div class="line">                <span class="keyword">let</span> error = <span class="type">NSError</span>(domain: <span class="string">"NetworkService"</span>, code: <span class="number">0</span>, userInfo: info)</div><div class="line">                failure?(data, error, httpResponse.statusCode)</div><div class="line">            &#125;</div><div class="line">        &#125;)</div><div class="line">        </div><div class="line">        task?.resume()</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">func</span> <span class="title">cancel</span><span class="params">()</span></span> &#123;</div><div class="line">        task?.cancel()</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">/// 创建request对象</span></div><div class="line">    <span class="keyword">private</span> <span class="function"><span class="keyword">func</span> <span class="title">makeQuery</span><span class="params">(<span class="keyword">for</span> url: URL, params: [String : Any]?, type: QueryType)</span></span> -&gt; <span class="type">URLRequest</span> &#123;</div><div class="line">        <span class="keyword">switch</span> type &#123;</div><div class="line">        <span class="comment">/// 通过httpBody传参</span></div><div class="line">        <span class="keyword">case</span> .json:</div><div class="line">            <span class="keyword">var</span> mutableRequest = <span class="type">URLRequest</span>(url: url, cachePolicy: .reloadIgnoringLocalAndRemoteCacheData, timeoutInterval: <span class="number">10.0</span>)</div><div class="line">            <span class="keyword">if</span> <span class="keyword">let</span> params = params &#123;</div><div class="line">                mutableRequest.httpBody = <span class="keyword">try</span>! <span class="type">JSONSerialization</span>.data(withJSONObject: params, options: [])</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">return</span> mutableRequest</div><div class="line">        <span class="comment">/// URL 尾部带上参数</span></div><div class="line">        <span class="keyword">case</span> .path:</div><div class="line">            <span class="keyword">var</span> query = <span class="string">""</span></div><div class="line">            params?.forEach(&#123; (key, value) <span class="keyword">in</span></div><div class="line">                query = query + <span class="string">"\(key)=\(value)&amp;"</span></div><div class="line">            &#125;)</div><div class="line">            <span class="keyword">var</span> components = <span class="type">URLComponents</span>(url: url, resolvingAgainstBaseURL: <span class="literal">true</span>)!</div><div class="line">            components.query = query</div><div class="line">            <span class="keyword">return</span> <span class="type">URLRequest</span>(url: components.url!, cachePolicy: .reloadIgnoringLocalAndRemoteCacheData, timeoutInterval: <span class="number">10.0</span>)</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在这个service中，我们将所有的参数都收集起来，发出网络请求，使用的是datatask，当然这只是其中一种方式，可以扩展下载，上传等等网络请求</p>
+<p>这样，整个一个网络请求的流程就讲完了，上面我们还讲到了要将返回的参数转成一个model，在调用处，我们实际接收到的是一个struct对象，这个转化的过程，我们放在了operation中</p>
+<p>在operation的处理成功请求的时候，有一行代码是这样的</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> item = <span class="keyword">try</span> <span class="type">SignInResponseMapper</span>.process(response)</div></pre></td></tr></table></figure>
+<p>这其实就是将返回的数据转化成我们需要的model</p>
+<p>这里，做了两种映射，一种是单个的json对象，一个是解析一个json对象数组</p>
+<p>单个解析：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> Foundation</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">protocol</span> <span class="title">ResponseMapperProtocol</span> </span>&#123;</div><div class="line">    associatedtype <span class="type">Item</span></div><div class="line">    <span class="keyword">static</span> <span class="function"><span class="keyword">func</span> <span class="title">process</span><span class="params">(<span class="number">_</span> obj: AnyObject?)</span></span> <span class="keyword">throws</span> -&gt; <span class="type">Item</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">internal</span> <span class="class"><span class="keyword">enum</span> <span class="title">ResponseMapperError</span>: <span class="title">Error</span> </span>&#123;</div><div class="line">    <span class="keyword">case</span> invalid</div><div class="line">    <span class="keyword">case</span> missingAttribute</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ResponseMapper</span>&lt;<span class="title">A</span>: <span class="title">ParsedItem</span>&gt; </span>&#123;</div><div class="line">    </div><div class="line">    <span class="keyword">static</span> <span class="function"><span class="keyword">func</span> <span class="title">process</span><span class="params">(<span class="number">_</span> obj: AnyObject?, parse: <span class="params">(<span class="number">_</span> json: [String: AnyObject])</span></span></span> -&gt; <span class="type">A</span>?) <span class="keyword">throws</span> -&gt; <span class="type">A</span> &#123;</div><div class="line">        <span class="keyword">guard</span> <span class="keyword">let</span> json = obj <span class="keyword">as</span>? [<span class="type">String</span>: <span class="type">AnyObject</span>] <span class="keyword">else</span> &#123; <span class="keyword">throw</span> <span class="type">ResponseMapperError</span>.invalid &#125;</div><div class="line">        <span class="keyword">if</span> <span class="keyword">let</span> item = parse(json) &#123;</div><div class="line">            <span class="keyword">return</span> item</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            <span class="keyword">throw</span> <span class="type">ResponseMapperError</span>.missingAttribute</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>解析登录返回的数据</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> Foundation</div><div class="line"></div><div class="line"><span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">SignInResponseMapper</span>: <span class="title">ResponseMapper</span>&lt;<span class="title">SignInItem</span>&gt;, <span class="title">ResponseMapperProtocol</span> </span>&#123;</div><div class="line">    </div><div class="line">    <span class="keyword">static</span> <span class="function"><span class="keyword">func</span> <span class="title">process</span><span class="params">(<span class="number">_</span> obj: AnyObject?)</span></span> <span class="keyword">throws</span> -&gt; <span class="type">SignInItem</span> &#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">try</span> process(obj, parse: &#123; json <span class="keyword">in</span></div><div class="line">            <span class="keyword">let</span> userName = json[<span class="string">"userName"</span>] <span class="keyword">as</span>? <span class="type">String</span></div><div class="line">            <span class="keyword">let</span> password = json[<span class="string">"password"</span>] <span class="keyword">as</span>? <span class="type">String</span></div><div class="line">            <span class="keyword">if</span> <span class="keyword">let</span> userName = userName, <span class="keyword">let</span> password = password &#123;</div><div class="line">                <span class="keyword">return</span> <span class="type">SignInItem</span>(userName: userName, password: password)</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">return</span> <span class="literal">nil</span></div><div class="line">        &#125;)</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>解析json数组对象：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> Foundation</div><div class="line"></div><div class="line"><span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">ArrayResponseMapper</span>&lt;<span class="title">A</span>: <span class="title">ParsedItem</span>&gt; </span>&#123;</div><div class="line">    </div><div class="line">    <span class="keyword">static</span> <span class="function"><span class="keyword">func</span> <span class="title">process</span><span class="params">(<span class="number">_</span> obj: AnyObject?, mapper: <span class="params">(<span class="params">(Any?)</span></span></span></span> <span class="keyword">throws</span> -&gt; <span class="type">A</span>)) <span class="keyword">throws</span> -&gt; [<span class="type">A</span>] &#123;</div><div class="line">        <span class="keyword">guard</span> <span class="keyword">let</span> json = obj <span class="keyword">as</span>? [[<span class="type">String</span>: <span class="type">AnyObject</span>]] <span class="keyword">else</span> &#123; <span class="keyword">throw</span> <span class="type">ResponseMapperError</span>.invalid &#125;</div><div class="line">        </div><div class="line">        <span class="keyword">var</span> items = [<span class="type">A</span>]()</div><div class="line">        <span class="keyword">for</span> jsonNode <span class="keyword">in</span> json &#123;</div><div class="line">            <span class="keyword">let</span> item = <span class="keyword">try</span> mapper(jsonNode)</div><div class="line">            items.append(item)</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> items</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>要使用解析数组的，将继承的类更改，调用ArrayResponseMapper的process即可</p>
+<p>其他的代码，就不粘上来了，源码我上传到GitHub，关于这个框架，可扩展性很强，后期可以丰富很多进去，欢迎大家给我提issue</p>
+<p>项目地址：<a href="https://github.com/yangqian111/EasyNetwork" target="_blank" rel="external">https://github.com/yangqian111/EasyNetwork</a></p>
+<p><strong>欢迎关注微博：ppsheep_Qian</strong></p>
+<p><a href="http://weibo.com/ppsheep" target="_blank" rel="external">http://weibo.com/ppsheep</a></p>
+<p><strong>欢迎关注公众号</strong></p>
+<p><img src="http://ac-mhke0kuv.clouddn.com/830a4ead8294ceff5160.jpg" alt=""></p>
+
+            
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">标签</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/all-tags/网络库封装/">网络库封装</a>
+
+            </div>
+        
+        <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/05/10/ARC/"  data-tooltip="谈谈ARC的本质和实现">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/04/13/ActionSheet-like-wechat/" data-tooltip="iOS类似于微信的ActionSheet">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://ppsheep.com/2017/04/28/EasyNetwork/">
+                <i class="fa fa-google-plus"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://ppsheep.com/2017/04/28/EasyNetwork/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://ppsheep.com/2017/04/28/EasyNetwork/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2017 ppsheep. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="3">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/05/10/ARC/"  data-tooltip="谈谈ARC的本质和实现">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/04/13/ActionSheet-like-wechat/" data-tooltip="iOS类似于微信的ActionSheet">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://ppsheep.com/2017/04/28/EasyNetwork/">
+                <i class="fa fa-google-plus"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://ppsheep.com/2017/04/28/EasyNetwork/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://ppsheep.com/2017/04/28/EasyNetwork/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="3">
+    <ul class="share-options">
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://ppsheep.com/2017/04/28/EasyNetwork/">
+                <i class="fa fa-google-plus"></i><span class="">分享到 Google+</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://ppsheep.com/2017/04/28/EasyNetwork/">
+                <i class="fa fa-facebook-official"></i><span>分享到 Facebook</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://ppsheep.com/2017/04/28/EasyNetwork/">
+                <i class="fa fa-twitter"></i><span>分享到 Twitter</span>
+            </a>
+        </li>
+    </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-remove"></i>
+        </div>
+        
+            <img id="about-card-picture" src="http://o8bxt3lx0.bkt.clouddn.com/7931417.jpeg"/>
+        
+            <h4 id="about-card-name">ppsheep</h4>
+        
+            <h5 id="about-card-bio"><p>一个就职于网易的初级iOS开发者<br>目前正在修炼自己</p>
+<p>博客建立不久，正在寻找更好的写作方式<br>博客上的内容会同步到公众号Sheep_iOS，另外也会挑选一些比较好的文章推送给大家</p>
+<p>我个人的微信号YangQian5999</p>
+<p>我的微博ppsheep_qian</p>
+<p>文章末尾一般会有公众号二维码<br>欢迎大家关注</p>
+</h5>
+        
+        
+            <h5 id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>iOS开发者</p>
+
+            </h5>
+        
+        
+            <h5 id="about-card-location">
+                <i class="fa fa-map-marker"></i>
+                <br/>
+                杭州
+            </h5>
+        
+    </div>
+</div>
+
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+    </body>
+    <!--SCRIPTS-->
+<script src="/assets/js/script-i4qo6jx6jji9fg0dftpya6ivemizsbow4fhow76d8dwpm7m1wbvi378ssumx.min.js"></script>
+<!--SCRIPTS END-->
+
+    
+
+
+
+</html>

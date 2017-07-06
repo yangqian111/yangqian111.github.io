@@ -1,0 +1,505 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="ppsheep">
+    <title>iOS类似于微信的ActionSheet - ppsheep</title>
+    <meta name="author" content="ppsheep">
+    
+    
+    
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+    
+    <meta name="description" content="在之前，这个ActionSheet是已经写过的，之前是因为觉得iOS9的ActionSheet有点看不大习惯，就自己写了一个简单的，之前还发过一篇介绍了一下，最近要用到这个ActionSheet，然后拿出来用，觉得之前写的还是比较粗糙，这里再重新加工一下">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="iOS类似于微信的ActionSheet">
+<meta property="og:url" content="http://ppsheep.com/2017/04/13/ActionSheet-like-wechat/index.html">
+<meta property="og:site_name" content="ppsheep">
+<meta property="og:description" content="在之前，这个ActionSheet是已经写过的，之前是因为觉得iOS9的ActionSheet有点看不大习惯，就自己写了一个简单的，之前还发过一篇介绍了一下，最近要用到这个ActionSheet，然后拿出来用，觉得之前写的还是比较粗糙，这里再重新加工一下">
+<meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/ppsheep/gk8a2.gif">
+<meta property="og:image" content="http://ac-mhke0kuv.clouddn.com/830a4ead8294ceff5160.jpg">
+<meta property="og:updated_time" content="2017-04-14T03:13:21.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS类似于微信的ActionSheet">
+<meta name="twitter:description" content="在之前，这个ActionSheet是已经写过的，之前是因为觉得iOS9的ActionSheet有点看不大习惯，就自己写了一个简单的，之前还发过一篇介绍了一下，最近要用到这个ActionSheet，然后拿出来用，觉得之前写的还是比较粗糙，这里再重新加工一下">
+<meta name="twitter:image" content="http://o8bxt3lx0.bkt.clouddn.com/ppsheep/gk8a2.gif">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/7931417.jpeg"/>
+    
+    
+        <meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/ppsheep/8rnk9.jpg"/>
+        <meta class="swiftype" name="image" data-type="enum" content="http://o8bxt3lx0.bkt.clouddn.com/ppsheep/8rnk9.jpg" />
+    
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-nuvue6sithwirecbhvw3dkaobiojqvtadsnhguwi7k04xklybw5djl1smadp.min.css">
+    <!--STYLES END-->
+    
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="3">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <h1 class="header-title">
+        <a class="header-title-link" href="/ ">ppsheep</a>
+    </h1>
+    
+        
+            <a  class="header-right-picture "
+                href="#about">
+        
+        
+            <img class="header-picture" src="http://o8bxt3lx0.bkt.clouddn.com/7931417.jpeg"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="3">
+    
+        <div class="sidebar-profile">
+            <a href="/#about">
+                    <img class="sidebar-profile-picture" src="http://o8bxt3lx0.bkt.clouddn.com/7931417.jpeg"/>
+            </a>
+            <span class="sidebar-profile-name">ppsheep</span>
+        </div>
+    
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/ "
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+                    <span class="sidebar-button-desc">首页</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-categories"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+                    <span class="sidebar-button-desc">分类</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-tags"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+                    <span class="sidebar-button-desc">标签</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-archives"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+                    <span class="sidebar-button-desc">归档</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link st-search-show-outputs"
+                         href="#search"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-search"></i>
+                    <span class="sidebar-button-desc">搜索</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="#about"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+                    <span class="sidebar-button-desc">关于</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="https://github.com/yangqian111" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+                    <span class="sidebar-button-desc">GitHub</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="http://weibo.com/6071931832/profile?topnav=1&wvr=6" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+                    <span class="sidebar-button-desc">微博</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="mailto:ppsheep.qian@gmail.com" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+                    <span class="sidebar-button-desc">邮箱</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/atom.xml"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+                    <span class="sidebar-button-desc">RSS</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+</nav>
+
+            
+            <div id="main" data-behavior="3"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post" itemscope itemType="http://schema.org/BlogPosting">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title" itemprop="headline">
+            iOS类似于微信的ActionSheet
+        </h1>
+    
+    <div class="post-meta">
+    <time itemprop="datePublished" datetime="2017-04-13T14:08:15+08:00">
+	
+		    4月 13, 2017
+    	
+    </time>
+    
+        <span>发布在 </span>
+        
+    <a class="category-link" href="/all-categories/iOS组件/">iOS组件</a>, <a class="category-link" href="/all-categories/iOS组件/UI小组件/">UI小组件</a>
+
+
+    
+</div>
+
+</div>
+    
+    <div class="post-content markdown" itemprop="articleBody">
+        <div class="main-content-wrap">
+            <p>在之前，这个ActionSheet是已经写过的，之前是因为觉得iOS9的ActionSheet有点看不大习惯，就自己写了一个简单的，之前还发过一篇介绍了一下，最近要用到这个ActionSheet，然后拿出来用，觉得之前写的还是比较粗糙，这里再重新加工一下</p>
+<a id="more"></a>
+<p>同样的，还是先看一下效果图</p>
+<p><img src="http://o8bxt3lx0.bkt.clouddn.com/ppsheep/gk8a2.gif" alt=""></p>
+<p>首先根据效果，我们可以分析一下，怎样来实现这样一个效果，其实无论什么UI效果，第一步都是先分析我们怎么样来实现这个，后面才是怎么样来将这个效果实现的更好，代码更清晰简洁，扩展性更高。</p>
+<ul>
+<li>首先，我们需要一个全遮罩的背景，在点击的时候需要将actionsheet隐藏掉</li>
+<li>然后这个actionsheet，需要根据选项来生成，可以想到这选项是一个个的button，我看见有的实现里是将它做成一个tableview，我感觉是做麻烦了</li>
+<li>另外一个就是点击回调了，这里我做了两种，一个是delegate回调，一个是block回调</li>
+</ul>
+<h4 id="回调的item"><a href="#回调的item" class="headerlink" title="回调的item"></a>回调的item</h4><p>很多实现的actionsheet，回调都是一个index的值，我之前实现的也是一个点击的索引，但是这样扩展起来比较麻烦，很有局限性，所以这次，我将回调做成了一个model，这个model里你可以自己定义一些属性，根据传入的参数，来自定义这个model，这样，扩展性稍微强一些</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">PPSActionSheetItem</span> : <span class="title">NSObject</span></span></div><div class="line"></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readonly</span>, <span class="keyword">copy</span>) <span class="built_in">NSString</span> *title;<span class="comment">//点击title</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readonly</span>, <span class="keyword">assign</span>) <span class="built_in">NSInteger</span> index;<span class="comment">//点击的index</span></div><div class="line"></div><div class="line">+ (PPSActionSheetItem *)itemWithTitle:(<span class="built_in">NSString</span> *)title index:(<span class="built_in">NSInteger</span>)index;</div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">PPSActionSheetItem</span>()</span></div><div class="line"></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readwrite</span>, <span class="keyword">copy</span>) <span class="built_in">NSString</span> *title;<span class="comment">//点击title</span></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">readwrite</span>, <span class="keyword">assign</span>) <span class="built_in">NSInteger</span> index;<span class="comment">//点击的index</span></div><div class="line"></div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">PPSActionSheetItem</span></span></div><div class="line"></div><div class="line">+ (PPSActionSheetItem *)itemWithTitle:(<span class="built_in">NSString</span> *)title index:(<span class="built_in">NSInteger</span>)index &#123;</div><div class="line">    PPSActionSheetItem *item = [[PPSActionSheetItem alloc] initWithTitle:title index:index];</div><div class="line">    <span class="keyword">return</span> item;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">instancetype</span>)initWithTitle:(<span class="built_in">NSString</span> *)title index:(<span class="built_in">NSInteger</span>)index &#123;</div><div class="line">    <span class="keyword">self</span> = [<span class="keyword">super</span> init];</div><div class="line">    <span class="keyword">if</span>(<span class="keyword">self</span>) &#123;</div><div class="line">        _title = [title <span class="keyword">copy</span>];</div><div class="line">        _index = index;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;</div><div class="line">&#125;</div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<h4 id="delegate-amp-amp-block"><a href="#delegate-amp-amp-block" class="headerlink" title="delegate &amp;&amp; block"></a>delegate &amp;&amp; block</h4><p>点击的回调，和之前没什么差别，只是回调的数据变成了item</p>
+<h5 id="delegate"><a href="#delegate" class="headerlink" title="delegate"></a>delegate</h5><font color="red">在点击事件里面 回传actionsheet的目的  是因为在一个viewcontroller里面可能会有多个 actionsheet展现，在同一个VC里面就需要区分 是哪个actionsheet 来区分操作<br><br>不同的actionsheet当然可以使用tag来区分 当然也可以用其他的方法区分</font>
+
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@class</span> <span class="title">PPSActionSheet</span>;</span></div><div class="line"><span class="class"><span class="keyword">@class</span> <span class="title">PPSActionSheetItem</span>;</span></div><div class="line"><span class="class"><span class="keyword">@protocol</span> <span class="title">PPSActionSheetClickedDelegate</span> &lt;<span class="title">NSObject</span>&gt;</span></div><div class="line"></div><div class="line"><span class="keyword">@required</span></div><div class="line"><span class="comment">/**</span></div><div class="line"> 点击选项 实现这个代理必须实现这个方法 不然点击不能实现</div><div class="line"> </div><div class="line"> @param actionSheet 当前显示的actionsheet 如果存在多个actionsheet 可以分别出是哪一个actionsheet</div><div class="line"> @param item 点击的位置</div><div class="line"> */</div><div class="line">- (<span class="keyword">void</span>)actionSheet:(PPSActionSheet *)actionSheet clickedButtonAtIndex:(PPSActionSheetItem *)item;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<h5 id="block"><a href="#block" class="headerlink" title="block"></a>block</h5><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//点击回调</span></div><div class="line"><span class="keyword">typedef</span> <span class="keyword">void</span>(^ClickedCompleteBlock)(PPSActionSheetItem *item);</div></pre></td></tr></table></figure>
+<h4 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h4><h5 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h5><p>在初始化的时候，提供了初始化方法,如果想使用block回调方式，直接将delegate置为nil就行</p>
+<p>初始化方法的选项，采用的是传入可变参数的形式，这样，在初始化的时候，显得更简洁明了一些</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> 创建实例，如果使用block,delegate直接传nil即可</div><div class="line"> </div><div class="line"> @param delegate    代理 一般为当前的VC</div><div class="line"> @param cancleTitle 取消的title 最下面的选项</div><div class="line"> @param otherTitles 其他的一些选项标题</div><div class="line"> </div><div class="line"> @return actionsheet</div><div class="line"> */</div><div class="line">- (<span class="keyword">instancetype</span>)initWithDelegate:(<span class="keyword">id</span>&lt;PPSActionSheetClickedDelegate&gt;)delegate</div><div class="line">                     cancleTitle:(<span class="built_in">NSString</span> *)cancleTitle</div><div class="line">                     otherTitles:(<span class="built_in">NSString</span> *)otherTitles,... <span class="built_in">NS_REQUIRES_NIL_TERMINATION</span>;</div></pre></td></tr></table></figure>
+<h4 id="效果实现"><a href="#效果实现" class="headerlink" title="效果实现"></a>效果实现</h4><p>整个actionsheet是继承自UIView，我们之前说到的黑色遮罩，我将actionsheet的本身设置为一个全屏的view，给它加一个背景颜色效果，再alpha设置一下，就达到了效果。</p>
+<p>然后选项的view，都将他们加到了actionsheet的一个子view sheetView中</p>
+<p>在初始化的时候，首先将选项item，根据传入的参数生成</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> tag = <span class="number">0</span>;<span class="comment">//记录item的index值</span></div><div class="line">_items = [<span class="built_in">NSMutableArray</span> array];</div><div class="line"><span class="comment">//首先添加取消按钮</span></div><div class="line">PPSActionSheetItem *cancleItem = [PPSActionSheetItem itemWithTitle:<span class="string">@"取消"</span> index:<span class="number">0</span>];</div><div class="line">[_items addObject:cancleItem];</div><div class="line">    </div><div class="line">tag ++;</div><div class="line">    </div><div class="line"><span class="built_in">NSString</span>* curStr;</div><div class="line">va_list list;</div><div class="line"><span class="keyword">if</span>(otherTitles)</div><div class="line">&#123;</div><div class="line">    PPSActionSheetItem *item = [PPSActionSheetItem itemWithTitle:otherTitles index:tag];</div><div class="line">    [_items addObject:item];</div><div class="line">    tag ++;</div><div class="line">    </div><div class="line">    va_start(list, otherTitles);</div><div class="line">    <span class="keyword">while</span> ((curStr = va_arg(list, <span class="built_in">NSString</span>*))) &#123;</div><div class="line">        PPSActionSheetItem *item = [PPSActionSheetItem itemWithTitle:curStr index:tag];</div><div class="line">        [_items addObject:item];</div><div class="line">        tag ++;</div><div class="line">    &#125;</div><div class="line">    va_end(list);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在选项item生成完成之后，我们需要计算一下sheetview的frame，然后就可以开始添加按钮到sheetview上了</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">CGRect</span> sheetViewF = _sheetView.frame;</div><div class="line">sheetViewF.size.height = BtnHeight * _items.count + CancleMargin;</div><div class="line">_sheetView.frame = sheetViewF;</div><div class="line"><span class="comment">//开始添加按钮</span></div><div class="line">[<span class="keyword">self</span> setupBtnWithTitles];</div></pre></td></tr></table></figure>
+<p>在添加按钮的时候，将每个按钮计算一下frame，添加到sheetview上就行，实现起来都是不麻烦的</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> 创建每个选项</div><div class="line"> </div><div class="line"> */</div><div class="line">- (<span class="keyword">void</span>)setupBtnWithTitles &#123;</div><div class="line">    </div><div class="line">    <span class="keyword">for</span> (PPSActionSheetItem *item <span class="keyword">in</span> _items) &#123;</div><div class="line">        <span class="built_in">UIButton</span> *btn = <span class="literal">nil</span>;</div><div class="line">        <span class="keyword">if</span> (item.index == <span class="number">0</span>) &#123;<span class="comment">//取消按钮</span></div><div class="line">            btn = [[<span class="built_in">UIButton</span> alloc] initWithFrame:<span class="built_in">CGRectMake</span>(<span class="number">0</span>, _sheetView.frame.size.height - BtnHeight, PPSActionSheetScreenWidth, BtnHeight)];</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            btn = [[<span class="built_in">UIButton</span> alloc] initWithFrame:<span class="built_in">CGRectMake</span>(<span class="number">0</span>, BtnHeight * (item.index - <span class="number">1</span>) , PPSActionSheetScreenWidth, BtnHeight)];</div><div class="line">            <span class="comment">// 最上面画分割线</span></div><div class="line">            <span class="built_in">UIView</span> *line = [[<span class="built_in">UIView</span> alloc] initWithFrame:<span class="built_in">CGRectMake</span>(<span class="number">0</span>, <span class="number">0</span>, PPSActionSheetScreenWidth, <span class="number">0.5</span>)];</div><div class="line">            line.backgroundColor = PPSActionSheetSeparatorColor;</div><div class="line">            [btn addSubview:line];</div><div class="line">        &#125;</div><div class="line">        btn.tag = item.index;</div><div class="line">        [btn setBackgroundImage:PPSActionSheetNormalImage forState:<span class="built_in">UIControlStateNormal</span>];</div><div class="line">        [btn setBackgroundImage:PPSActionSheetHighImage forState:<span class="built_in">UIControlStateHighlighted</span>];</div><div class="line">        [btn setTitle:item.title forState:<span class="built_in">UIControlStateNormal</span>];</div><div class="line">        btn.titleLabel.font = [<span class="built_in">UIFont</span> fontWithName:<span class="string">@"STHeitiSC-Light"</span> size:<span class="number">17</span>];</div><div class="line">        [btn setTitleColor:[<span class="built_in">UIColor</span> blackColor] forState:<span class="built_in">UIControlStateNormal</span>];</div><div class="line">        [btn addTarget:<span class="keyword">self</span> action:<span class="keyword">@selector</span>(sheetBtnClick:) forControlEvents:<span class="built_in">UIControlEventTouchUpInside</span>];</div><div class="line">        [<span class="keyword">self</span>.sheetView addSubview:btn];</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在使用的时候，可以通过block，也可使用delegate</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">PPSActionSheet *sheet1 = [[PPSActionSheet alloc] initWithDelegate:<span class="literal">nil</span> cancleTitle:<span class="string">@"取消"</span> otherTitles:<span class="string">@"你好"</span>,<span class="string">@"我好"</span>, <span class="literal">nil</span>];</div><div class="line">sheet1.clickedCompleteBlock = ^(PPSActionSheetItem *item) &#123;</div><div class="line">    <span class="built_in">UIAlertView</span> *alert = [[<span class="built_in">UIAlertView</span> alloc] initWithTitle:item.title message:<span class="string">@"点击的item"</span> delegate:<span class="literal">nil</span> cancelButtonTitle:<span class="string">@"OK"</span> otherButtonTitles:<span class="literal">nil</span>, <span class="literal">nil</span>];</div><div class="line">    [alert show];</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, item.title);</div><div class="line">&#125;;</div><div class="line">[sheet1 show];</div></pre></td></tr></table></figure>
+<p>这个actionsheet还可以丰富很多，比如可以传入主标题，副标题之类的，还可以将它丰富成具体购买商品选择数量，或者几个选项的控制开关等等。<br>有这个想法，后面应该是先从主副标题开始吧</p>
+<p>其他的也没什么要讲的了，这个actionsheet，也是在用到图片浏览器的时候，需要用到它，然后一看之前的写的有点丑，就稍微整理了一下，那个关于查看的图片的小工具，也会重新整理优化一下，那个图片查看器上还有一个下载的progress的小view，那个view我也准备拎出来单独成一个仓库，这些小的view都是可以优化很多，还能丰富很多，拎出来做个准备</p>
+<p>源码我就放上去了：</p>
+<p><a href="https://github.com/yangqian111/PPSActionSheet" target="_blank" rel="external">https://github.com/yangqian111/PPSActionSheet</a></p>
+<p><strong>欢迎关注微博：ppsheep_Qian</strong></p>
+<p><a href="http://weibo.com/ppsheep" target="_blank" rel="external">http://weibo.com/ppsheep</a></p>
+<p><strong>欢迎关注公众号</strong></p>
+<p><img src="http://ac-mhke0kuv.clouddn.com/830a4ead8294ceff5160.jpg" alt=""></p>
+
+            
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">标签</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/all-tags/ActionSheet/">ActionSheet</a>
+
+            </div>
+        
+        <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/04/28/EasyNetwork/"  data-tooltip="EasyNetwork--精简的网络封装 不依赖第三方库">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/04/10/NSURLProtocol-hook-network-request/" data-tooltip="使用NSURLProtocol拦截APP内的网络请求">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://ppsheep.com/2017/04/13/ActionSheet-like-wechat/">
+                <i class="fa fa-google-plus"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://ppsheep.com/2017/04/13/ActionSheet-like-wechat/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://ppsheep.com/2017/04/13/ActionSheet-like-wechat/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2017 ppsheep. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="3">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/04/28/EasyNetwork/"  data-tooltip="EasyNetwork--精简的网络封装 不依赖第三方库">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/04/10/NSURLProtocol-hook-network-request/" data-tooltip="使用NSURLProtocol拦截APP内的网络请求">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://ppsheep.com/2017/04/13/ActionSheet-like-wechat/">
+                <i class="fa fa-google-plus"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://ppsheep.com/2017/04/13/ActionSheet-like-wechat/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://ppsheep.com/2017/04/13/ActionSheet-like-wechat/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="3">
+    <ul class="share-options">
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://ppsheep.com/2017/04/13/ActionSheet-like-wechat/">
+                <i class="fa fa-google-plus"></i><span class="">分享到 Google+</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://ppsheep.com/2017/04/13/ActionSheet-like-wechat/">
+                <i class="fa fa-facebook-official"></i><span>分享到 Facebook</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://ppsheep.com/2017/04/13/ActionSheet-like-wechat/">
+                <i class="fa fa-twitter"></i><span>分享到 Twitter</span>
+            </a>
+        </li>
+    </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-remove"></i>
+        </div>
+        
+            <img id="about-card-picture" src="http://o8bxt3lx0.bkt.clouddn.com/7931417.jpeg"/>
+        
+            <h4 id="about-card-name">ppsheep</h4>
+        
+            <h5 id="about-card-bio"><p>一个就职于网易的初级iOS开发者<br>目前正在修炼自己</p>
+<p>博客建立不久，正在寻找更好的写作方式<br>博客上的内容会同步到公众号Sheep_iOS，另外也会挑选一些比较好的文章推送给大家</p>
+<p>我个人的微信号YangQian5999</p>
+<p>我的微博ppsheep_qian</p>
+<p>文章末尾一般会有公众号二维码<br>欢迎大家关注</p>
+</h5>
+        
+        
+            <h5 id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>iOS开发者</p>
+
+            </h5>
+        
+        
+            <h5 id="about-card-location">
+                <i class="fa fa-map-marker"></i>
+                <br/>
+                杭州
+            </h5>
+        
+    </div>
+</div>
+
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+    </body>
+    <!--SCRIPTS-->
+<script src="/assets/js/script-i4qo6jx6jji9fg0dftpya6ivemizsbow4fhow76d8dwpm7m1wbvi378ssumx.min.js"></script>
+<!--SCRIPTS END-->
+
+    
+
+
+
+</html>

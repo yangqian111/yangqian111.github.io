@@ -1,0 +1,480 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="ppsheep">
+    <title>Swift下UserDefaults的正确姿势 - ppsheep</title>
+    <meta name="author" content="ppsheep">
+    
+    
+    
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+    
+    <meta name="description" content="刚刚在微博上看到一篇关于UserDefaults的文章，想起来之前在swift.gg上看到一篇关于在3.0下，UserDaults的正确使用姿势，记录下来。关于那篇文章，我已经有转发 http://weibo.com/ppsheep感兴趣可以上去瞧瞧">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="Swift下UserDefaults的正确姿势">
+<meta property="og:url" content="http://ppsheep.com/2017/04/06/UserDefaults in Swift/index.html">
+<meta property="og:site_name" content="ppsheep">
+<meta property="og:description" content="刚刚在微博上看到一篇关于UserDefaults的文章，想起来之前在swift.gg上看到一篇关于在3.0下，UserDaults的正确使用姿势，记录下来。关于那篇文章，我已经有转发 http://weibo.com/ppsheep感兴趣可以上去瞧瞧">
+<meta property="og:updated_time" content="2017-04-07T10:40:34.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Swift下UserDefaults的正确姿势">
+<meta name="twitter:description" content="刚刚在微博上看到一篇关于UserDefaults的文章，想起来之前在swift.gg上看到一篇关于在3.0下，UserDaults的正确使用姿势，记录下来。关于那篇文章，我已经有转发 http://weibo.com/ppsheep感兴趣可以上去瞧瞧">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/7931417.jpeg"/>
+    
+    
+        <meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/ppsheep/7xsl1.png"/>
+        <meta class="swiftype" name="image" data-type="enum" content="http://o8bxt3lx0.bkt.clouddn.com/ppsheep/7xsl1.png" />
+    
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-nuvue6sithwirecbhvw3dkaobiojqvtadsnhguwi7k04xklybw5djl1smadp.min.css">
+    <!--STYLES END-->
+    
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="3">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <h1 class="header-title">
+        <a class="header-title-link" href="/ ">ppsheep</a>
+    </h1>
+    
+        
+            <a  class="header-right-picture "
+                href="#about">
+        
+        
+            <img class="header-picture" src="http://o8bxt3lx0.bkt.clouddn.com/7931417.jpeg"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="3">
+    
+        <div class="sidebar-profile">
+            <a href="/#about">
+                    <img class="sidebar-profile-picture" src="http://o8bxt3lx0.bkt.clouddn.com/7931417.jpeg"/>
+            </a>
+            <span class="sidebar-profile-name">ppsheep</span>
+        </div>
+    
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/ "
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+                    <span class="sidebar-button-desc">首页</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-categories"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+                    <span class="sidebar-button-desc">分类</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-tags"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+                    <span class="sidebar-button-desc">标签</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-archives"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+                    <span class="sidebar-button-desc">归档</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link st-search-show-outputs"
+                         href="#search"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-search"></i>
+                    <span class="sidebar-button-desc">搜索</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="#about"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+                    <span class="sidebar-button-desc">关于</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="https://github.com/yangqian111" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+                    <span class="sidebar-button-desc">GitHub</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="http://weibo.com/6071931832/profile?topnav=1&wvr=6" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+                    <span class="sidebar-button-desc">微博</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="mailto:ppsheep.qian@gmail.com" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+                    <span class="sidebar-button-desc">邮箱</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/atom.xml"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+                    <span class="sidebar-button-desc">RSS</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+</nav>
+
+            
+            <div id="main" data-behavior="3"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post" itemscope itemType="http://schema.org/BlogPosting">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title" itemprop="headline">
+            Swift下UserDefaults的正确姿势
+        </h1>
+    
+    <div class="post-meta">
+    <time itemprop="datePublished" datetime="2017-04-06T16:15:29+08:00">
+	
+		    4月 06, 2017
+    	
+    </time>
+    
+        <span>发布在 </span>
+        
+    <a class="category-link" href="/all-categories/Swift/">Swift</a>
+
+
+    
+</div>
+
+</div>
+    
+    <div class="post-content markdown" itemprop="articleBody">
+        <div class="main-content-wrap">
+            <p>刚刚在微博上看到一篇关于UserDefaults的文章，想起来之前在swift.gg上看到一篇关于在3.0下，UserDaults的正确使用姿势，记录下来。关于那篇文章，我已经有转发 <a href="http://weibo.com/ppsheep" target="_blank" rel="external">http://weibo.com/ppsheep</a><br>感兴趣可以上去瞧瞧</p>
+<a id="more"></a>
+<p>在swift.gg上有一篇详细介绍swift 3.0下，UserDefaults的使用，只是当时读到这篇文章，没有看到demo，就顺手写了一个，理解也更加深刻。</p>
+<p>这里我就把demo直接粘出来好了，其实就是一个扩展，这里用到了空间、枚举等特性，具体我就不作介绍，肯定没这篇文章写得好  文章链接 <a href="http://www.swift.gg/2017/01/16/swift-userdefaults-protocol/" target="_blank" rel="external">http://www.swift.gg/2017/01/16/swift-userdefaults-protocol/</a></p>
+<p>对UserDefaults进行扩展</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">import</span> Foundation</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">protocol</span> <span class="title">KeyNamespaceable</span> </span>&#123; &#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">extension</span> <span class="title">KeyNamespaceable</span> </span>&#123;</div><div class="line">    <span class="keyword">static</span> <span class="function"><span class="keyword">func</span> <span class="title">namespace</span>&lt;T&gt;<span class="params">(<span class="number">_</span> key: T)</span></span> -&gt; <span class="type">String</span> <span class="keyword">where</span> <span class="type">T</span>: <span class="type">RawRepresentable</span> &#123;</div><div class="line">        <span class="keyword">return</span> <span class="string">"\(Self.self).\(key.rawValue)"</span></div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">protocol</span> <span class="title">BoolUserDefaultable</span> : <span class="title">KeyNamespaceable</span> </span>&#123;</div><div class="line">    </div><div class="line">    associatedtype <span class="type">BoolDefaultKey</span> : <span class="type">RawRepresentable</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">extension</span> <span class="title">BoolUserDefaultable</span> <span class="title">where</span> <span class="title">BoolDefaultKey</span>.<span class="title">RawValue</span> == <span class="title">String</span> </span>&#123;</div><div class="line">    </div><div class="line">    <span class="comment">// BoolUserDefaultable extension</span></div><div class="line">    <span class="keyword">static</span> <span class="function"><span class="keyword">func</span> <span class="title">set</span><span class="params">(<span class="number">_</span> value: Bool, forKey key: BoolDefaultKey)</span></span> &#123;</div><div class="line">        <span class="keyword">let</span> key = namespace(key)</div><div class="line">        <span class="type">UserDefaults</span>.standard.<span class="keyword">set</span>(value, forKey: key)</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">static</span> <span class="function"><span class="keyword">func</span> <span class="title">bool</span><span class="params">(forKey key: BoolDefaultKey)</span></span> -&gt; <span class="type">Bool</span> &#123;</div><div class="line">        <span class="keyword">let</span> key = namespace(key)</div><div class="line">        <span class="keyword">return</span> <span class="type">UserDefaults</span>.standard.bool(forKey: key)</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">protocol</span> <span class="title">StringUserDefaultable</span> : <span class="title">KeyNamespaceable</span> </span>&#123;</div><div class="line">    </div><div class="line">    associatedtype <span class="type">StringDefaultKey</span> : <span class="type">RawRepresentable</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">extension</span> <span class="title">StringUserDefaultable</span> <span class="title">where</span> <span class="title">StringDefaultKey</span>.<span class="title">RawValue</span> == <span class="title">String</span> </span>&#123;</div><div class="line">    <span class="comment">// StringUserDefaultable extension</span></div><div class="line">    <span class="keyword">static</span> <span class="function"><span class="keyword">func</span> <span class="title">set</span><span class="params">(<span class="number">_</span> value: String, forKey key: StringDefaultKey)</span></span> &#123;</div><div class="line">        <span class="keyword">let</span> key = namespace(key)</div><div class="line">        <span class="type">UserDefaults</span>.standard.<span class="keyword">set</span>(value, forKey: key)</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">static</span> <span class="function"><span class="keyword">func</span> <span class="title">string</span><span class="params">(forKey key: StringDefaultKey)</span></span> -&gt; <span class="type">String</span>? &#123;</div><div class="line">        <span class="keyword">let</span> key = namespace(key)</div><div class="line">        <span class="keyword">return</span> <span class="type">UserDefaults</span>.standard.string(forKey: key)</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">extension</span> <span class="title">UserDefaults</span> </span>&#123;</div><div class="line">    </div><div class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">Account</span> : <span class="title">BoolUserDefaultable</span> </span>&#123;</div><div class="line">        <span class="class"><span class="keyword">enum</span> <span class="title">BoolDefaultKey</span> : <span class="title">String</span> </span>&#123;</div><div class="line">            <span class="keyword">case</span> isUserLoggedIn</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">AccoutToken</span> : <span class="title">StringUserDefaultable</span> </span>&#123;</div><div class="line">        <span class="class"><span class="keyword">enum</span> <span class="title">StringDefaultKey</span> : <span class="title">String</span> </span>&#123;</div><div class="line">            <span class="keyword">case</span> userToken</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>其中的知识，都是用到了上面那篇文章中的</p>
+<p>有了这个扩展之后，加入我们需要记录一下登录的标志，只需要</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//设置登录标志</span></div><div class="line"><span class="type">UserDefaults</span>.<span class="type">Account</span>.<span class="keyword">set</span>(<span class="literal">true</span>, forKey: .isUserLoggedIn)</div><div class="line"><span class="comment">//获取登录标志</span></div><div class="line"><span class="type">UserDefaults</span>.<span class="type">Account</span>.bool(forKey: .isUserLoggedIn)</div></pre></td></tr></table></figure>
+<p>使用起来非常简洁明了，当然并不局限于bool 我还扩展了String，其他的就可以依葫芦画瓢</p>
+<p><strong>最近新建了一个微博，还是觉得公众号有一些局限性，并且感觉微博更能关注业界的动态，同样欢迎大家关注：ppsheep_Qian</strong></p>
+<p><strong>欢迎大家关注我的公众号，我会定期分享一些我在项目中遇到问题的解决办法和一些iOS实用的技巧，现阶段主要是整理出一些基础的知识记录下来</strong></p>
+<p>上边是公众号，下边是我个人微信</p>
+<div align="middle"><br>    <image src="http://ac-mhke0kuv.clouddn.com/830a4ead8294ceff5160.jpg"></image><br>    <image src="http://o8bxt3lx0.bkt.clouddn.com/avatar.jpg"></image><br></div>
+
+<p>文章也会同步更新到我的博客：<br><a href="http://ppsheep.com">http://ppsheep.com</a></p>
+
+            
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">标签</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/all-tags/Swift-UserDefaults/">Swift UserDefaults</a>
+
+            </div>
+        
+        <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/04/10/NSURLProtocol-hook-network-request/"  data-tooltip="使用NSURLProtocol拦截APP内的网络请求">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/03/14/Operation-Queues并发编程/" data-tooltip="Operation Queues并发编程">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://ppsheep.com/2017/04/06/UserDefaults in Swift/">
+                <i class="fa fa-google-plus"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://ppsheep.com/2017/04/06/UserDefaults in Swift/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://ppsheep.com/2017/04/06/UserDefaults in Swift/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2017 ppsheep. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="3">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/04/10/NSURLProtocol-hook-network-request/"  data-tooltip="使用NSURLProtocol拦截APP内的网络请求">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/03/14/Operation-Queues并发编程/" data-tooltip="Operation Queues并发编程">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://ppsheep.com/2017/04/06/UserDefaults in Swift/">
+                <i class="fa fa-google-plus"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://ppsheep.com/2017/04/06/UserDefaults in Swift/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://ppsheep.com/2017/04/06/UserDefaults in Swift/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="3">
+    <ul class="share-options">
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://ppsheep.com/2017/04/06/UserDefaults in Swift/">
+                <i class="fa fa-google-plus"></i><span class="">分享到 Google+</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://ppsheep.com/2017/04/06/UserDefaults in Swift/">
+                <i class="fa fa-facebook-official"></i><span>分享到 Facebook</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://ppsheep.com/2017/04/06/UserDefaults in Swift/">
+                <i class="fa fa-twitter"></i><span>分享到 Twitter</span>
+            </a>
+        </li>
+    </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-remove"></i>
+        </div>
+        
+            <img id="about-card-picture" src="http://o8bxt3lx0.bkt.clouddn.com/7931417.jpeg"/>
+        
+            <h4 id="about-card-name">ppsheep</h4>
+        
+            <h5 id="about-card-bio"><p>一个就职于网易的初级iOS开发者<br>目前正在修炼自己</p>
+<p>博客建立不久，正在寻找更好的写作方式<br>博客上的内容会同步到公众号Sheep_iOS，另外也会挑选一些比较好的文章推送给大家</p>
+<p>我个人的微信号YangQian5999</p>
+<p>我的微博ppsheep_qian</p>
+<p>文章末尾一般会有公众号二维码<br>欢迎大家关注</p>
+</h5>
+        
+        
+            <h5 id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>iOS开发者</p>
+
+            </h5>
+        
+        
+            <h5 id="about-card-location">
+                <i class="fa fa-map-marker"></i>
+                <br/>
+                杭州
+            </h5>
+        
+    </div>
+</div>
+
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+    </body>
+    <!--SCRIPTS-->
+<script src="/assets/js/script-i4qo6jx6jji9fg0dftpya6ivemizsbow4fhow76d8dwpm7m1wbvi378ssumx.min.js"></script>
+<!--SCRIPTS END-->
+
+    
+
+
+
+</html>

@@ -1,0 +1,554 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="ppsheep">
+    <title>用CocoaPod创建私有的静态库(不公开源码) - ppsheep</title>
+    <meta name="author" content="ppsheep">
+    
+    
+    
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+    
+    <meta name="description" content="今天将手上的SDK加入了通过CocoaPod集成，但是没有上到pod的官方库，是公司内部的私有库，现在组件化很火，相信很多公司稍微大一些的项目都会有这个需求，现在我们就来讲讲怎么加入pod的集成方式，这里我就把github当做我的私有仓库了">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="用CocoaPod创建私有的静态库(不公开源码)">
+<meta property="og:url" content="http://ppsheep.com/2017/05/11/private-static-library/index.html">
+<meta property="og:site_name" content="ppsheep">
+<meta property="og:description" content="今天将手上的SDK加入了通过CocoaPod集成，但是没有上到pod的官方库，是公司内部的私有库，现在组件化很火，相信很多公司稍微大一些的项目都会有这个需求，现在我们就来讲讲怎么加入pod的集成方式，这里我就把github当做我的私有仓库了">
+<meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/ppsheep/mfycu.jpg">
+<meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/ppsheep/t5pg5.jpg">
+<meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/ppsheep/adgaj.jpg">
+<meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/ppsheep/oqz3e.jpg">
+<meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/ppsheep/ku2wn.jpg">
+<meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/ppsheep/d233u.jpg">
+<meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/ppsheep/7vrfl.jpg">
+<meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/ppsheep/bu6nz.jpg">
+<meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/ppsheep/kgxd3.jpg">
+<meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/ppsheep/lndwz.jpg">
+<meta property="og:image" content="http://ac-mhke0kuv.clouddn.com/830a4ead8294ceff5160.jpg">
+<meta property="og:updated_time" content="2017-05-11T09:34:20.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="用CocoaPod创建私有的静态库(不公开源码)">
+<meta name="twitter:description" content="今天将手上的SDK加入了通过CocoaPod集成，但是没有上到pod的官方库，是公司内部的私有库，现在组件化很火，相信很多公司稍微大一些的项目都会有这个需求，现在我们就来讲讲怎么加入pod的集成方式，这里我就把github当做我的私有仓库了">
+<meta name="twitter:image" content="http://o8bxt3lx0.bkt.clouddn.com/ppsheep/mfycu.jpg">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/7931417.jpeg"/>
+    
+    
+        <meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/ppsheep/yeznb.png"/>
+        <meta class="swiftype" name="image" data-type="enum" content="http://o8bxt3lx0.bkt.clouddn.com/ppsheep/yeznb.png" />
+    
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-nuvue6sithwirecbhvw3dkaobiojqvtadsnhguwi7k04xklybw5djl1smadp.min.css">
+    <!--STYLES END-->
+    
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="3">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <h1 class="header-title">
+        <a class="header-title-link" href="/ ">ppsheep</a>
+    </h1>
+    
+        
+            <a  class="header-right-picture "
+                href="#about">
+        
+        
+            <img class="header-picture" src="http://o8bxt3lx0.bkt.clouddn.com/7931417.jpeg"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="3">
+    
+        <div class="sidebar-profile">
+            <a href="/#about">
+                    <img class="sidebar-profile-picture" src="http://o8bxt3lx0.bkt.clouddn.com/7931417.jpeg"/>
+            </a>
+            <span class="sidebar-profile-name">ppsheep</span>
+        </div>
+    
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/ "
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+                    <span class="sidebar-button-desc">首页</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-categories"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+                    <span class="sidebar-button-desc">分类</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-tags"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+                    <span class="sidebar-button-desc">标签</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-archives"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+                    <span class="sidebar-button-desc">归档</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link st-search-show-outputs"
+                         href="#search"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-search"></i>
+                    <span class="sidebar-button-desc">搜索</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="#about"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+                    <span class="sidebar-button-desc">关于</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="https://github.com/yangqian111" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+                    <span class="sidebar-button-desc">GitHub</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="http://weibo.com/6071931832/profile?topnav=1&wvr=6" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+                    <span class="sidebar-button-desc">微博</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="mailto:ppsheep.qian@gmail.com" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+                    <span class="sidebar-button-desc">邮箱</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/atom.xml"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+                    <span class="sidebar-button-desc">RSS</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+</nav>
+
+            
+            <div id="main" data-behavior="3"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post" itemscope itemType="http://schema.org/BlogPosting">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title" itemprop="headline">
+            用CocoaPod创建私有的静态库(不公开源码)
+        </h1>
+    
+    <div class="post-meta">
+    <time itemprop="datePublished" datetime="2017-05-11T15:53:52+08:00">
+	
+		    5月 11, 2017
+    	
+    </time>
+    
+        <span>发布在 </span>
+        
+    <a class="category-link" href="/all-categories/iOS组件化/">iOS组件化</a>
+
+
+    
+</div>
+
+</div>
+    
+    <div class="post-content markdown" itemprop="articleBody">
+        <div class="main-content-wrap">
+            <p>今天将手上的SDK加入了通过CocoaPod集成，但是没有上到pod的官方库，是公司内部的私有库，现在组件化很火，相信很多公司稍微大一些的项目都会有这个需求，现在我们就来讲讲怎么加入pod的集成方式，这里我就把github当做我的私有仓库了</p>
+<a id="more"></a>
+<p>pod环境我就不讲怎么集成了，如果还没集成的同学，请移步</p>
+<p><a href="http://ppsheep.com/2015/11/20/CocoaPods的安装/">http://ppsheep.com/2015/11/20/CocoaPods的安装/</a></p>
+<h3 id="pod-lib-create"><a href="#pod-lib-create" class="headerlink" title="pod lib create"></a>pod lib create</h3><p>这里我们通过pod官方提供的模板来创建，我目前也是这样创建的，当然xcode也提供了创建静态库的方式，这个我就不讲了，感兴趣的同学可以Google一下</p>
+<p>首先进入到我们想要存放工程的地方 通过命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pod lib create PPSPrivateStaticLibrary</div></pre></td></tr></table></figure>
+<p>这里我将我的静态库取名为<strong>PPSPrivateStaticLibrary</strong></p>
+<p><img src="http://o8bxt3lx0.bkt.clouddn.com/ppsheep/mfycu.jpg" alt=""></p>
+<p>这里开始创建的时候我们会填几个问题：</p>
+<blockquote>
+<ol>
+<li><p>What language do you want to use?? [ Swift / ObjC ] //选择你要创建的静态库的语言</p>
+</li>
+<li><p>Would you like to include a demo application with your library? [ Yes / No ] //是否需要创建一个demo用来测试你的静态库</p>
+</li>
+<li><p>Which testing frameworks will you use? [ Specta / Kiwi / None ] //使用哪种测试框架来进行测试</p>
+</li>
+<li><p>Would you like to do view based testing? [ Yes / No ] //是否要做基础的视图测试</p>
+</li>
+<li><p>What is your class prefix? //文件前缀</p>
+</li>
+</ol>
+</blockquote>
+<p>下面是我选择的</p>
+<p><img src="http://o8bxt3lx0.bkt.clouddn.com/ppsheep/t5pg5.jpg" alt=""></p>
+<p>创建完成过后，我们的工程会自动打开，创建完成后，工程的目录如下</p>
+<p><img src="http://o8bxt3lx0.bkt.clouddn.com/ppsheep/adgaj.jpg" alt=""></p>
+<p>接下来我们主要编辑的是podspec文件，首先我们来看一下，我编写的SDK中的测试文件结构</p>
+<p><img src="http://o8bxt3lx0.bkt.clouddn.com/ppsheep/oqz3e.jpg" alt=""></p>
+<p>我想要公开上面文件中的PPSPublic1和PPSPublic2的头文件，其他的全部不公开出来，那我们怎样编写podspec文件呢</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div></pre></td><td class="code"><pre><div class="line">Pod::Spec.new do |s|</div><div class="line">  s.name             = &apos;PPSPrivateStaticLibrary&apos;</div><div class="line">  s.version          = &apos;0.1.0&apos;</div><div class="line"></div><div class="line">#这里加上你的工程简介</div><div class="line">  s.summary          = &apos;This is ppsheep‘s test&apos;</div><div class="line"></div><div class="line">#这里加上你的工程简介</div><div class="line">  s.description      = &lt;&lt;-DESC</div><div class="line">这是我的一个测试工程，用来演示怎样创建一个源码不公开的静态库</div><div class="line">                       DESC</div><div class="line"></div><div class="line">#项目主页，这里可以放上你的静态库的介绍网页</div><div class="line">  s.homepage         = &apos;https://github.com/yangqian111/PPSPrivateStaticLibrary&apos;</div><div class="line"></div><div class="line">  s.license          = &#123; :type =&gt; &apos;MIT&apos;, :file =&gt; &apos;LICENSE&apos; &#125;</div><div class="line"></div><div class="line">  s.author           = &#123; &apos;ppsheep&apos; =&gt; &apos;ppsheep.qian@gmail.com&apos; &#125;</div><div class="line"></div><div class="line">  s.source           = &#123; :git =&gt; &apos;/Users/yangqian/Desktop/demo/PPSPrivateStaticLibrary&apos;, :tag =&gt; s.version.to_s &#125;</div><div class="line"></div><div class="line">#最低iOS系统要求</div><div class="line">  s.ios.deployment_target = &apos;8.0&apos;</div><div class="line"></div><div class="line">#是否需要项目支持ARC</div><div class="line">  s.requires_arc = true</div><div class="line"></div><div class="line">#这个地方注意下，你在工程中要用到的framework,都需要在这里声明，我只是这里列举了几个</div><div class="line">s.frameworks = &apos;SystemConfiguration&apos;, &apos;MobileCoreServices&apos;, &apos;CoreGraphics&apos;, &apos;Security&apos;, &apos;CoreTelephony&apos;</div><div class="line"></div><div class="line">#在项目中我们还会用到一些library，也需要在这里声明，比如sqllite等tbd结尾的</div><div class="line">s.libraries = &apos;resolv&apos;</div><div class="line"></div><div class="line">#这里声明的存放源文件的地址，就是我们实际写的代码</div><div class="line">  s.source_files = &apos;PPSPrivateStaticLibrary/Classes/**/*&apos;</div><div class="line"></div><div class="line">#这里可以用来存放你的资源文件，图片，证书等等</div><div class="line">  # s.resource_bundles = &#123;</div><div class="line">  #   &apos;PPSPrivateStaticLibrary&apos; =&gt; [&apos;PPSPrivateStaticLibrary/Assets/*.png&apos;]</div><div class="line">  # &#125;</div><div class="line"></div><div class="line">#这里声明你需要公开的文件, 有几种声明方式，通配符也支持的，在这里我可以使用通配符PPSPrivateStaticLibrary/Classes/Public/*.h</div><div class="line"></div><div class="line">  s.public_header_files = &apos;PPSPrivateStaticLibrary/Classes/Public/*.h&apos;</div><div class="line">#也可以一个一个写出来[]</div><div class="line">#s.public_header_files = [&apos;PPSPrivateStaticLibrary/Classes/Public/PPSPublic1.h&apos;,</div><div class="line">#                          &apos;PPSPrivateStaticLibrary/Classes/Public/PPSPublic2.h&apos;]</div><div class="line"></div><div class="line">#这里可以声明你的静态库依赖的其他静态库</div><div class="line">  # s.dependency &apos;AFNetworking&apos;, &apos;~&gt; 2.3&apos;</div><div class="line">end</div></pre></td></tr></table></figure>
+<p>上面的都写好了，接下来，我们测试一下，首先进入到刚才目录中创建的example文件夹install一下工程</p>
+<p>然后，我们就可以在例子中引入两个公开的文件</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="meta">#import <span class="meta-string">"PPSAppDelegate.h"</span></span></div><div class="line"><span class="meta">#import <span class="meta-string">&lt;PPSPrivateStaticLibrary/PPSPublic1.h&gt;</span></span></div><div class="line"><span class="meta">#import <span class="meta-string">&lt;PPSPrivateStaticLibrary/PPSPublic2.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">PPSAppDelegate</span></span></div><div class="line"></div><div class="line">- (<span class="built_in">BOOL</span>)application:(<span class="built_in">UIApplication</span> *)application didFinishLaunchingWithOptions:(<span class="built_in">NSDictionary</span> *)launchOptions</div><div class="line">&#123;</div><div class="line">    PPSPublic1 *p1 = [[PPSPublic1 alloc] init];</div><div class="line">    [p1 public1];</div><div class="line">    PPSPublic2 *p2 = [[PPSPublic2 alloc] init];</div><div class="line">    [p2 public2];</div><div class="line">    <span class="keyword">return</span> <span class="literal">YES</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>能够正常调用，我们的例子程序已经能够正常调用SDK，然后我们还需要检查一下我们的pod库是否符合pod规则，也是通过命令行来检测，进入到我们的工程目录,使用命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pod lib lint</div></pre></td></tr></table></figure>
+<p><img src="http://o8bxt3lx0.bkt.clouddn.com/ppsheep/ku2wn.jpg" alt=""></p>
+<p>可能会遇到这个问题</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[!] The validator for Swift projects uses Swift 3.0 by default, if you are using a different version of swift you can use a `.swift-version` file to set the version for your Pod. For example to use Swift 2.3, run: </div><div class="line">    `echo &quot;2.3&quot; &gt; .swift-version`.</div><div class="line">You can use the `--no-clean` option to inspect any issue.</div></pre></td></tr></table></figure>
+<p>因为我之前已经全局设置过了，所以这次没遇到这个问题，如果遇到了这个问题，在命令行执行以下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">echo &quot;3.0&quot; &gt; .swift-version</div></pre></td></tr></table></figure>
+<p>就可以解决了</p>
+<p>其中可能还会遇到其他问题，这个就要具体情况具体分析了</p>
+<p>验证我们通过了，接下来，就需要打包了，pod可以打成两种形式的包，一种framework，还有一种是.a的library，这里我使用的是framework</p>
+<p>也是通过命令行来执行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pod package PPSPrivateStaticLibrary.podspec --force</div></pre></td></tr></table></figure>
+<p><img src="http://o8bxt3lx0.bkt.clouddn.com/ppsheep/d233u.jpg" alt=""></p>
+<p>这里，遇到了问题，因为我们还未将源码提交到git本地仓库，tag也未打，所以报错了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">git add .</div><div class="line">git commit -a -m &apos;0.1.0&apos;</div><div class="line">git tag -a 0.1.0 -m &apos;0.1.0&apos;</div></pre></td></tr></table></figure>
+<p><img src="http://o8bxt3lx0.bkt.clouddn.com/ppsheep/7vrfl.jpg" alt=""></p>
+<p>再次执行</p>
+<p><img src="http://o8bxt3lx0.bkt.clouddn.com/ppsheep/bu6nz.jpg" alt=""></p>
+<p>已经成功执行了</p>
+<p>我们到工程目录下去找</p>
+<p><img src="http://o8bxt3lx0.bkt.clouddn.com/ppsheep/kgxd3.jpg" alt=""></p>
+<p>好了已经有了我们想要的framework，如果不放心framework是否支持所有的架构，我们可以检测一下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">lipo -info</div></pre></td></tr></table></figure>
+<p>注意这里不是将framework文件夹拿来检查，而是文件夹下面的二进制文件</p>
+<p><img src="http://o8bxt3lx0.bkt.clouddn.com/ppsheep/lndwz.jpg" alt=""></p>
+<p>可以看到，包含了所有的架构</p>
+<h3 id="上传到私有仓库"><a href="#上传到私有仓库" class="headerlink" title="上传到私有仓库"></a>上传到私有仓库</h3><p>在我们生成的文件夹中，我们需要用到的两个文件，一个是framework，还有一个就是PPSPrivateStaticLibrary.podspec文件</p>
+<p>在上传之前，我们还需要修改一下podspec文件其中的一个地方</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">//将  s.source修改成我们的私有仓库的地址</div><div class="line">  s.source = &#123; :git =&gt; &apos;https://github.com/yangqian111/PPSPrivateStaticLibrary.git&apos;, :tag =&gt; s.version.to_s&#125;</div><div class="line">//将s.ios.vendored_framework前的ios文件夹去掉</div><div class="line">s.ios.vendored_framework   = &apos;PPSPrivateStaticLibrary.framework&apos;</div></pre></td></tr></table></figure>
+<p>然后将framework和PPSPrivateStaticLibrary全部上传到我们的私有仓库</p>
+<p>接下来我们就可以集成我们的pod库了</p>
+<p>新建一个工程，在Podfile中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">workspace ‘Test.xcworkspace&apos;</div><div class="line"></div><div class="line">project ‘Test.xcodeproj&apos;</div><div class="line"></div><div class="line">platform :ios, &apos;8.0&apos;</div><div class="line"></div><div class="line">target &apos;Test&apos; do</div><div class="line"></div><div class="line">pod &apos;PPSPrivateStaticLibrary&apos;,:git=&gt;&apos;https://github.com/yangqian111/PPSPrivateStaticLibrary.git&apos;</div><div class="line"></div><div class="line">end</div></pre></td></tr></table></figure>
+<p>其中地址，写我们的私有仓库地址</p>
+<p>这样就能顺利集成</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">#import &lt;PPSPrivateStaticLibrary/PPSPublic1.h&gt;</div><div class="line">#import &lt;PPSPrivateStaticLibrary/PPSPublic2.h&gt;</div><div class="line"></div><div class="line">@interface AppDelegate ()</div><div class="line"></div><div class="line">@end</div><div class="line"></div><div class="line">@implementation AppDelegate</div><div class="line"></div><div class="line"></div><div class="line">- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions &#123;</div><div class="line">    PPSPublic1 *p1 = [[PPSPublic1 alloc] init];</div><div class="line">    [p1 public1];</div><div class="line">    PPSPublic2 *p2 = [[PPSPublic2 alloc] init];</div><div class="line">    [p2 public2];</div><div class="line">    return YES;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这只能算是一个初步集成，还有很多能做，比如我还想要集成其他的第三方公开库，或者我还要集成其他的第三方私有库，这些，我在后面如果会用到，都会分享出来</p>
+<p>源码这些我都放在了github上</p>
+<p><a href="https://github.com/yangqian111/PPSPrivateStaticLibrary" target="_blank" rel="external">https://github.com/yangqian111/PPSPrivateStaticLibrary</a></p>
+<p><strong>欢迎关注微博：ppsheep_Qian</strong></p>
+<p><a href="http://weibo.com/ppsheep" target="_blank" rel="external">http://weibo.com/ppsheep</a></p>
+<p><strong>欢迎关注公众号</strong></p>
+<p><img src="http://ac-mhke0kuv.clouddn.com/830a4ead8294ceff5160.jpg" alt=""></p>
+
+            
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">标签</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/all-tags/静态库创建/">静态库创建</a>
+
+            </div>
+        
+        <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/05/15/public-static-library/"  data-tooltip="pod静态库的创建(共享源码并上传pod公共库)">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/05/10/ARC/" data-tooltip="谈谈ARC的本质和实现">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://ppsheep.com/2017/05/11/private-static-library/">
+                <i class="fa fa-google-plus"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://ppsheep.com/2017/05/11/private-static-library/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://ppsheep.com/2017/05/11/private-static-library/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2017 ppsheep. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="3">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/05/15/public-static-library/"  data-tooltip="pod静态库的创建(共享源码并上传pod公共库)">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/05/10/ARC/" data-tooltip="谈谈ARC的本质和实现">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://ppsheep.com/2017/05/11/private-static-library/">
+                <i class="fa fa-google-plus"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://ppsheep.com/2017/05/11/private-static-library/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://ppsheep.com/2017/05/11/private-static-library/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="3">
+    <ul class="share-options">
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://ppsheep.com/2017/05/11/private-static-library/">
+                <i class="fa fa-google-plus"></i><span class="">分享到 Google+</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://ppsheep.com/2017/05/11/private-static-library/">
+                <i class="fa fa-facebook-official"></i><span>分享到 Facebook</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://ppsheep.com/2017/05/11/private-static-library/">
+                <i class="fa fa-twitter"></i><span>分享到 Twitter</span>
+            </a>
+        </li>
+    </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-remove"></i>
+        </div>
+        
+            <img id="about-card-picture" src="http://o8bxt3lx0.bkt.clouddn.com/7931417.jpeg"/>
+        
+            <h4 id="about-card-name">ppsheep</h4>
+        
+            <h5 id="about-card-bio"><p>一个就职于网易的初级iOS开发者<br>目前正在修炼自己</p>
+<p>博客建立不久，正在寻找更好的写作方式<br>博客上的内容会同步到公众号Sheep_iOS，另外也会挑选一些比较好的文章推送给大家</p>
+<p>我个人的微信号YangQian5999</p>
+<p>我的微博ppsheep_qian</p>
+<p>文章末尾一般会有公众号二维码<br>欢迎大家关注</p>
+</h5>
+        
+        
+            <h5 id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>iOS开发者</p>
+
+            </h5>
+        
+        
+            <h5 id="about-card-location">
+                <i class="fa fa-map-marker"></i>
+                <br/>
+                杭州
+            </h5>
+        
+    </div>
+</div>
+
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+    </body>
+    <!--SCRIPTS-->
+<script src="/assets/js/script-i4qo6jx6jji9fg0dftpya6ivemizsbow4fhow76d8dwpm7m1wbvi378ssumx.min.js"></script>
+<!--SCRIPTS END-->
+
+    
+
+
+
+</html>

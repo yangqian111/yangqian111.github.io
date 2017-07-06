@@ -19,7 +19,7 @@
 <meta property="og:url" content="http://ppsheep.com/2017/03/13/理解OC内部的消息调用、消息转发、类和对象-二/index.html">
 <meta property="og:site_name" content="ppsheep">
 <meta property="og:description" content="之前我们讲了关于OC消息转发，类和对象的内部实现的一些原理，现在我们接着讲，关于消息转发过程中的另外几个过程，将消息转发给其他对象处理，另外还有类方法的动态添加。">
-<meta property="og:updated_time" content="2017-03-13T07:18:30.000Z">
+<meta property="og:updated_time" content="2017-03-13T07:44:29.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="理解OC内部的消息调用、消息转发、类和对象-二">
 <meta name="twitter:description" content="之前我们讲了关于OC消息转发，类和对象的内部实现的一些原理，现在我们接着讲，关于消息转发过程中的另外几个过程，将消息转发给其他对象处理，另外还有类方法的动态添加。">
@@ -170,16 +170,25 @@
                 
                     <a  class="sidebar-button-link " href="https://github.com/yangqian111" target="_blank">
                 
-                    <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+                    <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
                     <span class="sidebar-button-desc">GitHub</span>
                 </a>
         </li>
         
             <li class="sidebar-button">
                 
-                    <a  class="sidebar-button-link " href="mailto:787688073@qq.com" target="_blank">
+                    <a  class="sidebar-button-link " href="http://weibo.com/6071931832/profile?topnav=1&wvr=6" target="_blank">
                 
-                    <i class="sidebar-button-icon fa fa-lg fa-envelope-o"></i>
+                    <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+                    <span class="sidebar-button-desc">微博</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="mailto:ppsheep.qian@gmail.com" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
                     <span class="sidebar-button-desc">邮箱</span>
                 </a>
         </li>
@@ -267,6 +276,8 @@
 <p>调用了logClassMethod:方法，但是类中没有这个类方法，在resolveClassMethod:来动态增加</p>
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> 处理类方法</div><div class="line"></div><div class="line"> @param sel 需要动态添加的方法 @return 是否已经有可实现的方法</div><div class="line"> */</div><div class="line">+(<span class="built_in">BOOL</span>)resolveClassMethod:(SEL)sel&#123;</div><div class="line">    Class metaClass = objc_getMetaClass(class_getName(<span class="keyword">self</span>));</div><div class="line">    IMP imp = [<span class="keyword">self</span> instanceMethodForSelector:<span class="keyword">@selector</span>(myClassMethod)];</div><div class="line">    <span class="keyword">if</span> (sel == <span class="keyword">@selector</span>(logClassMethod)) &#123;</div><div class="line">        class_addMethod(metaClass, sel,imp , <span class="string">"v@:"</span>);</div><div class="line">        <span class="keyword">return</span> <span class="literal">YES</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> [<span class="keyword">super</span> resolveClassMethod:sel];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)myClassMethod&#123;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"我的动态类方法"</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>这样，就能够正常实现了</p>
+<p>源代码同样的 </p>
+<p><a href="https://github.com/yangqian111/Objective-C-Runtime" target="_blank" rel="external">https://github.com/yangqian111/Objective-C-Runtime</a></p>
 <p><strong>欢迎大家关注我的公众号，我会定期分享一些我在项目中遇到问题的解决办法和一些iOS实用的技巧，现阶段主要是整理出一些基础的知识记录下来</strong></p>
 <p>上边是公众号，下边是我个人微信</p>
 <div align="middle"><br>    <image src="http://ac-mhke0kuv.clouddn.com/830a4ead8294ceff5160.jpg"></image><br>    <image src="http://o8bxt3lx0.bkt.clouddn.com/avatar.jpg"></image><br></div>
@@ -290,7 +301,7 @@
         <ul class="post-actions post-action-nav">
             <li class="post-action">
                 
-                    <a class="post-action-btn btn btn--disabled">
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/03/14/Operation-Queues并发编程/"  data-tooltip="Operation Queues并发编程">
                 
                     <i class="fa fa-angle-left"></i>
                     <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
@@ -328,12 +339,6 @@
             </a>
         </li>
         
-            <li class="post-action">
-                <a class="post-action-btn btn btn--default" href="#ds-thread">
-                    <i class="fa fa-comment-o"></i>
-                </a>
-            </li>
-        
         <li class="post-action">
             
                 <a class="post-action-btn btn btn--default" href="#">
@@ -346,11 +351,6 @@
 
 
         
-            
-                <div id="ds-thread" class="ds-thread" data-thread-key="2017/03/13/理解OC内部的消息调用、消息转发、类和对象-二/"
-     data-title="理解OC内部的消息调用、消息转发、类和对象-二" data-url="http://ppsheep.com/2017/03/13/理解OC内部的消息调用、消息转发、类和对象-二/">
-</div>
-
             
         
     </div>
@@ -372,7 +372,7 @@
         <ul class="post-actions post-action-nav">
             <li class="post-action">
                 
-                    <a class="post-action-btn btn btn--disabled">
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/03/14/Operation-Queues并发编程/"  data-tooltip="Operation Queues并发编程">
                 
                     <i class="fa fa-angle-left"></i>
                     <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
@@ -409,12 +409,6 @@
                 <i class="fa fa-twitter"></i>
             </a>
         </li>
-        
-            <li class="post-action">
-                <a class="post-action-btn btn btn--default" href="#ds-thread">
-                    <i class="fa fa-comment-o"></i>
-                </a>
-            </li>
         
         <li class="post-action">
             
@@ -469,7 +463,9 @@
         
             <h5 id="about-card-bio"><p>一个就职于网易的初级iOS开发者<br>目前正在修炼自己</p>
 <p>博客建立不久，正在寻找更好的写作方式<br>博客上的内容会同步到公众号Sheep_iOS，另外也会挑选一些比较好的文章推送给大家</p>
-<p>我个人的微信号YangQian5999<br>文章末尾一般会有公众号二维码<br>欢迎大家关注</p>
+<p>我个人的微信号YangQian5999</p>
+<p>我的微博ppsheep_qian</p>
+<p>文章末尾一般会有公众号二维码<br>欢迎大家关注</p>
 </h5>
         
         
@@ -497,18 +493,6 @@
 <script src="/assets/js/script-i4qo6jx6jji9fg0dftpya6ivemizsbow4fhow76d8dwpm7m1wbvi378ssumx.min.js"></script>
 <!--SCRIPTS END-->
 
-    
-        <script type="text/javascript">
-            var duoshuoQuery = {short_name:'yangqian111'};
-            (function() {
-                var ds = document.createElement('script');
-                ds.type = 'text/javascript';ds.async = true;
-                ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-                ds.charset = 'UTF-8';
-                (document.getElementsByTagName('head')[0]
-                || document.getElementsByTagName('body')[0]).appendChild(ds);
-            })();
-        </script>
     
 
 

@@ -1,0 +1,516 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="ppsheep">
+    <title>使用NSURLProtocol拦截APP内的网络请求 - ppsheep</title>
+    <meta name="author" content="ppsheep">
+    
+    
+    
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+    
+    <meta name="description" content="APP内的网络请求的监控，相信很多APP内都有这个模块，通过监控APP内的网络请求，观察各个API的稳定性。这些数据，一般我们都会先收集起来，在一段时间内，上传到服务器。在iOS中，出了WK的网络请求，其他的所有网络请求都可以通过NSURLProtocol来拦截监控，下面我们来实践一下。">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="使用NSURLProtocol拦截APP内的网络请求">
+<meta property="og:url" content="http://ppsheep.com/2017/04/10/NSURLProtocol-hook-network-request/index.html">
+<meta property="og:site_name" content="ppsheep">
+<meta property="og:description" content="APP内的网络请求的监控，相信很多APP内都有这个模块，通过监控APP内的网络请求，观察各个API的稳定性。这些数据，一般我们都会先收集起来，在一段时间内，上传到服务器。在iOS中，出了WK的网络请求，其他的所有网络请求都可以通过NSURLProtocol来拦截监控，下面我们来实践一下。">
+<meta property="og:updated_time" content="2017-04-12T01:40:54.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用NSURLProtocol拦截APP内的网络请求">
+<meta name="twitter:description" content="APP内的网络请求的监控，相信很多APP内都有这个模块，通过监控APP内的网络请求，观察各个API的稳定性。这些数据，一般我们都会先收集起来，在一段时间内，上传到服务器。在iOS中，出了WK的网络请求，其他的所有网络请求都可以通过NSURLProtocol来拦截监控，下面我们来实践一下。">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/7931417.jpeg"/>
+    
+    
+        <meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/ppsheep/vg75e.jpeg"/>
+        <meta class="swiftype" name="image" data-type="enum" content="http://o8bxt3lx0.bkt.clouddn.com/ppsheep/vg75e.jpeg" />
+    
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-nuvue6sithwirecbhvw3dkaobiojqvtadsnhguwi7k04xklybw5djl1smadp.min.css">
+    <!--STYLES END-->
+    
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="3">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <h1 class="header-title">
+        <a class="header-title-link" href="/ ">ppsheep</a>
+    </h1>
+    
+        
+            <a  class="header-right-picture "
+                href="#about">
+        
+        
+            <img class="header-picture" src="http://o8bxt3lx0.bkt.clouddn.com/7931417.jpeg"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="3">
+    
+        <div class="sidebar-profile">
+            <a href="/#about">
+                    <img class="sidebar-profile-picture" src="http://o8bxt3lx0.bkt.clouddn.com/7931417.jpeg"/>
+            </a>
+            <span class="sidebar-profile-name">ppsheep</span>
+        </div>
+    
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/ "
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+                    <span class="sidebar-button-desc">首页</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-categories"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+                    <span class="sidebar-button-desc">分类</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-tags"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+                    <span class="sidebar-button-desc">标签</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-archives"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+                    <span class="sidebar-button-desc">归档</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link st-search-show-outputs"
+                         href="#search"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-search"></i>
+                    <span class="sidebar-button-desc">搜索</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="#about"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+                    <span class="sidebar-button-desc">关于</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="https://github.com/yangqian111" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+                    <span class="sidebar-button-desc">GitHub</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="http://weibo.com/6071931832/profile?topnav=1&wvr=6" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+                    <span class="sidebar-button-desc">微博</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="mailto:ppsheep.qian@gmail.com" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+                    <span class="sidebar-button-desc">邮箱</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/atom.xml"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+                    <span class="sidebar-button-desc">RSS</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+</nav>
+
+            
+            <div id="main" data-behavior="3"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post" itemscope itemType="http://schema.org/BlogPosting">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title" itemprop="headline">
+            使用NSURLProtocol拦截APP内的网络请求
+        </h1>
+    
+    <div class="post-meta">
+    <time itemprop="datePublished" datetime="2017-04-10T15:21:51+08:00">
+	
+		    4月 10, 2017
+    	
+    </time>
+    
+        <span>发布在 </span>
+        
+    <a class="category-link" href="/all-categories/网络/">网络</a>
+
+
+    
+</div>
+
+</div>
+    
+    <div class="post-content markdown" itemprop="articleBody">
+        <div class="main-content-wrap">
+            <p>APP内的网络请求的监控，相信很多APP内都有这个模块，通过监控APP内的网络请求，观察各个API的稳定性。这些数据，一般我们都会先收集起来，在一段时间内，上传到服务器。在iOS中，出了WK的网络请求，其他的所有网络请求都可以通过NSURLProtocol来拦截监控，下面我们来实践一下。</p>
+<a id="more"></a>
+<p>首先，我们需要介绍一下，在iOS中苹果提供了NSURLConnection、NSURLSession等优秀的网路接口供我们来调用，开源社区也有很多的开源库，如之前的ASIHttpRequest 现在的AFNetworking和Alamofire，我们接下来介绍的NSURLProtocol，都可以监控到这些开源库的网络请求。</p>
+<h3 id="NSURLProtocol"><a href="#NSURLProtocol" class="headerlink" title="NSURLProtocol"></a>NSURLProtocol</h3><p>NSURLProtocol是iOS网络加载系统中很强的一部分，它其实是一个抽象类，我们可以通过继承子类化来拦截APP中的网络请求。</p>
+<p>举几个例子：</p>
+<ul>
+<li>我们的APP内的所有请求都需要增加公共的头，像这种我们就可以直接通过NSURLProtocol来实现，当然实现的方式有很多种</li>
+<li>再比如我们需要将APP某个API进行一些访问的统计</li>
+<li>再比如我们需要统计APP内的网络请求失败率</li>
+</ul>
+<p>等等，都可以用到</p>
+<p>NSURLProtocol是一个抽象类，我们需要子类化才能实现网络请求拦截。</p>
+<h3 id="子类化NSURLProtocol"><a href="#子类化NSURLProtocol" class="headerlink" title="子类化NSURLProtocol"></a>子类化NSURLProtocol</h3><p>在NSURLProtocol中，我们需要告诉它哪些网络请求是需要我们拦截的，这个是通过方法can​Init​With​Request:​来实现的，比如我们现在需要拦截全部的HTTP和HTTPS请求，那么这个逻辑我们就可以在can​Init​With​Request:​中来定义</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> 需要控制的请求</div><div class="line"></div><div class="line"> @param request 此次请求</div><div class="line"> @return 是否需要监控</div><div class="line"> */</div><div class="line">+ (<span class="built_in">BOOL</span>)canInitWithRequest:(<span class="built_in">NSURLRequest</span> *)request &#123;</div><div class="line">    </div><div class="line">    <span class="keyword">if</span> (![request.URL.scheme isEqualToString:<span class="string">@"http"</span>] &amp;&amp;</div><div class="line">        ![request.URL.scheme isEqualToString:<span class="string">@"https"</span>]) &#123;</div><div class="line">        <span class="keyword">return</span> <span class="literal">NO</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="literal">YES</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在方法canonicalRequestForRequest:中，我们可以自定义当前的请求request，当然如果不需要自定义，直接返回就行</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> 设置我们自己的自定义请求</div><div class="line"> 可以在这里统一加上头之类的</div><div class="line"> </div><div class="line"> @param request 应用的此次请求</div><div class="line"> @return 我们自定义的请求</div><div class="line"> */</div><div class="line">+ (<span class="built_in">NSURLRequest</span> *)canonicalRequestForRequest:(<span class="built_in">NSURLRequest</span> *)request &#123;</div><div class="line">    <span class="keyword">return</span> request;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>对于每个NSURLProtocol的子类，都有一个client，通过它来对iOS的网络加载系统进行一系列的操作，比如，通知收到response或者错误的网络请求等等</p>
+<p>这样，我们通过这两个方法，就已经能够拦截住iOS的网络请求了，但是这里有个问题</p>
+<p>在我们上层业务调用网络请求的时候，首先会调用我们的can​Init​With​Request:方法，询问是否对该请求进行处理，接着会调用我们的canonicalRequestForRequest:来自定义一个request，接着又会去调用can​Init​With​Request:询问自定义的request是否需要处理，我们又返回YES，然后又去调用了canonicalRequestForRequest:，这样，就形成了一个死循环了，这肯定是我们不希望看到的。</p>
+<p>有个处理方法，我们可以对每个处理过的request进行标记，在判断如果这个request已经处理过了，那么我们就不再进行处理，这样就有效避免了死循环</p>
+<p>在我们自定义request的方法中，我们来设置处理标志</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">+ (<span class="built_in">NSURLRequest</span> *)canonicalRequestForRequest:(<span class="built_in">NSURLRequest</span> *)request &#123;</div><div class="line">    <span class="built_in">NSMutableURLRequest</span> *mutableReqeust = [request mutableCopy];</div><div class="line">    [<span class="built_in">NSURLProtocol</span> setProperty:@YES</div><div class="line">                        forKey:PPSHTTP</div><div class="line">                     inRequest:mutableReqeust];</div><div class="line">    <span class="keyword">return</span> [mutableReqeust <span class="keyword">copy</span>];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>然后在我们的询问处理方法中，通过判断是否有处理过的标志，来进行拦截</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">+ (<span class="built_in">BOOL</span>)canInitWithRequest:(<span class="built_in">NSURLRequest</span> *)request &#123;</div><div class="line">    </div><div class="line">    <span class="keyword">if</span> (![request.URL.scheme isEqualToString:<span class="string">@"http"</span>] &amp;&amp;</div><div class="line">        ![request.URL.scheme isEqualToString:<span class="string">@"https"</span>]) &#123;</div><div class="line">        <span class="keyword">return</span> <span class="literal">NO</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//如果是已经拦截过的  就放行</span></div><div class="line">    <span class="keyword">if</span> ([<span class="built_in">NSURLProtocol</span> propertyForKey:PPSHTTP inRequest:request] ) &#123;</div><div class="line">        <span class="keyword">return</span> <span class="literal">NO</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="literal">YES</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这样，我们就避免了死循环</p>
+<p>接下来，就是需要将这个request发送出去了，因为如果我们不处理这个request请求，系统会自动发出这个网络请求，但是当我们处理了这个请求，就需要我们手动来进行发送了。</p>
+<p>我们要手动发送这个网络请求，需要重写startLoading方法</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)startLoading &#123;</div><div class="line">    <span class="built_in">NSURLRequest</span> *request = [[<span class="keyword">self</span> <span class="keyword">class</span>] canonicalRequestForRequest:<span class="keyword">self</span>.request];</div><div class="line">    <span class="keyword">self</span>.connection = [[<span class="built_in">NSURLConnection</span> alloc] initWithRequest:request delegate:<span class="keyword">self</span> startImmediately:<span class="literal">YES</span>];</div><div class="line">    <span class="keyword">self</span>.pps_request = <span class="keyword">self</span>.request;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>解释一下上面的代码，因为我们拦截的这个请求是一个真实的请求，所以我们需要创建这样一个真实的网络请求，在第二行代码中，将我们自定义创建的request发了出了，第三行是为了保存当前的request，作为我们后面的处理对象。</p>
+<p>当然，有start就有stop，stop就很简单了</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)stopLoading &#123;</div><div class="line">    [<span class="keyword">self</span>.connection cancel];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在startLoading中，我们发起了一个NSURLConnection的请求，因为NSURLProtocol使我们自己定义的，所以我们需要将网络请求的一系列操作全部传递出去，不然上层就不知道当前网络的一个请求状态，那我们怎么将这个网络状态传到上层？在之前，我们说过每个protocol有一个NSURLProtocolClient实例，我们就通过这个client来传递。</p>
+<p>传递一个网络请求，无外乎就是传递请求的一些过程，数据，结果等等。 发起了发起了一个NSURLConnection的请求，实现它的delegate就能够知道网络请求的一系列操作</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#pragma mark - NSURLConnectionDelegate</span></div><div class="line">- (<span class="keyword">void</span>)connection:(<span class="built_in">NSURLConnection</span> *)connection didFailWithError:(<span class="built_in">NSError</span> *)error&#123;</div><div class="line">    [<span class="keyword">self</span>.client URLProtocol:<span class="keyword">self</span> didFailWithError:error];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="built_in">BOOL</span>)connectionShouldUseCredentialStorage:(<span class="built_in">NSURLConnection</span> *)connection&#123;</div><div class="line">    <span class="keyword">return</span> <span class="literal">YES</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)connection:(<span class="built_in">NSURLConnection</span> *)connection didReceiveAuthenticationChallenge:(<span class="built_in">NSURLAuthenticationChallenge</span> *)challenge&#123;</div><div class="line">    [<span class="keyword">self</span>.client URLProtocol:<span class="keyword">self</span> didReceiveAuthenticationChallenge:challenge];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)connection:(<span class="built_in">NSURLConnection</span> *)connection</div><div class="line">didCancelAuthenticationChallenge:(<span class="built_in">NSURLAuthenticationChallenge</span> *)challenge &#123;</div><div class="line">    [<span class="keyword">self</span>.client URLProtocol:<span class="keyword">self</span> didCancelAuthenticationChallenge:challenge];</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">#pragma mark - NSURLConnectionDataDelegate</span></div><div class="line">-(<span class="built_in">NSURLRequest</span> *)connection:(<span class="built_in">NSURLConnection</span> *)connection willSendRequest:(<span class="built_in">NSURLRequest</span> *)request redirectResponse:(<span class="built_in">NSURLResponse</span> *)response&#123;</div><div class="line">    <span class="keyword">if</span> (response != <span class="literal">nil</span>) &#123;</div><div class="line">        <span class="keyword">self</span>.pps_response = response;</div><div class="line">        [<span class="keyword">self</span>.client URLProtocol:<span class="keyword">self</span> wasRedirectedToRequest:request redirectResponse:response];</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> request;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)connection:(<span class="built_in">NSURLConnection</span> *)connection</div><div class="line">didReceiveResponse:(<span class="built_in">NSURLResponse</span> *)response &#123;</div><div class="line">    [[<span class="keyword">self</span> client] URLProtocol:<span class="keyword">self</span> didReceiveResponse:response cacheStoragePolicy:<span class="built_in">NSURLCacheStorageAllowed</span>];</div><div class="line">    <span class="keyword">self</span>.pps_response = response;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)connection:(<span class="built_in">NSURLConnection</span> *)connection didReceiveData:(<span class="built_in">NSData</span> *)data &#123;</div><div class="line">    [<span class="keyword">self</span>.client URLProtocol:<span class="keyword">self</span> didLoadData:data];</div><div class="line">    [<span class="keyword">self</span>.pps_data appendData:data];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="built_in">NSCachedURLResponse</span> *)connection:(<span class="built_in">NSURLConnection</span> *)connection</div><div class="line">                  willCacheResponse:(<span class="built_in">NSCachedURLResponse</span> *)cachedResponse &#123;</div><div class="line">    <span class="keyword">return</span> cachedResponse;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)connectionDidFinishLoading:(<span class="built_in">NSURLConnection</span> *)connection &#123;</div><div class="line">    [[<span class="keyword">self</span> client] URLProtocolDidFinishLoading:<span class="keyword">self</span>];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>其实从上面的代码，我们可以看出，我们就是在我们自己自定义的protocol中进行了一个传递过程，其他的也没有做操作</p>
+<p>这样，基本的protocol就已经实现完成，那么怎样来拦截网络。我们需要将我们自定义的PPSURLProtocol通过NSURLProtocol注册到我们的网络加载系统中，告诉系统我们的网络请求处理类不再是默认的NSURLProtocol，而是我们自定义的PPSURLProtocol</p>
+<p>我们在PPSURLProtocol暴露两个方法</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#import <span class="meta-string">&lt;Foundation/Foundation.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">PPSURLProtocol</span> : <span class="title">NSURLProtocol</span></span></div><div class="line"></div><div class="line">+ (<span class="keyword">void</span>)start;</div><div class="line"></div><div class="line">+ (<span class="keyword">void</span>)end;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<p>然后在我们的APP启动的时候，调用start，就可以监听到我们的网络请求。</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">+ (<span class="keyword">void</span>)start &#123;</div><div class="line">    PPSURLSessionConfiguration *sessionConfiguration = [PPSURLSessionConfiguration defaultConfiguration];</div><div class="line">    [<span class="built_in">NSURLProtocol</span> registerClass:[PPSURLProtocol <span class="keyword">class</span>]];</div><div class="line">&#125;</div><div class="line"></div><div class="line">+ (<span class="keyword">void</span>)end &#123;</div><div class="line">    PPSURLSessionConfiguration *sessionConfiguration = [PPSURLSessionConfiguration defaultConfiguration];</div><div class="line">    [<span class="built_in">NSURLProtocol</span> unregisterClass:[PPSURLProtocol <span class="keyword">class</span>]];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>目前为止，我们上面的代码已经能够监控到绝大部分的网络请求，但是呢，有一个却是特殊的。</p>
+<p>对于NSURLSession发起的网络请求，我们发现通过shared得到的session发起的网络请求都能够监听到，但是通过方法<em>sessionWithConfiguration:delegate:delegateQueue:</em>得到的session，我们是不能监听到的，原因就出在NSURLSessionConfiguration上，我们进到NSURLSessionConfiguration里面看一下，他有一个属性</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">@property</span> (<span class="keyword">nullable</span>, <span class="keyword">copy</span>) <span class="built_in">NSArray</span>&lt;Class&gt; *protocolClasses;</div></pre></td></tr></table></figure>
+<p>我们能够看出，这是一个NSURLProtocol数组，上面我们提到了，我们监控网络是通过注册NSURLProtocol来进行网络监控的，但是通过<em>sessionWithConfiguration:delegate:delegateQueue:</em>得到的session，他的configuration中已经有一个NSURLProtocol，所以他不会走我们的protocol来，怎么解决这个问题呢？ 其实很简单，我们将NSURLSessionConfiguration的属性protocolClasses的get方法hook掉，通过返回我们自己的protocol，这样，我们就能够监控到通过<em>sessionWithConfiguration:delegate:delegateQueue:</em>得到的session的网络请求</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">void</span>)load &#123;</div><div class="line">    </div><div class="line">    <span class="keyword">self</span>.isSwizzle=<span class="literal">YES</span>;</div><div class="line">    Class cls = <span class="built_in">NSClassFromString</span>(<span class="string">@"__NSCFURLSessionConfiguration"</span>) ?: <span class="built_in">NSClassFromString</span>(<span class="string">@"NSURLSessionConfiguration"</span>);</div><div class="line">    [<span class="keyword">self</span> swizzleSelector:<span class="keyword">@selector</span>(protocolClasses) fromClass:cls toClass:[<span class="keyword">self</span> <span class="keyword">class</span>]];</div><div class="line">    </div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)unload &#123;</div><div class="line">    </div><div class="line">    <span class="keyword">self</span>.isSwizzle=<span class="literal">NO</span>;</div><div class="line">    Class cls = <span class="built_in">NSClassFromString</span>(<span class="string">@"__NSCFURLSessionConfiguration"</span>) ?: <span class="built_in">NSClassFromString</span>(<span class="string">@"NSURLSessionConfiguration"</span>);</div><div class="line">    [<span class="keyword">self</span> swizzleSelector:<span class="keyword">@selector</span>(protocolClasses) fromClass:cls toClass:[<span class="keyword">self</span> <span class="keyword">class</span>]];</div><div class="line">    </div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)swizzleSelector:(SEL)selector fromClass:(Class)original toClass:(Class)stub &#123;</div><div class="line">    </div><div class="line">    Method originalMethod = class_getInstanceMethod(original, selector);</div><div class="line">    Method stubMethod = class_getInstanceMethod(stub, selector);</div><div class="line">    <span class="keyword">if</span> (!originalMethod || !stubMethod) &#123;</div><div class="line">        [<span class="built_in">NSException</span> raise:<span class="built_in">NSInternalInconsistencyException</span> format:<span class="string">@"Couldn't load NEURLSessionConfiguration."</span>];</div><div class="line">    &#125;</div><div class="line">    method_exchangeImplementations(originalMethod, stubMethod);</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="built_in">NSArray</span> *)protocolClasses &#123;</div><div class="line">    </div><div class="line">    <span class="keyword">return</span> @[[PPSURLProtocol <span class="keyword">class</span>]];</div><div class="line">    <span class="comment">//如果还有其他的监控protocol，也可以在这里加进去</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在启动的时候，将这个方法替换掉，在移除监听的时候，恢复之前的方法</p>
+<p>至此，我们的监听就完成了，如果我们需要将这所有的监听存起来，在protocol的start或者stop中获取到request和response，将他们存储起来就行，需要说明的是，据苹果的官方说明，因为请求参数可能会很大，为了保证性能，请求参数是没有被拦截掉的，就是post的HTTPBody是没有的，我没有获取出来，如果有其他的办法，还请告知</p>
+<p>源码，放在了：</p>
+<p><a href="https://github.com/yangqian111/PPSNetworkMonitor" target="_blank" rel="external">https://github.com/yangqian111/PPSNetworkMonitor</a></p>
+<p><strong>我的个人微博：ppsheep_Qian</strong></p>
+<p><strong>欢迎大家关注我的公众号，我会定期分享一些我在项目中遇到问题的解决办法和一些iOS实用的技巧，现阶段主要是整理出一些基础的知识记录下来</strong></p>
+<p><div align="middle"><br>    <image src="http://ac-mhke0kuv.clouddn.com/830a4ead8294ceff5160.jpg"></image><br></div><br>文章也会同步更新到我的博客：<br><a href="http://ppsheep.com">http://ppsheep.com</a></p>
+
+            
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">标签</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/all-tags/hook网络/">hook网络</a>
+
+            </div>
+        
+        <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/04/13/ActionSheet-like-wechat/"  data-tooltip="iOS类似于微信的ActionSheet">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/04/06/UserDefaults in Swift/" data-tooltip="Swift下UserDefaults的正确姿势">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://ppsheep.com/2017/04/10/NSURLProtocol-hook-network-request/">
+                <i class="fa fa-google-plus"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://ppsheep.com/2017/04/10/NSURLProtocol-hook-network-request/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://ppsheep.com/2017/04/10/NSURLProtocol-hook-network-request/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2017 ppsheep. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="3">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/04/13/ActionSheet-like-wechat/"  data-tooltip="iOS类似于微信的ActionSheet">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/04/06/UserDefaults in Swift/" data-tooltip="Swift下UserDefaults的正确姿势">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://ppsheep.com/2017/04/10/NSURLProtocol-hook-network-request/">
+                <i class="fa fa-google-plus"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://ppsheep.com/2017/04/10/NSURLProtocol-hook-network-request/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://ppsheep.com/2017/04/10/NSURLProtocol-hook-network-request/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="3">
+    <ul class="share-options">
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://ppsheep.com/2017/04/10/NSURLProtocol-hook-network-request/">
+                <i class="fa fa-google-plus"></i><span class="">分享到 Google+</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://ppsheep.com/2017/04/10/NSURLProtocol-hook-network-request/">
+                <i class="fa fa-facebook-official"></i><span>分享到 Facebook</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://ppsheep.com/2017/04/10/NSURLProtocol-hook-network-request/">
+                <i class="fa fa-twitter"></i><span>分享到 Twitter</span>
+            </a>
+        </li>
+    </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-remove"></i>
+        </div>
+        
+            <img id="about-card-picture" src="http://o8bxt3lx0.bkt.clouddn.com/7931417.jpeg"/>
+        
+            <h4 id="about-card-name">ppsheep</h4>
+        
+            <h5 id="about-card-bio"><p>一个就职于网易的初级iOS开发者<br>目前正在修炼自己</p>
+<p>博客建立不久，正在寻找更好的写作方式<br>博客上的内容会同步到公众号Sheep_iOS，另外也会挑选一些比较好的文章推送给大家</p>
+<p>我个人的微信号YangQian5999</p>
+<p>我的微博ppsheep_qian</p>
+<p>文章末尾一般会有公众号二维码<br>欢迎大家关注</p>
+</h5>
+        
+        
+            <h5 id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>iOS开发者</p>
+
+            </h5>
+        
+        
+            <h5 id="about-card-location">
+                <i class="fa fa-map-marker"></i>
+                <br/>
+                杭州
+            </h5>
+        
+    </div>
+</div>
+
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+    </body>
+    <!--SCRIPTS-->
+<script src="/assets/js/script-i4qo6jx6jji9fg0dftpya6ivemizsbow4fhow76d8dwpm7m1wbvi378ssumx.min.js"></script>
+<!--SCRIPTS END-->
+
+    
+
+
+
+</html>

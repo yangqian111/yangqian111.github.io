@@ -1,0 +1,601 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="ppsheep">
+    <title>Operation Queues并发编程 - ppsheep</title>
+    <meta name="author" content="ppsheep">
+    
+    
+    
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+    
+    <meta name="description" content="并发、异步在我们的编程中，见到的太多了。在iOS中，实现并发的主要三个途径Operation Queues、Dispatch Queues、Dispatch Sources，今天我们就来详细介绍Operatin Queues的使用，花了两天时间写这一篇，值得一看。">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="Operation Queues并发编程">
+<meta property="og:url" content="http://ppsheep.com/2017/03/14/Operation-Queues并发编程/index.html">
+<meta property="og:site_name" content="ppsheep">
+<meta property="og:description" content="并发、异步在我们的编程中，见到的太多了。在iOS中，实现并发的主要三个途径Operation Queues、Dispatch Queues、Dispatch Sources，今天我们就来详细介绍Operatin Queues的使用，花了两天时间写这一篇，值得一看。">
+<meta property="og:updated_time" content="2017-03-15T07:22:24.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Operation Queues并发编程">
+<meta name="twitter:description" content="并发、异步在我们的编程中，见到的太多了。在iOS中，实现并发的主要三个途径Operation Queues、Dispatch Queues、Dispatch Sources，今天我们就来详细介绍Operatin Queues的使用，花了两天时间写这一篇，值得一看。">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/7931417.jpeg"/>
+    
+    
+        <meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/blog/2017-03-14-timg-5.jpeg"/>
+        <meta class="swiftype" name="image" data-type="enum" content="http://o8bxt3lx0.bkt.clouddn.com/blog/2017-03-14-timg-5.jpeg" />
+    
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-nuvue6sithwirecbhvw3dkaobiojqvtadsnhguwi7k04xklybw5djl1smadp.min.css">
+    <!--STYLES END-->
+    
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="3">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <h1 class="header-title">
+        <a class="header-title-link" href="/ ">ppsheep</a>
+    </h1>
+    
+        
+            <a  class="header-right-picture "
+                href="#about">
+        
+        
+            <img class="header-picture" src="http://o8bxt3lx0.bkt.clouddn.com/7931417.jpeg"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="3">
+    
+        <div class="sidebar-profile">
+            <a href="/#about">
+                    <img class="sidebar-profile-picture" src="http://o8bxt3lx0.bkt.clouddn.com/7931417.jpeg"/>
+            </a>
+            <span class="sidebar-profile-name">ppsheep</span>
+        </div>
+    
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/ "
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+                    <span class="sidebar-button-desc">首页</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-categories"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+                    <span class="sidebar-button-desc">分类</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-tags"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+                    <span class="sidebar-button-desc">标签</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-archives"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+                    <span class="sidebar-button-desc">归档</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link st-search-show-outputs"
+                         href="#search"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-search"></i>
+                    <span class="sidebar-button-desc">搜索</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="#about"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+                    <span class="sidebar-button-desc">关于</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="https://github.com/yangqian111" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+                    <span class="sidebar-button-desc">GitHub</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="http://weibo.com/6071931832/profile?topnav=1&wvr=6" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+                    <span class="sidebar-button-desc">微博</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="mailto:ppsheep.qian@gmail.com" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+                    <span class="sidebar-button-desc">邮箱</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/atom.xml"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+                    <span class="sidebar-button-desc">RSS</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+</nav>
+
+            
+            <div id="main" data-behavior="3"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post" itemscope itemType="http://schema.org/BlogPosting">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title" itemprop="headline">
+            Operation Queues并发编程
+        </h1>
+    
+    <div class="post-meta">
+    <time itemprop="datePublished" datetime="2017-03-14T14:23:34+08:00">
+	
+		    3月 14, 2017
+    	
+    </time>
+    
+        <span>发布在 </span>
+        
+    <a class="category-link" href="/all-categories/iOS中的并发编程/">iOS中的并发编程</a>
+
+
+    
+</div>
+
+</div>
+    
+    <div class="post-content markdown" itemprop="articleBody">
+        <div class="main-content-wrap">
+            <p>并发、异步在我们的编程中，见到的太多了。在iOS中，实现并发的主要三个途径Operation Queues、Dispatch Queues、Dispatch Sources，今天我们就来详细介绍Operatin Queues的使用，花了两天时间写这一篇，值得一看。</p>
+<a id="more"></a>
+<h3 id="为什么要并发"><a href="#为什么要并发" class="headerlink" title="为什么要并发"></a>为什么要并发</h3><p>现在是个手机，拿出来就是多少多少CPU，并且这个CPU指挥增加不会减少，那我们作为开发者，需要尽可能地利用这么多个核心数，怎么利用呢，就是提高并发。</p>
+<h3 id="GCD和Operation-Queues的选择"><a href="#GCD和Operation-Queues的选择" class="headerlink" title="GCD和Operation Queues的选择"></a>GCD和Operation Queues的选择</h3><p>经常看到这样的问题，到底是使用队列还是GCD呢，我说一下我在平常编码过程中的使用情况。我一般GCD是只使用在写单例的时候，其他需要并发异步的地方，我一般使用的是队列。</p>
+<p>因为队列的可控性更强一些，苹果提供了一系列的API供我们操作并发的任务。虽然队列是在GCD的基础上再封装一层，这样说来使用队列性能会较GCD差一些，但是这个性能差异早已经不是我们该考虑的问题，这个差异无外乎就是Operation对象的开销，这个差异就太小了。</p>
+<h3 id="GCD和Operation-Queues的区别"><a href="#GCD和Operation-Queues的区别" class="headerlink" title="GCD和Operation Queues的区别"></a>GCD和Operation Queues的区别</h3><p>使用Operation Queues，我们队任务的可控性会强很多，对于一个正在执行的任务，我们可以暂停、恢复、取消，还可以为任务之间添加依赖</p>
+<p>但是对于GCD呢，我们不关心任务的调度情况，只要扔进去，让系统帮我们处理就好，如果我们要实现像上面队列所说的，就非常棘手</p>
+<h3 id="Operation-NSOperation"><a href="#Operation-NSOperation" class="headerlink" title="Operation(NSOperation)"></a>Operation(NSOperation)</h3><p>我们一般需要并发任务的时候，都是将任务封装到一个operation对象中，但是我们去看苹果官方的文档，上面有这样一句话</p>
+<blockquote>
+<p>The NSOperation class is an abstract class you use to encapsulate the code and data associated with a single task. Because it is abstract, you do not use this class directly but instead subclass or use one of the system-defined subclasses (NSInvocationOperation or BlockOperation) to perform the actual task. Despite being abstract, the base implementation of NSOperation does include significant logic to coordinate the safe execution of your task. The presence of this built-in logic allows you to focus on the actual implementation of your task, rather than on the glue code needed to ensure it works correctly with other system objects.</p>
+</blockquote>
+<p>解释一下，上面的大致意思就是Operation(在Swift中已经更名为Operation，在OC中为NSOperation，上面一段话其实是Swift下的一个文档，可能苹果还没及时更新)其实是一个抽象类，不能直接实例化，我们需要自定义一个它的子类或者使用系统提供的NSInvocationOperation或者BlockOperation</p>
+<p><strong>注意：在Swift中 NSInvocationOperation 已经被抛弃掉了，只剩下BlockOperation，在OC下 NSInvocationOperation 仍然可以使用</strong></p>
+<h5 id="NSInvocationOperation"><a href="#NSInvocationOperation" class="headerlink" title="NSInvocationOperation"></a>NSInvocationOperation</h5><p>使用NSInvocationOperation能够非常方便的并发任务，在NSInvocationOperation中有这样一个方法</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">- (<span class="keyword">nullable</span> <span class="keyword">instancetype</span>)initWithTarget:(<span class="keyword">id</span>)target selector:(SEL)sel object:(<span class="keyword">nullable</span> <span class="keyword">id</span>)arg;</div></pre></td></tr></table></figure>
+<p>加入我们需要并发这个方法中的代码，那么我们只需要传入方法所在的对象和这个现有的方法，就可以直接实行并发</p>
+<p>我们来看一下简单的代码</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">ViewController</span> ()</span></div><div class="line"></div><div class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">NSOperationQueue</span> *myQueue;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">ViewController</span></span></div><div class="line"></div><div class="line">-(<span class="keyword">void</span>)viewDidLoad&#123;</div><div class="line">    [<span class="keyword">super</span> viewDidLoad];</div><div class="line">    <span class="keyword">self</span>.myQueue = [[<span class="built_in">NSOperationQueue</span> alloc] init];</div><div class="line">    <span class="built_in">NSInvocationOperation</span> *invocationOp = [[<span class="built_in">NSInvocationOperation</span> alloc] initWithTarget:<span class="keyword">self</span> selector:<span class="keyword">@selector</span>(doSomething:) object:<span class="string">@"data"</span>];</div><div class="line">    [<span class="keyword">self</span>.myQueue addOperation:invocationOp];</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>,[<span class="built_in">NSThread</span> currentThread]);</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)doSomething:(<span class="keyword">id</span>)data&#123;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"%@-%@-%@"</span>,data,[<span class="built_in">NSThread</span> mainThread],[<span class="built_in">NSThread</span> currentThread]);</div><div class="line">    sleep(<span class="number">3</span>);</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"finish"</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<p>非常简单，上面的代码就是讲方法doSomething:异步执行，我们看一下控制台输出什么？</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="number">2017</span><span class="number">-03</span><span class="number">-14</span> <span class="number">15</span>:<span class="number">40</span>:<span class="number">37.520</span> OperationQueues[<span class="number">10294</span>:<span class="number">2193908</span>] &lt;<span class="built_in">NSThread</span>: <span class="number">0x600000079500</span>&gt;&#123;number = <span class="number">1</span>, name = main&#125;</div><div class="line"><span class="number">2017</span><span class="number">-03</span><span class="number">-14</span> <span class="number">15</span>:<span class="number">40</span>:<span class="number">37.520</span> OperationQueues[<span class="number">10294</span>:<span class="number">2194320</span>] data-&lt;<span class="built_in">NSThread</span>: <span class="number">0x600000079500</span>&gt;&#123;number = <span class="number">1</span>, name = (null)&#125;-&lt;<span class="built_in">NSThread</span>: <span class="number">0x600000266440</span>&gt;&#123;number = <span class="number">3</span>, name = (null)&#125;</div><div class="line"><span class="number">2017</span><span class="number">-03</span><span class="number">-14</span> <span class="number">15</span>:<span class="number">40</span>:<span class="number">40.525</span> OperationQueues[<span class="number">10294</span>:<span class="number">2194320</span>] finish</div></pre></td></tr></table></figure>
+<p>从上面的输出，我们可以看出，doSomething:这个方法子啊线程0x600000266440中执行，而我们拿到的主线程是0x600000079500，可以看出，这里实现了异步并发</p>
+<p><strong>注意</strong></p>
+<p>这里有个注意点，在NSOperation中有个start方法，用这个方法并不能实现并发。在NSOperation中 <em>isAsynchronous</em> (iOS7之前是方法<em>isConcurrent</em>)返回值代表了operation相对了调用它的start方法的线程来说是否是异步执行的，而默认情况下，他返回的是NO，也就是说直接调用start方法，是不能够实现异步执行的，我们来试一下</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">ViewController</span></span></div><div class="line"></div><div class="line">-(<span class="keyword">void</span>)viewDidLoad&#123;</div><div class="line">    [<span class="keyword">super</span> viewDidLoad];</div><div class="line"><span class="comment">//    self.myQueue = [[NSOperationQueue alloc] init];</span></div><div class="line">    <span class="built_in">NSInvocationOperation</span> *invocationOp = [[<span class="built_in">NSInvocationOperation</span> alloc] initWithTarget:<span class="keyword">self</span> selector:<span class="keyword">@selector</span>(doSomething:) object:<span class="string">@"data"</span>];</div><div class="line"><span class="comment">//    [self.myQueue addOperation:invocationOp];</span></div><div class="line">    [invocationOp start];</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>,[<span class="built_in">NSThread</span> currentThread]);</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">void</span>)doSomething:(<span class="keyword">id</span>)data&#123;</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"%@-%@-%@"</span>,data,[<span class="built_in">NSThread</span> mainThread],[<span class="built_in">NSThread</span> currentThread]);</div><div class="line">    sleep(<span class="number">3</span>);</div><div class="line">    <span class="built_in">NSLog</span>(<span class="string">@"finish"</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<p>看一下控制台的输出</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">2017-03-14 15:55:31.074 OperationQueues[11285:2454150] data-&lt;NSThread: 0x600000079c00&gt;&#123;number = 1, name = main&#125;-&lt;NSThread: 0x600000079c00&gt;&#123;number = 1, name = main&#125;</div><div class="line">2017-03-14 15:55:34.146 OperationQueues[11285:2454150] finish</div><div class="line">2017-03-14 15:55:34.147 OperationQueues[11285:2454150] &lt;NSThread: 0x600000079c00&gt;&#123;number = 1, name = main&#125;</div></pre></td></tr></table></figure>
+<p>我们可以明显看到，doSomething是在主线程中执行，并且阻塞了线程，所以我们在进行operation并发的时候，都需要将operation添加到队列当中，才能够实现并发，因为当我们讲一个非并发的operation添加到队列中时，队列会自动为这个operation创建一个线程，来进行异步并发</p>
+<h5 id="BlockOperation"><a href="#BlockOperation" class="headerlink" title="BlockOperation"></a>BlockOperation</h5><p>BlockOperation和Dispatch Queues比较类似，那么为什么有了Dispatch Queues还要使用BlockOperation呢？我们有时候会遇到这样的情况</p>
+<ul>
+<li>我们已经有了一个BlockOperation，不想再创建Dispatch Queues</li>
+<li>我们需要在operation之间设置一些依赖关系、进行一些KVO的观察，而这个Dispatch Queues是达不到的</li>
+</ul>
+<p>同样来使用一下BlockOperation</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ViewController</span>: <span class="title">UIViewController</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">let</span> operationQueue = <span class="type">OperationQueue</span>()</div><div class="line">    </div><div class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">viewDidLoad</span><span class="params">()</span></span> &#123;</div><div class="line">        <span class="keyword">super</span>.viewDidLoad()</div><div class="line">        <span class="keyword">let</span> blockOp = <span class="type">BlockOperation</span>.<span class="keyword">init</span> &#123; </div><div class="line">            <span class="built_in">print</span>(<span class="string">"\(Thread.main)--\(Thread.current)"</span>)</div><div class="line">            sleep(<span class="number">3</span>)</div><div class="line">            <span class="built_in">print</span>(<span class="string">"blockOp1 finish"</span>)</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        blockOp.addExecutionBlock &#123;</div><div class="line">            <span class="built_in">print</span>(<span class="string">"\(Thread.main)--\(Thread.current)"</span>)</div><div class="line">            sleep(<span class="number">3</span>)</div><div class="line">            <span class="built_in">print</span>(<span class="string">"blockOp2 finish"</span>)</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        blockOp.addExecutionBlock &#123;</div><div class="line">            <span class="built_in">print</span>(<span class="string">"\(Thread.main)--\(Thread.current)"</span>)</div><div class="line">            sleep(<span class="number">3</span>)</div><div class="line">            <span class="built_in">print</span>(<span class="string">"blockOp3 finish"</span>)</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        operationQueue.addOperation(blockOp)</div><div class="line">        </div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>看一下控制台的输出</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;NSThread: 0x6080000780c0&gt;&#123;number = 1, name = (null)&#125;--&lt;NSThread: 0x608000265b80&gt;&#123;number = 3, name = (null)&#125;</div><div class="line">&lt;NSThread: 0x6080000780c0&gt;&#123;number = 1, name = (null)&#125;--&lt;NSThread: 0x608000265d40&gt;&#123;number = 4, name = (null)&#125;</div><div class="line">&lt;NSThread: 0x6080000780c0&gt;&#123;number = 1, name = (null)&#125;--&lt;NSThread: 0x60000007f300&gt;&#123;number = 5, name = (null)&#125;</div><div class="line">blockOp2 finish</div><div class="line">blockOp3 finish</div><div class="line">blockOp1 finish</div></pre></td></tr></table></figure>
+<p>每次运行，可能输出的结果都不一样，我们通过看线程地址，就能分辨出，每个block都是在一个单独的线程中执行</p>
+<p>同样的，我们还是来试一下，使用start来进行启动queue</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ViewController</span>: <span class="title">UIViewController</span> </span>&#123;</div><div class="line"></div><div class="line"><span class="comment">//    let operationQueue = OperationQueue()</span></div><div class="line">    </div><div class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">viewDidLoad</span><span class="params">()</span></span> &#123;</div><div class="line">        <span class="keyword">super</span>.viewDidLoad()</div><div class="line">        <span class="keyword">let</span> blockOp = <span class="type">BlockOperation</span>.<span class="keyword">init</span> &#123; </div><div class="line">            <span class="built_in">print</span>(<span class="string">"\(Thread.main)--1--\(Thread.current)"</span>)</div><div class="line">            sleep(<span class="number">3</span>)</div><div class="line">            <span class="built_in">print</span>(<span class="string">"blockOp1 finish"</span>)</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        blockOp.addExecutionBlock &#123;</div><div class="line">            <span class="built_in">print</span>(<span class="string">"\(Thread.main)--2--\(Thread.current)"</span>)</div><div class="line">            sleep(<span class="number">3</span>)</div><div class="line">            <span class="built_in">print</span>(<span class="string">"blockOp2 finish"</span>)</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        blockOp.addExecutionBlock &#123;</div><div class="line">            <span class="built_in">print</span>(<span class="string">"\(Thread.main)--3--\(Thread.current)"</span>)</div><div class="line">            sleep(<span class="number">3</span>)</div><div class="line">            <span class="built_in">print</span>(<span class="string">"blockOp3 finish"</span>)</div><div class="line">        &#125;</div><div class="line">        </div><div class="line"><span class="comment">//        operationQueue.addOperation(blockOp)</span></div><div class="line">        blockOp.start()</div><div class="line">        </div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>输出就截然不同</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;NSThread: 0x17006e7c0&gt;&#123;number = 1, name = main&#125;--1--&lt;NSThread: 0x17006e7c0&gt;&#123;number = 1, name = main&#125;</div><div class="line">&lt;NSThread: 0x17006e7c0&gt;&#123;number = 1, name = (null)&#125;--2--&lt;NSThread: 0x174078d00&gt;&#123;number = 3, name = (null)&#125;</div><div class="line">blockOp2 finish</div><div class="line">&lt;NSThread: 0x17006e7c0&gt;&#123;number = 1, name = (null)&#125;--3--&lt;NSThread: 0x174078d00&gt;&#123;number = 3, name = (null)&#125;</div><div class="line">blockOp1 finish</div><div class="line">blockOp3 finish</div></pre></td></tr></table></figure>
+<p>完全没有规律的，每次输出都会不一样，但是这里有一个肯定是不会变的，不知道大家能不能猜到</p>
+<p>就是首先加入到operation中的block都将会在当前调起的start的线程中执行，其他的block就不一定了</p>
+<p>关于BlockOperation，只要其中的block大于1，就会触发多线程执行，但是这个多线程使我们完全不能控制的，都是系统调起，其中可能遇到阻塞，也可能不会遇到阻塞，这完全依赖于系统的分配</p>
+<h3 id="自定义Operation"><a href="#自定义Operation" class="headerlink" title="自定义Operation"></a>自定义Operation</h3><p>我们自定义Operation对象，可以定义非并发的Operation也可以定义并发的Operation。什么意思呢？我们之前已经使用过了BlockOperation和NSInvocationOperation，两种都不能自身实现并发，我们这里可以自己实现自身并发的Operation，在调用start方法，即可以让他并发，下面我们来实现一下</p>
+<h5 id="非并发的Operation"><a href="#非并发的Operation" class="headerlink" title="非并发的Operation"></a>非并发的Operation</h5><p>对于非并发的Operation，很简单，我们只需要让它可以正常执行main方法中的任务就行，并且能够响应取消事件就行</p>
+<p>关于响应取消事件，为了要响应取消事件，我们需要在执行时，不断检测isCancelled方法，看看返回是否是取消状态，在苹果的文档中有这样一句话</p>
+<blockquote>
+<p>You should always check the value of this property before doing any work towards accomplishing the operation’s task, which typically means checking it at the beginning of your custom main() method. It is possible for an operation to be cancelled before it begins executing or at any time while it is executing. Therefore, checking the value at the beginning of your main() method (and periodically throughout that method) lets you exit as quickly as possible when an operation is cancelled.</p>
+</blockquote>
+<p>上面的大致意思就是，在你执行main方法，或者main方法需要执行时(这个我的理解是在main方法中执行了一个循环)，都应该检查这个operation 是否已经cancle掉了，换句话说，就是在main执行之前应该检查，在main中执行的循环，每次循环之前也应该检查</p>
+<p>读到这里，我们应该就会了解到，其实operation的cancle不是立刻取消的，而是每次在检查isCancled的时候，才会来取消</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyOperation</span>: <span class="title">Operation</span> </span>&#123;</div><div class="line">    </div><div class="line">    <span class="keyword">var</span> message: <span class="type">String</span>!</div><div class="line">    <span class="keyword">var</span> info: <span class="type">String</span>!</div><div class="line">    </div><div class="line">    </div><div class="line">    <span class="keyword">public</span> <span class="keyword">init</span>(message: <span class="type">String</span>, messageInfo: <span class="type">String</span>) &#123;</div><div class="line">        <span class="keyword">super</span>.<span class="keyword">init</span>()</div><div class="line">        <span class="keyword">self</span>.message = message<span class="comment">//注意这里swift的写法，参数和变量相同，下面是不相同</span></div><div class="line">        info = messageInfo</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</div><div class="line">        </div><div class="line">        <span class="keyword">if</span> isCancelled &#123;</div><div class="line">            <span class="keyword">return</span></div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        <span class="built_in">print</span>(<span class="string">"\(Thread.main)--\(Thread.current)"</span>)</div><div class="line">        </div><div class="line">        <span class="keyword">for</span> <span class="keyword">var</span> i <span class="keyword">in</span> <span class="number">1</span>..&lt;<span class="number">10</span> &#123;</div><div class="line">            </div><div class="line">            <span class="keyword">if</span> isCancelled &#123;</div><div class="line">                <span class="keyword">return</span></div><div class="line">            &#125;</div><div class="line">            </div><div class="line">            <span class="built_in">print</span>(<span class="string">"\(i)"</span>)</div><div class="line">            </div><div class="line">            sleep(<span class="number">2</span>)</div><div class="line">            </div><div class="line">            i += <span class="number">1</span></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这样在main方法执行之前，和每次循环执行时，都会检测当前的OPeration是否已经cancle了，但是这个是一个非并发的Operation，我们使用start任然会卡掉发起start的线程，接下来我们来自定义一个可以并发的线程</p>
+<h5 id="并发的Operation"><a href="#并发的Operation" class="headerlink" title="并发的Operation"></a>并发的Operation</h5><p>查看苹果文档，是最准确的，我们看看苹果文档上，是怎么说的我们自定义的一个并发的operation。</p>
+<p><a href="https://developer.apple.com/reference/foundation/operation" target="_blank" rel="external">https://developer.apple.com/reference/foundation/operation</a><br>这是关于Operation的整个介绍，我们可以再下面找到具体的属性，方法，点进去查看，其中方法<em>isFinished</em>有这样一句话：</p>
+<blockquote>
+<p>When implementing a concurrent operation object, you must override the implementation of this property so that you can return the finished state of your operation. </p>
+</blockquote>
+<p>同样的，还有<em>isExecuting</em></p>
+<blockquote>
+<p>When implementing a concurrent operation object, you must override the implementation of this property so that you can return the execution state of your operation. </p>
+</blockquote>
+<p><em>start</em></p>
+<blockquote>
+<p>If you are implementing a concurrent operation, you must override this method and use it to initiate your operation.</p>
+</blockquote>
+<p>大致我们能够了解到，这三个方法是必须要重写的，前两个方法是控制着当前operation的运行环境，是否正在运行，是否运行完成</p>
+<p>start方法，我们就不说了，这个肯定要重写，因为要在这个里面重启线程来运行我们的operation任务</p>
+<p>我们再来看一下<em>main</em>方法的说明</p>
+<blockquote>
+<p>If you are implementing a concurrent operation, you are not required to override this method but may do so if you plan to call it from your custom start() method.</p>
+</blockquote>
+<p>从官方的文档中，我们可以看出，我们不用必须重写main方法，但是如果我们想自己启动线程，异步执行operation的话，我们最好还是重写它，这是为什么呢？</p>
+<p>其实我们看一下，start方法中，其实是为了配置当前的operation执行的环境(启动一个线程)</p>
+<p>而我们真正执行的代码，虽然也可以方法start方法中，但是感觉逻辑有点混乱，如果我们放到main方法中，这样operation的结构更加清晰，明了</p>
+<p>我们这里再加一个重写属性<em>isReady</em>，这个重写属性也是可选的，这里选择重写他，是为了展示一下重写这个方法的时候，需要设置KVO，因为在operation中，我们很多属性，都是可以KVO监测的，如果我们重写，都应该在属性改变时，通知外部，我们的属性改变了</p>
+<p>好，我们来数一下，需要重写的方法或者属性的getter：</p>
+<ul>
+<li>isFinished           (必须)</li>
+<li>isExecuting           (必须)</li>
+<li>start               (必须)</li>
+<li>main    (非必须)</li>
+<li>isReady     (非必须)</li>
+</ul>
+<p>首先我把整个类的代码都贴出来，再来解释</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> Foundation</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyAnotherOperation</span>: <span class="title">Operation</span> </span>&#123;</div><div class="line">    </div><div class="line">    <span class="keyword">var</span> message: <span class="type">String</span>?</div><div class="line">    <span class="keyword">var</span> info: <span class="type">String</span>?</div><div class="line">    </div><div class="line">    <span class="class"><span class="keyword">enum</span> <span class="title">State</span> </span>&#123;</div><div class="line">        <span class="keyword">case</span>  ready, executing, finished</div><div class="line">        <span class="keyword">var</span> keyPath: <span class="type">String</span>&#123;</div><div class="line">            <span class="keyword">switch</span> <span class="keyword">self</span> &#123;</div><div class="line">            <span class="keyword">case</span> .ready:</div><div class="line">                <span class="keyword">return</span> <span class="string">"isReady"</span></div><div class="line">            <span class="keyword">case</span> .executing:</div><div class="line">                <span class="keyword">return</span> <span class="string">"isExecuting"</span></div><div class="line">            <span class="keyword">case</span> .finished:</div><div class="line">                <span class="keyword">return</span> <span class="string">"isFinished"</span></div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">var</span> state = <span class="type">State</span>.ready &#123;</div><div class="line">        <span class="keyword">willSet</span>&#123;</div><div class="line">            willChangeValue(forKey: newValue.keyPath)</div><div class="line">            willChangeValue(forKey: state.keyPath)</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">didSet</span>&#123;</div><div class="line">            didChangeValue(forKey: oldValue.keyPath)</div><div class="line">            didChangeValue(forKey: state.keyPath)</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">init</span>(message: <span class="type">String</span>, info: <span class="type">String</span>) &#123;</div><div class="line">        <span class="keyword">super</span>.<span class="keyword">init</span>()</div><div class="line">        <span class="keyword">self</span>.message = message</div><div class="line">        <span class="keyword">self</span>.info = info</div><div class="line">        </div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">start</span><span class="params">()</span></span> &#123;</div><div class="line">        <span class="keyword">if</span> isCancelled &#123;</div><div class="line">            state = .finished</div><div class="line">            <span class="keyword">return</span></div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        state = .executing</div><div class="line">        <span class="type">Thread</span>.detachNewThreadSelector(#selector(<span class="type">Operation</span>.main), toTarget: <span class="keyword">self</span>, with: <span class="literal">nil</span>)</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</div><div class="line">        <span class="built_in">print</span>(<span class="string">"\(Thread.main)--\(Thread.current)"</span>)</div><div class="line">        <span class="keyword">for</span> <span class="keyword">var</span> i <span class="keyword">in</span> <span class="number">1</span>..&lt;<span class="number">10</span> &#123;</div><div class="line">            </div><div class="line">            <span class="keyword">if</span> isCancelled &#123;</div><div class="line">                <span class="keyword">return</span></div><div class="line">            &#125;</div><div class="line">            </div><div class="line">            <span class="built_in">print</span>(<span class="string">"\(i)"</span>)</div><div class="line">            </div><div class="line">            sleep(<span class="number">2</span>)</div><div class="line">            </div><div class="line">            i += <span class="number">1</span></div><div class="line">        &#125;</div><div class="line">        sleep(<span class="number">3</span>)</div><div class="line">        </div><div class="line">       state = .finished</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">// MARK: - override</span></div><div class="line">    </div><div class="line">    <span class="keyword">override</span> <span class="keyword">var</span> isReady: <span class="type">Bool</span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">super</span>.isReady &amp;&amp; state == .ready</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">override</span> <span class="keyword">var</span> isFinished: <span class="type">Bool</span>&#123;</div><div class="line">        <span class="keyword">return</span> state == .finished</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">override</span> <span class="keyword">var</span> isExecuting: <span class="type">Bool</span>&#123;</div><div class="line">        <span class="keyword">return</span> state == .executing</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">override</span> <span class="keyword">var</span> isAsynchronous: <span class="type">Bool</span>&#123;</div><div class="line">            <span class="keyword">return</span> <span class="literal">true</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在这里，我是通过swift来实现的，相信读懂了的同学，用OC也能够简单实现，如果有什么疑问，再联系我好了</p>
+<p>解释一下上面的代码：</p>
+<p>因为，operation的属性isReady、isExecuting、isFinished都需要在改变时通知外部KVO通知，所以我们在将要改变他们的值和改变之后，都需要发出通知，如果我每个都去写，觉得麻烦，就定义了一个枚举State，代表当前的一个operation的状态</p>
+<p>每次不管他们任何一个的状态需要改变时，我直接改变state的值，然后在state的willSet和didSet方法中来发出通知</p>
+<p>这个时候就能感觉出，swift的强大之处了，枚举中能够定义属性，根据当前的枚举值，返回通知的key</p>
+<p>在<em>isReady</em>方法中</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">override</span> <span class="keyword">var</span> isReady: <span class="type">Bool</span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">super</span>.isReady &amp;&amp; state == .ready</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>不要忘记，一定要检查父类的ready属性</p>
+<p>这样，我们每次，直接调用start方法，就是启了一个线程，在单独跑这个任务</p>
+<h3 id="配置operation之间的联系"><a href="#配置operation之间的联系" class="headerlink" title="配置operation之间的联系"></a>配置operation之间的联系</h3><p>我们之前在讲到operation和GCD的优缺点的时候，说到过，operation更加灵活，operation之间的灵活点之一就是operation之间可以添加依赖的，一个operation可以在另一个operation执行完成之后，再执行</p>
+<p><strong>注意</strong></p>
+<ul>
+<li>在我们添加依赖的时候，需要在添加到队列之前，就将依赖设置好，如果在添加到队列之后设置，依赖就可能会失效，因为添加到队列，operation就随时可能被执行</li>
+<li>依赖是单向的a.addDependency(b)，那么这个只会是a依赖于b，a在b执行完过后才会再次执行，所以，我们设置的时候不要设置成了一个循环依赖，这样operation都不会执行了</li>
+<li>设置operation不管是我们自定义的还是系统提供的都可以设置，没有区别</li>
+</ul>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> blockOp1 = <span class="type">BlockOperation</span>.<span class="keyword">init</span> &#123;</div><div class="line">    <span class="built_in">print</span>(<span class="string">"\(Thread.main)--1--\(Thread.current)"</span>)</div><div class="line">    sleep(<span class="number">5</span>)</div><div class="line">&#125;</div><div class="line"><span class="keyword">let</span> blockOp2 = <span class="type">BlockOperation</span>.<span class="keyword">init</span> &#123;</div><div class="line">    <span class="built_in">print</span>(<span class="string">"\(Thread.main)--2--\(Thread.current)"</span>)</div><div class="line">    sleep(<span class="number">5</span>)</div><div class="line">&#125;</div><div class="line"><span class="keyword">let</span> blockOp3 = <span class="type">BlockOperation</span>.<span class="keyword">init</span> &#123;</div><div class="line">    <span class="built_in">print</span>(<span class="string">"\(Thread.main)--3--\(Thread.current)"</span>)</div><div class="line">    sleep(<span class="number">5</span>)</div><div class="line">&#125;</div><div class="line">    </div><div class="line">blockOp2.addDependency(blockOp1)</div><div class="line">blockOp3.addDependency(blockOp2)</div><div class="line">myQueue.addOperation(blockOp1)</div><div class="line">myQueue.addOperation(blockOp2)</div><div class="line">myQueue.addOperation(blockOp3)</div></pre></td></tr></table></figure>
+<p>上面的代码运行，就能看出blockOp1——&gt; blockOp2——&gt; blockOp3<br>这样的执行顺序</p>
+<h3 id="修改operation在队列中的优先级"><a href="#修改operation在队列中的优先级" class="headerlink" title="修改operation在队列中的优先级"></a>修改operation在队列中的优先级</h3><p>这里需要注意的是，只有在同一队列中，修改operation的优先级才起作用，不然是不起作用的。</p>
+<p>而且只有当一个operation的isReady为true的时候，这个优先级才起作用，举个例子</p>
+<p>比如有两个operation，有一个高优先级的operation A 它的isReady为 false，还有一个低优先级的operation B 它的isReady为 true，那么这样的情况下，B仍然会先执行。</p>
+<p>如果他们的isReady均为true 这个时候，才是A会首先执行</p>
+<p>在Operation中有个枚举</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">enum</span> <span class="title">QueuePriority</span> : <span class="title">Int</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="keyword">case</span> veryLow</div><div class="line"></div><div class="line">    <span class="keyword">case</span> low</div><div class="line"></div><div class="line">    <span class="keyword">case</span> normal</div><div class="line"></div><div class="line">    <span class="keyword">case</span> high</div><div class="line"></div><div class="line">    <span class="keyword">case</span> veryHigh</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>其中决定了在队列中的优先级</p>
+<h3 id="修改operation执行任务的线程优先级"><a href="#修改operation执行任务的线程优先级" class="headerlink" title="修改operation执行任务的线程优先级"></a>修改operation执行任务的线程优先级</h3><p>在iOS中，我们知道线程都是内核管理的，我们不能够操作线程的执行，但是我们可以修改线程的优先级，这样，内核就会优先分配线程给我们线程优先级高的线程执行</p>
+<p>在Operation中有个属性</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@available</span>(iOS, introduced: <span class="number">4.0</span>, deprecated: <span class="number">8.0</span>)</div><div class="line">open <span class="keyword">var</span> threadPriority: <span class="type">Double</span></div></pre></td></tr></table></figure>
+<p>可以设置他的值从0.0到1.0  默认值为0.5</p>
+<p><strong>思考</strong></p>
+<p>这里，我们思考一个问题，如果这个operation是我们自定义的一个并发operation，那么它的线程是我们自己在start方法中启动的，因为我们没有调用super的start方法，所以这个线程的优先级就需要我们自己在start方法中，手动设置了。</p>
+<h3 id="设置-Completion-Block"><a href="#设置-Completion-Block" class="headerlink" title="设置 Completion Block"></a>设置 Completion Block</h3><p>我们还是通过一段代码来分析</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> blockOp1 = <span class="type">BlockOperation</span>.<span class="keyword">init</span> &#123;</div><div class="line">    <span class="built_in">print</span>(<span class="string">"\(Thread.main)--1--\(Thread.current)"</span>)</div><div class="line">    sleep(<span class="number">5</span>)</div><div class="line">&#125;</div><div class="line">    </div><div class="line"><span class="keyword">let</span> blockOp2 = <span class="type">BlockOperation</span>.<span class="keyword">init</span> &#123;</div><div class="line">    <span class="built_in">print</span>(<span class="string">"\(Thread.main)--2--\(Thread.current)"</span>)</div><div class="line">    sleep(<span class="number">5</span>)</div><div class="line">&#125;</div><div class="line">    </div><div class="line">blockOp2.completionBlock = &#123;</div><div class="line">    <span class="keyword">if</span> blockOp2.isCancelled &#123;</div><div class="line">        <span class="built_in">print</span>(<span class="string">"取消了"</span>);</div><div class="line">        <span class="keyword">return</span></div><div class="line">    &#125;</div><div class="line">    <span class="built_in">print</span>(<span class="string">"blockOp2执行完成"</span>)</div><div class="line">&#125;</div><div class="line"></div><div class="line">    </div><div class="line"><span class="keyword">let</span> blockOp3 = <span class="type">BlockOperation</span>.<span class="keyword">init</span> &#123;</div><div class="line">    <span class="built_in">print</span>(<span class="string">"\(Thread.main)--3--\(Thread.current)"</span>)</div><div class="line">    sleep(<span class="number">5</span>)</div><div class="line">&#125;</div><div class="line">    </div><div class="line">blockOp2.addDependency(blockOp1)</div><div class="line">blockOp3.addDependency(blockOp2)</div><div class="line">myQueue.addOperation(blockOp1)</div><div class="line">myQueue.addOperation(blockOp2)</div><div class="line">myQueue.addOperation(blockOp3)</div><div class="line">    </div><div class="line">    </div><div class="line"><span class="comment">//在两秒后将blockOp2取消掉，看看会出现什么情况</span></div><div class="line"><span class="keyword">let</span> delayQueue = <span class="type">DispatchQueue</span>(label: <span class="string">"com.ppsheep.delayqueue"</span>, qos: .userInitiated)</div><div class="line"><span class="keyword">let</span> additionalTime: <span class="type">DispatchTimeInterval</span> = .seconds(<span class="number">2</span>)</div><div class="line">delayQueue.asyncAfter(deadline: .now()+additionalTime) &#123; </div><div class="line">    <span class="built_in">print</span>(<span class="string">"开始取消blockOp2"</span>)</div><div class="line">    blockOp2.cancel()</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上面的代码，是我将三个operation分别添加到一个qoeue中，并且，我将blockOp2设置了completionBlock</p>
+<p>看看输出</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;<span class="type">NSThread</span>: <span class="number">0x60000007a100</span>&gt;&#123;number = <span class="number">1</span>, name = (null)&#125;--<span class="number">1</span>--&lt;<span class="type">NSThread</span>: <span class="number">0x60800026d140</span>&gt;&#123;number = <span class="number">3</span>, name = (null)&#125;</div><div class="line">开始取消blockOp2</div><div class="line">取消了</div><div class="line">&lt;<span class="type">NSThread</span>: <span class="number">0x60000007a100</span>&gt;&#123;number = <span class="number">1</span>, name = (null)&#125;--<span class="number">3</span>--&lt;<span class="type">NSThread</span>: <span class="number">0x608000276500</span>&gt;&#123;number = <span class="number">4</span>, name = (null)&#125;</div></pre></td></tr></table></figure>
+<p>通过上面的输出，我们可以总结几点</p>
+<ul>
+<li>不管是operation是否取消，他的completionBlock都会执行，所以我们在执行completionBlock的时候需要检查一下他是否已经被取消了</li>
+<li>三个operation互相之间设置了依赖，当blockOp2被取消时，blockOp3并没有影响执行，所以这里也可以看出，当依赖之间的operation取消时，并不会影响其他operation的执行</li>
+</ul>
+<p><strong>注意</strong></p>
+<p>这里还有一点需要注意，一般来说，我们的completionBlock回调线程都是和发起start或者queue的同一线程，所以如果是需要更新UI，最好在completionBlock中，使用GCD，扔到主线程来执行</p>
+<p>关于Operation Queues的我们需要了解的知识，大概已经讲完了，在我们日常的使用中，上面讲到的应该已经够用了</p>
+<p>参考：<br><a href="https://www.objccn.io/issue-2-3/" target="_blank" rel="external">https://www.objccn.io/issue-2-3/</a></p>
+<p><strong>欢迎大家关注我的公众号，我会定期分享一些我在项目中遇到问题的解决办法和一些iOS实用的技巧，现阶段主要是整理出一些基础的知识记录下来</strong></p>
+<p>上边是公众号，下边是我个人微信</p>
+<div align="middle"><br>    <image src="http://ac-mhke0kuv.clouddn.com/830a4ead8294ceff5160.jpg"></image><br>    <image src="http://o8bxt3lx0.bkt.clouddn.com/avatar.jpg"></image><br></div>
+
+<p>文章也会同步更新到我的博客：<br><a href="http://ppsheep.com">http://ppsheep.com</a></p>
+
+            
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">标签</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/all-tags/Operation-Queues/">Operation Queues</a>
+
+            </div>
+        
+        <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/04/06/UserDefaults in Swift/"  data-tooltip="Swift下UserDefaults的正确姿势">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/03/13/理解OC内部的消息调用、消息转发、类和对象-二/" data-tooltip="理解OC内部的消息调用、消息转发、类和对象-二">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://ppsheep.com/2017/03/14/Operation-Queues并发编程/">
+                <i class="fa fa-google-plus"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://ppsheep.com/2017/03/14/Operation-Queues并发编程/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://ppsheep.com/2017/03/14/Operation-Queues并发编程/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2017 ppsheep. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="3">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/04/06/UserDefaults in Swift/"  data-tooltip="Swift下UserDefaults的正确姿势">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/03/13/理解OC内部的消息调用、消息转发、类和对象-二/" data-tooltip="理解OC内部的消息调用、消息转发、类和对象-二">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://ppsheep.com/2017/03/14/Operation-Queues并发编程/">
+                <i class="fa fa-google-plus"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://ppsheep.com/2017/03/14/Operation-Queues并发编程/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://ppsheep.com/2017/03/14/Operation-Queues并发编程/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="3">
+    <ul class="share-options">
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://ppsheep.com/2017/03/14/Operation-Queues并发编程/">
+                <i class="fa fa-google-plus"></i><span class="">分享到 Google+</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://ppsheep.com/2017/03/14/Operation-Queues并发编程/">
+                <i class="fa fa-facebook-official"></i><span>分享到 Facebook</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://ppsheep.com/2017/03/14/Operation-Queues并发编程/">
+                <i class="fa fa-twitter"></i><span>分享到 Twitter</span>
+            </a>
+        </li>
+    </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-remove"></i>
+        </div>
+        
+            <img id="about-card-picture" src="http://o8bxt3lx0.bkt.clouddn.com/7931417.jpeg"/>
+        
+            <h4 id="about-card-name">ppsheep</h4>
+        
+            <h5 id="about-card-bio"><p>一个就职于网易的初级iOS开发者<br>目前正在修炼自己</p>
+<p>博客建立不久，正在寻找更好的写作方式<br>博客上的内容会同步到公众号Sheep_iOS，另外也会挑选一些比较好的文章推送给大家</p>
+<p>我个人的微信号YangQian5999</p>
+<p>我的微博ppsheep_qian</p>
+<p>文章末尾一般会有公众号二维码<br>欢迎大家关注</p>
+</h5>
+        
+        
+            <h5 id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>iOS开发者</p>
+
+            </h5>
+        
+        
+            <h5 id="about-card-location">
+                <i class="fa fa-map-marker"></i>
+                <br/>
+                杭州
+            </h5>
+        
+    </div>
+</div>
+
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+    </body>
+    <!--SCRIPTS-->
+<script src="/assets/js/script-i4qo6jx6jji9fg0dftpya6ivemizsbow4fhow76d8dwpm7m1wbvi378ssumx.min.js"></script>
+<!--SCRIPTS END-->
+
+    
+
+
+
+</html>
