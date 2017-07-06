@@ -1,0 +1,493 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="ppsheep">
+    <title>全局单例的正确使用 - ppsheep</title>
+    <meta name="author" content="ppsheep">
+    
+    
+    
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+    
+    <meta name="description" content="最近在写项目中遇到一个问题，是关于单例的问题，一般我们使用单例，其实用起来很简单，但是在某些场景下，我们目前的使用方式就会出现问题，下面我们来看看。">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="全局单例的正确使用">
+<meta property="og:url" content="http://ppsheep.com/2017/07/06/single/index.html">
+<meta property="og:site_name" content="ppsheep">
+<meta property="og:description" content="最近在写项目中遇到一个问题，是关于单例的问题，一般我们使用单例，其实用起来很简单，但是在某些场景下，我们目前的使用方式就会出现问题，下面我们来看看。">
+<meta property="og:image" content="http://ac-mhke0kuv.clouddn.com/830a4ead8294ceff5160.jpg">
+<meta property="og:updated_time" content="2017-07-06T08:49:24.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="全局单例的正确使用">
+<meta name="twitter:description" content="最近在写项目中遇到一个问题，是关于单例的问题，一般我们使用单例，其实用起来很简单，但是在某些场景下，我们目前的使用方式就会出现问题，下面我们来看看。">
+<meta name="twitter:image" content="http://ac-mhke0kuv.clouddn.com/830a4ead8294ceff5160.jpg">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/7931417.jpeg"/>
+    
+    
+        <meta property="og:image" content="http://o8bxt3lx0.bkt.clouddn.com/ppsheep/89kqu.jpg"/>
+        <meta class="swiftype" name="image" data-type="enum" content="http://o8bxt3lx0.bkt.clouddn.com/ppsheep/89kqu.jpg" />
+    
+    
+    
+    <!--STYLES-->
+    <link rel="stylesheet" href="/assets/css/style-nuvue6sithwirecbhvw3dkaobiojqvtadsnhguwi7k04xklybw5djl1smadp.min.css">
+    <!--STYLES END-->
+    
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="3">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <h1 class="header-title">
+        <a class="header-title-link" href="/ ">ppsheep</a>
+    </h1>
+    
+        
+            <a  class="header-right-picture "
+                href="#about">
+        
+        
+            <img class="header-picture" src="http://o8bxt3lx0.bkt.clouddn.com/7931417.jpeg"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="3">
+    
+        <div class="sidebar-profile">
+            <a href="/#about">
+                    <img class="sidebar-profile-picture" src="http://o8bxt3lx0.bkt.clouddn.com/7931417.jpeg"/>
+            </a>
+            <span class="sidebar-profile-name">ppsheep</span>
+        </div>
+    
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/ "
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+                    <span class="sidebar-button-desc">首页</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-categories"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+                    <span class="sidebar-button-desc">分类</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-tags"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+                    <span class="sidebar-button-desc">标签</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/all-archives"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+                    <span class="sidebar-button-desc">归档</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link st-search-show-outputs"
+                         href="#search"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-search"></i>
+                    <span class="sidebar-button-desc">搜索</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="#about"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+                    <span class="sidebar-button-desc">关于</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="https://github.com/yangqian111" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+                    <span class="sidebar-button-desc">GitHub</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="http://weibo.com/6071931832/profile?topnav=1&wvr=6" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+                    <span class="sidebar-button-desc">微博</span>
+                </a>
+        </li>
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link " href="mailto:ppsheep.qian@gmail.com" target="_blank">
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+                    <span class="sidebar-button-desc">邮箱</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+        <ul class="sidebar-buttons">
+        
+            <li class="sidebar-button">
+                
+                    <a  class="sidebar-button-link "
+                         href="/atom.xml"
+                        
+                    >
+                
+                    <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+                    <span class="sidebar-button-desc">RSS</span>
+                </a>
+        </li>
+        
+    </ul>
+    
+</nav>
+
+            
+            <div id="main" data-behavior="3"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post" itemscope itemType="http://schema.org/BlogPosting">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title" itemprop="headline">
+            全局单例的正确使用
+        </h1>
+    
+    <div class="post-meta">
+    <time itemprop="datePublished" datetime="2017-07-06T16:22:17+08:00">
+	
+		    7月 06, 2017
+    	
+    </time>
+    
+        <span>发布在 </span>
+        
+    <a class="category-link" href="/all-categories/iOS基础/">iOS基础</a>
+
+
+    
+</div>
+
+</div>
+    
+    <div class="post-content markdown" itemprop="articleBody">
+        <div class="main-content-wrap">
+            <p>最近在写项目中遇到一个问题，是关于单例的问题，一般我们使用单例，其实用起来很简单，但是在某些场景下，我们目前的使用方式就会出现问题，下面我们来看看。</p>
+<a id="more"></a>
+<h3 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h3><p>首先来说一下我遇到的使用场景，有一个类，我需要在整个项目工程中，他只能被创建一次，无论用什么创建方式，他的内存地址都不能更改。</p>
+<p>首先按照我们日常的单例使用方式，我们来实现一下。</p>
+<p>首先有一个单例类Single</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">@interface Single : NSObject</div><div class="line"></div><div class="line">+ (instancetype)sharedInstance;</div><div class="line"></div><div class="line">@end</div><div class="line"></div><div class="line">@implementation Single</div><div class="line"></div><div class="line">+ (instancetype)sharedInstance &#123;</div><div class="line">    static dispatch_once_t onceToken;</div><div class="line">    static Single *__single = nil;</div><div class="line">    dispatch_once(&amp;onceToken, ^&#123;</div><div class="line">        __single = [[Single alloc] init];</div><div class="line">    &#125;);</div><div class="line">    return __single;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (instancetype)init &#123;</div><div class="line">    self = [super init];</div><div class="line">    if (!self) &#123;</div><div class="line">        return nil;</div><div class="line">    &#125;</div><div class="line">    return self;</div><div class="line">&#125;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
+<p>我们每次获取这个类使用的时候，直接使用sharedInstance获取，这样不用说，获取出来的肯定是同一个对象</p>
+<p>但是现在我的这个类对外提供了一个初始化方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line">@interface Single : NSObject</div><div class="line"></div><div class="line">@property (nonatomic, copy) NSString *key;</div><div class="line"></div><div class="line">+ (instancetype)sharedInstance;</div><div class="line"></div><div class="line">- (instancetype)initWithKey:(NSString *)key;</div><div class="line"></div><div class="line">@end</div><div class="line"></div><div class="line">-----------------------------------------------------------------------------</div><div class="line"></div><div class="line">@implementation Single</div><div class="line"></div><div class="line">+ (instancetype)sharedInstance &#123;</div><div class="line">    static dispatch_once_t onceToken;</div><div class="line">    static Single *__single = nil;</div><div class="line">    dispatch_once(&amp;onceToken, ^&#123;</div><div class="line">        __single = [[Single alloc] init];</div><div class="line">    &#125;);</div><div class="line">    return __single;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (instancetype)init &#123;</div><div class="line">    return [self initWithKey:nil];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (instancetype)initWithKey:(NSString *)key &#123;</div><div class="line">    self = [super init];</div><div class="line">    if (!self) &#123;</div><div class="line">        return nil;</div><div class="line">    &#125;</div><div class="line">    _key = [key copy];</div><div class="line">    return self;</div><div class="line">&#125;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
+<p>然后我在需要使用到single的地方这样来获取</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Single *single1 = [Single sharedInstance];</div><div class="line">Single *single2 = [[Single alloc] initWithKey:@&quot;11&quot;];</div></pre></td></tr></table></figure>
+<p>打印出他们的内存地址</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Printing description of single1:</div><div class="line">&lt;Single: 0x60000000d610&gt;</div><div class="line">Printing description of single2:</div><div class="line">&lt;Single: 0x60000000d5f0&gt;</div></pre></td></tr></table></figure>
+<p>很明显，我现在得到的是两个不一样的对象，我想要获得完全一样的对象，怎么做呢</p>
+<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><p>每个对象在初始化的时候，都是先获取内存地址，而这一步是在方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">+ (instancetype)allocWithZone:(struct _NSZone *)zone;</div></pre></td></tr></table></figure>
+<p>在我们的init方法中，都是在做一些让这个对象能满足我们使用的一些设置</p>
+<p>那我想要在整个工程中获取到唯一的一个实例，我们就可以在这个分配内存的方法中做单例步骤</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">@implementation Single</div><div class="line"></div><div class="line">+ (instancetype)sharedInstance &#123;</div><div class="line">    return [[self alloc] init];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (instancetype)init &#123;</div><div class="line">    return [self initWithKey:nil];</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (instancetype)initWithKey:(NSString *)key &#123;</div><div class="line">    self = [super init];</div><div class="line">    if (!self) &#123;</div><div class="line">        return nil;</div><div class="line">    &#125;</div><div class="line">    _key = [key copy];</div><div class="line">    return self;</div><div class="line">&#125;</div><div class="line"></div><div class="line">static Single *__single = nil;</div><div class="line">+ (instancetype)allocWithZone:(struct _NSZone *)zone &#123;</div><div class="line">    static dispatch_once_t onceToken;</div><div class="line">    dispatch_once(&amp;onceToken, ^&#123;</div><div class="line">        __single = [super allocWithZone: zone];</div><div class="line">    &#125;);</div><div class="line">    return __single;</div><div class="line">&#125;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
+<p>我们再次获取使用单例时</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Single *single1 = [Single sharedInstance];</div><div class="line">Single *single2 = [[Single alloc] initWithKey:@&quot;11&quot;];</div><div class="line">Single *single3 = [Single sharedInstance];</div><div class="line">Single *single4 = [[Single alloc] init];</div></pre></td></tr></table></figure>
+<p>得到的完全是相同的一个实例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">Printing description of single1:</div><div class="line">&lt;Single: 0x6000000155d0&gt;</div><div class="line">Printing description of single2:</div><div class="line">&lt;Single: 0x6000000155d0&gt;</div><div class="line">Printing description of single3:</div><div class="line">&lt;Single: 0x6000000155d0&gt;</div><div class="line">Printing description of single4:</div><div class="line">&lt;Single: 0x6000000155d0&gt;</div></pre></td></tr></table></figure>
+<p><strong>欢迎关注微博：ppsheep_Qian</strong></p>
+<p><a href="http://weibo.com/ppsheep" target="_blank" rel="external">http://weibo.com/ppsheep</a></p>
+<p><strong>欢迎关注公众号</strong></p>
+<p><img src="http://ac-mhke0kuv.clouddn.com/830a4ead8294ceff5160.jpg" alt=""></p>
+
+            
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">标签</span><br/>
+                
+    <a class="tag tag--primary tag--small t-link" href="/all-tags/真正的单例/">真正的单例</a>
+
+            </div>
+        
+        <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--disabled">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/05/15/public-static-library/" data-tooltip="pod静态库的创建(共享源码并上传pod公共库)">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://ppsheep.com/2017/07/06/single/">
+                <i class="fa fa-google-plus"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://ppsheep.com/2017/07/06/single/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://ppsheep.com/2017/07/06/single/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2017 ppsheep. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="3">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--disabled">
+                
+                    <i class="fa fa-angle-left"></i>
+                    <span class="hide-xs hide-sm text-small icon-ml">上一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+                
+                    <a class="post-action-btn btn btn--default tooltip--top" href="/2017/05/15/public-static-library/" data-tooltip="pod静态库的创建(共享源码并上传pod公共库)">
+                
+                    <span class="hide-xs hide-sm text-small icon-mr">下一篇</span>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a class="post-action-btn btn btn--default btn-open-shareoptions"  href="#btn-open-shareoptions">
+                <i class="fa fa-share-alt"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=http://ppsheep.com/2017/07/06/single/">
+                <i class="fa fa-google-plus"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://ppsheep.com/2017/07/06/single/">
+                <i class="fa fa-facebook-official"></i>
+            </a>
+        </li>
+        <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=http://ppsheep.com/2017/07/06/single/">
+                <i class="fa fa-twitter"></i>
+            </a>
+        </li>
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#">
+            
+                <i class="fa fa-list"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                <div id="share-options-bar" class="share-options-bar" data-behavior="3">
+    <ul class="share-options">
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=http://ppsheep.com/2017/07/06/single/">
+                <i class="fa fa-google-plus"></i><span class="">分享到 Google+</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://ppsheep.com/2017/07/06/single/">
+                <i class="fa fa-facebook-official"></i><span>分享到 Facebook</span>
+            </a>
+        </li>
+        <li class="share-option">
+            <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=http://ppsheep.com/2017/07/06/single/">
+                <i class="fa fa-twitter"></i><span>分享到 Twitter</span>
+            </a>
+        </li>
+    </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-remove"></i>
+        </div>
+        
+            <img id="about-card-picture" src="http://o8bxt3lx0.bkt.clouddn.com/7931417.jpeg"/>
+        
+            <h4 id="about-card-name">ppsheep</h4>
+        
+            <h5 id="about-card-bio"><p>一个就职于网易的初级iOS开发者<br>目前正在修炼自己</p>
+<p>博客建立不久，正在寻找更好的写作方式<br>博客上的内容会同步到公众号Sheep_iOS，另外也会挑选一些比较好的文章推送给大家</p>
+<p>我个人的微信号YangQian5999</p>
+<p>我的微博ppsheep_qian</p>
+<p>文章末尾一般会有公众号二维码<br>欢迎大家关注</p>
+</h5>
+        
+        
+            <h5 id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>iOS开发者</p>
+
+            </h5>
+        
+        
+            <h5 id="about-card-location">
+                <i class="fa fa-map-marker"></i>
+                <br/>
+                杭州
+            </h5>
+        
+    </div>
+</div>
+
+        
+<div id="cover" style="background-image:url('/assets/images/cover.jpg');"></div>
+    </body>
+    <!--SCRIPTS-->
+<script src="/assets/js/script-i4qo6jx6jji9fg0dftpya6ivemizsbow4fhow76d8dwpm7m1wbvi378ssumx.min.js"></script>
+<!--SCRIPTS END-->
+
+    
+
+
+
+</html>
